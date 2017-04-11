@@ -1,0 +1,48 @@
+environment:
+
+  PYTHON_ARCH: "64"
+  PYTHON: "C:\\Python34-conda64"
+
+  matrix:
+    - PYTHON_VERSION: "3.5"
+      XARRAY_VERSION: "0.8"
+    - PYTHON_VERSION: "3.5"
+      XARRAY_VERSION: "0.9"
+    - PYTHON_VERSION: "3.6"
+      XARRAY_VERSION: "0.8"
+    - PYTHON_VERSION: "3.6"
+      XARRAY_VERSION: "0.9"
+install:
+  # Install miniconda Python
+  - "powershell ./ci/install_python.ps1"
+   # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+  # Check that we have the expected version and architecture for Python
+  - "python --version"
+  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+  # make sure we use an 'innocent' default matplotlib environment
+  - copy /y nul matplotlibrc
+  - conda config --set always_yes yes --set changeps1 no
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - set ENVKEY=py%PYTHON_VERSION%_xr%XARRAY_VERSION%
+  - conda env create -f tests/envs/environment_%ENVKEY%.yml
+  - activate psyplot_%ENVKEY%
+  - pip install coveralls
+  # install the test plugin
+  - cd tests/test_plugin
+  - python setup.py install
+  - cd ../../
+  - python setup.py install
+  # export the environment for debugging
+  - conda env export -n psyplot_%ENVKEY%
+  # print versions of all the important requirements
+  - psyplot -aV
+
+build: false
+
+test_script:
+  - python setup.py pytest

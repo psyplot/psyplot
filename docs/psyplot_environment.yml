@@ -1,0 +1,12 @@
+name: psyplot
+channels:
+    - chilipp
+    - conda-forge
+dependencies:
+    - psyplot
+    - dask
+    - psy-maps
+    - psy-reg
+    - seaborn
+    - bottleneck
+    - netCDF4

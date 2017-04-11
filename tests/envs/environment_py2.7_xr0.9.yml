@@ -1,0 +1,15 @@
+name: psyplot_py2.7_xr0.9
+channels:
+    - conda-forge
+dependencies:
+    - python=2.7
+    - matplotlib
+    - dask
+    - xarray=0.9
+    - netCDF4
+    - seaborn
+    - scipy  # necessary for scipy engine test
+    - pynio
+    - pyngl
+    - pip:
+        - pytest

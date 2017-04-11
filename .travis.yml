@@ -1,0 +1,92 @@
+language: generic
+matrix:
+  include:
+  # linux environments
+  - env:
+      - PYTHON_VERSION=3.6
+      - XARRAY_VERSION=0.9
+    os: linux
+  - env:
+      - PYTHON_VERSION=3.6
+      - XARRAY_VERSION=0.8
+    os: linux
+  - env:
+      - PYTHON_VERSION=3.5
+      - XARRAY_VERSION=0.9
+    os: linux
+  - env:
+      - PYTHON_VERSION=3.5
+      - XARRAY_VERSION=0.8
+    os: linux
+  - env:
+      - PYTHON_VERSION=2.7
+      - XARRAY_VERSION=0.9
+    os: linux
+  - env:
+      - PYTHON_VERSION=2.7
+      - XARRAY_VERSION=0.8
+    os: linux
+  # osx environments
+  - env:
+      - PYTHON_VERSION=3.6
+      - XARRAY_VERSION=0.9
+    os: osx
+  - env:
+      - PYTHON_VERSION=2.7
+      - XARRAY_VERSION=0.9
+    os: osx
+addons:  # install cdo
+  apt:
+    packages:
+    - cdo
+before_install:
+  # make sure, gfortran and gnu-sed are installed
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew install gnu-sed --with-default-names;
+    fi
+install:
+  # select the os name for the conda installer
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        OS_NAME=MacOSX;
+    else
+        OS_NAME=Linux;
+    fi
+  # We do this conditionally because it saves us some downloading if the
+  # version is the same.
+  - if [[ "$PYTHON_VERSION" == "2.7" ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda2-latest-"${OS_NAME}"-x86_64.sh -O miniconda.sh;
+    else
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-"${OS_NAME}"-x86_64.sh -O miniconda.sh;
+    fi
+  # make sure we use an 'innocent' default matplotlib environment
+  - touch matplotlibrc
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - pip install pyyaml  # is somehow not included in the current conda installation
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - 'ENVKEY=py"${PYTHON_VERSION}"_xr"${XARRAY_VERSION}"'
+  - conda env create -f tests/envs/environment_$ENVKEY.yml
+  - source activate psyplot_$ENVKEY
+  # install python cdo bindings
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        pip install cdo;
+    fi
+  # install coveralls
+  - pip install coveralls
+  # install the test plugin
+  - cd tests/test_plugin && python setup.py install && cd ../../
+  # install psyplot
+  - python setup.py install
+  # export the environment for debugging
+  - conda env export -n psyplot_$ENVKEY
+  # print versions of all the important requirements
+  - psyplot -aV
+script:
+  - coverage run --source=psyplot setup.py pytest
+
+after_success:
+  - coveralls

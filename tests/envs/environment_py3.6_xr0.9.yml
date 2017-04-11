@@ -1,0 +1,14 @@
+name: psyplot_py3.6_xr0.9
+channels:
+    - conda-forge
+dependencies:
+    - python=3.6
+    - matplotlib
+    - dask
+    - xarray=0.9
+    - netCDF4
+    - seaborn
+    - scipy  # necessary for scipy engine test
+    - gdal  # for psyplot.gdal_store
+    - pip:
+        - pytest

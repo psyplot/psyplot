@@ -1,0 +1,82 @@
+---
+# logging settings for the nc2map module
+
+version: 1
+
+disable_existing_loggers: False
+
+formatters:
+
+    simple:
+
+        format: "[%(name)s] - %(levelname)s - %(message)s"
+
+    level_message:
+
+        format: "%(levelname)s: %(message)s"
+
+    full:
+        format: "%(asctime)s - [%(name)s.%(funcName)s] - %(levelname)s - %(message)s"
+
+
+handlers:
+
+    console:
+
+        class: logging.StreamHandler
+
+        level: DEBUG
+
+        formatter: simple
+
+        stream: ext://sys.stdout
+
+    warning_console:
+
+        class: logging.StreamHandler
+
+        level: INFO
+
+        formatter: level_message
+
+        stream: ext://sys.stdout
+
+
+    debug_file_handler:
+
+        class: logging.handlers.RotatingFileHandler
+
+        mode: w
+
+        level: DEBUG
+
+        formatter: full
+
+        filename: ~/.debug_psyplot.log
+
+        maxBytes: 10485760 # 10MB
+
+        backupCount: 5
+
+        encoding: utf8
+
+        delay: True
+
+loggers:
+
+    psyplot:
+
+        handlers: [console]
+
+        propagate: False
+
+        level: DEBUG
+
+    psyplot.warning:
+
+        handlers: [warning_console, debug_file_handler]
+
+        propagate: False
+
+        level: WARNING
+...
