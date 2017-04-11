@@ -92,3 +92,14 @@ this project.
 .. _matplotlib: http://matplotlib.org
 .. _xarray: http://xarray.pydata.org/
 .. _cartopy: http://scitools.org.uk/cartopy
+
+
+
+Note
+----
+Commits on github prior to version 1.0 were moved into another repository, the
+`psyplot_old`_ repository. This has been done because prior to version 1.0,
+the github repository contained all the reference figures used for testing 
+which made the size of the repository too large.
+
+.. _psyplot_old: https://github.com/Chilipp/psyplot
