@@ -21,6 +21,7 @@ import six
 import subprocess as spr
 from itertools import product
 import warnings
+import sphinx_rtd_theme
 # make sure, psyplot from parent directory is used
 sys.path.insert(0, os.path.abspath('..'))
 import psyplot
@@ -136,17 +137,14 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
+html_theme = 'sphinx_rtd_theme'
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-
-    # Add any paths that contain custom static files (such as style sheets)
-    # here, relative to this directory. They are copied after the builtin
-    # static files, so a file named "default.css" will overwrite the builtin
-    # "default.css".
-    html_static_path = ['_static']
+# Add any paths that contain custom static files (such as style sheets)
+# here, relative to this directory. They are copied after the builtin
+# static files, so a file named "default.css" will overwrite the builtin
+# "default.css".
+html_static_path = ['_static']
 
 # otherwise, readthedocs.org uses their theme by default, so no need to specify
 
@@ -165,7 +163,7 @@ html_favicon = '_static/psyplot.ico'
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
     'index': ['sidebarlogo.html', 'sidebarusefullinks.html', 'searchbox.html'],
-    '**': ['sidebarlogo.html', 'relations.html', 'searchbox.html', 
+    '**': ['sidebarlogo.html', 'relations.html', 'searchbox.html',
            'localtoc.html', 'sidebarusefullinks.html']
 }
 
