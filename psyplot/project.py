@@ -461,7 +461,7 @@ class Project(ArrayList):
             necessary if the `ax` keyword consists of subplots with projection
             that differs from the one that is needed
         enable_post: bool
-            If True, the :attr:`~psyplot.plotter.Plotter.post` formatoption is 
+            If True, the :attr:`~psyplot.plotter.Plotter.post` formatoption is
             enabled and post processing scripts are allowed. If ``None``, this
             parameter is set to True if there is a value given for the `post`
             formatoption in `fmt` or `kwargs`
@@ -1056,7 +1056,7 @@ class Project(ArrayList):
             automatically determined by pickle. Note: Set this to ``'latin1'``
             if using a project created with python2 on python3.
         enable_post: bool
-            If True, the :attr:`~psyplot.plotter.Plotter.post` formatoption is 
+            If True, the :attr:`~psyplot.plotter.Plotter.post` formatoption is
             enabled and post processing scripts are allowed. Do only set this
             parameter to ``True`` if you know you can trust the information in
             `fname`
@@ -1270,6 +1270,7 @@ class _ProjectLoader(object):
         ret['projection'] = proj
         ret['visible'] = ax.get_visible()
         ret['spines'] = {}
+        ret['zorder'] = ax.get_zorder()
         for key, val in ax.spines.items():
             ret['spines'][key] = {}
             for prop in ['linestyle', 'edgecolor', 'linewidth',
