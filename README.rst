@@ -23,9 +23,9 @@ The psyplot interactive visualization framework
     :alt: Travis
     :target: https://travis-ci.org/Chilipp/psyplot
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/3jk6ea1n4a4dl6vk?svg=true
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/3jk6ea1n4a4dl6vk/branch/master?svg=true
     :alt: AppVeyor
-    :target: https://ci.appveyor.com/project/Chilipp/psyplot
+    :target: https://ci.appveyor.com/project/Chilipp/psyplot/branch/master
 
 .. |coveralls| image:: https://coveralls.io/repos/github/Chilipp/psyplot/badge.svg?branch=master
     :alt: Coverage
@@ -99,7 +99,7 @@ Note
 ----
 Commits on github prior to version 1.0 were moved into another repository, the
 `psyplot_old`_ repository. This has been done because prior to version 1.0,
-the github repository contained all the reference figures used for testing 
+the github repository contained all the reference figures used for testing
 which made the size of the repository too large.
 
 .. _psyplot_old: https://github.com/Chilipp/psyplot

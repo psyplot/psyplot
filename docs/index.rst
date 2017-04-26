@@ -48,9 +48,9 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
     :alt: Travis
     :target: https://travis-ci.org/Chilipp/psyplot
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/3jk6ea1n4a4dl6vk?svg=true
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/3jk6ea1n4a4dl6vk/branch/master?svg=true
     :alt: AppVeyor
-    :target: https://ci.appveyor.com/project/Chilipp/psyplot
+    :target: https://ci.appveyor.com/project/Chilipp/psyplot/branch/master
 
 .. |coveralls| image:: https://coveralls.io/repos/github/Chilipp/psyplot/badge.svg?branch=master
     :alt: Coverage
