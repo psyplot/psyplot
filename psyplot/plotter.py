@@ -698,15 +698,15 @@ class DictFormatoption(Formatoption):
             if todefault:
                 self.plotter[self.key].clear()
             self.plotter[self.key].update(value)
-            
-            
+
+
 class PostTiming(Formatoption):
     """
     Determine when to run the :attr:`post` formatoption
-    
+
     This formatoption determines, whether the :attr:`post` formatoption
     should be run never, after replot or after every update.
-    
+
     Possible types
     --------------
     'never'
@@ -716,17 +716,19 @@ class PostTiming(Formatoption):
     'replot'
         Only run post processing scripts when the data changes or a replot
         is necessary
-        
+
     See Also
     --------
     post: The post processing formatoption"""
-    
+
     default = 'never'
-    
+
     priority = -inf
-    
+
     group = 'post_processing'
-    
+
+    name = 'Timing of the post processing'
+
     @staticmethod
     def validate(value):
         value = six.text_type(value)
@@ -735,23 +737,23 @@ class PostTiming(Formatoption):
             raise ValueError('String must be one of %s, not %r' % (
                 possible_values, value))
         return value
-    
+
     def update(self, value):
         pass
-    
-    
+
+
 class PostProcDependencies(object):
     """The dependencies of this formatoption"""
-    
+
     def __get__(self, instance, owner):
-        if (instance is None or instance.plotter is None or 
+        if (instance is None or instance.plotter is None or
                 not instance.plotter._initialized):
             return []
         elif instance.post_timing.value == 'always':
             return list(set(instance.plotter) - {instance.key})
         else:
             return []
-        
+
     def __set__(self, instance, value):
         pass
 
@@ -759,34 +761,34 @@ class PostProcDependencies(object):
 class PostProcessing(Formatoption):
     """
     Apply your own postprocessing script
-    
+
     This formatoption let's you apply your own post processing script. Just
     enter the script as a string and it will be executed. The formatoption
     will be made available via the ``self`` variable
-    
+
     Possible types
     --------------
     None
         Don't do anything
     str
         The post processing script as string
-        
+
     Note
     ----
-    This formatoption uses the built-in :func:`exec` function to compile the 
+    This formatoption uses the built-in :func:`exec` function to compile the
     script. Since this poses a security risk when loading psyplot projects,
-    it is by default disabled through the :attr:`Plotter.enable_post` 
-    attribute. If you are sure that you can trust the script in this 
+    it is by default disabled through the :attr:`Plotter.enable_post`
+    attribute. If you are sure that you can trust the script in this
     formatoption, set this attribute of the corresponding :class:`Plotter` to
     ``True``
-        
+
     Examples
     --------
-    Assume, you want to manually add the mean of the data to the title of the 
+    Assume, you want to manually add the mean of the data to the title of the
     matplotlib axes. You can simply do this via
-    
+
     .. code-block:: python
-        
+
         from psyplot.plotter import Plotter
         from xarray import DataArray
         plotter = Plotter(DataArray([1, 2, 3]))
@@ -795,28 +797,30 @@ class PostProcessing(Formatoption):
         plotter.update(post="self.ax.set_title(str(self.data.mean()))")
         plotter.ax.get_title()
         '2.0'
-        
+
     By default, the ``post`` formatoption is only ran, when it is explicitly
-    updated. However, you can use the :attr:`post_timing` formatoption, to 
-    run it automatically. E.g. for running it after every update of the 
+    updated. However, you can use the :attr:`post_timing` formatoption, to
+    run it automatically. E.g. for running it after every update of the
     plotter, you can set
-    
+
     .. code-block:: python
-    
+
         plotter.update(post_timing='always')
-        
+
     See Also
     --------
     post_timing: Determine the timing of this formatoption"""
-    
+
     children = ['post_timing']
-    
+
     default = None
-    
+
     priority = -inf
-    
+
     group = 'post_processing'
-    
+
+    name = 'Custom post processing script'
+
     @staticmethod
     def validate(value):
         if value is None:
@@ -825,16 +829,16 @@ class PostProcessing(Formatoption):
             raise ValueError("Expected a string, not %s" % (type(value), ))
         else:
             return six.text_type(value)
-    
+
     @property
     def data_dependent(self):
         """True if the corresponding :class:`post_timing <PostTiming>`
         formatoption is set to ``'replot'`` to run the post processing script
         after every change of the data"""
         return self.post_timing.value == 'replot'
-    
+
     dependencies = PostProcDependencies()
-        
+
     def update(self, value):
         if value is None:
             return
@@ -856,7 +860,7 @@ class Plotter(dict):
 
     #: List of base strings in the :attr:`psyplot.rcParams` dictionary
     _rcparams_string = []
-    
+
     post_timing = PostTiming('post_timing')
     post = PostProcessing('post')
 
@@ -1012,8 +1016,8 @@ class Plotter(dict):
     #: The decoder to use for the formatoptions. If None, the decoder of the
     #: raw data is used
     plot_data_decoder = None
-    
-    #: :class:`bool` that has to be ``True`` if the post processing script in 
+
+    #: :class:`bool` that has to be ``True`` if the post processing script in
     #: the :attr:`post` formatoption should be enabled
     enable_post = False
 
@@ -1037,7 +1041,7 @@ class Plotter(dict):
     @docstrings.get_sectionsf('Plotter')
     @docstrings.dedent
     def __init__(self, data=None, ax=None, auto_update=None, project=None,
-                 draw=None, make_plot=True, clear=False, 
+                 draw=None, make_plot=True, clear=False,
                  enable_post=False, **kwargs):
         """
         Parameters
@@ -1057,7 +1061,7 @@ class Plotter(dict):
         clear: bool
             If True, the axes is cleared first
         enable_post: bool
-            If True, the :attr:`post` formatoption is enabled and post 
+            If True, the :attr:`post` formatoption is enabled and post
             processing scripts are allowed
         ``**kwargs``
             Any formatoption key from the :attr:`formatoptions` attribute that
