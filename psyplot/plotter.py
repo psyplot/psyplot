@@ -632,7 +632,7 @@ class Formatoption(object):
     def _lock_children(self):
         """acquire the locks of the children"""
         plotter = self.plotter
-        for key in self.children:
+        for key in self.children + self.dependencies:
             try:
                 getattr(plotter, key).lock.acquire()
             except AttributeError:
@@ -641,7 +641,7 @@ class Formatoption(object):
     def _release_children(self):
         """release the locks of the children"""
         plotter = self.plotter
-        for key in self.children:
+        for key in self.children + self.dependencies:
             try:
                 getattr(plotter, key).lock.release()
             except AttributeError:
