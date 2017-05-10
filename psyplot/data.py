@@ -2906,7 +2906,6 @@ class ArrayList(list):
         --------
         from_dataset, array_info"""
         pwd = pwd or getcwd()
-        save_only = only
         if only is None:
             def only_filter(arr_name, info):
                 return True
@@ -2914,11 +2913,13 @@ class ArrayList(list):
             only_filter = only
         elif isstring(only):
             def only_filter(arr_name, info):
-                return re.search(save_only) is not None
+                return patt.search(arr_name) is not None
+            patt = re.compile(only)
             only = None
         else:
             def only_filter(arr_name, info):
                 return arr_name in save_only
+            save_only = only
             only = None
         if not isinstance(alternative_paths, dict):
             it = iter(alternative_paths)

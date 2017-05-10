@@ -975,6 +975,17 @@ class TestArrayList(unittest.TestCase):
         self.assertEqual(self.list_class.from_dict(
                             d, only=l.arr_names[1:]).array_info(),
                          l[1:].array_info())
+        # test to a pattern
+        self.assertEqual(self.list_class.from_dict(
+                            d, only='|'.join(l.arr_names[1:])).array_info(),
+                         l[1:].array_info())
+        # test to a function
+        self.assertEqual(
+            self.list_class.from_dict(
+                d, only=lambda n, info: (
+                    n in l.arr_names[1:] and 'name' not in 'info')
+                ).array_info(),
+            l[1:].array_info())
 
     def test_logger(self):
         """Test whether one can access the logger"""
