@@ -957,7 +957,7 @@ class TestArrayList(unittest.TestCase):
             ('attrs', OrderedDict())]))
         return l
 
-    def test_from_dict(self):
+    def test_from_dict_01(self):
         """Test the creation from a dictionary"""
         l = self.test_array_info()
         d = l.array_info(engine='netCDF4')
@@ -966,6 +966,15 @@ class TestArrayList(unittest.TestCase):
         d = l.array_info(ds_description={'ds'})
         self.assertEqual(self.list_class.from_dict(d).array_info(),
                          l.array_info())
+
+    def test_from_dict_02_only(self):
+        """Test the only keyword"""
+        l = self.test_array_info()
+        d = l.array_info(ds_description={'ds'})
+        # test to use only the first 2
+        self.assertEqual(self.list_class.from_dict(
+                            d, only=l.arr_names[1:]).array_info(),
+                         l[1:].array_info())
 
     def test_logger(self):
         """Test whether one can access the logger"""

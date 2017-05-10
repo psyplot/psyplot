@@ -1107,7 +1107,10 @@ class Project(ArrayList):
         else:
             obj._main = gcp(True)
         axes = {}
-        for arr, arr_dict in zip(obj, six.itervalues(d['arrays'])):
+        arr_names = obj.arr_names
+        for arr, (arr_name, arr_dict) in zip(
+                obj, filter(lambda t: t[0] in arr_names,
+                            six.iteritems(d['arrays']))):
             if not arr_dict.get('plotter'):
                 continue
             plot_dict = arr_dict['plotter']

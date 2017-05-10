@@ -2833,7 +2833,8 @@ class ArrayList(list):
     @docstrings.get_sectionsf('ArrayList.from_dict')
     @docstrings.dedent
     def from_dict(cls, d, alternative_paths={}, datasets=None,
-                  pwd=None, ignore_keys=['attrs', 'plotter', 'ds'], **kwargs):
+                  pwd=None, ignore_keys=['attrs', 'plotter', 'ds'],
+                  only=None, **kwargs):
         """
         Create a list from the dictionary returned by :meth:`array_info`
 
@@ -2862,6 +2863,33 @@ class ArrayList(list):
         ignore_keys: list of str
             Keys specified in this list are ignored and not seen as array
             information (note that ``attrs`` are used anyway)
+        only: string, list or callable
+            Can be one of the following three things:
+
+            - a string that represents a pattern to match the array names
+              that shall be included
+            - a list of array names to include
+            - a callable
+
+              .. code-block:: python
+
+                  def filter_func(arr_name: str, info: dict): -> bool
+                      return True or False
+
+              that takes one string and one dictionary as argument.
+              The arguments are
+
+              - arr_name (:class:`str`): The array name (``arr_name``
+                attribute)
+              - info (:class:`dict`): The dictionary with the array
+                informations. Common keys are ``'name'`` that points to the
+                variable name and ``'dims'`` that points to the dimensions and
+                ``'fname'`` that points to the file name
+
+              The function should return ``True`` if the array shall be
+              included, else ``False``. This function will also be given to
+              subsequents instances of :class:`InteractiveList` objects that
+              are contained in the returned value
 
         Other Parameters
         ----------------
@@ -2878,6 +2906,20 @@ class ArrayList(list):
         --------
         from_dataset, array_info"""
         pwd = pwd or getcwd()
+        save_only = only
+        if only is None:
+            def only_filter(arr_name, info):
+                return True
+        elif callable(only):
+            only_filter = only
+        elif isstring(only):
+            def only_filter(arr_name, info):
+                return re.search(save_only) is not None
+            only = None
+        else:
+            def only_filter(arr_name, info):
+                return arr_name in save_only
+            only = None
         if not isinstance(alternative_paths, dict):
             it = iter(alternative_paths)
             alternative_paths = defaultdict(partial(next, it, None))
@@ -2910,10 +2952,11 @@ class ArrayList(list):
         elif not isinstance(datasets, dict):
             it_datasets = iter(datasets)
             datasets = defaultdict(partial(next, it_datasets, None))
-        arrays = [0] * len(set(d) - {'attrs'})
+        arrays = [0] * len(d)
         i = 0
         for arr_name, info in six.iteritems(d):
-            if arr_name in ignore_keys:
+            if arr_name in ignore_keys or not only_filter(arr_name, info):
+                arrays.pop(i)
                 continue
             if not {'fname', 'ds', 'arr'}.intersection(info):
                 # the described object is an InteractiveList
@@ -3216,7 +3259,7 @@ class ArrayList(list):
         %(InteractiveArray.update.parameters.auto_update)s
         %(ArrayList.start_update.parameters)s
         enable_post: bool
-            If not None, enable (``True``) or disable (``False``) the 
+            If not None, enable (``True``) or disable (``False``) the
             :attr:`~psyplot.plotter.Plotter.post`  formatoption in the plotters
         ``**kwargs``
             Any other formatoption or dimension that shall be updated
