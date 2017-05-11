@@ -648,7 +648,11 @@ class Formatoption(object):
                 pass
 
     def finish_update(self):
-        """Finish the update and sharing process"""
+        """Finish the update, initialization and sharing process
+
+        This function is called at the end of the :meth:`Plotter.start_update`,
+        :meth:`Plotter.initialize_plot` or the :meth:`Plotter.share` methods.
+        """
         pass
 
     @dedent
@@ -1266,6 +1270,7 @@ class Plotter(dict):
         self._updating = True
         for priority, grouper in fmto_groups:
             self._plot_by_priority(priority, grouper, initializing=True)
+        self._release_all(True)  # finish the update
         self.cleared = False
         self.replot = False
         self._initialized = True
