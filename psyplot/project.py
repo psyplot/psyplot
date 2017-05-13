@@ -1015,7 +1015,7 @@ class Project(ArrayList):
     @docstrings.dedent
     def load_project(cls, fname, auto_update=None, make_plot=True,
                      draw=None, alternative_axes=None, main=False,
-                     encoding=None, enable_post=False, **kwargs):
+                     encoding=None, enable_post=False, new_fig=True, **kwargs):
         """
         Load a project from a file or dict
 
@@ -1060,6 +1060,9 @@ class Project(ArrayList):
             enabled and post processing scripts are allowed. Do only set this
             parameter to ``True`` if you know you can trust the information in
             `fname`
+        new_fig: bool
+            If True (default) and `alternative_axes` is None, new figures are
+            created if the figure already exists
         pwd: str or None, optional
             Path to the working directory from where the data can be imported.
             If None and `fname` is the path to a file, `pwd` is set to the
@@ -1094,9 +1097,12 @@ class Project(ArrayList):
                     # apply the patch
                     patches[plotter_cls](arr_d['plotter'],
                                          d.get('versions', {}))
+        fig_map = {}
         if alternative_axes is None:
             for fig_dict in six.itervalues(d.get('figs', {})):
-                _ProjectLoader.load_figure(fig_dict)
+                orig_num = fig_dict.get('num') or 1
+                fig_map[orig_num] = _ProjectLoader.load_figure(
+                    fig_dict).number
         elif not isinstance(alternative_axes, dict):
             alternative_axes = iter(alternative_axes)
         obj = cls.from_dict(d['arrays'], pwd=pwd, **kwargs)
@@ -1129,6 +1135,8 @@ class Project(ArrayList):
                     ax = axes[next(iter(already_opened))]
                 else:
                     plot_dict['ax'].pop('shared', None)
+                    plot_dict['ax']['fig'] = fig_map[
+                        plot_dict['ax'].get('fig') or 1]
                     axes[arr.psy.arr_name] = ax = _ProjectLoader.load_axes(
                         plot_dict['ax'])
             plotter_cls(
@@ -1250,13 +1258,19 @@ class _ProjectLoader(object):
             'subplotpars': vars(fig.subplotpars)}
 
     @staticmethod
-    def load_figure(d):
+    def load_figure(d, new_fig=True):
         """Create a figure from what is returned by :meth:`inspect_figure`"""
         import matplotlib.pyplot as plt
         subplotpars = d.pop('subplotpars', None)
         if subplotpars is not None:
             subplotpars.pop('validate', None)
             subplotpars = mfig.SubplotParams(**subplotpars)
+        if new_fig:
+            nums = plt.get_fignums()
+            if d.get('num') in nums:
+                d['num'] = next(
+                    i for i in range(max(plt.get_fignums()) + 1, 0, -1)
+                    if i not in nums)
         return plt.figure(subplotpars=subplotpars, **d)
 
     @staticmethod
