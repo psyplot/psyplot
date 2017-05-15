@@ -2869,22 +2869,28 @@ class ArrayList(list):
             - a string that represents a pattern to match the array names
               that shall be included
             - a list of array names to include
-            - a callable
+            - a callable with two arguments, a string and a dict such as
 
               .. code-block:: python
 
                   def filter_func(arr_name: str, info: dict): -> bool
+                      '''
+                      Filter the array names
+
+                      This function should return True if the array shall be
+                      included, else False
+
+                      Parameters
+                      ----------
+                      arr_name: str
+                          The array name (i.e. the ``arr_name`` attribute)
+                      info: dict
+                          The dictionary with the array informations. Common
+                          keys are ``'name'`` that points to the variable name
+                          and ``'dims'`` that points to the dimensions and
+                          ``'fname'`` that points to the file name
+                      '''
                       return True or False
-
-              that takes one string and one dictionary as argument.
-              The arguments are
-
-              - arr_name (:class:`str`): The array name (``arr_name``
-                attribute)
-              - info (:class:`dict`): The dictionary with the array
-                informations. Common keys are ``'name'`` that points to the
-                variable name and ``'dims'`` that points to the dimensions and
-                ``'fname'`` that points to the file name
 
               The function should return ``True`` if the array shall be
               included, else ``False``. This function will also be given to

@@ -356,7 +356,9 @@ done via
 
     In [1]: !psyplot-plugin my-plugin
 
-    In [2]: !tree my-plugin
+    In [2]: import glob
+
+    In [3]: glob.glob('my-plugin/**', recursive=True)
 
 The following files are created in a directory named ``'my-plugin'``:
 
@@ -374,4 +376,4 @@ If you want to see more, look into the comments in the created files.
 .. ipython::
 
     @suppress
-    In [3]: !rm -r my-plugin
+    In [4]: !rm -r my-plugin

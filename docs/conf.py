@@ -232,8 +232,7 @@ intersphinx_mapping = {
     'psy_reg': ('https://psyplot.readthedocs.io/projects/psy-reg/en/latest/',
                 None),
     'psyplot_gui': (
-        'http://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/'
-    )
+        'http://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/', None),
 }
 if six.PY3:
     intersphinx_mapping['python'] = ('https://docs.python.org/3.6/', None)
