@@ -8,6 +8,11 @@
 Interactive data visualization with python
 ==========================================
 
+.. image:: _static/psyplot.png
+    :width: 50%
+    :alt: psyplot logo
+    :align: center
+
 Welcome! **psyplot** is an open source python project that mainly combines the
 plotting utilities of matplotlib_ and the data management of the xarray_
 package. The main purpose is to have a framework that allows a  fast,
