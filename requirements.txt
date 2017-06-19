@@ -4,8 +4,8 @@ matplotlib==2.0.2  # rq.filter: >=1.4, <2.1
 
 # xarray
 #   https://github.com/pydata/xarray/blob/stable/doc/whats-new.rst
-xarray==0.9.5  # rq.filter: >=0.7.0, < 1.0
+xarray==0.9.6  # rq.filter: >=0.7.0, < 1.0
 
 # NetCDF4
 #   https://github.com/Unidata/netcdf4-python/blob/master/Changelog
-netCDF4==1.2.7 # rq.filter: >=1.2, <1.3
+netCDF4==1.2.9 # rq.filter: >=1.2, <1.3
