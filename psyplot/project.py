@@ -1102,7 +1102,7 @@ class Project(ArrayList):
             for fig_dict in six.itervalues(d.get('figs', {})):
                 orig_num = fig_dict.get('num') or 1
                 fig_map[orig_num] = _ProjectLoader.load_figure(
-                    fig_dict).number
+                    fig_dict, new_fig=new_fig).number
         elif not isinstance(alternative_axes, dict):
             alternative_axes = iter(alternative_axes)
         obj = cls.from_dict(d['arrays'], pwd=pwd, **kwargs)

@@ -155,7 +155,7 @@ class TestProject(td.TestArrayList):
         tp.results.clear()
         fig, axes = plt.subplots(1, 2)
         ds = psy.open_dataset(bt.get_file('circumpolar_test.nc'))
-        sp = psy.Project.load_project(fname, datasets=[ds])
+        sp = psy.Project.load_project(fname, datasets=[ds], new_fig=False)
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(sp[0].psy.ax.rowNum, 0)
@@ -200,7 +200,8 @@ class TestProject(td.TestArrayList):
         tp.results.clear()
         fig, axes = plt.subplots(1, 2)
         sp = psy.Project.load_project(
-            fname, alternative_paths=[bt.get_file('circumpolar_test.nc')])
+            fname, alternative_paths=[bt.get_file('circumpolar_test.nc')],
+            new_fig=False)
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(sp[0].psy.ax.rowNum, 0)
@@ -277,7 +278,7 @@ class TestProject(td.TestArrayList):
                          osp.join(outdir2, 'circumpolar_test.nc'))
         self.assertEqual(psyd.get_filename_ds(mp[7].psy.base)[0],
                          osp.join(outdir2, 'circumpolar_test.nc'))
-        
+
     def test_save_and_load_06_post_fmt(self):
         """Test whether the :attr:`psyplot.plotter.Plotter.post` fmt works"""
         psy.register_plotter('test_plotter', import_plotter=True,
@@ -299,7 +300,7 @@ class TestProject(td.TestArrayList):
         # test with enabled post
         sp = psy.Project.load_project(fname, enable_post=True)
         self.assertEqual(sp.plotters[0].ax.get_title(), 'test')
-        
+
 
     def test_versions_and_patch(self):
         import warnings
@@ -377,7 +378,7 @@ class TestProject(td.TestArrayList):
                          '| fmt1 | fmt3 |\n'
                          '+------+------+')
         title = psyp.groups['labels']
-        self.assertEqual(sp1.keys(['fmt1', 'fmt2', 'fmt3'], func=str, 
+        self.assertEqual(sp1.keys(['fmt1', 'fmt2', 'fmt3'], func=str,
                                   grouped=True),
                          '*' * len(title) + '\n' +
                          title + '\n' +
@@ -392,7 +393,7 @@ class TestProject(td.TestArrayList):
                          '+------+\n'
                          '| fmt3 |\n'
                          '+------+')
-        self.assertEqual(mp.keys(['fmt1', 'fmt2', 'fmt3'], func=str, 
+        self.assertEqual(mp.keys(['fmt1', 'fmt2', 'fmt3'], func=str,
                                  grouped=True),
                          '*' * len(title) + '\n' +
                          title + '\n' +
@@ -452,7 +453,7 @@ class TestProject(td.TestArrayList):
             'post_timing', '===========', psyp.PostTiming.__doc__, '']))
         title = psyp.groups['labels']
         self.assertEqual(
-            sp1.docs(['fmt1', 'fmt2', 'fmt3'], func=str, grouped=True), 
+            sp1.docs(['fmt1', 'fmt2', 'fmt3'], func=str, grouped=True),
             '\n'.join([
                 '*' * len(title),
                 title,
@@ -465,7 +466,7 @@ class TestProject(td.TestArrayList):
                 'fmt3', '====', tp.SimpleFmt3.__doc__]))
         # test summed project
         self.assertEqual(
-            mp.docs(['fmt1', 'fmt3'], func=str, grouped=True), 
+            mp.docs(['fmt1', 'fmt3'], func=str, grouped=True),
             '\n'.join([
                 '*' * len(title),
                 title,
@@ -498,49 +499,52 @@ class TestProject(td.TestArrayList):
             'fmt1', tp.indent(tp.SimpleFmt.__doc__.splitlines()[0], '    '),
             'fmt2', tp.indent(tp.SimpleFmt2.__doc__.splitlines()[0], '    '),
             'fmt3', tp.indent(tp.SimpleFmt3.__doc__.splitlines()[0], '    '),
-            'post', tp.indent(psyp.PostProcessing.__doc__.splitlines()[0], 
+            'post', tp.indent(psyp.PostProcessing.__doc__.splitlines()[0],
                               '    '),
-            'post_timing', tp.indent(psyp.PostTiming.__doc__.splitlines()[0], 
+            'post_timing', tp.indent(psyp.PostTiming.__doc__.splitlines()[0],
                                      '    ')]))
         # test summed project
         self.assertEqual(mp.summaries(func=str), '\n'.join([
             'fmt1', tp.indent(tp.SimpleFmt.__doc__.splitlines()[0], '    '),
             'fmt3', tp.indent(tp.SimpleFmt3.__doc__.splitlines()[0], '    '),
-            'post', tp.indent(psyp.PostProcessing.__doc__.splitlines()[0], 
+            'post', tp.indent(psyp.PostProcessing.__doc__.splitlines()[0],
                               '    '),
-            'post_timing', tp.indent(psyp.PostTiming.__doc__.splitlines()[0], 
+            'post_timing', tp.indent(psyp.PostTiming.__doc__.splitlines()[0],
                                      '    ')]))
         title = psyp.groups['labels']
         self.assertEqual(
-            sp1.summaries(['fmt1', 'fmt2', 'fmt3'], func=str, grouped=True), 
+            sp1.summaries(['fmt1', 'fmt2', 'fmt3'], func=str, grouped=True),
             '\n'.join([
                 '*' * len(title),
                 title,
                 '*' * len(title),
-                'fmt1', tp.indent(tp.SimpleFmt.__doc__.splitlines()[0], '    '),
-                'fmt2', tp.indent(tp.SimpleFmt2.__doc__.splitlines()[0], '    '),
+                'fmt1', tp.indent(
+                    tp.SimpleFmt.__doc__.splitlines()[0], '    '),
+                'fmt2', tp.indent(
+                    tp.SimpleFmt2.__doc__.splitlines()[0], '    '),
                 '',
                 '*********',
                 'something',
                 '*********',
-                'fmt3', tp.indent(tp.SimpleFmt3.__doc__.splitlines()[0], '    ')]
+                'fmt3', tp.indent(
+                    tp.SimpleFmt3.__doc__.splitlines()[0], '    ')]
             ))
         # test summed project
         self.assertEqual(
-            mp.summaries(['fmt1', 'fmt3'], func=str, grouped=True), 
+            mp.summaries(['fmt1', 'fmt3'], func=str, grouped=True),
             '\n'.join([
                 '*' * len(title),
                 title,
                 '*' * len(title),
-                'fmt1', tp.indent(tp.SimpleFmt.__doc__.splitlines()[0], 
+                'fmt1', tp.indent(tp.SimpleFmt.__doc__.splitlines()[0],
                                   '    '),
                 '',
                 '*********',
                 'something',
                 '*********',
-                'fmt3', tp.indent(tp.SimpleFmt3.__doc__.splitlines()[0], 
-                                  '    ')]
-            ))
+                'fmt3', tp.indent(tp.SimpleFmt3.__doc__.splitlines()[0],
+                                  '    ')])
+            )
 
     def test_figs(self):
         """Test the :attr:`psyplot.project.Project.figs` attribute"""
@@ -1377,7 +1381,7 @@ class TestPlotterInterface(unittest.TestCase):
                          ds[['u', 'v']].isel(lon=2).to_array().values.tolist())
         psy.close()
         psy.unregister_plotter('test_plotter')
-        
+
     def test_plot_creation_11_post_fmt(self):
         """Test the :attr:`psyplot.plotter.Plotter.post` formatoption"""
         psy.register_plotter('test_plotter',
@@ -1385,7 +1389,7 @@ class TestPlotterInterface(unittest.TestCase):
                              plotter_name='TestPlotter')
         ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'))
         # test whether it is plotted automatically
-        sp = psy.plot.test_plotter(ds, name='t2m', 
+        sp = psy.plot.test_plotter(ds, name='t2m',
                                    post='self.ax.set_title("test")')
         self.assertEqual(sp.plotters[0].ax.get_title(), 'test')
         # test whether the disabling works
