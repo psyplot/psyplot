@@ -2555,9 +2555,6 @@ class ArrayList(list):
                     "parameter to None for renaming!" % arr.psy.arr_name)
             elif new_name is True:
                 new_name = new_name if isstring(new_name) else 'arr{0}'
-                self.logger.debug('renaming %s to %s in %s',
-                    arr.psy.arr_name, self.next_available_name(new_name),
-                    self)
                 arr.psy.arr_name = self.next_available_name(new_name)
                 return arr, True
         return arr, None
@@ -3322,7 +3319,9 @@ class ArrayList(list):
             :attr:`InteractiveArray.idims` attribute.
             Otherwise the :meth:`xarray.DataArray.coords` attribute is used.
         ``**attrs``
-            Parameters may be any attribute of the arrays in this instance.
+            Parameters may be any attribute of the arrays in this instance,
+            including the matplotlib axes (``ax``), matplotlib figure
+            (``fig``) and the array name (``arr_name``).
             Values may be iterables (e.g. lists) of the attributes to consider
             or callable functions that accept the attribute as a value. If the
             value is a string, it will be put into a list."""
@@ -3350,6 +3349,10 @@ class ArrayList(list):
                 def check_values(arr, key, vals):
                     if key == 'arr_name':
                         attr = arr.psy.arr_name
+                    elif attr == 'ax':
+                        attr = arr.psy.ax
+                    elif attr == 'fig':
+                        attr = arr.psy.ax.figure
                     else:
                         try:
                             attr = getattr(arr, key)
@@ -3377,6 +3380,10 @@ class ArrayList(list):
             def check_values(arr, key, vals):
                 if key == 'arr_name':
                     attr = arr.psy.arr_name
+                elif key == 'ax':
+                    attr = arr.psy.ax
+                elif attr == 'fig':
+                    attr = arr.psy.ax.figure
                 elif key in arr.coords:
                     attr = arr.psy.idims[key]
                 else:
