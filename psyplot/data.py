@@ -3349,10 +3349,10 @@ class ArrayList(list):
                 def check_values(arr, key, vals):
                     if key == 'arr_name':
                         attr = arr.psy.arr_name
-                    elif attr == 'ax':
+                    elif key == 'ax':
                         attr = arr.psy.ax
-                    elif attr == 'fig':
-                        attr = arr.psy.ax.figure
+                    elif key == 'fig':
+                        attr = getattr(arr.psy.ax, 'figure', None)
                     else:
                         try:
                             attr = getattr(arr, key)
@@ -3382,8 +3382,8 @@ class ArrayList(list):
                     attr = arr.psy.arr_name
                 elif key == 'ax':
                     attr = arr.psy.ax
-                elif attr == 'fig':
-                    attr = arr.psy.ax.figure
+                elif key == 'fig':
+                    attr = getattr(arr.psy.ax, 'figure', None)
                 elif key in arr.coords:
                     attr = arr.psy.idims[key]
                 else:

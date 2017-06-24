@@ -636,6 +636,44 @@ class TestArrayList(unittest.TestCase):
             [arr.psy.arr_name for arr in l(arr_name=['arr0', 'arr1'], test=1)],
             ['arr0'])
 
+    def test_filter_6_ax(self):
+        """Test the filtering of the ArrayList"""
+        import matplotlib.pyplot as plt
+        from psyplot.plotter import Plotter
+        ds = self._filter_test_ds
+        l = self.list_class.from_dataset(ds, ydim=[0, 1], name='v0')
+        print(l)
+        axes = plt.subplots(1, 2)[1]
+        for i, arr in enumerate(l):
+            Plotter(arr, ax=axes[i])
+        # mix criteria
+        self.assertEqual(
+            [arr.psy.arr_name for arr in l(ax=axes[0])],
+            [l[0].psy.arr_name])
+        self.assertEqual(
+            [arr.psy.arr_name for arr in l(ax=axes[1])],
+            [l[1].psy.arr_name])
+
+    def test_filter_7_fig(self):
+        """Test the filtering of the ArrayList"""
+        import matplotlib.pyplot as plt
+        from psyplot.plotter import Plotter
+        ds = self._filter_test_ds
+        l = self.list_class.from_dataset(ds, ydim=[0, 1], name='v0')
+        figs = [0, 0]
+        axes = [0, 0]
+        figs[0], axes[0] = plt.subplots()
+        figs[1], axes[1] = plt.subplots()
+        for i, arr in enumerate(l):
+            Plotter(arr, ax=axes[i])
+        # mix criteria
+        self.assertEqual(
+            [arr.psy.arr_name for arr in l(fig=figs[0])],
+            [l[0].psy.arr_name])
+        self.assertEqual(
+            [arr.psy.arr_name for arr in l(fig=figs[1])],
+            [l[1].psy.arr_name])
+
     def test_list_filter_1_name(self):
         """Test the filtering of InteractiveList by the variable name"""
         ds = self._filter_test_ds
