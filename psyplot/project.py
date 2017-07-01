@@ -1104,7 +1104,7 @@ class Project(ArrayList):
                 fig_map[orig_num] = _ProjectLoader.load_figure(
                     fig_dict, new_fig=new_fig).number
         elif not isinstance(alternative_axes, dict):
-            alternative_axes = iter(alternative_axes)
+            alternative_axes = cycle(iter(alternative_axes))
         obj = cls.from_dict(d['arrays'], pwd=pwd, **kwargs)
         if main:
             # we create a new project with the project factory to make sure

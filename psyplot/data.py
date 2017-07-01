@@ -3361,7 +3361,7 @@ class ArrayList(list):
                     if np.ndim(attr):  # do not filter for multiple items
                         return False
                     if hasattr(arr.psy, 'decoder') and (
-                            attr.name == tname):
+                            arr.name == tname):
                         try:
                             vals = np.asarray(vals, dtype=np.datetime64)
                         except ValueError:
