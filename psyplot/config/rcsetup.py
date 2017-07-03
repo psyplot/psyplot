@@ -509,11 +509,21 @@ environment variable."""
                                               func='update'))
                 dict.__setitem__(self, k, v)
 
-    def update_from_defaultParams(self, defaultParams=None):
-        """Update from the a dictionary like the :attr:`defaultParams`"""
+    def update_from_defaultParams(self, defaultParams=None,
+                                  plotters=True):
+        """Update from the a dictionary like the :attr:`defaultParams`
+
+        Parameters
+        ----------
+        defaultParams: dict
+            The :attr:`defaultParams` like dictionary. If None, the
+            :attr:`defaultParams` attribute will be updated
+        plotters: bool
+            If True, ``'project.plotters'`` will be updated too"""
         if defaultParams is None:
             defaultParams = self.defaultParams
-        self.update({key: val[0] for key, val in defaultParams.items()})
+        self.update({key: val[0] for key, val in defaultParams.items()
+                     if plotters or key != 'project.plotters'})
 
     def __repr__(self):
         import pprint
