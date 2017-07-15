@@ -101,11 +101,11 @@ class TestPlotter(psyp.Plotter):
     fmt1 = SimpleFmt('fmt1')
     fmt2 = SimpleFmt2('fmt2')
     fmt3 = SimpleFmt3('fmt3')
-    
-    
+
+
 class TestPostFormatoption(unittest.TestCase):
     """TestCase for the :class:`psyplot.plotter.PostProcessing` formatoption"""
-    
+
     def test_timing(self):
         plotter = TestPlotter(xr.DataArray([]), enable_post=True)
         # test attribute for the formatoption
@@ -117,7 +117,7 @@ class TestPostFormatoption(unittest.TestCase):
         plotter.update(fmt1='something')
         # check if the post fmt has been updated
         self.assertEqual(plotter.post.test, [1])
-        
+
         # -- test replot timing
         plotter.update(post_timing='replot')
         plotter.update(fmt1='something else')
@@ -126,7 +126,7 @@ class TestPostFormatoption(unittest.TestCase):
         plotter.update(fmt2='test', replot=True)
         # check if the post fmt has been updated
         self.assertEqual(plotter.post.test, [1, 1])
-        
+
         # -- test always timing
         plotter.update(post_timing='always')
         # check if the post fmt has been updated
@@ -134,10 +134,10 @@ class TestPostFormatoption(unittest.TestCase):
         plotter.update(fmt1='okay')
         # check if the post fmt has been updated
         self.assertEqual(plotter.post.test, [1, 1, 1, 1])
-        
+
     def test_enable(self):
         """Test if the warning is raised"""
-        plotter = TestPlotter(xr.DataArray([]), 
+        plotter = TestPlotter(xr.DataArray([]),
                               post='self.ax.set_title("test")')
         self.assertEqual(plotter.ax.get_title(), '')
         plotter.enable_post = True
@@ -276,13 +276,14 @@ class PlotterTest(unittest.TestCase):
 
     def test_fmt_connections(self):
         """Test the order of the updates"""
-        plotter = TestPlotter(xr.DataArray([]),
+        arr = xr.DataArray([])
+        arr.psy.arr_name = 'arr0'
+        plotter = TestPlotter(arr,
                               fmt1='test', fmt2='test2', fmt3='test3')
-        plotter.data.psy.arr_name = 'data'
 
         # check the initialization order
         self.assertEqual(list(results.keys()),
-                         ['data.fmt3', 'data.fmt2', 'data.fmt1'])
+                         ['arr0.fmt3', 'arr0.fmt2', 'arr0.fmt1'])
 
         # check the connection properties
         self.assertIs(plotter.fmt1.fmt2, plotter.fmt2)
@@ -293,7 +294,7 @@ class PlotterTest(unittest.TestCase):
         results.clear()
         plotter.update(fmt2='something', fmt3='else')
         self.assertEqual(list(results.keys()),
-                         ['data.fmt3', 'data.fmt2', 'data.fmt1'])
+                         ['arr0.fmt3', 'arr0.fmt2', 'arr0.fmt1'])
         self.assertEqual(plotter.fmt1.value, 'test')
         self.assertEqual(plotter.fmt2.value, 'something')
         self.assertEqual(plotter.fmt3.value, 'else')
@@ -541,11 +542,11 @@ class PlotterTest(unittest.TestCase):
             'fmt1', indent(SimpleFmt.__doc__.splitlines()[0], '    '),
             'fmt2', indent(SimpleFmt2.__doc__.splitlines()[0], '    '),
             'fmt3', indent(SimpleFmt3.__doc__.splitlines()[0], '    '),
-            'post', indent(psyp.PostProcessing.__doc__.splitlines()[0], 
+            'post', indent(psyp.PostProcessing.__doc__.splitlines()[0],
                            '    '),
-            'post_timing', indent(psyp.PostTiming.__doc__.splitlines()[0], 
+            'post_timing', indent(psyp.PostTiming.__doc__.splitlines()[0],
                                   '    ')]))
-        s = plotter.show_summaries(['fmt1', 'fmt2', 'fmt3'], func=str, 
+        s = plotter.show_summaries(['fmt1', 'fmt2', 'fmt3'], func=str,
                                    grouped=True)
         title = psyp.groups['labels']
         self.assertEqual(s, '\n'.join([
