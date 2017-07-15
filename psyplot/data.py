@@ -1877,7 +1877,7 @@ class InteractiveBase(object):
 
     @docstrings.get_sectionsf('InteractiveBase')
     @dedent
-    def __init__(self, plotter=None, arr_name='data', auto_update=None):
+    def __init__(self, plotter=None, arr_name='arr0', auto_update=None):
         """
         Parameters
         ----------
