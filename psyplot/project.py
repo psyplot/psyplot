@@ -1313,6 +1313,8 @@ class _ProjectLoader(object):
         spines = d.pop('spines', None)
         if mpl.__version__ >= '2.0' and 'axisbg' in d:  # axisbg is depreceated
             d['facecolor'] = d.pop('axisbg')
+        elif mpl.__version__ < '2.0' and 'facecolor' in d:
+            d['axisbg'] = d.pop('facecolor')
         if proj is not None and not isinstance(proj, six.string_types):
             proj = getattr(import_module(proj[0]), proj[1])()
         if d.pop('is_subplot', None):
