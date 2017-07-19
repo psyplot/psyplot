@@ -13,19 +13,23 @@ Interactive data visualization with python
     :alt: psyplot logo
     :align: center
 
-Welcome! **psyplot** is an open source python project that mainly combines the
+Welcome! Looking for a fast and flexible visualization software? Here we
+present **psyplot**, an open source python project that mainly combines the
 plotting utilities of matplotlib_ and the data management of the xarray_
-package. The main purpose is to have a framework that allows a  fast,
-attractive, flexible, easily applicable, easily reproducible and especially
-an interactive visualization of your data.
+package and integrates them into a software that can be used via command-line
+and via a GUI!
 
-The ultimate goal is to help scientists and especially climate model
-developers in their daily work by providing a flexible visualization tool that
-can be enhanced by their own visualization scripts. ``psyplot`` can be used
-through the python command line and through the
-:ref:`psyplot-gui <psyplot_gui:psyplot-gui>` module which
-provides a graphical user interface for an easier interactive usage. See the
-:ref:`about` section for more motivation.
+The main purpose is to have a framework that allows a  fast, attractive,
+flexible, easily applicable, easily reproducible and especially an interactive
+visualization of your data.
+
+The ultimate goal is to help scientists in their daily work by providing a
+flexible visualization tool that can be enhanced by their own visualization
+scripts. ``psyplot`` can be used via command line and with the
+graphical user interface (GUI) from the
+:ref:`psyplot-gui <psyplot_gui:psyplot-gui>` module.
+
+If you want more motivation: Have a look into the :ref:`about` section.
 
 The package is very new and there are many features that will be included in
 the future. So we are very pleased for feedback! Please simply raise an issue
@@ -107,8 +111,8 @@ Acknowledgment
 --------------
 This package has been developed by Philipp Sommer.
 
-I want to thank the developers of the matplotlib_, xarray_ and cartopy_
-packages for their great packages and of course the python developers for their
+I want to thank the matplotlib_, xarray_ and cartopy_ developers
+for their great packages and of course the python developers for their
 fascinating work on this beautiful language.
 
 A special thanks to Stefan Hagemann and Tobias Stacke from the
