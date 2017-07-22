@@ -345,7 +345,7 @@ There are three possibilities how you can do this:
    :attr:`~psyplot.config.rcsetup.rcParams`
 3. The steady and shareable solution: Create a new plugin
 
-The third solution has been used for the psy-maps_ and psy-simple plugins. To
+The third solution has been used for the psy-maps_ and psy-simple_ plugins. To
 create a skeleton for your plugin, you can use the ``psyplot-plugin`` command
 that is installed when you install psyplot.
 
@@ -377,3 +377,6 @@ If you want to see more, look into the comments in the created files.
 
     @suppress
     In [4]: !rm -r my-plugin
+
+.. _psy-maps: https://psyplot.readthedocs.io/projects/psy-maps/en/latest/
+.. _psy-simple: https://psyplot.readthedocs.io/projects/psy-simple/en/latest/

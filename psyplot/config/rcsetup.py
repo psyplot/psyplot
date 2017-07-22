@@ -942,7 +942,7 @@ def get_configdir(name='psyplot', env_key='PSYPLOTCONFIGDIR'):
 
     1. If the `env_key` environment variable is supplied, choose that.
 
-    2a. On Linux and osx, choose ``'$HOME/.config/' + name`.
+    2a. On Linux and osx, choose ``'$HOME/.config/' + name``.
 
     2b. On other platforms, choose ``'$HOME/.' + name``.
 
