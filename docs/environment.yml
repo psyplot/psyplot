@@ -17,7 +17,6 @@ dependencies:
     - psy-maps
     - sphinx-argparse
     - pip:
-        - commonmark
         - autodocsumm
         - cdo
         - sphinx-nbexamples
