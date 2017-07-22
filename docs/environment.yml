@@ -1,7 +1,7 @@
 name: psyplot_docs
 channels:
-    - conda-forge
     - chilipp
+    - conda-forge
 dependencies:
     - python=3.5
     - dask
