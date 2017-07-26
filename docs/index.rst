@@ -38,52 +38,54 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
 
 .. start-badges
 
-.. list-table::
-    :stub-columns: 1
-    :widths: 10 90
+.. only:: html
 
-    * - docs
-      - |docs|
-    * - tests
-      - |travis| |appveyor| |requires| |coveralls|
-    * - package
-      - |version| |conda| |supported-versions| |supported-implementations|
+    .. list-table::
+        :stub-columns: 1
+        :widths: 10 90
 
-.. |docs| image:: http://readthedocs.org/projects/psyplot/badge/?version=latest
-    :alt: Documentation Status
-    :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
+        * - docs
+          - |docs|
+        * - tests
+          - |travis| |appveyor| |requires| |coveralls|
+        * - package
+          - |version| |conda| |supported-versions| |supported-implementations|
 
-.. |travis| image:: https://travis-ci.org/Chilipp/psyplot.svg?branch=master
-    :alt: Travis
-    :target: https://travis-ci.org/Chilipp/psyplot
+    .. |docs| image:: http://readthedocs.org/projects/psyplot/badge/?version=latest
+        :alt: Documentation Status
+        :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/3jk6ea1n4a4dl6vk/branch/master?svg=true
-    :alt: AppVeyor
-    :target: https://ci.appveyor.com/project/Chilipp/psyplot/branch/master
+    .. |travis| image:: https://travis-ci.org/Chilipp/psyplot.svg?branch=master
+        :alt: Travis
+        :target: https://travis-ci.org/Chilipp/psyplot
 
-.. |coveralls| image:: https://coveralls.io/repos/github/Chilipp/psyplot/badge.svg?branch=master
-    :alt: Coverage
-    :target: https://coveralls.io/github/Chilipp/psyplot?branch=master
+    .. |appveyor| image:: https://ci.appveyor.com/api/projects/status/3jk6ea1n4a4dl6vk/branch/master?svg=true
+        :alt: AppVeyor
+        :target: https://ci.appveyor.com/project/Chilipp/psyplot/branch/master
 
-.. |requires| image:: https://requires.io/github/Chilipp/psyplot/requirements.svg?branch=master
-    :alt: Requirements Status
-    :target: https://requires.io/github/Chilipp/psyplot/requirements/?branch=master
+    .. |coveralls| image:: https://coveralls.io/repos/github/Chilipp/psyplot/badge.svg?branch=master
+        :alt: Coverage
+        :target: https://coveralls.io/github/Chilipp/psyplot?branch=master
 
-.. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
-    :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/psyplot
+    .. |requires| image:: https://requires.io/github/Chilipp/psyplot/requirements.svg?branch=master
+        :alt: Requirements Status
+        :target: https://requires.io/github/Chilipp/psyplot/requirements/?branch=master
 
-.. |conda| image:: https://anaconda.org/chilipp/psyplot/badges/installer/conda.svg
-    :alt: conda
-    :target: https://conda.anaconda.org/chilipp
+    .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
+        :alt: PyPI Package latest release
+        :target: https://pypi.python.org/pypi/psyplot
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/psyplot.svg?style=flat
-    :alt: Supported versions
-    :target: https://pypi.python.org/pypi/psyplot
+    .. |conda| image:: https://anaconda.org/chilipp/psyplot/badges/installer/conda.svg
+        :alt: conda
+        :target: https://conda.anaconda.org/chilipp
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/psyplot.svg?style=flat
-    :alt: Supported implementations
-    :target: https://pypi.python.org/pypi/psyplot
+    .. |supported-versions| image:: https://img.shields.io/pypi/pyversions/psyplot.svg?style=flat
+        :alt: Supported versions
+        :target: https://pypi.python.org/pypi/psyplot
+
+    .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/psyplot.svg?style=flat
+        :alt: Supported implementations
+        :target: https://pypi.python.org/pypi/psyplot
 
 .. end-badges
 
