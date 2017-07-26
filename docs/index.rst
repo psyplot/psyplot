@@ -38,7 +38,7 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
 
 .. start-badges
 
-.. only:: html
+.. only:: html and not epub
 
     .. list-table::
         :stub-columns: 1
