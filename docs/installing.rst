@@ -8,6 +8,23 @@ Installation
 How to install
 --------------
 
+Installation using single executable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The easiest way for the installation comes via the psyplot-conda_ project.
+Here we provide ready-to-go installers for psyplot for all
+platforms. Those installers include conda, psyplot, the
+`graphical user interface`_, several plugins (psy-simple_,
+psy-maps_ and psy-reg_) and their dependencies.
+
+Installation instructions and downloadable files can be found in the
+psyplot-conda_ repository.
+
+.. _psyplot-conda: https://github.com/Chilipp/psyplot-conda
+.. _graphical user interface: https://github.com/Chilipp/psyplot-gui
+.. _psy-simple: https://github.com/Chilipp/psy-simple
+.. _psy-maps: https://github.com/Chilipp/psy-maps
+.. _psy-reg: https://github.com/Chilipp/psy-reg
+
 Installation using conda
 ^^^^^^^^^^^^^^^^^^^^^^^^
 We highly recommend to use conda_ for installing psyplot. After downloading
