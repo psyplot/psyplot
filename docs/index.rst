@@ -109,6 +109,17 @@ Documentation
     changelog
 
 
+Examples
+--------
+
+.. linkgalleries::
+
+    psyplot
+    psy_simple
+    psy_maps
+    psy_reg
+
+
 Acknowledgment
 --------------
 This package has been developed by Philipp Sommer.
