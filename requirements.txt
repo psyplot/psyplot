@@ -8,5 +8,5 @@ xarray==0.9.6  # rq.filter: >=0.7.0, < 1.0
 
 # pandas
 #   http://pandas.pydata.org/pandas-docs/stable/whatsnew.html
-pandas==0.20.2 # rq.filter: >= 0.18.0, < 1.0
+pandas==0.20.3 # rq.filter: >= 0.18.0, < 0.21
 
