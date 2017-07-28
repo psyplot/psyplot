@@ -22,10 +22,10 @@ Changed
   packages to make the debugging and testing easier
 
   - The psyplot.plotter.simple, baseplotter and colors modules have been moved
-    to the psy-simple package
-  - The psyplot.plotter.maps and boxes modules have been moved to the psy-maps
+    to the psy-simple_ package
+  - The psyplot.plotter.maps and boxes modules have been moved to the psy-maps_
     package
-  - The psyplot.plotter.linreg module has been moved to the psy-fit package
+  - The psyplot.plotter.linreg module has been moved to the psy-reg_ package
 * The endings of the yaml configuration files are now all *.yml*. Hence,
 
   - the configuration file name is now *psyplotrc.yml* instead of
@@ -34,3 +34,9 @@ Changed
     of *logging.yaml*
 * Under osx, the configuration directory is now also expected to be in
   ``$HOME/.config/psyplot`` (as it is for linux)
+
+
+.. _psy-simple: https://github.com/Chilipp/psy-simple
+.. _psy-maps: https://github.com/Chilipp/psy-maps
+.. _psy-reg: https://github.com/Chilipp/psy-reg
+
