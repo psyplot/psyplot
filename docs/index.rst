@@ -45,7 +45,7 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
         :widths: 10 90
 
         * - docs
-          - |docs|
+          - |docs| |joss|
         * - tests
           - |travis| |appveyor| |requires| |coveralls|
         * - package
@@ -86,6 +86,10 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
     .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/psyplot.svg?style=flat
         :alt: Supported implementations
         :target: https://pypi.python.org/pypi/psyplot
+
+    .. |joss| image:: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg
+        :alt: Journal of Open Source Software
+        :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
 
 .. end-badges
 
