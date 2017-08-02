@@ -10,16 +10,55 @@ How to install
 
 Installation using single executable
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. only:: html and not epub
+
+    +--------------+--------------+----------------+
+    | | |win-logo| | | |osx-logo| | | |linux-logo| |
+    | | Windows    | | Mac OS X   | | Linux        |
+    +==============+==============+================+
+    | | |win-64|   | |win-64|     | |win-64|       |
+    | | |win-32|   |              |                |
+    +--------------+--------------+----------------+
+
+    .. |win-logo| image:: windows.png
+
+    .. |linux-logo| image:: linux.png
+
+    .. |osx-logo| image:: apple.png
+
+    .. |win-64| raw:: html
+
+        <a href="_static/psyplot-conda-latest-Windows-x86_64.exe.html">64-bit</a>
+
+    .. |win-32| raw:: html
+
+        <a href="_static/psyplot-conda-latest-Windows-x86.exe.html">32-bit</a>
+
+    .. |osx-64| raw:: html
+
+        <a href="_static/psyplot-conda-latest-MacOSX-x86_64.sh.html">64-bit</a>
+
+    .. |linux-64| raw:: html
+
+        <a href="_static/psyplot-conda-latest-Linux-x86_64.sh.html">64-bit</a>
+
 The easiest way for the installation comes via the psyplot-conda_ project.
 Here we provide ready-to-go installers for psyplot for all
 platforms. Those installers include conda, psyplot, the
 `graphical user interface`_, several plugins (psy-simple_,
 psy-maps_ and psy-reg_) and their dependencies.
 
-Installation instructions and downloadable files can be found in the
-psyplot-conda_ repository.
+.. only:: html and not epub
+
+    The latest versions for the installers can be downloaded through the links
+    at the top.
+
+Installation instructions and downloadable files for all versions can be found
+in the psyplot-conda_ repository and explicitly in the releases_ page.
 
 .. _psyplot-conda: https://github.com/Chilipp/psyplot-conda
+.. _releases: https://github.com/Chilipp/psyplot-conda/releases
 .. _graphical user interface: https://github.com/Chilipp/psyplot-gui
 .. _psy-simple: https://github.com/Chilipp/psy-simple
 .. _psy-maps: https://github.com/Chilipp/psy-maps
