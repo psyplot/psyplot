@@ -8,6 +8,6 @@ function GetLatestReleaseInfo(osname) {
                 var asset = release.assets[i];
             }
         }
-        window.location.href = asset.browser_download_url;
+        window.location.replace(asset.browser_download_url);
     });
 }
