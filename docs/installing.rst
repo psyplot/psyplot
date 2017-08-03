@@ -17,7 +17,7 @@ Installation using single executable
     | | |win-logo| | | |osx-logo| | | |linux-logo| |
     | | Windows    | | Mac OS X   | | Linux        |
     +==============+==============+================+
-    | | |win-64|   | |win-64|     | |win-64|       |
+    | | |win-64|   | |osx-64|     | |linux-64|     |
     | | |win-32|   |              |                |
     +--------------+--------------+----------------+
 
@@ -59,8 +59,8 @@ in the psyplot-conda_ repository and explicitly in the releases_ page.
 
 .. note::
 
-    Under Linux and MacOSX you can also use a combination of ``curl`` and
-    ``wget`` to download the latest installer. Just open a terminal and type
+    Under Linux and MacOSX you can also use ``cURL`` and to download the latest
+    installer. Just open a terminal and type
 
     .. code-block:: bash
 
