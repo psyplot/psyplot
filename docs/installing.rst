@@ -54,8 +54,41 @@ psy-maps_ and psy-reg_) and their dependencies.
     The latest versions for the installers can be downloaded through the links
     at the top.
 
-Installation instructions and downloadable files for all versions can be found
-in the psyplot-conda_ repository and explicitly in the releases_ page.
+Files for all versions can be found in the psyplot-conda_ repository and
+explicitly on the releases_ page.
+
+Installation on MacOSX and Linux
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Download the bash script (file ending on ``'.sh'`` for linux or MacOSX) from
+above or the releases_ page and open a terminal window.
+
+Type::
+
+    bash '<path-to-the-downloaded-file.sh>'
+
+and simply follow the instructions.
+
+For more informations on the command line options type
+
+Type::
+
+    bash '<Path-to-the-downloaded-file.sh>' --help
+
+On MaxOSX, the installation will create the ``Psyplot.app`` in the
+``/Applications`` folder (or alternatively the``~/Applications`` folder) which
+you can use to open the psyplot GUI. Otherwise type ``psyplot`` in the
+terminal.
+
+
+Installation on Windows
+~~~~~~~~~~~~~~~~~~~~~~~
+Download the executable script (file ending on ``'.exe'``) for your platform
+from above or the releases_ page.
+
+Just double click the downloaded file and follow the instructions. The
+installation will create an item in the windows menu
+(Start -> Programs -> Psyplot) which you can use to open the GUI. Otherwise,
+open a command window (``cmd``) and type ``psyplot``.
 
 .. note::
 
