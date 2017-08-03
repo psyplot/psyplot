@@ -57,6 +57,23 @@ psy-maps_ and psy-reg_) and their dependencies.
 Installation instructions and downloadable files for all versions can be found
 in the psyplot-conda_ repository and explicitly in the releases_ page.
 
+.. note::
+
+    Under Linux and MacOSX you can also use a combination of ``curl`` and
+    ``wget`` to download the latest installer. Just open a terminal and type
+
+    .. code-block:: bash
+
+        curl -o psyplot-conda.sh -LO `curl -s https://api.github.com/repos/Chilipp/psyplot-conda/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep Linux`
+
+    where ``OSNAME`` is one of ``Linux`` or ``MacOSX``.
+
+    Then install it simply via
+
+    .. code-block:: bash
+
+        bash psyplot-conda.sh
+
 .. _psyplot-conda: https://github.com/Chilipp/psyplot-conda
 .. _releases: https://github.com/Chilipp/psyplot-conda/releases
 .. _graphical user interface: https://github.com/Chilipp/psyplot-gui
