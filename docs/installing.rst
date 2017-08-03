@@ -64,7 +64,7 @@ in the psyplot-conda_ repository and explicitly in the releases_ page.
 
     .. code-block:: bash
 
-        curl -o psyplot-conda.sh -LO `curl -s https://api.github.com/repos/Chilipp/psyplot-conda/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep Linux`
+        curl -o psyplot-conda.sh -LO `curl -s https://api.github.com/repos/Chilipp/psyplot-conda/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep OSNAME`
 
     where ``OSNAME`` is one of ``Linux`` or ``MacOSX``.
 
