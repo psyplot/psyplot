@@ -27,21 +27,13 @@ Installation using single executable
 
     .. |osx-logo| image:: apple.png
 
-    .. |win-64| raw:: html
+    .. |win-64| replace:: :psycon:`64-bit (.exe installer) <Windows-x86_64.exe>`
 
-        <a href="_static/psyplot-conda-latest-Windows-x86_64.exe.html">64-bit</a>
+    .. |win-32| replace:: :psycon:`32-bit (.exe installer) <Windows-x86.exe>`
 
-    .. |win-32| raw:: html
+    .. |osx-64| replace:: :psycon:`64-bit (bash installer) <MacOSX-x86_64.sh>`
 
-        <a href="_static/psyplot-conda-latest-Windows-x86.exe.html">32-bit</a>
-
-    .. |osx-64| raw:: html
-
-        <a href="_static/psyplot-conda-latest-MacOSX-x86_64.sh.html">64-bit</a>
-
-    .. |linux-64| raw:: html
-
-        <a href="_static/psyplot-conda-latest-Linux-x86_64.sh.html">64-bit</a>
+    .. |linux-64| replace:: :psycon:`64-bit (bash installer) <Linux-x86_64.sh>`
 
 The easiest way for the installation comes via the psyplot-conda_ project.
 Here we provide ready-to-go installers for psyplot for all

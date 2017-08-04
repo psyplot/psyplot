@@ -22,6 +22,14 @@ import subprocess as spr
 from itertools import product
 import warnings
 import sphinx_rtd_theme
+import json
+import logging
+
+if six.PY2:
+    from urllib import urlopen
+else:
+    from urllib.request import urlopen
+
 # make sure, psyplot from parent directory is used
 sys.path.insert(0, os.path.abspath('..'))
 import psyplot
@@ -49,6 +57,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'sphinx.ext.extlinks',
     'matplotlib.sphinxext.plot_directive',
     'IPython.sphinxext.ipython_console_highlighting',
     'IPython.sphinxext.ipython_directive',
@@ -238,6 +247,31 @@ if six.PY3:
     intersphinx_mapping['python'] = ('https://docs.python.org/3.6/', None)
 else:
     intersphinx_mapping['python'] = ('https://docs.python.org/2.7/', None)
+
+
+# get link to conda files
+url = "https://api.github.com/repos/Chilipp/psyplot-conda/releases/latest"
+try:
+    response = urlopen(url)
+except Exception as e:
+    logging.getLogger(__name__).warning(
+        'Could not download latest psyplot-conda release from %s!', url,
+        exc_info=True)
+    psy_con_tag = 'v1.0.0'
+else:
+    s = response.read() if six.PY2 else response.read().decode()
+    d = json.loads(s)
+    psy_con_tag = d['tag_name']
+
+psy_con_base = (
+    'https://github.com/Chilipp/psyplot-conda/releases/download/%s' % (
+        psy_con_tag))
+psy_con_v = psy_con_tag[1:] if psy_con_tag.startswith('v') else psy_con_tag
+
+
+extlinks = {
+    'psycon': ('%s/psyplot-conda-%s-%%s' % (psy_con_base, psy_con_v), '')
+    }
 
 
 replacements = {
