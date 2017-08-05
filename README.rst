@@ -39,9 +39,9 @@ The psyplot interactive visualization framework
     :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/psyplot
 
-.. |conda| image:: https://anaconda.org/chilipp/psyplot/badges/installer/conda.svg
+.. |conda| image:: https://anaconda.org/conda-forge/psyplot/badges/version.svg
     :alt: conda
-    :target: https://conda.anaconda.org/chilipp
+    :target: https://conda.anaconda.org/conda-forge/psyplot
 
 .. |supported-versions| image:: https://img.shields.io/pypi/pyversions/psyplot.svg?style=flat
     :alt: Supported versions

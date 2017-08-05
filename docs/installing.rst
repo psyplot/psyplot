@@ -111,7 +111,7 @@ Installation using conda
 We highly recommend to use conda_ for installing psyplot. After downloading
 the installer from anaconda_, you can install psyplot simply via::
 
-    $ conda install -c chilipp psyplot
+    $ conda install -c conda-forge psyplot
 
 However, this only installs the raw framework. For your specific task, you
 should consider one of the below mentioned plugins (see  :ref:`optional_deps`).
