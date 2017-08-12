@@ -7,6 +7,20 @@ Installation
 
 How to install
 --------------
+There basically four different methodologies for the installation. You should
+choose the one, which is the most appropriate solution concerning your skills
+and your usage:
+
+The simple installation
+    Use standalone installers which will install all the necessary packages and
+    modules. See :ref:`install-standalone`
+The intermediate installation
+    For people coding in python, we recommend to install it through anaconda
+    and the conda-forge channel (see :ref:`install-conda`) or, if you are
+    not using anaconda, you can use pip (see :ref:`install-pip`)
+The developer installation
+    Install it from source (see :ref:`install-source`)
+
 
 .. _install-standalone:
 
@@ -441,7 +455,7 @@ changes made to your ``PATH`` variable.
 .. _uninstall-standalone-osx-bash:
 
 Uninstall the App installed via bash script
-+++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
 As for :ref:`linux <uninstall-standalone-linux>`, just delete the folder where you
 installed ``psyplot-conda``. By default, this is ``$HOME/psyplot-conda``.
 Open a terminal and just type::
