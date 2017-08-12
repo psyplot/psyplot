@@ -1,6 +1,5 @@
 name: psyplot
 channels:
-    - chilipp
     - conda-forge
 dependencies:
     - psyplot
