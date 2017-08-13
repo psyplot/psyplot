@@ -362,7 +362,7 @@ class RcParams(dict):
     HEADER = """Configuration parameters of the psyplot module
 
 You can copy this file (or parts of it) to another path and save it as
-PSYPLOTRC. The directory should then be stored in the PSYPLOTCONFIGDIR
+psyplotrc.yml. The directory should then be stored in the PSYPLOTCONFIGDIR
 environment variable."""
 
     msg_depr = "%s is deprecated and replaced with %s; please use the latter."
@@ -1183,3 +1183,5 @@ _str_err_msg = ('You must supply exactly {n:d} comma-separated values, '
 #: formatoptions and configuration settings.
 rcParams = RcParams()
 rcParams.update_from_defaultParams()
+
+defaultParams_orig = defaultParams.copy()
