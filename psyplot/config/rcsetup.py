@@ -332,6 +332,7 @@ base rcParams dictionary."""
         for k, v in six.iteritems(dict(*args, **kwargs)):
             self[k] = v
 
+
 docstrings.delete_params('SubDict.parameters', 'base')
 
 
@@ -1011,7 +1012,7 @@ def validate_dict(d):
         try:
             with open(d) as f:
                 return dict(yaml.load(f))
-        except:
+        except Exception:
             raise ValueError("Could not convert {} to dictionary!".format(d))
 
 
