@@ -14,5 +14,5 @@ from .rcsetup import psyplot_fname
 
 
 #: class:`str` or ``None``. Path to the yaml configuration file (if found).
-#: See :func:`psyplot.config.rcsetup.psyplot_fname` for further information
+#: See :func:`~psyplot.config.rcsetup.psyplot_fname` for further information
 config_path = psyplot_fname()
