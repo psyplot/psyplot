@@ -103,6 +103,7 @@ Documentation
     about
     installing
     getting_started
+    configuration
     projects
     plugins
     command_line

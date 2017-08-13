@@ -364,10 +364,10 @@ The following files are created in a directory named ``'my-plugin'``:
 
 ``'setup.py'``
     The installation script
-``'my-plugin/plugin.py'``
+``'my_plugin/plugin.py'``
     The file that sets up the configuration of our plugin. This file should
-    define the ``rcParams`` for the plugin
-``'my-plugin/plotters.py'``
+    define the ``rcParams`` for the plugin (see also :ref:`plugins-rcParams`)
+``'my_plugin/plotters.py'``
     The file in which we define the plotters. This file should define the
     plotters and formatoptions.
 
@@ -380,3 +380,118 @@ If you want to see more, look into the comments in the created files.
 
 .. _psy-maps: https://psyplot.readthedocs.io/projects/psy-maps/en/latest/
 .. _psy-simple: https://psyplot.readthedocs.io/projects/psy-simple/en/latest/
+
+.. _plugins-rcParams:
+
+``rcParams`` handling in plugins
+--------------------------------
+Every formatoption does have default values. In
+:ref:`our example above <new_plotters>`, we simply set it via the
+:attr:`~psyplot.plotter.Formatoption.default` attribute. This is a hard-coded,
+but easy, stable and quick solution.
+
+However, your formatoption could also be used in different plotters, each
+requiring a different default value. Or you want to give the user the
+possibility to set his own default value. For this, we implemented the
+
+.. autosummary::
+
+    psyplot.plotter.Plotter._rcparams_string
+
+attribute. Here you can specify a string for this plotter which is used to
+get the default value of the formatoptions in this plotter from the
+:attr:`rcParams <psyplot.config.rcsetup.rcParams>`. The expected
+:attr:`~psyplot.plotter.Formatoption.default_key` for one formatoption would
+then be ``the_chosen_string + fmt_key``.
+
+The following example illustrates this:
+
+.. ipython::
+
+    In [1]: from psyplot.config.rcsetup import rcParams
+       ...: from psyplot.plotter import Plotter, Formatoption
+
+
+First we define our defaultParams, a mapping from default key to the
+default value, a validation function, and a description (see the
+:data:`psyplot.config.rcsetup.defaultParams` dictionary).
+
+.. ipython::
+
+    In [2]: defaultParams = {
+       ...:     'plotter.example_plotter.fmt1': [
+       ...:         1, lambda val: int(val), 'Example formatoption']
+       ...:     }
+
+Then we update the :attr:`~psyplot.config.rcsetup.RcParams.defaultParams` of
+the :attr:`psyplot.rcParams <psyplot.config.rcsetup.rcParams>` and set the
+value
+
+.. ipython::
+
+    In [3]: rcParams.defaultParams.update(defaultParams)
+
+    In [4]: rcParams.update_from_defaultParams(defaultParams)
+       ...: print(rcParams['plotter.example_plotter.fmt1'])
+
+Now we define a formatoption for our new plotter class and implement it in a
+new plotter object.
+
+.. ipython::
+
+    In [5]: class ExampleFmt(Formatoption):
+       ...:     def update(self, value):
+       ...:         pass
+
+    In [6]: class ExamplePlotter(Plotter):
+       ...:     # we use our base string, 'plotter.example_plotter.'
+       ...:     _rcparams_string = ['plotter.example_plotter.']
+       ...:     # and register a formatoption for the plotter
+       ...:     fmt1 = ExampleFmt('fmt1')
+
+If we now create a new instance of this ``ExamplePlotter``, the ``fmt1``
+formatoption will have a value of ``1``, as we defined it in the above
+``defaultParams``:
+
+.. ipython::
+
+    In [7]: plotter = ExamplePlotter()
+
+    In [8]: print(plotter['fmt1'])
+
+    # and the default_key is our string in the defaultParams, a combination
+    # of the _rcparams_string and the formatoption key
+    In [9]: print(plotter.fmt1.default_key)
+
+    In [10]: print(plotter.fmt1.default)
+
+Changing the value in the :attr:`~psyplot.config.rcsetup.rcParams`, also
+changes the default value for the plotter
+
+.. ipython::
+
+    In [11]: rcParams['plotter.example_plotter.fmt1'] = 2
+
+    In [12]: print(plotter.fmt1.default)
+
+Also, if we subclass this plotter, the default_key will not change
+
+.. ipython::
+
+    In [13]: class SecondPlotter(ExamplePlotter):
+       ....:     # we set a new _rcparams_string
+       ....:     _rcparams_string = ['plotter.another_plotter.']
+
+    In [14]: plotter = SecondPlotter()
+
+    # still the same key, although we defined a different _rcparams_string
+    In [15]: print(plotter.fmt1.default_key)
+
+    @suppress
+    In [10]: rcParams.pop('plotter.example_plotter.fmt1', None)
+       ....: rcParams.defaultParams.pop('plotter.example_plotter.fmt1', None)
+
+If you're developing a new plugin you would then have to define the
+``rcParams`` and ``defaultParams`` in the ``plugin.py`` script (see
+:ref:`new_plugins`) and they will then be automatically implemented in
+:attr:`psyplot.rcParams <psyplot.config.rcsetup.rcParams>`.
