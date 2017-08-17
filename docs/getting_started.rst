@@ -52,6 +52,15 @@ type
     @savefig docs_getting_started.png width=4in
     In [4]: p = psy.plot.mapplot('demo.nc', name='t2m')
 
+.. note::
+
+    If you're not using the :ref:`GUI <psyplot_gui:psyplot-gui>`, you have to
+    call the :meth:`~Project.show` method to display the plot, i.e. just run
+
+    .. code-block:: python
+
+        p.show()
+
 Now you created your first project
 
 .. ipython::
