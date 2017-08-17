@@ -21,6 +21,44 @@ demonstrations.
 .. _netCDF4: https://github.com/Unidata/netcdf4-python
 .. _psy-maps: https://psy-maps.readthedocs.io/en/latest
 
+.. note::
+
+    We recommend to either run this example using our
+    :ref:`GUI <psyplot_gui:psyplot-gui>`. However, you can also either use
+    IPython_ from the terminal via
+
+    .. code-block:: bash
+
+        conda install ipython  # or pip install ipython
+        ipython  # starts the ipython console
+
+    and copy-paste the commands in this
+    example, or you use a `jupyter notebook`_ via
+
+    .. code-block:: bash
+
+        conda install jupyter  # or pip install jupyter
+        jupyter notebook  # starts the notebook server
+
+    Then create a new notebook in the desired location and copy-paste the
+    examples below. If you want, we also recommend to include the following
+    commands in the notebook
+
+    .. code-block:: ipython
+
+        import psyplot.project as psy
+        # show the figures inline in the notebook and not in a separate window
+        %matplotlib inline
+        # don't close the figures after showing them, because than the update
+        # would not work
+        %config InlineBackend.close_figures = False
+        # show the figures after they are drawn or updated. This is useful
+        # for the visualization in the jupyter notebook
+        psy.rcParams['auto_show'] = True
+
+    .. _IPython: http://ipython.readthedocs.io/en/stable/
+    .. _jupyter notebook: http://jupyter.org/install.html
+
 After you :ref:`installed psyplot <install>`, you can import the package via
 
 .. ipython::
