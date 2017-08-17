@@ -24,8 +24,8 @@ bibliography: paper.bib
 
 psyplot [@psyplot] is an cross-platform open source python project that mainly
 combines the plotting utilities of matplotlib [@Hunter2007] and the data
-management of the xarray [@xarray] package and integrates them into a software
-that can be used via command-line and via a GUI.
+management of the xarray [@hoyer2017xarray] package and integrates them into a
+software that can be used via command-line and via a GUI.
 
 The main purpose is to have a framework that allows a fast, attractive,
 flexible, easily applicable, easily reproducible and especially an interactive
