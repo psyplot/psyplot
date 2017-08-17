@@ -91,11 +91,13 @@ fascinating work on this beautiful language.
 
 A special thanks to Stefan Hagemann and Tobias Stacke from the
 Max-Planck-Institute of Meteorology in Hamburg, Germany for the motivation on
-this project.
+this project and to the people of the `Not yet visible`_ agency for their
+advice in designing the logo and webpage.
 
 .. _matplotlib: http://matplotlib.org
 .. _xarray: http://xarray.pydata.org/
 .. _cartopy: http://scitools.org.uk/cartopy
+.. _Not yet visible: https://notyetvisible.de/
 
 
 
