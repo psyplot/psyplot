@@ -1,6 +1,6 @@
 .. _getting-started:
 
-Getting startet
+Getting started
 ===============
 
 .. include:: <isonum.txt>
