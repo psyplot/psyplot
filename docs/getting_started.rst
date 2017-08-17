@@ -12,7 +12,7 @@ Initialization and interactive usage
 ------------------------------------
 
 This section shall introduce you how to read data from a netCDF file and
-visualize it via psyplot. For this, you need to have netCDF4_ and and the to be
+visualize it via psyplot. For this, you need to have netCDF4_ and the
 psy-maps_ psyplot plugin to be installed (see :ref:`install`).
 
 Furthermore we use the :download:`demo.nc` netCDF file for our
