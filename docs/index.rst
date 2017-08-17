@@ -109,6 +109,7 @@ Documentation
     command_line
     examples/index
     develop/index
+    contribute
     api/psyplot
     todos
     changelog

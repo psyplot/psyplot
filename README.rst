@@ -71,9 +71,11 @@ provides a graphical user interface for an easier interactive usage.
 
 The package is very new and there are many features that will be included in
 the future. So we are very pleased for feedback! Please simply raise an issue
-on `GitHub <https://github.com/Chilipp/psyplot>`__.
+on `GitHub <https://github.com/Chilipp/psyplot>`__ (see also
+`How to contribute`_ in the docs).
 
-.. _psyplot-gui: http://psyplot-gui.readthedocs.io/en/latest/
+.. _psyplot-gui: http://psyplot.readthedocs.io/projects/psyplot-gui/en/latest
+.. _How to contribute: http://psyplot.readthedocs.io/en/latest/contribute.html
 
 You can see the full documentation on
 `readthedocs.org <http://psyplot.readthedocs.io/en/latest/>`__.
