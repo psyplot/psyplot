@@ -285,7 +285,7 @@ use the python package manager ``pip`` and install via::
 
     $ pip install psyplot
 
-However to be on the save side, make sure you have the :ref:`dependencies`
+However to be on the safe side, make sure you have the :ref:`dependencies`
 installed.
 
 .. _install-source:
