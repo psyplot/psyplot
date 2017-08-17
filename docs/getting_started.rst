@@ -44,7 +44,7 @@ demonstrations.
     examples below. If you want, we also recommend to include the following
     commands in the notebook
 
-    .. code-block:: ipython
+    .. code-block:: python
 
         import psyplot.project as psy
         # show the figures inline in the notebook and not in a separate window
