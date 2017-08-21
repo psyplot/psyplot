@@ -114,4 +114,4 @@ Commits on github prior to version 1.0 were moved into another repository, the
 the github repository contained all the reference figures used for testing
 which made the size of the repository too large.
 
-.. _psyplot_old: https://github.com/Chilipp/psyplot
+.. _psyplot_old: https://github.com/Chilipp/psyplot_old
