@@ -139,10 +139,16 @@ Max-Planck-Institute of Meteorology in Hamburg, Germany for the motivation on
 this project and to the people of the `Not yet visible`_ agency for their
 advice in designing the logo and webpage.
 
+Finally the author thanks the Swiss National Science Foundation (SNF) for their
+support. Funding for the author came from the `ACACIA grant (CR10I2_146314)`_
+and the `HORNET grant (169598)`_.
+
 .. _matplotlib: http://matplotlib.org
 .. _xarray: http://xarray.pydata.org/
 .. _cartopy: http://scitools.org.uk/cartopy
 .. _Not yet visible: https://notyetvisible.de/
+.. _ACACIA grant (CR10I2_146314): http://p3.snf.ch/project-146314
+.. _HORNET grant (169598): http://p3.snf.ch/project-169598
 
 
 
