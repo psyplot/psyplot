@@ -141,7 +141,7 @@ advice in designing the logo and webpage.
 
 Finally the author thanks the Swiss National Science Foundation (SNF) for their
 support. Funding for the author came from the `ACACIA grant (CR10I2_146314)`_
-and the `HORNET grant (169598)`_.
+and the `HORNET grant (200021_169598)`_.
 
 .. _matplotlib: http://matplotlib.org
 .. _xarray: http://xarray.pydata.org/
