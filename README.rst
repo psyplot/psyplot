@@ -13,7 +13,9 @@ The psyplot interactive visualization framework
     * - tests
       - |travis| |appveyor| |requires| |coveralls|
     * - package
-      - |version| |conda| |supported-versions| |supported-implementations|
+      - |version| |conda| |github|
+    * - implementations
+      - |supported-versions| |supported-implementations|
 
 .. |docs| image:: http://readthedocs.org/projects/psyplot/badge/?version=latest
     :alt: Documentation Status
@@ -54,6 +56,10 @@ The psyplot interactive visualization framework
 .. |joss| image:: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg
     :alt: Journal of Open Source Software
     :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
+
+.. |github| image:: https://img.shields.io/github/release/Chilipp/psyplot.svg
+    :target: https://github.com/Chilipp/psyplot/releases/latest
+    :alt: Latest github release
 
 .. end-badges
 
