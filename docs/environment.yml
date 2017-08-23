@@ -15,6 +15,7 @@ dependencies:
     - ipykernel
     - sphinx
     - psy-maps
+    - imagemagick
     - pip:
         - sphinx-argparse==0.1.17
         - autodocsumm
