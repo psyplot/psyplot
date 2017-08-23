@@ -126,6 +126,36 @@ Examples
     psy_reg
 
 
+.. _citation:
+
+How to cite psyplot
+-------------------
+
+When using psyplot, you should at least cite the publication in
+`the Journal of Open Source Software`_:
+
+.. only:: html and not epub
+
+    .. image:: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg
+        :alt: Journal of Open Source Software
+        :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
+
+Sommer, P. S.: The psyplot interactive visualization framework,
+*The Journal of Open Source Software*, 2, doi:10.21105/joss.00363,
+https://doi.org/10.21105/joss.00363, 2017.
+
+:download:`BibTex <psyplot_entry.bib>` - :download:`EndNote <psyplot_entry.enw>`
+
+Furthermore, each release of psyplot and it's :ref:`subprojects <projects>` is
+associated with a DOI using zenodo.org_. If you want to cite a specific
+version or plugin, please refer to the `releases page of psyplot` or the
+releases page of the corresponding subproject.
+
+
+.. _the Journal of Open Source Software: http://joss.theoj.org/
+.. _zenodo.org: https://zenodo.org/
+.. _releases page of psyplot: https://github.com/Chilipp/psyplot/releases/
+
 Acknowledgment
 --------------
 This package has been developed by Philipp Sommer.
@@ -148,7 +178,7 @@ and the `HORNET grant (200021_169598)`_.
 .. _cartopy: http://scitools.org.uk/cartopy
 .. _Not yet visible: https://notyetvisible.de/
 .. _ACACIA grant (CR10I2_146314): http://p3.snf.ch/project-146314
-.. _HORNET grant (169598): http://p3.snf.ch/project-169598
+.. _HORNET grant (200021_169598): http://p3.snf.ch/project-169598
 
 
 
