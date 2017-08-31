@@ -1,3 +1,11 @@
+v1.0.1
+======
+Added
+-----
+* The yaxis_inverted and xaxis_inverted is now considered when loading and
+  saving a matplotlib axes
+
+
 v1.0.0
 ======
 
