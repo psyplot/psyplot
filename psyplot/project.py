@@ -1288,6 +1288,8 @@ class _ProjectLoader(object):
         ret['visible'] = ax.get_visible()
         ret['spines'] = {}
         ret['zorder'] = ax.get_zorder()
+        ret['yaxis_inverted'] = ax.yaxis_inverted()
+        ret['xaxis_inverted'] = ax.xaxis_inverted()
         for key, val in ax.spines.items():
             ret['spines'][key] = {}
             for prop in ['linestyle', 'edgecolor', 'linewidth',
@@ -1311,6 +1313,8 @@ class _ProjectLoader(object):
         fig = plt.figure(d.pop('fig', None))
         proj = d.pop('projection', None)
         spines = d.pop('spines', None)
+        invert_yaxis = d.pop('yaxis_inverted', None)
+        invert_xaxis = d.pop('xaxis_inverted', None)
         if mpl.__version__ >= '2.0' and 'axisbg' in d:  # axisbg is depreceated
             d['facecolor'] = d.pop('axisbg')
         elif mpl.__version__ < '2.0' and 'facecolor' in d:
@@ -1326,6 +1330,12 @@ class _ProjectLoader(object):
         if spines is not None:
             for key, val in spines.items():
                 ret.spines[key].update(val)
+        if invert_xaxis:
+            if ret.get_xlim()[0] < ret.get_xlim()[1]:
+                ret.invert_xaxis()
+        if invert_yaxis:
+            if ret.get_ylim()[0] < ret.get_ylim()[1]:
+                ret.invert_yaxis()
         return ret
 
 
