@@ -10,6 +10,7 @@ def readme():
     with open('README.rst') as f:
         return f.read()
 
+
 # read the version from version.py
 with open(osp.join('psyplot', 'version.py')) as f:
     exec(f.read())
