@@ -46,7 +46,8 @@ def main(args=None):
 @docstrings.dedent
 def make_plot(fnames=[], name=[], dims=None, plot_method=None,
               output=None, project=None, engine=None, formatoptions=None,
-              tight=False, rc_file=None, encoding=None, enable_post=False):
+              tight=False, rc_file=None, encoding=None, enable_post=False,
+              seaborn_style=None):
     """
     Eventually start the QApplication or only make a plot
 
@@ -85,10 +86,13 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
         automatically determined by pickle. Note: Set this to ``'latin1'``
         if using a project created with python2 on python3.
     enable_post: bool
-        Enable the :attr:`~psyplot.plotter.Plotter.post` processing 
-        formatoption. If True/set, post processing scripts are enabled in the 
-        given `project`. Only set this if you are sure that you can trust the 
+        Enable the :attr:`~psyplot.plotter.Plotter.post` processing
+        formatoption. If True/set, post processing scripts are enabled in the
+        given `project`. Only set this if you are sure that you can trust the
         given project file because it may be a security vulnerability.
+    seaborn_style: str
+        The name of the style of the seaborn package that can be used for
+        the :func:`seaborn.set_style` function
     """
     if project is not None and (name != [] or dims is not None):
         warn('The `name` and `dims` parameter are ignored if the `project`'
@@ -109,6 +113,9 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
         raise ValueError(
             "A plotting method must be provided if the output parameter "
             "is set and not the project!")
+    if seaborn_style is not None:
+        import seaborn as sns
+        sns.set_style(seaborn_style)
     import psyplot.project as psy
     if project is not None:
         fnames = [s.split(',') for s in fnames]
@@ -232,8 +239,10 @@ def get_parser(create=True):
     parser.pop_key('rc_file', 'metavar')
 
     parser.update_arg('encoding', short='e')
-    
+
     parser.pop_key('enable_post', 'short')
+
+    parser.update_arg('seaborn_style', short='sns')
 
     if create:
         parser.create_arguments()
