@@ -4,6 +4,7 @@ Added
 -----
 * The yaxis_inverted and xaxis_inverted is now considered when loading and
   saving a matplotlib axes
+* Added the `seaborn-style` command line argument
 
 
 v1.0.0
@@ -47,4 +48,3 @@ Changed
 .. _psy-simple: https://github.com/Chilipp/psy-simple
 .. _psy-maps: https://github.com/Chilipp/psy-maps
 .. _psy-reg: https://github.com/Chilipp/psy-reg
-
