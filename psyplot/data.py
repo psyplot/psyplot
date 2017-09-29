@@ -710,7 +710,8 @@ class CFDecoder(object):
         Returns
         -------
         %(CFDecoder.is_triangular.returns)s"""
-        return self.get_x(var).ndim == 2
+        xcoord = self.get_x(var)
+        return xcoord is not None and xcoord.ndim == 2
 
     @docstrings.dedent
     def _check_unstructered_bounds(self, *args, **kwargs):
