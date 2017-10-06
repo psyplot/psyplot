@@ -5,6 +5,7 @@ Added
 * The yaxis_inverted and xaxis_inverted is now considered when loading and
   saving a matplotlib axes
 * Added the `seaborn-style` command line argument
+* Added the `concat_dim` command line argument
 
 
 v1.0.0

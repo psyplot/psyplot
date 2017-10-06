@@ -3,6 +3,7 @@
 That's a test"""
 import os
 import six
+import inspect
 
 if six.PY3:
 
@@ -22,6 +23,12 @@ if six.PY3:
 
     def getcwd(*args, **kwargs):
         return os.getcwd(*args, **kwargs)
+
+    def get_default_value(func, arg):
+        argspec = inspect.getfullargspec(func)
+        return next(default for a, default in zip(reversed(argspec[0]),
+                                                  reversed(argspec.defaults))
+                    if a == arg)
 
     basestring = str
     unicode_type = str
@@ -55,6 +62,12 @@ elif six.PY2:
 
     def getcwd(*args, **kwargs):
         return os.getcwdu(*args, **kwargs)
+
+    def get_default_value(func, arg):
+        argspec = inspect.getargspec(func)
+        return next(default for a, default in zip(reversed(argspec[0]),
+                                                  reversed(argspec.defaults))
+                    if a == arg)
 
     basestring = basestring
     unicode_type = unicode

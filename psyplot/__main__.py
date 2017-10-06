@@ -5,9 +5,11 @@ import six
 from itertools import chain
 from collections import defaultdict
 import yaml
+import xarray as xr
 import psyplot
 from psyplot.docstring import docstrings
 from psyplot.warning import warn
+from psyplot.compat.pycompat import get_default_value
 from funcargparse import FuncArgParser
 import logging
 
@@ -47,7 +49,8 @@ def main(args=None):
 def make_plot(fnames=[], name=[], dims=None, plot_method=None,
               output=None, project=None, engine=None, formatoptions=None,
               tight=False, rc_file=None, encoding=None, enable_post=False,
-              seaborn_style=None):
+              seaborn_style=None,
+              concat_dim=get_default_value(xr.open_mfdataset, 'concat_dim')):
     """
     Eventually start the QApplication or only make a plot
 
@@ -93,6 +96,9 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
     seaborn_style: str
         The name of the style of the seaborn package that can be used for
         the :func:`seaborn.set_style` function
+    concat_dim: str
+        The concatenation dimension if multiple files in `fnames` are
+        provided
     """
     if project is not None and (name != [] or dims is not None):
         warn('The `name` and `dims` parameter are ignored if the `project`'
@@ -134,7 +140,7 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
             raise ValueError("Unknown plot method %s!" % plot_method)
         p = pm(
             fnames, name=name, dims=dims or {}, engine=engine,
-            fmt=formatoptions or {}, mf_mode=True)
+            fmt=formatoptions or {}, mf_mode=True, concat_dim=concat_dim)
         p.export(output, tight=tight)
     return
 
@@ -243,6 +249,8 @@ def get_parser(create=True):
     parser.pop_key('enable_post', 'short')
 
     parser.update_arg('seaborn_style', short='sns')
+
+    parser.update_arg('concat_dim', short='cd')
 
     if create:
         parser.create_arguments()

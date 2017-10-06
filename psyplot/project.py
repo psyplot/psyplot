@@ -12,6 +12,7 @@ import sys
 import six
 from copy import deepcopy as _deepcopy
 import logging
+import inspect
 import pickle
 from importlib import import_module
 from itertools import chain, repeat, cycle, count
@@ -33,7 +34,8 @@ from psyplot.data import (
     ArrayList, open_dataset, open_mfdataset, _MissingModule,
     to_netcdf, Signal, CFDecoder, safe_list, InteractiveList)
 from psyplot.plotter import unique_everseen, Plotter
-from psyplot.compat.pycompat import OrderedDict, range, getcwd
+from psyplot.compat.pycompat import (OrderedDict, range, getcwd,
+                                     get_default_value as _get_default_value)
 try:
     from cdo import Cdo as _CdoBase
     with_cdo = True
@@ -60,6 +62,9 @@ _current_subproject = None  # current subproject
 
 # the informations on the psyplot and plugin versions
 _versions = get_versions(requirements=False)
+
+
+_concat_dim_default = _get_default_value(xarray.open_mfdataset, 'concat_dim')
 
 
 def _update_versions():
@@ -410,13 +415,16 @@ class Project(ArrayList):
     docstrings.delete_params('ArrayList.from_dataset.parameters', 'base')
     docstrings.delete_kwargs('ArrayList.from_dataset.other_parameters',
                              kwargs='kwargs')
+    docstrings.keep_params('xarray.open_mfdataset.parameters', 'concat_dim')
 
     @_only_main
     @docstrings.get_sectionsf('Project._add_data')
     @docstrings.dedent
     def _add_data(self, plotter_cls, filename_or_obj, fmt={}, make_plot=True,
                   draw=None, mf_mode=False, ax=None, engine=None, delete=True,
-                  share=False, clear=False, enable_post=None, *args, **kwargs):
+                  share=False, clear=False, enable_post=None,
+                  concat_dim=_concat_dim_default,
+                  *args, **kwargs):
         """
         Extract data from a dataset and visualize it with the given plotter
 
@@ -465,6 +473,8 @@ class Project(ArrayList):
             enabled and post processing scripts are allowed. If ``None``, this
             parameter is set to True if there is a value given for the `post`
             formatoption in `fmt` or `kwargs`
+        %(xarray.open_mfdataset.parameters.concat_dim)s
+            This parameter only does have an effect if `mf_mode` is True.
         %(ArrayList.from_dataset.parameters.no_base)s
 
         Other Parameters
@@ -476,7 +486,8 @@ class Project(ArrayList):
         if not isinstance(filename_or_obj, xarray.Dataset):
             if mf_mode:
                 filename_or_obj = open_mfdataset(filename_or_obj,
-                                                 engine=engine)
+                                                 engine=engine,
+                                                 concat_dim=concat_dim)
             else:
                 filename_or_obj = open_dataset(filename_or_obj,
                                                engine=engine)
