@@ -1604,7 +1604,7 @@ class Plotter(dict):
         keys = {fmto.key for fmto in fmtos}
         if self.replot or any(fmto.priority >= START for fmto in fmtos):
             self.replot = True
-            self.plot_data = self.data.copy(True)
+            self.plot_data = self.data
             new_fmtos = dict((f.key, f) for f in self._fmtos
                              if ((f not in fmtos and is_data_dependent(
                                  f, self.data))))

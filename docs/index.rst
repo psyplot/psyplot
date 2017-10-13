@@ -111,6 +111,7 @@ Documentation
     getting_started
     configuration
     projects
+    accessors
     plugins
     command_line
     examples/index

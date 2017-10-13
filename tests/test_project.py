@@ -1083,7 +1083,7 @@ class TestPlotterInterface(unittest.TestCase):
         self.assertTrue(hasattr(psy.plot, 'test_plotter'))
         self.assertIs(psy.plot.test_plotter.plotter_cls, tp.TestPlotter)
         psy.plot.test_plotter.print_func = str
-        self.assertEqual(psy.plot.test_plotter.fmt1, tp.SimpleFmt.__doc__)
+        self.assertEqual(psy.plot.test_plotter.fmt1(), tp.SimpleFmt.__doc__)
         psy.plot.test_plotter.print_func = None
         # test the warning
         if not six.PY2:
@@ -1421,6 +1421,62 @@ class TestPlotterInterface(unittest.TestCase):
 
         psy.plot.test_plotter.check_data(ds, 't2m', {'lev': 3})
         psy.unregister_plotter('test_plotter')
+
+
+class TestDatasetPlotter(unittest.TestCase):
+    """Test the Dataset accessor and :class:`psyplot.project.DatasetPlotter`
+    """
+
+    def setUp(self):
+        for identifier in list(psy.registered_plotters):
+            psy.unregister_plotter(identifier)
+        psy.close('all')
+        plt.close('all')
+
+    def tearDown(self):
+        for identifier in list(psy.registered_plotters):
+            psy.unregister_plotter(identifier)
+        psy.close('all')
+        plt.close('all')
+        tp.results.clear()
+
+    def test_plotting(self):
+        psy.register_plotter('test_plotter',
+                             import_plotter=True, module='test_plotter',
+                             plotter_name='TestPlotter')
+
+        ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'))
+        sp = ds.psy.plot.test_plotter(name='t2m')
+        self.assertEqual(len(sp), 1)
+        self.assertEqual(sp[0].name, 't2m')
+        self.assertEqual(sp[0].shape, ds.t2m.shape)
+        self.assertEqual(sp[0].values.tolist(), ds.t2m.values.tolist())
+        self.assertIs(sp, psy.gcp())
+
+
+class TestDataArrayPlotter(unittest.TestCase):
+    """Test DataArray accessor and :class:`psyplot.project.DataArrayPlotter`
+    """
+
+    def setUp(self):
+        for identifier in list(psy.registered_plotters):
+            psy.unregister_plotter(identifier)
+        plt.close('all')
+
+    def tearDown(self):
+        for identifier in list(psy.registered_plotters):
+            psy.unregister_plotter(identifier)
+        plt.close('all')
+        tp.results.clear()
+
+    def test_plotting(self):
+        psy.register_plotter('test_plotter',
+                             import_plotter=True, module='test_plotter',
+                             plotter_name='TestPlotter')
+
+        ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'))
+        plotter = ds.t2m.psy.plot.test_plotter(fmt1='fmt1 set')
+        self.assertTrue(plotter.fmt1.value, 'fmt1 set')
 
 
 @unittest.skipIf(not psy.with_cdo, "Cdo not installed")

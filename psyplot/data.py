@@ -7,7 +7,7 @@ from importlib import import_module
 import re
 import six
 from collections import defaultdict
-from itertools import chain, product, repeat, starmap, count, cycle
+from itertools import chain, product, repeat, starmap, count, cycle, islice
 import xarray as xr
 from xarray.core.utils import NDArrayMixin
 from xarray.core.formatting import first_n_items, format_item
@@ -28,6 +28,9 @@ import psyplot.utils as utils
 # No data variable. This is used for filtering if an attribute could not have
 # been accessed
 _NODATA = object
+
+
+VARIABLELABEL = 'variable'
 
 
 logger = logging.getLogger(__name__)
@@ -73,6 +76,19 @@ def _infer_interval_breaks(coord):
     first = coord[0] - deltas[0]
     last = coord[-1] + deltas[-1]
     return np.r_[[first], coord[:-1] + deltas, [last]]
+
+
+def _get_variable_names(arr):
+    """Return the variable names of an array"""
+    if VARIABLELABEL in arr.dims:
+        return arr.coords[VARIABLELABEL].tolist()
+    else:
+        return arr.name
+
+
+def _get_dims(arr):
+    """Return all dimensions but the :attr:`VARIABLELABEL`"""
+    return tuple(filter(lambda d: d != VARIABLELABEL, arr.dims))
 
 
 @docstrings.get_sectionsf('setup_coords')
@@ -1792,6 +1808,10 @@ class InteractiveBase(object):
     base for :class:`InteractiveArray` and :class:`InteractiveList`) to
     communicate with the corresponding :class:`~psyplot.plotter.Plotter` in the
     :attr:`plotter` attribute"""
+
+    #: The :class:`psyplot.project.DataArrayPlotter`
+    _plot = None
+
     @property
     def plotter(self):
         """:class:`psyplot.plotter.Plotter` instance that makes the interactive
@@ -1808,6 +1828,28 @@ class InteractiveBase(object):
 
     no_auto_update = property(_no_auto_update_getter,
                               doc=_no_auto_update_getter.__doc__)
+
+    @property
+    def plot(self):
+        """An object to visualize this data object
+
+        To make a 2D-plot with the :mod:`psy-simple <psy_simple.plugin>`
+        plugin, you can just type
+
+        .. code-block:: python
+
+            plotter = da.psy.plot.plot2d()
+
+        It will create a new :class:`psyplot.plotter.Plotter` instance with the
+        extracted and visualized data.
+
+        See Also
+        --------
+        psyplot.project.DataArrayPlotter: for the different plot methods"""
+        if self._plot is None:
+            import psyplot.project as psy
+            self._plot = psy.DataArrayPlotter(self)
+        return self._plot
 
     @no_auto_update.setter
     def no_auto_update(self, value):
@@ -1871,8 +1913,17 @@ class InteractiveBase(object):
             this instance fullfills during the update process"""
         return self.plotter._njobs if self.plotter is not None else []
 
-    #: :class:`str`. The internal name of the :class:`InteractiveBase` instance
-    arr_name = None
+    @property
+    def arr_name(self):
+        """:class:`str`. The internal name of the :class:`InteractiveBase`"""
+        return self._arr_name
+
+    @arr_name.setter
+    def arr_name(self, value):
+        self._arr_name = value
+        self.onupdate.emit()
+
+    _arr_name = None
 
     _no_auto_update = None
 
@@ -2021,6 +2072,11 @@ class InteractiveBase(object):
 
         if not self.no_auto_update or auto_update:
             self.start_update(draw=draw)
+
+    def to_interactive_list(self):
+        """Return a :class:`InteractiveList` that contains this object"""
+        raise NotImplementedError('Not implemented for the %s class' % (
+            self.__class__.__name__, ))
 
 
 @xr.register_dataarray_accessor('psy')
@@ -2323,7 +2379,7 @@ class InteractiveArray(InteractiveBase):
             dims = self._new_dims
             method = self.method
             if dims:
-                if 'variable' in self.arr.coords:
+                if VARIABLELABEL in self.arr.coords:
                     self._update_concatenated(dims, method)
                 else:
                     self._update_array(dims, method)
@@ -2420,6 +2476,9 @@ class InteractiveArray(InteractiveBase):
         arr.psy = InteractiveArray(arr)
         return arr
 
+    def to_interactive_list(self):
+        return InteractiveList([self], arr_name=self.arr_name)
+
     isel.__doc__ = xr.DataArray.isel.__doc__
     sel.__doc__ = xr.DataArray.sel.__doc__
 
@@ -2445,8 +2504,21 @@ class ArrayList(list):
 
     @property
     def arr_names(self):
-        """Names of the arrays (!not of the variables!) in this list"""
+        """Names of the arrays (!not of the variables!) in this list
+
+        This attribute can be set with an iterable of unique names to change
+        the array names of the data objects in this list."""
         return list(arr.psy.arr_name for arr in self)
+
+    @arr_names.setter
+    def arr_names(self, value):
+        value = list(islice(value, 0, len(self)))
+        if not len(set(value)) == len(self):
+            raise ValueError(
+                "Got %i unique array names for %i data objects!" % (
+                    len(set(value)), len(self)))
+        for arr, n in zip(self, value):
+            arr.psy.arr_name = n
 
     @property
     def names(self):
@@ -2458,6 +2530,31 @@ class ArrayList(list):
             else:
                 ret.add(arr.name)
         return ret
+
+    @property
+    def all_names(self):
+        """The variable names for each of the arrays in this list"""
+        return [
+            _get_variable_names(arr) if not isinstance(arr, ArrayList) else
+            arr.all_names
+            for arr in self]
+
+    @property
+    def all_dims(self):
+        """The dimensions for each of the arrays in this list"""
+        return [
+            _get_dims(arr) if not isinstance(arr, ArrayList) else
+            arr.all_dims
+            for arr in self]
+
+    @property
+    def is_unstructured(self):
+        """A boolean for each array whether it is unstructured or not"""
+        return [
+            arr.psy.decoder.is_unstructured(arr)
+            if not isinstance(arr, ArrayList) else
+            arr.is_unstructured
+            for arr in self]
 
     @property
     def coords(self):
@@ -3581,6 +3678,7 @@ class DatasetAccessor(object):
     _filename = None
     _data_store = None
     _num = None
+    _plot = None
 
     @property
     def num(self):
@@ -3595,6 +3693,28 @@ class DatasetAccessor(object):
 
     def __init__(self, ds):
         self.ds = ds
+
+    @property
+    def plot(self):
+        """An object to generate new plots from this dataset
+
+        To make a 2D-plot with the :mod:`psy-simple <psy_simple.plugin>`
+        plugin, you can just type
+
+        .. code-block:: python
+
+            project = ds.psy.plot.plot2d(name='variable-name')
+
+        It will create a new subproject with the extracted and visualized data.
+
+        See Also
+        --------
+        psyplot.project.DatasetPlotter: for the different plot methods
+        """
+        if self._plot is None:
+            import psyplot.project as psy
+            self._plot = psy.DatasetPlotter(self.ds)
+        return self._plot
 
     @property
     def filename(self):
@@ -3839,6 +3959,9 @@ class InteractiveList(ArrayList, InteractiveBase):
         # reimplemented to emit onupdate
         super(InteractiveList, self).append(*args, **kwargs)
         self.onupdate.emit()
+
+    def to_interactive_list(self):
+        return self
 
 
 class _MissingModule(object):

@@ -15,7 +15,7 @@ import logging
 import inspect
 import pickle
 from importlib import import_module
-from itertools import chain, repeat, cycle, count
+from itertools import chain, repeat, cycle, count, islice
 from collections import Iterable, defaultdict
 from functools import wraps, partial
 import xarray
@@ -259,6 +259,34 @@ class Project(ArrayList):
     with_plotter = property(with_plotter, doc=ArrayList.with_plotter.__doc__)
 
     @property
+    def arr_names(self):
+        """Names of the arrays (!not of the variables!) in this list
+
+        This attribute can be set with an iterable of unique names to change
+        the array names of the data objects in this list."""
+        return list(arr.psy.arr_name for arr in self)
+
+    @arr_names.setter
+    def arr_names(self, value):
+        value = list(islice(value, len(self)))
+        if not len(set(value)) == len(self):
+            raise ValueError(
+                "Got %i unique array names for %i data objects!" % (
+                    len(set(value)), len(self)))
+        elif not self.is_main and set(value) & (
+                set(self.main.arr_names) - set(self.arr_names)):
+            raise ValueError(
+                "Cannot rename arrays because there are duplicates with the "
+                "main project: %s" % (
+                    set(value) & (
+                        set(self.main.arr_names) - set(self.arr_names)), ))
+        for arr, n in zip(self, value):
+            arr.psy.arr_name = n
+        if self.main is gcp(True):
+            for arr in self:
+                arr.psy.onupdate.emit()
+
+    @property
     def plotters(self):
         """A list of all the plotters in this instance"""
         return [arr.psy.plotter for arr in self.with_plotter]
@@ -418,7 +446,9 @@ class Project(ArrayList):
     docstrings.keep_params('xarray.open_mfdataset.parameters', 'concat_dim')
 
     @_only_main
-    @docstrings.get_sectionsf('Project._add_data')
+    @docstrings.get_sectionsf('Project._add_data',
+                              sections=['Parameters', 'Other Parameters',
+                                        'Returns'])
     @docstrings.dedent
     def _add_data(self, plotter_cls, filename_or_obj, fmt={}, make_plot=True,
                   draw=None, mf_mode=False, ax=None, engine=None, delete=True,
@@ -482,7 +512,12 @@ class Project(ArrayList):
         %(ArrayList.from_dataset.other_parameters.no_args_kwargs)s
         ``**kwargs``
             Any other dimension or formatoption that shall be passed to `dims`
-            or `fmt` respectively."""
+            or `fmt` respectively.
+
+        Returns
+        -------
+        Project
+            The subproject that contains the new (visualized) data array"""
         if not isinstance(filename_or_obj, xarray.Dataset):
             if mf_mode:
                 filename_or_obj = open_mfdataset(filename_or_obj,
@@ -1350,21 +1385,204 @@ class _ProjectLoader(object):
         return ret
 
 
+class ProjectPlotter(object):
+    """Plotting methods of the :class:`psyplot.project.Project` class"""
+
+    #: the base class for new plot methods. Is set below with the
+    #: :class:`PlotterInterface` class
+    _plot_method_base_cls = None
+
+    @property
+    def project(self):
+        return self._project if self._project is not None else gcp(True)
+
+    def __init__(self, project=None):
+        self._project = project
+
+    docstrings.keep_params('ArrayList.from_dataset.parameters',
+                           'default_slice')
+
+    @property
+    def _plot_methods(self):
+        """A dictionary with mappings from plot method to their summary"""
+        ret = {}
+        for attr in filter(lambda s: not s.startswith("_"), dir(self)):
+            obj = getattr(self, attr)
+            if isinstance(obj, PlotterInterface):
+                ret[attr] = obj._summary
+        return ret
+
+    def show_plot_methods(self):
+        """Print the plotmethods of this instance"""
+        print_func = PlotterInterface._print_func
+        if print_func is None:
+            print_func = six.print_
+        s = "\n".join(
+            "%s\n    %s" % t for t in six.iteritems(self._plot_methods))
+        return print_func(s)
+
+    @docstrings.get_sectionsf('ProjectPlotter._add_data',
+                              sections=['Parameters', 'Other Parameters',
+                                        'Returns'])
+    @docstrings.dedent
+    def _add_data(self, *args, **kwargs):
+        """
+        Add new plots to the project
+
+        Parameters
+        ----------
+        %(Project._add_data.parameters)s
+
+        Other Parameters
+        ----------------
+        %(Project._add_data.other_parameters)s
+
+        Returns
+        -------
+        %(Project._add_data.returns)s
+        """
+        # this method is just a shortcut to the :meth:`Project._add_data`
+        # method but is reimplemented by subclasses as the
+        # :class:`DatasetPlotter` or the :class:`DataArrayPlotter`
+        return self.project._add_data(*args, **kwargs)
+
+    @classmethod
+    @docstrings.get_sectionsf('ProjectPlotter._register_plotter')
+    @docstrings.dedent
+    def _register_plotter(cls, identifier, module, plotter_name,
+                          plotter_cls=None, summary='', prefer_list=False,
+                          default_slice=None, default_dims={},
+                          show_examples=True,
+                          example_call="filename, name=['my_variable'], ...",
+                          plugin=None):
+        """
+        Register a plotter for making plots
+
+        This class method registeres a plot function for the :class:`Project`
+        class under the name of the given `identifier`
+
+        Parameters
+        ----------
+        %(Project._register_plotter.parameters)s
+
+        Other Parameters
+        ----------------
+        prefer_list: bool
+            Determines the `prefer_list` parameter in the `from_dataset`
+            method. If True, the plotter is expected to work with instances of
+            :class:`psyplot.InteractiveList` instead of
+            :class:`psyplot.InteractiveArray`.
+        %(ArrayList.from_dataset.parameters.default_slice)s
+        default_dims: dict
+            Default dimensions that shall be used for plotting (e.g.
+            {'x': slice(None), 'y': slice(None)} for longitude-latitude plots)
+        show_examples: bool, optional
+            If True, examples how to access the plotter documentation are
+            included in class documentation
+        example_call: str, optional
+            The arguments and keyword arguments that shall be included in the
+            example of the generated plot method. This call will then appear as
+            ``>>> psy.plot.%%(identifier)s(%%(example_call)s)`` in the
+            documentation
+        plugin: str
+            The name of the plugin
+        """
+        full_name = '%s.%s' % (module, plotter_name)
+        if plotter_cls is not None:  # plotter has already been imported
+            docstrings.params['%s.formatoptions' % (full_name)] = \
+                plotter_cls.show_keys(
+                    indent=4, func=str,
+                    # include links in sphinx doc
+                    include_links=None)
+            doc_str = ('Possible formatoptions are\n\n'
+                       '%%(%s.formatoptions)s') % full_name
+        else:
+            doc_str = ''
+
+        summary = summary or (
+            'Open and plot data via :class:`%s.%s` plotters' % (
+                module, plotter_name))
+
+        if plotter_cls is not None:
+            _versions.update(get_versions(key=lambda s: s == plugin))
+
+        class PlotMethod(cls._plot_method_base_cls):
+            __doc__ = cls._gen_doc(summary, full_name, identifier,
+                                   example_call, doc_str, show_examples)
+
+            _default_slice = default_slice
+            _default_dims = default_dims
+            _plotter_cls = plotter_cls
+            _prefer_list = prefer_list
+            _plugin = plugin
+
+            _summary = summary
+
+        setattr(cls, identifier, PlotMethod(identifier, module, plotter_name))
+
+    @classmethod
+    def _gen_doc(cls, summary, full_name, identifier, example_call, doc_str,
+                 show_examples):
+        """Generate the documentation docstring for a PlotMethod"""
+        ret = docstrings.dedents("""
+            %s
+
+            This plotting method adds data arrays and plots them via
+            :class:`%s` plotters
+
+            To plot data from a netCDF file type::
+
+                >>> psy.plot.%s(%s)
+
+            %s""" % (summary, full_name, identifier, example_call, doc_str))
+
+        if show_examples:
+            ret += '\n\n' + cls._gen_examples(identifier)
+        return ret
+
+    @classmethod
+    def _gen_examples(cls, identifier):
+        """Generate examples how to axes the formatoption docs"""
+        return docstrings.dedents("""
+            Examples
+            --------
+            To explore the formatoptions and their documentations, use the
+            ``keys``, ``summaries`` and ``docs`` methods. For example::
+
+                >>> import psyplot.project as psy
+
+                # show the keys corresponding to a group or multiple
+                # formatopions
+                >>> psy.plot.%(id)s.keys('labels')
+
+                # show the summaries of a group of formatoptions or of a
+                # formatoption
+                >>> psy.plot.%(id)s.summaries('title')
+
+                # show the full documentation
+                >>> psy.plot.%(id)s.docs('plot')
+
+                # or access the documentation via the attribute
+                >>> psy.plot.%(id)s.plot""" % {'id': identifier})
+
+
 class PlotterInterface(object):
     """Base class for visualizing a data array from an predefined plotter
 
     See the :meth:`__call__` method for details on plotting."""
 
     @property
-    def project(self):
-        return self._project if self._project is not None else gcp(True)
+    def _logger(self):
+        name = '%s.%s.%s' % (self.__module__, self.__class__.__name__,
+                             self._method)
+        return logging.getLogger(name)
 
     @property
     def plotter_cls(self):
         """The plotter class"""
         ret = self._plotter_cls
         if ret is None:
-            self.project.logger.debug('importing %s', self.module)
+            self._logger.debug('importing %s', self.module)
             mod = import_module(self.module)
             plotter = self.plotter_name
             if plotter not in vars(mod):
@@ -1392,32 +1610,32 @@ class PlotterInterface(object):
     def print_func(self, value):
         self._print_func = value
 
-    def __init__(self, methodname, module, plotter_name, project=None):
+    def __init__(self, methodname, module, plotter_name, project_plotter=None):
         self._method = methodname
-        self._project = project
+        self._project_plotter = project_plotter
         self.module = module
         self.plotter_name = plotter_name
 
-    docstrings.delete_params('Project._add_data.parameters', 'plotter_cls')
+    docstrings.delete_params('ProjectPlotter._add_data.parameters',
+                             'plotter_cls')
 
     @docstrings.dedent
     def __call__(self, *args, **kwargs):
         """
         Parameters
         ----------
-        %(Project._add_data.parameters.no_plotter_cls)s
+        %(ProjectPlotter._add_data.parameters.no_plotter_cls)s
 
         Other Parameters
         ----------------
-        %(Project._add_data.other_parameters)s
+        %(ProjectPlotter._add_data.other_parameters)s
 
 
         Returns
         -------
-        Project
-            The subproject that contains the new (visualized) data array
+        %(ProjectPlotter._add_data.returns)s
         """
-        return self.project._add_data(
+        return self._project_plotter._add_data(
             self.plotter_cls, *args, **dict(chain(
                 [('prefer_list', self._prefer_list),
                  ('default_slice', self._default_slice)],
@@ -1425,7 +1643,8 @@ class PlotterInterface(object):
 
     def __getattr__(self, attr):
         if attr in self.plotter_cls._get_formatoptions():
-            return self.print_func(getattr(self.plotter_cls, attr).__doc__)
+            return partial(self.print_func,
+                           getattr(self.plotter_cls, attr).__doc__)
         else:
             raise AttributeError(
                 "%s instance does not have a %s attribute" % (
@@ -1440,7 +1659,7 @@ class PlotterInterface(object):
             except AttributeError:
                 setattr(instance, '_' + self._method, self.__class__(
                     self._method, self.module, self.plotter_name,
-                    instance._project))
+                    instance))
                 return getattr(instance, '_' + self._method)
 
     def __set__(self, instance, value):
@@ -1452,7 +1671,7 @@ class PlotterInterface(object):
         try:
             return sorted(chain(dir(self.__class__), self.__dict__,
                                 self.plotter_cls._get_formatoptions()))
-        except:
+        except Exception:
             return sorted(chain(dir(self.__class__), self.__dict__))
 
     @docstrings.dedent
@@ -1571,143 +1790,241 @@ class PlotterInterface(object):
                 decoders, variables)])
 
 
-class ProjectPlotter(object):
-    """Plotting methods of the :class:`psyplot.project.Project` class"""
+# set the base class for the :class:`ProjectPlotter` plot methods
+ProjectPlotter._plot_method_base_cls = PlotterInterface
 
-    @property
-    def project(self):
-        return self._project if self._project is not None else gcp(True)
 
-    def __init__(self, project=None):
-        self._project = project
+class DatasetPlotterInterface(PlotterInterface):
+    """Interface for the :class:`DatasetPlotter` to a plotter"""
 
-    docstrings.keep_params('ArrayList.from_dataset.parameters',
-                           'default_slice')
+    # there are not changes here compared to :class:`PlotterInterface`, except
+    # for a different docstring for the __call__ method
 
-    @property
-    def _plot_methods(self):
-        """A dictionary with mappings from plot method to their summary"""
-        ret = {}
-        for attr in filter(lambda s: not s.startswith("_"), dir(self)):
-            obj = getattr(self, attr)
-            if isinstance(obj, PlotterInterface):
-                ret[attr] = obj._summary
-        return ret
+    docstrings.delete_params('ProjectPlotter._add_data.parameters',
+                             'plotter_cls', 'filename_or_obj')
 
-    def show_plot_methods(self):
-        """Print the plotmethods of this instance"""
-        print_func = PlotterInterface._print_func
-        if print_func is None:
-            print_func = six.print_
-        s = "\n".join(
-            "%s\n    %s" % t for t in six.iteritems(self._plot_methods))
-        return print_func(s)
-
-    @classmethod
-    @docstrings.get_sectionsf('ProjectPlotter._register_plotter')
     @docstrings.dedent
-    def _register_plotter(cls, identifier, module, plotter_name,
-                          plotter_cls=None, summary='', prefer_list=False,
-                          default_slice=None, default_dims={},
-                          show_examples=True,
-                          example_call="filename, name=['my_variable'], ...",
-                          plugin=None):
+    def __call__(self, *args, **kwargs):
         """
-        Register a plotter for making plots
-
-        This class method registeres a plot function for the :class:`Project`
-        class under the name of the given `identifier`
-
         Parameters
         ----------
-        %(Project._register_plotter.parameters)s
+        %(ProjectPlotter._add_data.parameters.no_plotter_cls|filename_or_obj)s
 
         Other Parameters
         ----------------
-        prefer_list: bool
-            Determines the `prefer_list` parameter in the `from_dataset`
-            method. If True, the plotter is expected to work with instances of
-            :class:`psyplot.InteractiveList` instead of
-            :class:`psyplot.InteractiveArray`.
-        %(ArrayList.from_dataset.parameters.default_slice)s
-        default_dims: dict
-            Default dimensions that shall be used for plotting (e.g.
-            {'x': slice(None), 'y': slice(None)} for longitude-latitude plots)
-        show_examples: bool, optional
-            If True, examples how to access the plotter documentation are
-            included in class documentation
-        example_call: str, optional
-            The arguments and keyword arguments that shall be included in the
-            example of the generated plot method. This call will then appear as
-            ``>>> psy.plot.%%(identifier)s(%%(example_call)s)`` in the
-            documentation
-        plugin: str
-            The name of the plugin
+        %(ProjectPlotter._add_data.other_parameters)s
+
+
+        Returns
+        -------
+        %(ProjectPlotter._add_data.returns)s
         """
-        full_name = '%s.%s' % (module, plotter_name)
-        if plotter_cls is not None:  # plotter has already been imported
-            docstrings.params['%s.formatoptions' % (full_name)] = \
-                plotter_cls.show_keys(
-                    indent=4, func=str,
-                    # include links in sphinx doc
-                    include_links=None)
-            doc_str = ('Possible formatoptions are\n\n'
-                       '%%(%s.formatoptions)s') % full_name
-        else:
-            doc_str = ''
+        return super(DatasetPlotterInterface, self).__call__(*args, **kwargs)
 
-        summary = summary or (
-            'Open and plot data via :class:`%s.%s` plotters' % (
-                module, plotter_name))
 
-        if plotter_cls is not None:
-            _versions.update(get_versions(key=lambda s: s == plugin))
+class DatasetPlotter(ProjectPlotter):
+    """Interface between the :class:`xarray.Dataset` and the psyplot project
 
-        class PlotMethod(PlotterInterface):
-            __doc__ = docstrings.dedents("""
+    This class can be used to make new plots from a given dataset and add them
+    to the current :func:`psyplot.project`
+    """
+
+    _plot_method_base_cls = DatasetPlotterInterface
+
+    def __init__(self, ds, *args, **kwargs):
+        super(DatasetPlotter, self).__init__(*args, **kwargs)
+        self._ds = ds
+
+    docstrings.delete_params('ProjectPlotter._add_data.parameters',
+                             'filename_or_obj')
+
+    @docstrings.get_sectionsf('ProjectPlotter._add_data',
+                              sections=['Parameters', 'Other Parameters',
+                                        'Returns'])
+    @docstrings.dedent
+    def _add_data(self, plotter_cls, *args, **kwargs):
+        """
+        Add new plots to the project
+
+        Parameters
+        ----------
+        %(ProjectPlotter._add_data.parameters.no_filename_or_obj)s
+
+        Other Parameters
+        ----------------
+        %(ProjectPlotter._add_data.other_parameters)s
+
+        Returns
+        -------
+        %(ProjectPlotter._add_data.returns)s
+        """
+        # this method is just a shortcut to the :meth:`Project._add_data`
+        # method but is reimplemented by subclasses as the
+        # :class:`DatasetPlotter` or the :class:`DataArrayPlotter`
+        return super(DatasetPlotter, self)._add_data(plotter_cls, self._ds,
+                                                     *args, **kwargs)
+
+    @classmethod
+    def _gen_doc(cls, summary, full_name, identifier, example_call, doc_str,
+                 show_examples):
+        """Generate the documentation docstring for a PlotMethod"""
+        # leave out the first argument
+        example_call = ', '.join(map(str.strip, example_call.split(',')[1:]))
+        ret = docstrings.dedents("""
             %s
 
             This plotting method adds data arrays and plots them via
             :class:`%s` plotters
 
-            To plot data from a netCDF file type::
+            To plot a variable in this dataset, type::
 
-                >>> psy.plot.%s(%s)
+                >>> ds.psy.plot.%s(%s)
 
-            %s""" % (summary, full_name, identifier, example_call, doc_str) + (
-                   '' if not show_examples else """
+            %s""" % (summary, full_name, identifier, example_call, doc_str))
 
+        if show_examples:
+            ret += '\n\n' + cls._gen_examples(identifier)
+        return ret
+
+    @classmethod
+    def _gen_examples(cls, identifier):
+        """Generate examples how to axes the formatoption docs"""
+        return docstrings.dedents("""
             Examples
             --------
             To explore the formatoptions and their documentations, use the
             ``keys``, ``summaries`` and ``docs`` methods. For example::
 
-                >>> import psyplot.project as psy
-
                 # show the keys corresponding to a group or multiple
                 # formatopions
-                >>> psy.plot.%(id)s.keys('labels')
+                >>> ds.psy.plot.%(id)s.keys('labels')
 
                 # show the summaries of a group of formatoptions or of a
                 # formatoption
-                >>> psy.plot.%(id)s.summaries('title')
+                >>> ds.psy.plot.%(id)s.summaries('title')
 
                 # show the full documentation
-                >>> psy.plot.%(id)s.docs('plot')
+                >>> ds.psy.plot.%(id)s.docs('plot')
 
                 # or access the documentation via the attribute
-                >>> psy.plot.%(id)s.plot""" % {'id': identifier})
-            )
+                >>> ds.psy.plot.%(id)s.plot""" % {'id': identifier})
 
-            _default_slice = default_slice
-            _default_dims = default_dims
-            _plotter_cls = plotter_cls
-            _prefer_list = prefer_list
-            _plugin = plugin
 
-            _summary = summary
+class DataArrayPlotterInterface(PlotterInterface):
+    """Interface for the :class:`DataArrayPlotter` to a plotter"""
 
-        setattr(cls, identifier, PlotMethod(identifier, module, plotter_name))
+    # we reimplement the call method because we do not use the
+    # prefer_list, etc. keywords. And we reimplment the check_data method
+    # because we use the data array directly
+
+    docstrings.delete_params('Plotter.parameters', 'data')
+
+    @docstrings.dedent
+    def __call__(self, *args, **kwargs):
+        """
+        Parameters
+        ----------
+        %(Plotter.parameters.no_data)s
+
+
+        Returns
+        -------
+        psyplot.plotter.Plotter
+            The plotter that visualizes the data
+        """
+        checks, messages = self.check_data()
+        if not all(checks):
+            raise ValueError(
+                'Cannot visualize the data using %s! Reasons:\n    %s' % (
+                    self.plotter_name, '\n    '.join(filter(None, messages))))
+        return self._project_plotter._add_data(
+            self.plotter_cls, *args, **kwargs)
+
+    def check_data(self, *args, **kwargs):
+        """Check whether the plotter of this plot method can visualize the data
+        """
+        plotter_cls = self.plotter_cls
+        da_list = self._project_plotter._da.psy.to_interactive_list()
+        return plotter_cls.check_data(
+            da_list.all_names, da_list.all_dims, da_list.is_unstructured)
+
+
+class DataArrayPlotter(ProjectPlotter):
+    """Interface between the :class:`xarray.Dataset` and the psyplot project
+
+    This class can be used to make new plots from a given dataset and add them
+    to the current :func:`psyplot.project`
+    """
+
+    _plot_method_base_cls = DataArrayPlotterInterface
+
+    def __init__(self, da, *args, **kwargs):
+        super(DataArrayPlotter, self).__init__(*args, **kwargs)
+        self._da = getattr(da, 'arr', da)
+
+    @docstrings.dedent
+    def _add_data(self, plotter_cls, *args, **kwargs):
+        """
+        Visualize this data array
+
+        Parameters
+        ----------
+        %(Plotter.parameters.no_data)s
+
+        Returns
+        -------
+        psyplot.plotter.Plotter
+            The plotter that visualizes the data
+        """
+        # this method is just a shortcut to the :meth:`Project._add_data`
+        # method but is reimplemented by subclasses as the
+        # :class:`DatasetPlotter` or the :class:`DataArrayPlotter`
+        return plotter_cls(self._da, *args, **kwargs)
+
+    @classmethod
+    def _gen_doc(cls, summary, full_name, identifier, example_call, doc_str,
+                 show_examples):
+        """Generate the documentation docstring for a PlotMethod"""
+        # leave out the first argument
+        example_call = ', '.join(map(str.strip, example_call.split(',')[1:]))
+        ret = docstrings.dedents("""
+            %s
+
+            This plotting method visualizes the data via a
+            :class:`%s` plotters
+
+            To plot a variable in this dataset, type::
+
+                >>> da.psy.plot.%s()
+
+            %s""" % (summary, full_name, identifier, doc_str))
+
+        if show_examples:
+            ret += '\n\n' + cls._gen_examples(identifier)
+        return ret
+
+    @classmethod
+    def _gen_examples(cls, identifier):
+        """Generate examples how to axes the formatoption docs"""
+        return docstrings.dedents("""
+            Examples
+            --------
+            To explore the formatoptions and their documentations, use the
+            ``keys``, ``summaries`` and ``docs`` methods. For example::
+
+                # show the keys corresponding to a group or multiple
+                # formatopions
+                >>> da.psy.plot.%(id)s.keys('labels')
+
+                # show the summaries of a group of formatoptions or of a
+                # formatoption
+                >>> da.psy.plot.%(id)s.summaries('title')
+
+                # show the full documentation
+                >>> da.psy.plot.%(id)s.docs('plot')
+
+                # or access the documentation via the attribute
+                >>> da.psy.plot.%(id)s.plot""" % {'id': identifier})
 
 
 if with_cdo:
@@ -2023,6 +2340,10 @@ def register_plotter(identifier, module, plotter_name, plotter_cls=None,
                 "Project class already has a %s attribute" % identifier)
         ProjectPlotter._register_plotter(
             identifier, module, plotter_name, plotter_cls, **kwargs)
+        DatasetPlotter._register_plotter(
+            identifier, module, plotter_name, plotter_cls, **kwargs)
+        DataArrayPlotter._register_plotter(
+            identifier, module, plotter_name, plotter_cls, **kwargs)
     if identifier not in registered_plotters:
         kwargs.update(dict(
             module=module, plotter_name=plotter_name, sorter=sorter,
@@ -2052,7 +2373,8 @@ def unregister_plotter(identifier, sorter=True, plot_func=True):
         delattr(Project, identifier)
         d['sorter'] = False
     if plot_func and hasattr(ProjectPlotter, identifier):
-        delattr(ProjectPlotter, identifier)
+        for cls in [ProjectPlotter, DatasetPlotter, DataArrayPlotter]:
+            delattr(cls, identifier)
         try:
             delattr(plot, '_' + identifier)
         except AttributeError:
