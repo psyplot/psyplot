@@ -39,11 +39,6 @@ addons:  # install cdo
   apt:
     packages:
     - cdo
-before_install:
-  # make sure, gfortran and gnu-sed are installed
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      brew install gnu-sed --with-default-names;
-    fi
 install:
   # select the os name for the conda installer
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
