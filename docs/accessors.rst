@@ -6,7 +6,9 @@ xarray Accessors
 ================
 psyplot defines a :class:`~xarray.DataArray` and a :class:`~xarray.Dataset`
 accessor. You can use these accessors (see :ref:`xarray:internals`) to
-visualize your data and to update your plots.
+visualize your data and to update your plots. The following sections will show
+you how to make and update plots with these accessors. The plotmethods of the
+accessors are the same as for the :class:`psyplot.project.plot` object.
 
 .. _dataset-accessor:
 
