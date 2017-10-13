@@ -1,4 +1,4 @@
-v1.0.1
+v1.1.0
 ======
 Added
 -----
@@ -6,6 +6,8 @@ Added
   saving a matplotlib axes
 * Added the `seaborn-style` command line argument
 * Added the `concat_dim` command line argument
+* Added the plot attribute to the DataArray and Dataset accessors. It is now
+  possible to plot directly from the dataset and the data array
 
 
 v1.0.0
