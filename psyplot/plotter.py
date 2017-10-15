@@ -216,6 +216,9 @@ class Formatoption(object):
     #: included in the gui. If None, the key is used in the gui
     name = None
 
+    #: Boolean that is True if an update of the formatoption requires a replot
+    requires_replot = False
+
     @property
     def init_kwargs(self):
         """:class:`dict` key word arguments that are passed to the
@@ -1602,6 +1605,8 @@ class Plotter(dict):
                 fmto.dependencies)))
         seen = seen or {fmto.key for fmto in fmtos}
         keys = {fmto.key for fmto in fmtos}
+        self.replot = self.replot or any(
+            fmto.requires_replot for fmto in fmtos)
         if self.replot or any(fmto.priority >= START for fmto in fmtos):
             self.replot = True
             self.plot_data = self.data

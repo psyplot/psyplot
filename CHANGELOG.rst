@@ -4,10 +4,13 @@ Added
 -----
 * The yaxis_inverted and xaxis_inverted is now considered when loading and
   saving a matplotlib axes
-* Added the `seaborn-style` command line argument
-* Added the `concat_dim` command line argument
+* Added the ``seaborn-style`` command line argument
+* Added the ``concat_dim`` command line argument
 * Added the plot attribute to the DataArray and Dataset accessors. It is now
   possible to plot directly from the dataset and the data array
+* Added ``requires_replot`` attribute for the ``Formatoption`` class. If this
+  attribute is True and the formatoption is contained in an update, it is the
+  same as calling ``Plotter.update(replot=True))``.
 
 
 v1.0.0
