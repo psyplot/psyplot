@@ -302,7 +302,7 @@ fmt_attrs_map = {
         'lock', 'diff', 'set_value', 'check_and_set', 'initialize_plot',
         'update', 'share', 'finish_update', 'remove', 'changed', 'plotter',
         'priority', 'key', 'plot_fmt', 'update_after_plot',
-        'requires_clearing'],
+        'requires_clearing', 'requires_replot'],
     'Interface to the data': ['data_dependent', 'index_in_list', 'project',
                               'ax', 'raw_data', 'decoder', 'any_decoder',
                               'data', 'iter_data', 'iter_raw_data',
