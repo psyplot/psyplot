@@ -194,17 +194,24 @@ def get_parser(create=True):
         """), 'parser', ['Examples']),
         formatter_class=argparse.RawDescriptionHelpFormatter)
 
+    info_grp = parser.add_argument_group(
+        'Info options',
+        'Options that print informations and quit afterwards')
+
     parser.update_arg('version', short='V', long='version', action='version',
-                      version=psyplot.__version__, if_existent=False)
+                      version=psyplot.__version__, if_existent=False,
+                      group=info_grp)
 
     parser.update_arg('all_versions', short='aV', long='all-versions',
-                      action=AllVersionsAction, if_existent=False)
+                      action=AllVersionsAction, if_existent=False,
+                      group=info_grp)
 
     parser.update_arg('list_plugins', short='lp', long='list-plugins',
-                      action=ListPluginsAction, if_existent=False)
+                      action=ListPluginsAction, if_existent=False,
+                      group=info_grp)
     parser.update_arg(
         'list_plot_methods', short='lpm', long='list-plot-methods',
-        action=ListPlotMethodsAction, if_existent=False)
+        action=ListPlotMethodsAction, if_existent=False, group=info_grp)
 
     parser.setup_args(make_plot)
 
@@ -292,13 +299,12 @@ class AllVersionsAction(argparse.Action):
 class ListPluginsAction(argparse.Action):
 
     def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 default=argparse.SUPPRESS, **kwargs):
+                 **kwargs):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print the names of the plugins and exit")
         super(ListPluginsAction, self).__init__(
-            option_strings, nargs=0, dest=dest, default=default,
-            **kwargs)
+            option_strings, nargs=0, dest=dest, **kwargs)
 
     def __call__(self, parser, namespace, values, option_string=None):
         print(yaml.dump(psyplot.rcParams._plugins, default_flow_style=False))
@@ -308,13 +314,12 @@ class ListPluginsAction(argparse.Action):
 class ListPlotMethodsAction(argparse.Action):
 
     def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 default=argparse.SUPPRESS, **kwargs):
+                 **kwargs):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = "List the available plot methods and what they do"
         super(ListPlotMethodsAction, self).__init__(
-            option_strings, nargs=0, dest=dest, default=default,
-            **kwargs)
+            option_strings, nargs=0, dest=dest, **kwargs)
 
     def __call__(self, parser, namespace, values, option_string=None):
         pm_choices = {}

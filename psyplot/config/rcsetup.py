@@ -769,17 +769,9 @@ environment variable."""
 
         Parameters
         ----------
-        group: str
-            The group of the entry point
         raise_error: bool
             If True, an error is raised when multiple plugins define the same
-            plotter or rcParams key. Otherwise only a warning is raised
-
-        Returns
-        -------
-        dict
-            The plotters configuration dictionaries from the plugins for the
-            :func:`psyplot.project.register_plotter` function"""
+            plotter or rcParams key. Otherwise only a warning is raised"""
 
         pm_env = os.getenv('PSYPLOT_PLOTMETHODS', '').split('::')
         include_pms = [s[4:] for s in pm_env if s.startswith('yes:')]
