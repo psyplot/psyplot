@@ -537,7 +537,10 @@ class TestArrayList(unittest.TestCase):
 
     def tearDown(self):
         for f in self._created_files:
-            os.remove(f)
+            try:
+                os.remove(f)
+            except Exception:
+                pass
         self._created_files.clear()
 
     list_class = psyd.ArrayList
@@ -1055,6 +1058,7 @@ class TestArrayList(unittest.TestCase):
         self.assertEqual(
             self.list_class.from_dict(l.array_info()).array_info(),
             l.array_info())
+        ds.close()
 
     def test_from_dict_04_concat_dim(self):
         """Test opening a multifile dataset that requires a ``concat_dim``"""
