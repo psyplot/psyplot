@@ -857,7 +857,6 @@ class PostProcessing(Formatoption):
             exec(value, {'self': self})
 
 
-@docstrings.get_sectionsf('Plotter')
 class Plotter(dict):
     """Interactive plotting object for one or more data arrays
 
@@ -1265,6 +1264,7 @@ class Plotter(dict):
         if clear:
             self.logger.debug("    Clearing axes...")
             self.ax.clear()
+            self.cleared = True
         # get the formatoptions. We sort them here by key to make sure that the
         # order always stays the same (easier for debugging)
         fmto_groups = self._grouped_fmtos(self._sorted_by_priority(

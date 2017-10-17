@@ -1055,13 +1055,15 @@ class Project(ArrayList):
 
     docstrings.delete_params('ArrayList.from_dict.parameters', 'd', 'pwd')
     docstrings.keep_params('Project._add_data.parameters', 'make_plot')
+    docstrings.keep_params('Project._add_data.parameters', 'clear')
 
     @classmethod
     @docstrings.get_sectionsf('Project.load_project')
     @docstrings.dedent
     def load_project(cls, fname, auto_update=None, make_plot=True,
                      draw=None, alternative_axes=None, main=False,
-                     encoding=None, enable_post=False, new_fig=True, **kwargs):
+                     encoding=None, enable_post=False, new_fig=True,
+                     clear=None, **kwargs):
         """
         Load a project from a file or dict
 
@@ -1109,6 +1111,7 @@ class Project(ArrayList):
         new_fig: bool
             If True (default) and `alternative_axes` is None, new figures are
             created if the figure already exists
+        %(Project._add_data.parameters.clear)s
         pwd: str or None, optional
             Path to the working directory from where the data can be imported.
             If None and `fname` is the path to a file, `pwd` is set to the
@@ -1198,7 +1201,9 @@ class Project(ArrayList):
             for plotter in obj.plotters:
                 plotter.reinit(
                     draw=False,
-                    clear=plotter_cls._get_sample_projection() is not None)
+                    clear=clear or (
+                        clear is None and
+                        plotter_cls._get_sample_projection() is not None))
             if draw is None:
                 draw = rcParams['auto_draw']
             if draw:
