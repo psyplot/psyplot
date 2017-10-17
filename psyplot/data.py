@@ -1,5 +1,6 @@
 from __future__ import division
 import os
+import os.path as osp
 from threading import Thread
 from functools import partial
 from glob import glob
@@ -467,11 +468,28 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
     store_mod, store_cls = ds.psy.data_store
     if store_mod is not None:
         store = ds._file_obj
-        # try several datasets
-        for func in get_fname_funcs:
-            fname = func(store)
-            if fname is not None:
-                break
+        # try several engines
+        if hasattr(store, 'file_objs'):
+            fname = []
+            store_mod = []
+            store_cls = []
+            for obj in store.file_objs:  # mfdataset
+                _fname = None
+                for func in get_fname_funcs:
+                    if _fname is None:
+                        _fname = func(obj)
+                        if _fname is not None:
+                            fname.append(_fname)
+                            store_mod.append(obj.__module__)
+                            store_cls.append(obj.__class__.__name__)
+            fname = tuple(fname)
+            store_mod = tuple(store_mod)
+            store_cls = tuple(store_cls)
+        else:
+            for func in get_fname_funcs:
+                fname = func(store)
+                if fname is not None:
+                    break
     # check if paths is provided and if yes, save the file
     if fname is None and paths is not None:
         fname = next(paths, None)
@@ -1722,8 +1740,8 @@ def open_dataset(filename_or_obj, decode_cf=True, decode_times=True,
     xarray.Dataset
         The dataset that contains the variables from `filename_or_obj`"""
     # use the absolute path name (is saver when saving the project)
-    if isstring(filename_or_obj) and os.path.exists(filename_or_obj):
-        filename_or_obj = os.path.abspath(filename_or_obj)
+    if isstring(filename_or_obj) and osp.exists(filename_or_obj):
+        filename_or_obj = osp.abspath(filename_or_obj)
     if engine == 'gdal':
         from psyplot.gdal_store import GdalStore
         filename_or_obj = GdalStore(filename_or_obj)
@@ -1795,9 +1813,10 @@ def open_mfdataset(paths, decode_cf=True, decode_times=True,
         paths, decode_cf=decode_cf, decode_times=decode_times, engine=engine,
         decode_coords=False, **kwargs)
     if decode_cf:
-        return CFDecoder.decode_ds(ds, gridfile=gridfile, inplace=True,
-                                   decode_coords=decode_coords,
-                                   decode_times=decode_times)
+        ds = CFDecoder.decode_ds(ds, gridfile=gridfile, inplace=True,
+                                 decode_coords=decode_coords,
+                                 decode_times=decode_times)
+    ds.psy._concat_dim = kwargs.get('concat_dim')
     return ds
 
 
@@ -2387,7 +2406,7 @@ class InteractiveArray(InteractiveBase):
                 queues[0].task_done()
             self._new_dims = {}
             self.onupdate.emit()
-        except:
+        except Exception:
             self._finish_all(queues)
             raise
         return InteractiveBase.start_update(self, draw=draw, queues=queues)
@@ -2873,15 +2892,20 @@ class ArrayList(list):
         return instance
 
     @classmethod
-    def _get_dsnames(cls, data, ignore_keys=['attrs', 'plotter', 'ds']):
+    def _get_dsnames(cls, data, ignore_keys=['attrs', 'plotter', 'ds'],
+                     concat_dim=False):
         """Recursive method to get all the file names out of a dictionary
         `data` created with the :meth`array_info` method"""
         def filter_ignores(item):
             return item[0] not in ignore_keys and isinstance(item[1], dict)
         if 'fname' in data:
-            return {(data['fname'], data['store'])}
-        return set(chain(*map(cls._get_dsnames, dict(
-            filter(filter_ignores, six.iteritems(data))).values())))
+            return {tuple(
+                [data['fname'], data['store']] +
+                ([data.get('concat_dim')] if concat_dim else []))}
+        return set(chain(*map(partial(cls._get_dsnames, concat_dim=concat_dim,
+                                      ignore_keys=ignore_keys),
+                              dict(filter(filter_ignores,
+                                          six.iteritems(data))).values())))
 
     @classmethod
     def _get_ds_descriptions(
@@ -3022,29 +3046,38 @@ class ArrayList(list):
                 return arr_name in save_only
             save_only = only
             only = None
+
+        def get_fname_use(fname):
+            squeeze = isstring(fname)
+            fname = safe_list(fname)
+            ret = tuple(f if utils.is_remote_url(f) or osp.isabs(f) else
+                        osp.join(pwd, f)
+                        for f in fname)
+            return ret[0] if squeeze else ret
+
         if not isinstance(alternative_paths, dict):
             it = iter(alternative_paths)
             alternative_paths = defaultdict(partial(next, it, None))
         # first open all datasets if not already done
         if datasets is None:
-            names_and_stores = cls._get_dsnames(d)
+            replace_concat_dim = 'concat_dim' not in kwargs
+
+            names_and_stores = cls._get_dsnames(d, concat_dim=True)
             datasets = {}
-            for fname, (store_mod, store_cls) in names_and_stores:
+            for fname, (store_mod, store_cls), concat_dim in names_and_stores:
                 fname_use = fname
                 got = True
+                if replace_concat_dim and concat_dim is not None:
+                    kwargs['concat_dim'] = concat_dim
+                elif replace_concat_dim and concat_dim is None:
+                    kwargs.pop('concat_dim', None)
                 try:
                     fname_use = alternative_paths[fname]
                 except KeyError:
                     got = False
                 if not got or not fname_use:
                     if fname is not None:
-                        if utils.is_remote_url(fname):
-                            fname_use = fname
-                        else:
-                            if os.path.isabs(fname):
-                                fname_use = fname
-                            else:
-                                fname_use = os.path.join(pwd, fname)
+                        fname_use = get_fname_use(fname)
                 if fname_use is not None:
                     datasets[fname] = _open_ds_from_store(
                         fname_use, store_mod, store_cls, **kwargs)
@@ -3176,7 +3209,7 @@ class ArrayList(list):
         saved_ds = kwargs.pop('_saved_ds', {})
 
         def get_alternative(f):
-            return next(filter(lambda t: os.path.samefile(f, t[0]),
+            return next(filter(lambda t: osp.samefile(f, t[0]),
                                six.iteritems(alternative_paths)), [False, f])
 
         if copy:
@@ -3240,15 +3273,17 @@ class ArrayList(list):
                             else:
                                 found, f = get_alternative(f)
                                 if use_rel_paths:
-                                    f = os.path.relpath(f, pwd)
+                                    f = osp.relpath(f, pwd)
                                 else:
-                                    f = os.path.abspath(f)
+                                    f = osp.abspath(f)
                                 d['fname'].append(f)
                         if fname is None or isinstance(fname,
                                                        six.string_types):
                             d['fname'] = d['fname'][0]
                         else:
                             d['fname'] = tuple(safe_list(fname))
+                        if arr.psy.base.psy._concat_dim is not None:
+                            d['concat_dim'] = arr.psy.base.psy._concat_dim
                 if 'ds' in ds_description:
                     if full_ds:
                         d['ds'] = copy_obj(arr.psy.base)
@@ -3680,6 +3715,9 @@ class DatasetAccessor(object):
     _num = None
     _plot = None
 
+    #: The concatenation dimension for datasets opened with open_mfdataset
+    _concat_dim = None
+
     @property
     def num(self):
         """A unique number for the dataset"""
@@ -3721,7 +3759,7 @@ class DatasetAccessor(object):
         """The name of the file that stores this dataset"""
         fname = self._filename
         if fname is None:
-            fname, store_mod, store_cls = get_filename_ds(self.ds, dump=False)
+            fname = get_filename_ds(self.ds, dump=False)[0]
         return fname
 
     @filename.setter
@@ -3889,7 +3927,7 @@ class InteractiveList(ArrayList, InteractiveBase):
             for arr in self:
                 arr.psy.start_update(draw=False)
             self.onupdate.emit()
-        except:
+        except Exception:
             self._finish_all(queues)
             raise
         if queues is not None:
@@ -3987,6 +4025,22 @@ def _open_ds_from_store(fname, store_mod=None, store_cls=None, **kwargs):
     """Open a dataset and return it"""
     if isinstance(fname, xr.Dataset):
         return fname
+    if not isstring(fname):
+        try:  # test iterable
+            fname[0]
+        except TypeError:
+            pass
+        else:
+            if store_mod is not None and store_cls is not None:
+                if isstring(store_mod):
+                    store_mod = repeat(store_mod)
+                if isstring(store_cls):
+                    store_cls = repeat(store_cls)
+                fname = [getattr(import_module(sm), sc)(f)
+                         for sm, sc, f in zip(store_mod, store_cls, fname)]
+                kwargs['engine'] = None
+                kwargs['lock'] = False
+                return open_mfdataset(fname, **kwargs)
     if store_mod is not None and store_cls is not None:
         fname = getattr(import_module(store_mod), store_cls)(fname)
     return open_dataset(fname, **kwargs)

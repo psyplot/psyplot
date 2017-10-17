@@ -10,6 +10,7 @@ import psyplot.data as psyd
 import _base_testing as bt
 import numpy as np
 from collections import OrderedDict
+import tempfile
 
 try:
     import PyNio
@@ -529,6 +530,16 @@ class TestInteractiveArray(unittest.TestCase):
 class TestArrayList(unittest.TestCase):
     """Test the :class:`psyplot.data.ArrayList` class"""
 
+    _created_files = set()
+
+    def setUp(self):
+        self._created_files = set()
+
+    def tearDown(self):
+        for f in self._created_files:
+            os.remove(f)
+        self._created_files.clear()
+
     list_class = psyd.ArrayList
 
     def test_setup_coords(self):
@@ -642,7 +653,6 @@ class TestArrayList(unittest.TestCase):
         from psyplot.plotter import Plotter
         ds = self._filter_test_ds
         l = self.list_class.from_dataset(ds, ydim=[0, 1], name='v0')
-        print(l)
         axes = plt.subplots(1, 2)[1]
         for i, arr in enumerate(l):
             Plotter(arr, ax=axes[i])
@@ -1025,6 +1035,48 @@ class TestArrayList(unittest.TestCase):
                 ).array_info(),
             l[1:].array_info())
 
+    def test_from_dict_03_mfdataset(self):
+        """Test opening a multifile dataset"""
+        ds = xr.Dataset(*self._from_dataset_test_variables)
+        ds1 = ds.isel(time=slice(0, 2))
+        ds2 = ds.isel(time=slice(2, None))
+        fname1 = tempfile.NamedTemporaryFile(suffix='.nc',
+                                             prefix='tmp_psyplot_').name
+        ds1.to_netcdf(fname1)
+        self._created_files.add(fname1)
+        fname2 = tempfile.NamedTemporaryFile(suffix='.nc',
+                                             prefix='tmp_psyplot_').name
+        ds2.to_netcdf(fname2)
+        self._created_files.add(fname2)
+
+        # now open the mfdataset
+        ds = psyd.open_mfdataset([fname1, fname2])
+        l = self.list_class.from_dataset(ds, name=['v0'], time=[0, 3])
+        self.assertEqual(
+            self.list_class.from_dict(l.array_info()).array_info(),
+            l.array_info())
+
+    def test_from_dict_04_concat_dim(self):
+        """Test opening a multifile dataset that requires a ``concat_dim``"""
+        ds = xr.Dataset(*self._from_dataset_test_variables)
+        ds1 = ds.isel(time=0)
+        ds2 = ds.isel(time=1)
+        fname1 = tempfile.NamedTemporaryFile(suffix='.nc',
+                                             prefix='tmp_psyplot_').name
+        ds1.to_netcdf(fname1)
+        self._created_files.add(fname1)
+        fname2 = tempfile.NamedTemporaryFile(suffix='.nc',
+                                             prefix='tmp_psyplot_').name
+        ds2.to_netcdf(fname2)
+        self._created_files.add(fname2)
+
+        # now open the mfdataset
+        ds = psyd.open_mfdataset([fname1, fname2], concat_dim='time')
+        l = self.list_class.from_dataset(ds, name=['v0'], time=[0, 1])
+        self.assertEqual(
+            self.list_class.from_dict(l.array_info()).array_info(),
+            l.array_info())
+
     def test_logger(self):
         """Test whether one can access the logger"""
         import logging
@@ -1065,6 +1117,16 @@ class TestInteractiveList(TestArrayList):
 class AbsoluteTimeTest(unittest.TestCase, AlmostArrayEqualMixin):
     """TestCase for loading and storing absolute times"""
 
+    _created_files = set()
+
+    def setUp(self):
+        self._created_files = set()
+
+    def tearDown(self):
+        for f in self._created_files:
+            os.remove(f)
+        self._created_files.clear()
+
     @property
     def _test_ds(self):
         import xarray as xr
@@ -1079,9 +1141,10 @@ class AbsoluteTimeTest(unittest.TestCase, AlmostArrayEqualMixin):
     def test_to_netcdf(self):
         """Test whether the data is stored correctly"""
         import netCDF4 as nc
-        import tempfile
         ds = self._test_ds
-        fname = tempfile.NamedTemporaryFile().name
+        fname = tempfile.NamedTemporaryFile(suffix='.nc',
+                                            prefix='tmp_psyplot_').name
+        self._created_files.add(fname)
         psyd.to_netcdf(ds, fname)
         with nc.Dataset(fname) as nco:
             self.assertAlmostArrayEqual(

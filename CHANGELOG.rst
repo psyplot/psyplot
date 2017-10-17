@@ -11,6 +11,12 @@ Added
 * Added ``requires_replot`` attribute for the ``Formatoption`` class. If this
   attribute is True and the formatoption is contained in an update, it is the
   same as calling ``Plotter.update(replot=True))``.
+* We added support for multifile datasets when saving a project.
+  Multifile datasets are datasets that have been opened with, e.g.
+  ``psyplot.data.open_mfdataset`` or
+  ``psyplot.project.plot.<plotmethod>(..., mfmode=True)``. This however does
+  not always work with datasets opened with ``xarray.open_mfdataset``. In these
+  cases, you have to set the ``Dataset.psy._concat_dim`` attribute manually
 
 
 v1.0.0
