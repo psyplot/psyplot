@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+import os
 import sys
 import argparse
 import pickle
@@ -279,6 +281,11 @@ def _load_dims(s):
     return {}
 
 
+#: Disable the default for the info actions on RTD, because it looks
+#: better in the docs
+_on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+
 class AllVersionsAction(argparse.Action):
 
     def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
@@ -287,8 +294,10 @@ class AllVersionsAction(argparse.Action):
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print the versions of all plugins and requirements "
                           "and exit")
+        if not _on_rtd:
+            kwargs['default'] = default
         super(AllVersionsAction, self).__init__(
-            option_strings, nargs=0, dest=dest, default=default,
+            option_strings, nargs=0, dest=dest,
             **kwargs)
 
     def __call__(self, parser, namespace, values, option_string=None):
@@ -299,10 +308,12 @@ class AllVersionsAction(argparse.Action):
 class ListPluginsAction(argparse.Action):
 
     def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 **kwargs):
+                 default=argparse.SUPPRESS, **kwargs):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print the names of the plugins and exit")
+        if not _on_rtd:
+            kwargs['default'] = default
         super(ListPluginsAction, self).__init__(
             option_strings, nargs=0, dest=dest, **kwargs)
 
@@ -314,10 +325,12 @@ class ListPluginsAction(argparse.Action):
 class ListPlotMethodsAction(argparse.Action):
 
     def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 **kwargs):
+                 default=argparse.SUPPRESS, **kwargs):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = "List the available plot methods and what they do"
+        if not _on_rtd:
+            kwargs['default'] = default
         super(ListPlotMethodsAction, self).__init__(
             option_strings, nargs=0, dest=dest, **kwargs)
 
