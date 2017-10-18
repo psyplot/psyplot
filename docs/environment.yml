@@ -1,7 +1,7 @@
 name: psyplot_docs
 channels:
+    - chilipp/label/dev
     - conda-forge
-    - chilipp
 dependencies:
     - python=3.6
     - dask
