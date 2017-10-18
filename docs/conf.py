@@ -231,6 +231,7 @@ intersphinx_mapping = {
     'pandas': ('http://pandas.pydata.org/pandas-docs/stable/', None),
     'numpy': ('https://docs.scipy.org/doc/numpy/', None),
     'matplotlib': ('http://matplotlib.org/', None),
+    'seaborn': ('http://seaborn.pydata.org/', None),
     'sphinx': ('http://www.sphinx-doc.org/en/stable/', None),
     'xarray': ('http://xarray.pydata.org/en/stable/', None),
     'cartopy': ('http://scitools.org.uk/cartopy/docs/latest/', None),
