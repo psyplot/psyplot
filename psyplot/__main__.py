@@ -85,7 +85,7 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
         adjust the paper size of the `output` to it
     rc_file: str
         The path to a yaml configuration file that can be used to update  the
-        :attr:`psyplot.rcParams`
+        :attr:`~psyplot.config.rcsetup.rcParams`
     encoding: str
         The encoding to use for loading the project. If None, it is
         automatically determined by pickle. Note: Set this to ``'latin1'``
@@ -156,11 +156,9 @@ def get_parser(create=True):
     psyplot.parser.FuncArgParser
         The :class:`argparse.ArgumentParser` instance"""
     #: The parse that is used to parse arguments from the command line
-    parser = FuncArgParser(
-        description="""
-        Load a dataset, make the plot and save the result to a file""",
-        epilog=docstrings.get_sections(docstrings.dedents("""
-        **Examples**
+    epilog = docstrings.get_sections(docstrings.dedents("""
+        Examples
+        --------
 
         Here are some examples on how to use psyplot from the command line.
 
@@ -193,7 +191,15 @@ def get_parser(create=True):
 
             $ echo 'title: my title' > fmt.yaml
             $ psyplot myfile.nc -n t2m  -pm mapplot -fmt fmt.yaml -o test.pdf
-        """), 'parser', ['Examples']),
+        """), 'parser', ['Examples'])
+
+    if _on_rtd:  # make a rubric examples section
+        epilog = '.. rubric:: Examples\n' + '\n'.join(epilog.splitlines()[2:])
+
+    parser = FuncArgParser(
+        description="""
+        Load a dataset, make the plot and save the result to a file""",
+        epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
 
     info_grp = parser.add_argument_group(
