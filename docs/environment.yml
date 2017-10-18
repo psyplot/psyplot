@@ -3,7 +3,7 @@ channels:
     - conda-forge
     - chilipp
 dependencies:
-    - python=3.5
+    - python=3.6
     - dask
     - xarray
     - netCDF4
