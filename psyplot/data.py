@@ -2296,10 +2296,20 @@ class InteractiveArray(InteractiveBase):
 
     def _update_concatenated(self, dims, method):
         """Updates a concatenated array to new dimensions"""
+
+        def is_unequal(v1, v2):
+            try:
+                return bool(v1 != v2)
+            except ValueError:  # arrays
+                try:
+                    (v1 == v2).all()
+                except AttributeError:
+                    return False
+
         def filter_attrs(item):
-            """Checks whether the attribute is from the :attr:`base` dataset"""
+            """Checks whether the attribute is from the base variable"""
             return (item[0] not in self.base.attrs or
-                    item[1] != self.base.attrs[item[0]])
+                    is_unequal(item[1], self.base.attrs[item[0]]))
         saved_attrs = list(filter(filter_attrs, six.iteritems(self.arr.attrs)))
         saved_name = self.arr.name
         self.arr.name = 'None'
@@ -2329,10 +2339,21 @@ class InteractiveArray(InteractiveBase):
 
     def _update_array(self, dims, method):
         """Updates the array to the new dims from then :attr:`base` dataset"""
+
+        def is_unequal(v1, v2):
+            try:
+                return bool(v1 != v2)
+            except ValueError:  # arrays
+                try:
+                    (v1 == v2).all()
+                except AttributeError:
+                    return False
+
         def filter_attrs(item):
             """Checks whether the attribute is from the base variable"""
-            return ((item[0] not in base_var.attrs or
-                     item[1] != base_var.attrs[item[0]]))
+            return (item[0] not in base_var.attrs or
+                    is_unequal(item[1], base_var.attrs[item[0]]))
+
         base_var = self.base.variables[self.arr.name]
         if 'name' in dims:
             name = dims.pop('name')
