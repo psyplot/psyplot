@@ -220,6 +220,10 @@ def get_parser(create=True):
     parser.update_arg(
         'list_plot_methods', short='lpm', long='list-plot-methods',
         action=ListPlotMethodsAction, if_existent=False, group=info_grp)
+    parser.update_arg(
+        'list_datasets', short='lds', long='list-datasets',
+        action=ListDsNamesAction, if_existent=False, group=info_grp,
+        help="""List the used dataset names in the given `project`.""")
 
     parser.setup_args(make_plot)
 
@@ -351,6 +355,34 @@ class ListPlotMethodsAction(argparse.Action):
             import psyplot.project as psy
             pm_choices.update(psy.plot._plot_methods)
         print(yaml.dump(pm_choices, default_flow_style=False))
+        sys.exit(0)
+
+
+class ListDsNamesAction(argparse.Action):
+    """An action to list the used file names in a project"""
+
+    def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
+                 default=argparse.SUPPRESS, **kwargs):
+        if nargs is not None:
+            raise ValueError("nargs not allowed")
+        if not _on_rtd:
+            kwargs['default'] = default
+        super(ListDsNamesAction, self).__init__(
+            option_strings, nargs=0, dest=dest, **kwargs)
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        if namespace.project is None:
+            print('A project is required before this argument! Call syntax:\n'
+                  '%s -p <project-file>.pkl %s' % (parser.prog, option_string))
+            sys.exit(1)
+        import psyplot.data as psyd
+        import pickle
+        with open(namespace.project, 'rb') as f:
+            d = pickle.load(f)['arrays']
+        names = list(filter(None, (
+            t[0] for t in psyd.ArrayList._get_dsnames(d))))
+        if names:
+            print(yaml.dump(names, default_flow_style=False))
         sys.exit(0)
 
 
