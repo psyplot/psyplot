@@ -51,7 +51,7 @@ def main(args=None):
 def make_plot(fnames=[], name=[], dims=None, plot_method=None,
               output=None, project=None, engine=None, formatoptions=None,
               tight=False, rc_file=None, encoding=None, enable_post=False,
-              seaborn_style=None,
+              seaborn_style=None, output_project=None,
               concat_dim=get_default_value(xr.open_mfdataset, 'concat_dim')):
     """
     Eventually start the QApplication or only make a plot
@@ -98,6 +98,8 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
     seaborn_style: str
         The name of the style of the seaborn package that can be used for
         the :func:`seaborn.set_style` function
+    output_project: str
+        The name of a project file to save the project to
     concat_dim: str
         The concatenation dimension if multiple files in `fnames` are
         provided
@@ -144,6 +146,8 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
             fnames, name=name, dims=dims or {}, engine=engine,
             fmt=formatoptions or {}, mf_mode=True, concat_dim=concat_dim)
         p.export(output, tight=tight)
+    if output_project is not None:
+        p.save_project(output_project)
     return
 
 
@@ -249,6 +253,7 @@ def get_parser(create=True):
                       metavar='{%s}' % ', '.join(map(repr, pm_choices)))
 
     parser.update_arg('output', short='o', group=output_grp)
+    parser.update_arg('output_project', short='op', group=output_grp)
 
     parser.update_arg('project', short='p')
 
