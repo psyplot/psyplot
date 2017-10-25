@@ -142,10 +142,11 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
         pm = getattr(psy.plot, plot_method, None)
         if pm is None:
             raise ValueError("Unknown plot method %s!" % plot_method)
+        kwargs = {'name': name} if name else {}
         p = pm(
-            fnames, name=name, dims=dims or {}, engine=engine,
+            fnames, dims=dims or {}, engine=engine,
             fmt=formatoptions or {}, mf_mode=True, concat_dim=concat_dim)
-        p.export(output, tight=tight)
+        p.export(output, tight=tight, **kwargs)
     if output_project is not None:
         p.save_project(output_project)
     return
