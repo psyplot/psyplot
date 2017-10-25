@@ -145,8 +145,9 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
         kwargs = {'name': name} if name else {}
         p = pm(
             fnames, dims=dims or {}, engine=engine,
-            fmt=formatoptions or {}, mf_mode=True, concat_dim=concat_dim)
-        p.export(output, tight=tight, **kwargs)
+            fmt=formatoptions or {}, mf_mode=True, concat_dim=concat_dim,
+            **kwargs)
+        p.export(output, tight=tight)
     if output_project is not None:
         p.save_project(output_project)
     return
