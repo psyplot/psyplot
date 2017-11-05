@@ -40,7 +40,10 @@ class TestProject(td.TestArrayList):
                 if osp.exists(f) and osp.isdir(f):
                     shutil.rmtree(f)
                 elif osp.exists(f):
-                    os.remove(f)
+                    try:
+                        os.remove(f)
+                    except Exception:
+                        pass
             self._created_files.clear()
 
     def test_save_and_load_01_simple(self):
