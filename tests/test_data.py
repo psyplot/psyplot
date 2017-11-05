@@ -1128,7 +1128,10 @@ class AbsoluteTimeTest(unittest.TestCase, AlmostArrayEqualMixin):
 
     def tearDown(self):
         for f in self._created_files:
-            os.remove(f)
+            try:
+                os.remove(f)
+            except Exception:
+                pass
         self._created_files.clear()
 
     @property
