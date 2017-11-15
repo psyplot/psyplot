@@ -17,6 +17,9 @@ Added
   ``psyplot.project.plot.<plotmethod>(..., mfmode=True)``. This however does
   not always work with datasets opened with ``xarray.open_mfdataset``. In these
   cases, you have to set the ``Dataset.psy._concat_dim`` attribute manually
+* Added the ``chname`` parameter when loading a project. This parameter can
+  be used to display another variable from the dataset than the one stored
+  in the psyplot project file
 
 
 v1.0.0

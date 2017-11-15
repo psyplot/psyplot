@@ -1,5 +1,4 @@
 from __future__ import division
-import os
 import os.path as osp
 from threading import Thread
 from functools import partial
@@ -2974,7 +2973,7 @@ class ArrayList(list):
     @docstrings.dedent
     def from_dict(cls, d, alternative_paths={}, datasets=None,
                   pwd=None, ignore_keys=['attrs', 'plotter', 'ds'],
-                  only=None, **kwargs):
+                  only=None, chname={}, **kwargs):
         """
         Create a list from the dictionary returned by :meth:`array_info`
 
@@ -3036,6 +3035,9 @@ class ArrayList(list):
               included, else ``False``. This function will also be given to
               subsequents instances of :class:`InteractiveList` objects that
               are contained in the returned value
+        chname: dict
+            A mapping from variable names in the project to variable names
+            that should be used instead
 
         Other Parameters
         ----------------
@@ -3118,7 +3120,7 @@ class ArrayList(list):
                 # the described object is an InteractiveList
                 arr = InteractiveList.from_dict(
                     info, alternative_paths=alternative_paths,
-                    datasets=datasets)
+                    datasets=datasets, chname=chname)
                 if not arr:
                     warn("Skipping empty list %s!" % arr_name)
                     arrays.pop(i)
@@ -3128,7 +3130,8 @@ class ArrayList(list):
                     arr = info.pop('arr')
                 elif 'ds' in info:
                     arr = cls.from_dataset(
-                        info['ds'], dims=info['dims'], name=info['name'])[0]
+                        info['ds'], dims=info['dims'],
+                        name=chname.get(info['name'], info['name']))[0]
                 else:
                     fname = info['fname']
                     if fname is None:
@@ -3147,7 +3150,7 @@ class ArrayList(list):
                         continue
                     arr = cls.from_dataset(
                         datasets[fname], dims=info['dims'],
-                        name=info['name'])[0]
+                        name=chname.get(info['name'], info['name']))[0]
                 for key, val in six.iteritems(info.get('attrs', {})):
                     arr.attrs.setdefault(key, val)
             arr.psy.arr_name = arr_name

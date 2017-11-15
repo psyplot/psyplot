@@ -52,7 +52,8 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
               output=None, project=None, engine=None, formatoptions=None,
               tight=False, rc_file=None, encoding=None, enable_post=False,
               seaborn_style=None, output_project=None,
-              concat_dim=get_default_value(xr.open_mfdataset, 'concat_dim')):
+              concat_dim=get_default_value(xr.open_mfdataset, 'concat_dim'),
+              chname={}):
     """
     Eventually start the QApplication or only make a plot
 
@@ -103,6 +104,9 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
     concat_dim: str
         The concatenation dimension if multiple files in `fnames` are
         provided
+    chname: dict
+        A mapping from variable names in the project to variable names in the
+        datasets that should be used instead
     """
     if project is not None and (name != [] or dims is not None):
         warn('The `name` and `dims` parameter are ignored if the `project`'
@@ -129,12 +133,14 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
     import psyplot.project as psy
     if project is not None:
         fnames = [s.split(',') for s in fnames]
+        chname = dict(chname)
         single_files = (l[0] for l in fnames if len(l) == 1)
         alternative_paths = defaultdict(lambda: next(single_files, None))
         alternative_paths.update([l for l in fnames if len(l) == 2])
         p = psy.Project.load_project(
             project, alternative_paths=alternative_paths,
-            engine=engine, encoding=encoding, enable_post=enable_post)
+            engine=engine, encoding=encoding, enable_post=enable_post,
+            chname=chname)
         if formatoptions is not None:
             p.update(fmt=formatoptions)
         p.export(output, tight=tight)
@@ -264,6 +270,12 @@ def get_parser(create=True):
         The path to a yaml (``'.yml'`` or ``'.yaml'``) or pickle file
         defining a dictionary of formatoption that is applied to the data
         visualized by the chosen `plot_method`""", metavar='FILENAME')
+
+    parser.update_arg(
+        'chname', type=lambda s: s.split(','), nargs='*', help="""
+        A mapping from variable names in the project to variable names in the
+        datasets that should be used instead. Variable names should be
+        separated by a comma.""", metavar='project-variable,variable-to-use')
 
     parser.update_arg('tight', short='t', group=output_grp)
 
