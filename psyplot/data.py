@@ -3078,6 +3078,12 @@ class ArrayList(list):
                         for f in fname)
             return ret[0] if squeeze else ret
 
+        def get_name(name):
+            if not isstring(name):
+                return list(map(get_name, name))
+            else:
+                return chname.get(name, name)
+
         if not isinstance(alternative_paths, dict):
             it = iter(alternative_paths)
             alternative_paths = defaultdict(partial(next, it, None))
@@ -3131,7 +3137,7 @@ class ArrayList(list):
                 elif 'ds' in info:
                     arr = cls.from_dataset(
                         info['ds'], dims=info['dims'],
-                        name=chname.get(info['name'], info['name']))[0]
+                        name=get_name(info['name']))[0]
                 else:
                     fname = info['fname']
                     if fname is None:
@@ -3150,7 +3156,7 @@ class ArrayList(list):
                         continue
                     arr = cls.from_dataset(
                         datasets[fname], dims=info['dims'],
-                        name=chname.get(info['name'], info['name']))[0]
+                        name=get_name(info['name']))[0]
                 for key, val in six.iteritems(info.get('attrs', {})):
                     arr.attrs.setdefault(key, val)
             arr.psy.arr_name = arr_name
