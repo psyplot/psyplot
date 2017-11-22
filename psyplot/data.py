@@ -91,6 +91,13 @@ def _get_dims(arr):
     return tuple(filter(lambda d: d != VARIABLELABEL, arr.dims))
 
 
+def _open_store(store_mod, store_cls, fname):
+    try:
+        return getattr(import_module(store_mod), store_cls).open(fname)
+    except AttributeError:
+        return getattr(import_module(store_mod), store_cls)(fname)
+
+
 @docstrings.get_sectionsf('setup_coords')
 @dedent
 def setup_coords(arr_names=None, sort=[], dims={}, **kwargs):
@@ -4066,13 +4073,13 @@ def _open_ds_from_store(fname, store_mod=None, store_cls=None, **kwargs):
                     store_mod = repeat(store_mod)
                 if isstring(store_cls):
                     store_cls = repeat(store_cls)
-                fname = [getattr(import_module(sm), sc)(f)
+                fname = [_open_store(sm, sc, f)
                          for sm, sc, f in zip(store_mod, store_cls, fname)]
                 kwargs['engine'] = None
                 kwargs['lock'] = False
                 return open_mfdataset(fname, **kwargs)
     if store_mod is not None and store_cls is not None:
-        fname = getattr(import_module(store_mod), store_cls)(fname)
+        fname = _open_store(store_mod, store_cls, fname)
     return open_dataset(fname, **kwargs)
 
 

@@ -4,6 +4,10 @@ matrix:
   # linux environments
   - env:
       - PYTHON_VERSION=3.6
+      - XARRAY_VERSION=0.10
+    os: linux
+  - env:
+      - PYTHON_VERSION=3.6
       - XARRAY_VERSION=0.9
     os: linux
   - env:
@@ -17,6 +21,10 @@ matrix:
   - env:
       - PYTHON_VERSION=3.5
       - XARRAY_VERSION=0.8
+    os: linux
+  - env:
+      - PYTHON_VERSION=2.7
+      - XARRAY_VERSION=0.10
     os: linux
   - env:
       - PYTHON_VERSION=2.7
@@ -29,11 +37,15 @@ matrix:
   # osx environments
   - env:
       - PYTHON_VERSION=3.6
+      - XARRAY_VERSION=0.10
+    os: osx
+  - env:
+      - PYTHON_VERSION=3.6
       - XARRAY_VERSION=0.9
     os: osx
   - env:
       - PYTHON_VERSION=2.7
-      - XARRAY_VERSION=0.9
+      - XARRAY_VERSION=0.10
     os: osx
 addons:  # install cdo
   apt:

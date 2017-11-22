@@ -1185,7 +1185,10 @@ class FilenamesTest(unittest.TestCase):
         store_mod, store = ds.psy.data_store
         # try to load the dataset
         mod = import_module(store_mod)
-        ds2 = psyd.open_dataset(getattr(mod, store)(fname))
+        try:
+            ds2 = psyd.open_dataset(getattr(mod, store).open(fname))
+        except AttributeError:
+            ds2 = psyd.open_dataset(getattr(mod, store)(fname))
         ds.close()
         ds2.close()
         ds.psy.filename = None
