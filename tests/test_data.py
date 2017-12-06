@@ -560,6 +560,7 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
     def test_fldmean_01_lola(self):
         fname = bt.get_file('test-t2m-u-v.nc')
         ds = psyd.open_dataset(fname)
+        psyd.rcParams['gridweights.use_cdo'] = True
         means = ds.psy.t2m.psy.fldmean(keepdims=True)
         ds.close()
         ref = Cdo().fldmean(input=fname, returnArray='t2m')
@@ -573,6 +574,7 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
     def test_fldmean_02_icon(self):
         fname = bt.get_file('icon_test.nc')
         ds = psyd.open_dataset(fname)
+        psyd.rcParams['gridweights.use_cdo'] = True
         means = ds.psy.t2m.psy.fldmean(keepdims=True)
         ds.close()
         ref = Cdo().fldmean(input=fname, returnArray='t2m')
@@ -582,6 +584,7 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
     def test_fldstd_01_lola(self):
         fname = bt.get_file('test-t2m-u-v.nc')
         ds = psyd.open_dataset(fname)
+        psyd.rcParams['gridweights.use_cdo'] = True
         std = ds.psy.t2m.psy.fldstd(keepdims=True)
         ds.close()
         ref = Cdo().fldstd(input=fname, returnArray='t2m')
@@ -595,6 +598,7 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
     def test_fldstd_02_icon(self):
         fname = bt.get_file('icon_test.nc')
         ds = psyd.open_dataset(fname)
+        psyd.rcParams['gridweights.use_cdo'] = True
         std = ds.psy.t2m.psy.fldstd(keepdims=True)
         ds.close()
         ref = Cdo().fldstd(input=fname, returnArray='t2m')
