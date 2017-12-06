@@ -240,7 +240,7 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
             arr = ds.t2m[1:, 1]
             arr.psy.init_accessor(base=ds)
             if not six.PY2:
-                with self.assertWarnsRegex(UserWarning, 'time'):
+                with self.assertWarnsRegex(RuntimeWarning, 'time'):
                     dims = arr.psy.idims
             l = psyd.ArrayList.from_dataset(
                 ds, name='t2m', time=slice(1, None), lev=85000., method='sel')
@@ -292,6 +292,7 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
         decoder = psyd.CFDecoder(ds)
         arr = ds.t2m
         arr.attrs.pop('coordinates', None)
+        arr.encoding.pop('coordinates', None)
         for c in ds.coords.values():
             c.attrs.pop('axis', None)
         for dim in ['x', 'y', 'z', 't']:

@@ -829,14 +829,18 @@ class CFDecoder(object):
             'coordinates', '')).split()
         if not coord_names:
             return
+        ret = []
         for coord in map(lambda dim: coords[dim], filter(
                 lambda dim: dim in coords, chain(
                     coord_names, var.dims))):
             # check for the axis attribute or whether the coordinate is in the
             # list of possible coordinate names
-            if (coord.attrs.get('axis', '').lower() == axis or
-                    coord.name in getattr(self, axis)):
-                return coord
+            if (coord.name not in (c.name for c in ret) and
+                    (coord.attrs.get('axis', '').lower() == axis or
+                     coord.name in getattr(self, axis))):
+                ret.append(coord)
+        if ret:
+            return None if len(ret) > 1 else ret[0]
         # If the coordinates attribute is specified but the coordinate
         # variables themselves have no 'axis' attribute, we interpret the
         # coordinates such that x: -1, y: -2, z: -3
