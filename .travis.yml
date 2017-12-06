@@ -76,7 +76,7 @@ install:
   - source activate psyplot_$ENVKEY
   # install python cdo bindings
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        pip install cdo;
+        conda install -c conda-forge cdo python-cdo;
     fi
   # install coveralls
   - pip install coveralls
