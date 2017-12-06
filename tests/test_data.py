@@ -387,7 +387,7 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
     """Test the :class:`psyplot.data.InteractiveArray` class"""
 
     def tearDown(self):
-        psyd.rcParams.update_from_defaultParams()
+        psyd.rcParams.update_from_defaultParams(plotters=False)
 
     def test_auto_update(self):
         """Test the :attr:`psyplot.plotter.Plotter.no_auto_update` attribute"""

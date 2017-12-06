@@ -77,6 +77,7 @@ install:
   # install python cdo bindings
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         conda install -c conda-forge cdo python-cdo;
+        export CDO="$HOME/miniconda/envs/$ENVKEY/bin/cdo";
     fi
   # install coveralls
   - pip install coveralls
