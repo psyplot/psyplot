@@ -1,4 +1,5 @@
 from __future__ import division
+import os
 import os.path as osp
 from threading import Thread
 from functools import partial
@@ -21,7 +22,8 @@ from psyplot.docstring import dedent, docstrings, dedents
 from psyplot.compat.pycompat import (
     zip, map, isstring, OrderedDict, filter, range, getcwd,
     Queue)
-from psyplot.warning import warn, PsyPlotRuntimeWarning
+from psyplot.warning import PsyPlotRuntimeWarning
+from warnings import warn
 import psyplot.utils as utils
 
 
@@ -630,6 +632,7 @@ class CFDecoder(object):
         def add_attrs(obj):
             if 'coordinates' in obj.attrs:
                 extra_coords.update(obj.attrs['coordinates'].split())
+                obj.encoding['coordinates'] = obj.attrs.pop('coordinates')
             if 'bounds' in obj.attrs:
                 extra_coords.add(obj.attrs['bounds'])
         if gridfile is not None and not isinstance(gridfile, xr.Dataset):
@@ -822,7 +825,8 @@ class CFDecoder(object):
         # we first check for the dimensions and then for the coordinates
         # attribute
         coords = coords or self.ds.coords
-        coord_names = var.attrs.get('coordinates', '').split()
+        coord_names = var.attrs.get('coordinates', var.encoding.get(
+            'coordinates', '')).split()
         if not coord_names:
             return
         for coord in map(lambda dim: coords[dim], filter(
@@ -1189,7 +1193,7 @@ class CFDecoder(object):
         missing = set(arr.dims).difference(ret)
         if missing:
             warn('Could not get slices for the following dimensions: %r' % (
-                missing, ))
+                missing, ), PsyPlotRuntimeWarning)
         return ret
 
     @docstrings.get_sectionsf('CFDecoder.get_plotbounds', sections=[
@@ -2152,6 +2156,30 @@ class InteractiveArray(InteractiveBase):
         self._decoder = value
 
     @property
+    def xcoord(self):
+        """The x-coordinate of this data array"""
+        return self.decoder.get_x(next(six.itervalues(self.base_variables)),
+                                  self.arr.coords)
+
+    @property
+    def ycoord(self):
+        """The y-coordinate of this data array"""
+        return self.decoder.get_y(next(six.itervalues(self.base_variables)),
+                                  self.arr.coords)
+
+    @property
+    def xdim(self):
+        """The name of the x-dimension of this data array"""
+        return self.decoder.get_xname(
+            next(six.itervalues(self.base_variables)), self.arr.coords)
+
+    @property
+    def ydim(self):
+        """The name of the y-dimension of this data array"""
+        return self.decoder.get_yname(
+            next(six.itervalues(self.base_variables)), self.arr.coords)
+
+    @property
     def idims(self):
         """Coordinates in the :attr:`base` dataset as int or slice
 
@@ -2172,6 +2200,398 @@ class InteractiveArray(InteractiveBase):
         """%(InteractiveBase._njobs)s"""
         ret = super(self.__class__, self)._njobs or [0]
         ret[0] += 1
+        return ret
+
+    def _gridweights(self):
+        """Calculate the gridweights with a simple rectangular approximation"""
+        arr = self.arr
+        xcoord = self.xcoord
+        ycoord = self.ycoord
+        # convert the units
+        xcoord_orig = xcoord
+        ycoord_orig = ycoord
+        units = xcoord.attrs.get('units', '')
+        in_metres = False
+        in_degree = False
+        if 'deg' in units or (
+                'rad' not in units and 'lon' in xcoord.name and
+                'lat' in ycoord.name):
+            xcoord = xcoord * np.pi / 180
+            ycoord = ycoord * np.pi / 180
+            in_degree = True
+        elif 'rad' in units:
+            pass
+        else:
+            in_metres = True
+
+        # calculate the gridcell boundaries
+        xbounds = self.decoder.get_plotbounds(xcoord, arr.coords)
+        ybounds = self.decoder.get_plotbounds(ycoord, arr.coords)
+        if xbounds.ndim == 1:
+            xbounds, ybounds = np.meshgrid(xbounds, ybounds)
+
+        # calculate the weights based on the units
+        if xcoord.ndim == 2 or self.decoder.is_unstructured(self.arr):
+            warn("[%s] - Curvilinear grids are not supported! "
+                 "Using constant grid cell area weights!" % self.logger.name,
+                 PsyPlotRuntimeWarning)
+            weights = np.ones_like(xcoord.values)
+        elif in_metres:
+            weights = np.abs(xbounds[:-1, :-1] - xbounds[1:, 1:]) * (
+                np.abs(ybounds[:-1, :-1] - ybounds[1:, 1:]))
+        else:
+            weights = np.abs(xbounds[:-1, :-1] - xbounds[1:, 1:]) * (
+                np.sin(ybounds[:-1, :-1]) - np.sin(ybounds[1:, 1:]))
+
+        # normalize the weights by dividing through the sum
+        if in_degree:
+            xmask = (xcoord_orig.values < -400) | (xcoord_orig.values > 400)
+            ymask = (ycoord_orig.values < -200) | (ycoord_orig.values > 200)
+            if xmask.any() or ymask.any():
+                if xmask.ndim == 1 and weights.ndim != 1:
+                    xmask, ymask = np.meshgrid(xmask, ymask)
+                weights[xmask | ymask] = np.nan
+        if np.any(~np.isnan(weights)):
+            weights /= np.nansum(weights)
+        return weights
+
+    def _gridweights_cdo(self):
+        """Estimate the gridweights using CDOs"""
+        from cdo import Cdo
+        from tempfile import NamedTemporaryFile
+        sdims = {self.ydim, self.xdim}
+        cdo = Cdo()
+        fname = NamedTemporaryFile(prefix='psy', suffix='.nc').name
+        arr = self.arr
+        base = arr.psy.base
+        dims = arr.dims
+        ds = arr.isel(**{d: 0 for d in set(dims) - sdims}).to_dataset()
+        for coord in six.itervalues(ds.coords):
+            bounds = coord.attrs.get('bounds', coord.encoding.get('bounds'))
+            if bounds and bounds in set(base.coords) - set(ds.coords):
+                ds[bounds] = base.sel(
+                    **{d: arr.coords[d] for d in sdims}).coords[bounds]
+        to_netcdf(ds, fname)
+        ret = cdo.gridweights(input=fname, returnArray='cell_weights')
+        try:
+            os.remove(fname)
+        except Exception:
+            pass
+        return ret
+
+    def _weights_to_da(self, weights, keepdims=False, keepshape=False):
+        """Convert the 2D weights into a DataArray and potentially enlarge it
+        """
+        arr = self.arr
+        xcoord = self.xcoord
+        ycoord = self.ycoord
+        sdims = (self.ydim, self.xdim)
+        if sdims[0] == sdims[1]:   # unstructured grids
+            sdims = sdims[:1]
+        if (ycoord.name, xcoord.name) != sdims:
+            attrs = dict(coordinates=ycoord.name + ' ' + xcoord.name)
+        else:
+            attrs = {}
+
+        # reshape and expand if necessary
+        if not keepdims and not keepshape:
+            coords = {ycoord.name: ycoord, xcoord.name: xcoord}
+            dims = sdims
+        elif keepshape:
+            dims = arr.dims
+            coords = arr.coords
+            reps = tuple(s if dim not in sdims else 1
+                         for s, dim in zip(arr.shape, arr.dims))
+            weights = np.tile(weights, reps)
+            weights[arr.isnull().values] = np.nan
+            summed = np.nansum(weights, axis=tuple(map(dims.index, sdims)),
+                               keepdims=True)
+            weights /= summed
+        else:
+            dims = arr.dims
+            coords = arr.isel(
+                **{d: 0 if d not in sdims else slice(None)
+                   for d in dims}).coords
+            weights = weights.reshape(
+                tuple(1 if dim not in sdims else s
+                      for s, dim in zip(arr.shape, arr.dims)))
+        return xr.DataArray(weights, dims=dims, coords=coords,
+                            name='cell_weights', attrs=attrs)
+
+    def gridweights(self, keepdims=False, keepshape=False, use_cdo=None):
+        """Calculate the cell weights for each grid cell
+
+        Parameters
+        ----------
+        keepdims: bool
+            If True, keep the number of dimensions
+        keepshape: bool
+            If True, keep the exact shape as the source array and the missing
+            values in the array are masked
+        use_cdo: bool or None
+            If True, use Climate Data Operators (CDOs) to calculate the
+            weights. Note that this is used automatically for unstructured
+            grids. If None, it depends on the ``'gridweights.use_cdo'``
+            item in the :attr:`psyplot.rcParams`.
+
+        Returns
+        -------
+        xarray.DataArray
+            The 2D-DataArray with the grid weights"""
+        if use_cdo is None:
+            use_cdo = rcParams['gridweights.use_cdo']
+        if not use_cdo and self.decoder.is_unstructured(self.arr):
+            use_cdo = True
+        if use_cdo is None or use_cdo:
+            try:
+                weights = self._gridweights_cdo()
+            except Exception:
+                if use_cdo:
+                    raise
+                else:
+                    weights = self._gridweights()
+        else:
+            weights = self._gridweights()
+
+        return self._weights_to_da(weights, keepdims=keepdims,
+                                   keepshape=keepshape)
+
+    def _fldaverage_args(self):
+        """Masked array, xname, yname and axis for calculating the average"""
+        arr = self.arr
+        ma_arr = np.ma.array(arr, mask=arr.isnull())
+        sdims = (self.ydim, self.xdim)
+        if sdims[0] == sdims[1]:
+            sdims = sdims[:1]
+        axis = tuple(map(arr.dims.index, sdims))
+        return ma_arr, sdims, axis
+
+    def _insert_fldmean_bounds(self, da, keepdims=False):
+        xcoord = self.xcoord
+        ycoord = self.ycoord
+        sdims = (self.ydim, self.xdim)
+        xbounds = np.array([[xcoord.min(), xcoord.max()]])
+        ybounds = np.array([[ycoord.min(), ycoord.max()]])
+        xdims = (sdims[-1], 'bnds') if keepdims else ('bnds', )
+        ydims = (sdims[0], 'bnds') if keepdims else ('bnds', )
+        xattrs = xcoord.attrs.copy()
+        xattrs.pop('bounds', None)
+        yattrs = ycoord.attrs.copy()
+        yattrs.pop('bounds', None)
+        da.psy.base.coords[xcoord.name + '_bnds'] = xr.Variable(
+            xdims, xbounds if keepdims else xbounds[0], attrs=xattrs)
+        da.psy.base.coords[ycoord.name + '_bnds'] = xr.Variable(
+            ydims, ybounds if keepdims else ybounds[0], attrs=yattrs)
+
+    def fldmean(self, keepdims=False):
+        """Calculate the weighted mean over the x- and y-dimension
+
+        This method calculates the weighted mean of the spatial dimensions.
+        Weights are calculated using the :meth:`gridweights` method, missing
+        values are ignored. x- and y-dimensions are identified using the
+        :attr:`decoder`s :meth:`~CFDecoder.get_xname` and
+        :meth:`~CFDecoder.get_yname` methods.
+
+        Parameters
+        ----------
+        keepdims: bool
+            If True, the dimensionality of this array is maintained
+
+        Returns
+        -------
+        xr.DataArray
+            The computed fldmeans. The dimensions are the same as in this
+            array, only the spatial dimensions are omitted if `keepdims` is
+            False.
+
+        See Also
+        --------
+        fldstd: For calculating the weighted standard deviation
+        fldpctl: For calculating weighted percentiles
+        """
+        gridweights = self.gridweights(keepshape=True)
+        arr = self.arr
+
+        xcoord = self.decoder.get_x(next(six.itervalues(self.base_variables)),
+                                    arr.coords)
+        ycoord = self.decoder.get_y(next(six.itervalues(self.base_variables)),
+                                    arr.coords)
+        ma_arr, sdims, axis = self._fldaverage_args()
+        ma_means = np.ma.average(ma_arr, weights=gridweights, axis=axis)
+        if keepdims:
+            ma_means = ma_means.reshape(
+                tuple(1 if i in axis else s for i, s in enumerate(arr.shape)))
+        means = ma_means.data.copy()
+        means[ma_means.mask] = np.nan
+
+        coords = dict(arr.coords)
+        if keepdims:
+            coords[xcoord.name] = xcoord.mean().expand_dims(xcoord.dims[0])
+            coords[ycoord.name] = ycoord.mean().expand_dims(ycoord.dims[0])
+            dims = arr.dims
+        else:
+            coords[xcoord.name] = xcoord.mean()
+            coords[ycoord.name] = ycoord.mean()
+            dims = tuple(d for d in arr.dims if d not in sdims)
+        coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
+        coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
+        ret = xr.DataArray(means, name=arr.name, dims=dims,
+                           coords=coords, attrs=arr.attrs.copy())
+        self._insert_fldmean_bounds(ret, keepdims)
+        return ret
+
+    def fldstd(self, keepdims=False):
+        """Calculate the weighted standard deviation over x- and y-dimension
+
+        This method calculates the weighted standard deviation of the spatial
+        dimensions. Weights are calculated using the :meth:`gridweights`
+        method, missing values are ignored. x- and y-dimensions are identified
+        using the :attr:`decoder`s :meth:`~CFDecoder.get_xname` and
+        :meth:`~CFDecoder.get_yname` methods.
+
+        Parameters
+        ----------
+        keepdims: bool
+            If True, the dimensionality of this array is maintained
+
+        Returns
+        -------
+        xr.DataArray
+            The computed standard deviations. The dimensions are the same as
+            in this array, only the spatial dimensions are omitted if
+            `keepdims` is  False.
+
+        See Also
+        --------
+        fldmean: For calculating the weighted mean
+        fldpctl: For calculating weighted percentiles
+        """
+        arr = self.arr
+        ret = self.fldmean(keepdims=keepdims)
+        weights = self.gridweights(keepshape=True)
+        if not keepdims:
+            means = ret.values.reshape(
+                tuple(1 if d not in ret.dims else s
+                      for d, s in zip(arr.dims, arr.shape)))
+        else:
+            means = ret.values
+        ma_arr, sdims, axis = self._fldaverage_args()
+        ma_variance = np.ma.average((ma_arr - means)**2, weights=weights,
+                                    axis=axis)
+        if keepdims:
+            ma_variance = ma_variance.reshape(
+                tuple(1 if i in axis else s for i, s in enumerate(arr.shape)))
+
+        variance = ma_variance.data.copy()
+        variance[ma_variance.mask] = np.nan
+
+        ret.values[:] = np.sqrt(variance)
+        return ret
+
+    def fldpctl(self, q, keepdims=False):
+        """Calculate the percentiles along the x- and y-dimensions
+
+        This method calculates the specified percentiles along the given
+        dimension. Percentiles are weighted by the :meth:`gridweights` method
+        and missing values are ignored. x- and y-dimensions are estimated
+        through the :attr:`decoder`s :meth:`~CFDecoder.get_xname` and
+        :meth:`~CFDecoder.get_yname` methods
+
+        Parameters
+        ----------
+        q: float or list of floats between 0 and 100
+            The quantiles to estimate
+        keepdims: bool
+            If True, the number of dimensions of the array are maintained
+
+        Returns
+        -------
+        xr.DataArray
+            The data array with the dimensions. If `q` is a list or `keepdims`
+            is True, the first dimension will be the percentile ``'pctl'``.
+            The other dimensions are the same as in this array, only the
+            spatial dimensions are omitted if `keepdims` is False.
+
+        See Also
+        --------
+        fldstd: For calculating the weighted standard deviation
+        fldmean: For calculating the weighted mean"""
+        gridweights = self.gridweights(keepshape=True)
+        arr = self.arr
+
+        q = np.asarray(q) / 100.
+        if not (np.all(q >= 0) and np.all(q <= 100)):
+            raise ValueError('q should be in [0, 100]')
+        reduce_shape = False if keepdims else (not bool(q.ndim))
+        if not q.ndim:
+            q = q[np.newaxis]
+        data = arr.values.copy()
+        sdims, axis = self._fldaverage_args()[1:]
+        weights = gridweights.values
+        # flatten along the spatial axis
+        for ax in axis:
+            data = np.rollaxis(data, ax, 0)
+            weights = np.rollaxis(weights, ax, 0)
+        data = data.reshape(
+            (np.product(data.shape[:len(axis)]), ) + data.shape[len(axis):])
+        weights = weights.reshape(
+            (np.product(weights.shape[:len(axis)]), ) +
+            weights.shape[len(axis):])
+
+        # sort the data
+        sorter = np.argsort(data, axis=0)
+        all_indices = map(tuple, product(*map(range, data.shape[1:])))
+        for indices in all_indices:
+            indices = (slice(None), ) + indices
+            data.__setitem__(
+                indices, data.__getitem__(indices)[
+                    sorter.__getitem__(indices)])
+            weights.__setitem__(
+                indices, weights.__getitem__(indices)[
+                    sorter.__getitem__(indices)])
+
+        # compute the percentiles
+        weights = np.nancumsum(weights, axis=0) - 0.5 * weights
+        all_indices = map(tuple, product(*map(range, data.shape[1:])))
+        pctl = np.zeros((len(q), ) + data.shape[1:])
+
+        for indices in all_indices:
+            indices = (slice(None), ) + indices
+            mask = ~np.isnan(data.__getitem__(indices))
+            pctl.__setitem__(indices, np.interp(
+                q, weights.__getitem__(indices)[mask],
+                data.__getitem__(indices)[mask]))
+
+        # setup the data array and it's coordinates
+        xcoord = self.decoder.get_x(next(six.itervalues(self.base_variables)),
+                                    arr.coords)
+        ycoord = self.decoder.get_y(next(six.itervalues(self.base_variables)),
+                                    arr.coords)
+        coords = dict(arr.coords)
+        if keepdims:
+            pctl = pctl.reshape(
+                (len(q), ) +
+                tuple(1 if i in axis else s for i, s in enumerate(arr.shape)))
+            coords[xcoord.name] = xcoord.mean().expand_dims(xcoord.dims[0])
+            coords[ycoord.name] = ycoord.mean().expand_dims(ycoord.dims[0])
+            dims = arr.dims
+        else:
+            coords[xcoord.name] = xcoord.mean()
+            coords[ycoord.name] = ycoord.mean()
+            dims = tuple(d for d in arr.dims if d not in sdims)
+        if reduce_shape:
+            pctl = pctl[0]
+            coords['pctl'] = xr.Variable((), q[0] * 100.,
+                                         attrs={'long_name': 'Percentile'})
+        else:
+            coords['pctl'] = xr.Variable(('pctl', ), q * 100.,
+                                         attrs={'long_name': 'Percentile'})
+            dims = ('pctl', ) + dims
+        coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
+        coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
+        ret = xr.DataArray(pctl, name=arr.name, dims=dims, coords=coords,
+                           attrs=arr.attrs.copy())
+        self._insert_fldmean_bounds(ret, keepdims)
         return ret
 
     logger = InteractiveBase.logger

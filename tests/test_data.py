@@ -33,6 +33,14 @@ except ImportError as e:
     scipy = psyd._MissingModule(e)
     with_scipy = False
 
+try:
+    from cdo import Cdo
+    Cdo()
+except Exception:
+    with_cdo = False
+else:
+    with_cdo = True
+
 
 class AlmostArrayEqualMixin(object):
 
@@ -374,8 +382,11 @@ class UGridDecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
         self.assertAlmostArrayEqual(y.values, [0.4, 0.76666668])
 
 
-class TestInteractiveArray(unittest.TestCase):
+class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
     """Test the :class:`psyplot.data.InteractiveArray` class"""
+
+    def tearDown(self):
+        psyd.rcParams.update_from_defaultParams()
 
     def test_auto_update(self):
         """Test the :attr:`psyplot.plotter.Plotter.no_auto_update` attribute"""
@@ -525,6 +536,98 @@ class TestInteractiveArray(unittest.TestCase):
         self.assertIn('test', arr.attrs)
         self.assertEqual(arr.test, 4)
         self.assertEqual(arr.name, 'something')
+
+    @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    def test_gridweights_01_lola(self):
+        fname = bt.get_file('test-t2m-u-v.nc')
+        ds = psyd.open_dataset(fname)
+        weights = ds.psy.t2m.psy.gridweights()
+        ds.close()
+        ref = Cdo().gridweights(input=fname, returnArray='cell_weights')
+        self.assertAlmostArrayEqual(weights, ref, atol=1e-7)
+
+    @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    def test_gridweights_02_icon(self):
+        fname = bt.get_file('icon_test.nc')
+        ds = psyd.open_dataset(fname)
+        weights = ds.psy.t2m.psy.gridweights()
+        ds.close()
+        ref = Cdo().gridweights(input=fname, returnArray='cell_weights')
+        self.assertAlmostArrayEqual(weights, ref)
+
+    @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    def test_fldmean_01_lola(self):
+        fname = bt.get_file('test-t2m-u-v.nc')
+        ds = psyd.open_dataset(fname)
+        means = ds.psy.t2m.psy.fldmean(keepdims=True)
+        ds.close()
+        ref = Cdo().fldmean(input=fname, returnArray='t2m')
+        self.assertAlmostArrayEqual(means, ref)
+        # try it with the self defined gridweights
+        psyd.rcParams['gridweights.use_cdo'] = False
+        means = ds.psy.t2m.psy.fldmean(keepdims=True)
+        self.assertAlmostArrayEqual(means, ref, rtol=1e-5)
+
+    @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    def test_fldmean_02_icon(self):
+        fname = bt.get_file('icon_test.nc')
+        ds = psyd.open_dataset(fname)
+        means = ds.psy.t2m.psy.fldmean(keepdims=True)
+        ds.close()
+        ref = Cdo().fldmean(input=fname, returnArray='t2m')
+        self.assertAlmostArrayEqual(means, ref.reshape(means.shape))
+
+    @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    def test_fldstd_01_lola(self):
+        fname = bt.get_file('test-t2m-u-v.nc')
+        ds = psyd.open_dataset(fname)
+        std = ds.psy.t2m.psy.fldstd(keepdims=True)
+        ds.close()
+        ref = Cdo().fldstd(input=fname, returnArray='t2m')
+        self.assertAlmostArrayEqual(std, ref)
+        # try it with the self defined gridweights
+        psyd.rcParams['gridweights.use_cdo'] = False
+        std = ds.psy.t2m.psy.fldstd(keepdims=True)
+        self.assertAlmostArrayEqual(std, ref, rtol=1e-3)
+
+    @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    def test_fldstd_02_icon(self):
+        fname = bt.get_file('icon_test.nc')
+        ds = psyd.open_dataset(fname)
+        std = ds.psy.t2m.psy.fldstd(keepdims=True)
+        ds.close()
+        ref = Cdo().fldstd(input=fname, returnArray='t2m')
+        self.assertAlmostArrayEqual(std, ref.reshape(std.shape))
+
+    @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    def test_fldpctl_01_lola(self):
+        fname = bt.get_file('test-t2m-u-v.nc')
+        ds = psyd.open_dataset(fname)
+        pctl = ds.psy.t2m.psy.fldpctl(5)
+        self.assertEqual(pctl.shape, ds.t2m.shape[:-2])
+
+        pctl = ds.psy.t2m.psy.fldpctl([5, 95])
+        self.assertEqual(pctl.shape, (2, ) + ds.t2m.shape[:-2])
+        self.assertTrue((pctl[1] >= pctl[0]).all(),
+                        msg=('95th percentile should always be greater or '
+                             'equal than the 5th percentile! %s %s') % (
+                                pctl[0], pctl[1]))
+        ds.close()
+
+    @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    def test_fldpctl_02_icon(self):
+        fname = bt.get_file('icon_test.nc')
+        ds = psyd.open_dataset(fname)
+        pctl = ds.psy.t2m.psy.fldpctl(5)
+        self.assertEqual(pctl.shape, ds.t2m.shape[:-1])
+
+        pctl = ds.psy.t2m.psy.fldpctl([5, 95])
+        self.assertEqual(pctl.shape, (2, ) + ds.t2m.shape[:-1])
+        self.assertTrue((pctl[1] >= pctl[0]).all(),
+                        msg=('95th percentile should always be greater or '
+                             'equal than the 5th percentile! %s %s') % (
+                                pctl[0], pctl[1]))
+        ds.close()
 
 
 class TestArrayList(unittest.TestCase):

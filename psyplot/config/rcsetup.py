@@ -1101,6 +1101,12 @@ defaultParams = {
         :class:`psyplot.plotter.maps.FieldPlotter` instances, set
         ``{'plotter.fieldplotter.title': 'my title'}``""")],
 
+    'gridweights.use_cdo': [
+        None, validate_bool_maybe_none,
+        'Boolean flag to control whether CDOs (Climate Data Operators) should '
+        'be used to calculate grid weights. If None, they are tried to be '
+        'used.'],
+
     # decoder
     'decoder.x': [set(), validate_stringset,
                   'names that shall be interpreted as the longitudinal x dim'],

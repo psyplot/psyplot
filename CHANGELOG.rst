@@ -20,6 +20,9 @@ Added
 * Added the ``chname`` parameter when loading a project. This parameter can
   be used to display another variable from the dataset than the one stored
   in the psyplot project file
+* Added the ``gridweights``, ``fldmean``, ``fldstd`` and ``fldpctl`` methods
+  to the ``psy`` DataArray accessor to calculate weighted means, standard
+  deviations and percentiles over the spatial dimensions (x- and y).
 
 
 v1.0.0
