@@ -2275,6 +2275,8 @@ class InteractiveArray(InteractiveBase):
             if bounds and bounds in set(base.coords) - set(ds.coords):
                 ds[bounds] = base.sel(
                     **{d: arr.coords[d] for d in sdims}).coords[bounds]
+            ds = ds.drop([c.name for c in six.itervalues(ds.coords)
+                          if not c.ndim])
         to_netcdf(ds, fname)
         ret = cdo.gridweights(input=fname, returnArray='cell_weights')
         try:
