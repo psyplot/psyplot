@@ -2247,22 +2247,28 @@ class InteractiveArray(InteractiveBase):
     @property
     def iter_base_variables(self):
         """An iterator over the base variables in the :attr:`base` dataset"""
-        if 'variable' in self.arr.coords:
-            return (self.base.variables[name] for name in safe_list(
-                self.arr.coords['variable'].values.tolist()))
+        if VARIABLELABEL in self.arr.coords:
+            return (self._get_base_var(name) for name in safe_list(
+                self.arr.coords[VARIABLELABEL].values.tolist()))
         name = self.arr.name
         if name is None:
             return iter([self.arr._variable])
         return iter([self.base.variables[name]])
 
+    def _get_base_var(self, name):
+        try:
+            return self.base.variables[name]
+        except KeyError:
+            return self.arr.sel(**{VARIABLELABEL: name}).rename(name)
+
     @property
     def base_variables(self):
         """A mapping from the variable name to the variablein the :attr:`base`
         dataset."""
-        if 'variable' in self.arr.coords:
+        if VARIABLELABEL in self.arr.coords:
             return OrderedDict([
-                (name, self.base.variables[name]) for name in safe_list(
-                    self.arr.coords['variable'].values.tolist())])
+                (name, self._get_base_var(name)) for name in safe_list(
+                    self.arr.coords[VARIABLELABEL].values.tolist())])
         name = self.arr.name
         if name is None:
             return {name: self.arr._variable}
