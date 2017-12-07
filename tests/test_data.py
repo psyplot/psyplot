@@ -42,6 +42,9 @@ else:
     with_cdo = True
 
 
+xr_version = tuple(map(float, xr.__version__.split('.')[:3]))
+
+
 class AlmostArrayEqualMixin(object):
 
     def assertAlmostArrayEqual(self, actual, desired, rtol=1e-07, atol=0,
@@ -235,7 +238,7 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
                 psyd.safe_list(arr.coords[dim]),
                 msg="Slice %s for dimension %s is wrong!" % (dims[dim], dim))
         # test with unknown dimensions
-        if xr.__version__ >= '0.9':
+        if xr_version[:2] >= (0, 9):
             ds = ds.drop('time')
             arr = ds.t2m[1:, 1]
             arr.psy.init_accessor(base=ds)
@@ -557,31 +560,37 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         self.assertAlmostArrayEqual(weights, ref)
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
     def test_fldmean_01_lola(self):
+        from psyplot.project import Cdo
         fname = bt.get_file('test-t2m-u-v.nc')
         ds = psyd.open_dataset(fname)
         psyd.rcParams['gridweights.use_cdo'] = True
-        means = ds.psy.t2m.psy.fldmean(keepdims=True)
+        means = ds.psy.t2m.psy.fldmean()
         ds.close()
-        ref = Cdo().fldmean(input=fname, returnArray='t2m')
+        ref = Cdo().fldmean(input=fname, name='t2m')[0]
         self.assertAlmostArrayEqual(means, ref)
         # try it with the self defined gridweights
         psyd.rcParams['gridweights.use_cdo'] = False
-        means = ds.psy.t2m.psy.fldmean(keepdims=True)
+        means = ds.psy.t2m.psy.fldmean()
         self.assertAlmostArrayEqual(means, ref, rtol=1e-5)
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
     def test_fldmean_02_icon(self):
+        from psyplot.project import Cdo
         fname = bt.get_file('icon_test.nc')
         ds = psyd.open_dataset(fname)
         psyd.rcParams['gridweights.use_cdo'] = True
-        means = ds.psy.t2m.psy.fldmean(keepdims=True)
+        means = ds.psy.t2m.psy.fldmean()
         ds.close()
-        ref = Cdo().fldmean(input=fname, returnArray='t2m')
-        self.assertAlmostArrayEqual(means, ref.reshape(means.shape))
+        ref = Cdo().fldmean(input=fname, name='t2m')[0]
+        self.assertAlmostArrayEqual(means, ref)
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
     def test_fldstd_01_lola(self):
+        from psyplot.project import Cdo
         fname = bt.get_file('test-t2m-u-v.nc')
         ds = psyd.open_dataset(fname)
         psyd.rcParams['gridweights.use_cdo'] = True
@@ -595,16 +604,19 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         self.assertAlmostArrayEqual(std, ref, rtol=1e-3)
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
     def test_fldstd_02_icon(self):
+        from psyplot.project import Cdo
         fname = bt.get_file('icon_test.nc')
         ds = psyd.open_dataset(fname)
         psyd.rcParams['gridweights.use_cdo'] = True
-        std = ds.psy.t2m.psy.fldstd(keepdims=True)
+        std = ds.psy.t2m.psy.fldstd()
         ds.close()
-        ref = Cdo().fldstd(input=fname, returnArray='t2m')
-        self.assertAlmostArrayEqual(std, ref.reshape(std.shape))
+        ref = Cdo().fldstd(input=fname, name='t2m')[0]
+        self.assertAlmostArrayEqual(std, ref)
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
     def test_fldpctl_01_lola(self):
         fname = bt.get_file('test-t2m-u-v.nc')
         ds = psyd.open_dataset(fname)
@@ -620,6 +632,7 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         ds.close()
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
+    @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
     def test_fldpctl_02_icon(self):
         fname = bt.get_file('icon_test.nc')
         ds = psyd.open_dataset(fname)

@@ -14,6 +14,14 @@ import psyplot.plotter as psyp
 import psyplot.project as psy
 import matplotlib.pyplot as plt
 
+try:
+    from cdo import Cdo
+    Cdo()
+except Exception:
+    with_cdo = False
+else:
+    with_cdo = True
+
 remove_temp_files = True
 
 
@@ -1482,7 +1490,7 @@ class TestDataArrayPlotter(unittest.TestCase):
         self.assertTrue(plotter.fmt1.value, 'fmt1 set')
 
 
-@unittest.skipIf(not psy.with_cdo, "Cdo not installed")
+@unittest.skipIf(not with_cdo, "Cdo not installed")
 class TestCdo(unittest.TestCase):
 
     def setUp(self):

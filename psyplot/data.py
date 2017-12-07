@@ -2441,6 +2441,8 @@ class InteractiveArray(InteractiveBase):
             dims = tuple(d for d in arr.dims if d not in sdims)
         coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
         coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
+        coords = {name: c for name, c in coords.items()
+                  if set(c.dims) <= set(dims)}
         ret = xr.DataArray(means, name=arr.name, dims=dims,
                            coords=coords, attrs=arr.attrs.copy())
         self._insert_fldmean_bounds(ret, keepdims)
@@ -2595,6 +2597,8 @@ class InteractiveArray(InteractiveBase):
             dims = ('pctl', ) + dims
         coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
         coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
+        coords = {name: c for name, c in coords.items()
+                  if set(c.dims) <= set(dims)}
         ret = xr.DataArray(pctl, name=arr.name, dims=dims, coords=coords,
                            attrs=arr.attrs.copy())
         self._insert_fldmean_bounds(ret, keepdims)
