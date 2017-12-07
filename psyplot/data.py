@@ -2637,9 +2637,11 @@ class InteractiveArray(InteractiveBase):
         ds = arr.isel(**{d: 0 for d in set(dims) - sdims}).to_dataset()
         for coord in six.itervalues(ds.coords):
             bounds = coord.attrs.get('bounds', coord.encoding.get('bounds'))
-            if bounds and bounds in set(base.coords) - set(ds.coords):
+            if (bounds and bounds in set(base.coords) - set(ds.coords) and
+                    sdims.intersection(base.coords[bounds].dims)):
                 ds[bounds] = base.sel(
-                    **{d: arr.coords[d] for d in sdims}).coords[bounds]
+                    **{d: arr.coords[d].values for d in sdims}
+                    ).coords[bounds]
             ds = ds.drop([c.name for c in six.itervalues(ds.coords)
                           if not c.ndim])
         to_netcdf(ds, fname)
