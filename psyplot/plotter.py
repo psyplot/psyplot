@@ -319,16 +319,18 @@ class Formatoption(object):
     @property
     def iter_data(self):
         """Returns an iterator over the plot data arrays"""
-        if isinstance(self.data, InteractiveList):
-            return iter(self.data)
-        return iter([self.data])
+        data = self.data
+        if isinstance(data, InteractiveList):
+            return iter(data)
+        return iter([data])
 
     @property
     def iter_raw_data(self):
         """Returns an iterator over the original data arrays"""
-        if isinstance(self.raw_data, InteractiveList):
-            return iter(self.raw_data)
-        return iter([self.raw_data])
+        data = self.raw_data
+        if isinstance(data, InteractiveList):
+            return iter(data)
+        return iter([data])
 
     @property
     def validate(self):

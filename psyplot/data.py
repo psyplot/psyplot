@@ -2792,7 +2792,7 @@ class InteractiveArray(InteractiveBase):
         if keepdims:
             ma_means = ma_means.reshape(
                 tuple(1 if i in axis else s for i, s in enumerate(arr.shape)))
-        means = ma_means.data.copy()
+        means = np.array(ma_means.data)
         means[ma_means.mask] = np.nan
 
         coords = dict(arr.coords)
@@ -2855,7 +2855,7 @@ class InteractiveArray(InteractiveBase):
             ma_variance = ma_variance.reshape(
                 tuple(1 if i in axis else s for i, s in enumerate(arr.shape)))
 
-        variance = ma_variance.data.copy()
+        variance = np.array(ma_variance.data)
         variance[ma_variance.mask] = np.nan
 
         ret.values[:] = np.sqrt(variance)
