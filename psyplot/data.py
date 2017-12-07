@@ -2160,30 +2160,6 @@ class InteractiveArray(InteractiveBase):
         self._decoder = value
 
     @property
-    def xcoord(self):
-        """The x-coordinate of this data array"""
-        return self.decoder.get_x(next(six.itervalues(self.base_variables)),
-                                  self.arr.coords)
-
-    @property
-    def ycoord(self):
-        """The y-coordinate of this data array"""
-        return self.decoder.get_y(next(six.itervalues(self.base_variables)),
-                                  self.arr.coords)
-
-    @property
-    def xdim(self):
-        """The name of the x-dimension of this data array"""
-        return self.decoder.get_xname(
-            next(six.itervalues(self.base_variables)), self.arr.coords)
-
-    @property
-    def ydim(self):
-        """The name of the y-dimension of this data array"""
-        return self.decoder.get_yname(
-            next(six.itervalues(self.base_variables)), self.arr.coords)
-
-    @property
     def idims(self):
         """Coordinates in the :attr:`base` dataset as int or slice
 
@@ -2206,11 +2182,394 @@ class InteractiveArray(InteractiveBase):
         ret[0] += 1
         return ret
 
+    logger = InteractiveBase.logger
+    _idims = None
+    _base = None
+
+    # -------------- SIGNALS --------------------------------------------------
+    #: :class:`Signal` to be emiited when the base of the object changes
+    onbasechange = Signal('_onbasechange')
+    _onbasechange = None
+
+    @docstrings.dedent
+    def __init__(self, xarray_obj, *args, **kwargs):
+        """
+        The ``*args`` and ``**kwargs`` are essentially the same as for the
+        :class:`xarray.DataArray` method, additional ``**kwargs`` are
+        described below.
+
+        Other Parameters
+        ----------------
+        base: xarray.Dataset
+            Default: None. Dataset that serves as the origin of the data
+            contained in this DataArray instance. This will be used if you want
+            to update the coordinates via the :meth:`update` method. If None,
+            this instance will serve as a base as soon as it is needed.
+        decoder: psyplot.CFDecoder
+            The decoder that decodes the `base` dataset and is used to get
+            bounds. If not given, a new :class:`CFDecoder` is created
+        idims: dict
+            Default: None. dictionary with integer values and/or slices in the
+            `base` dictionary. If not given, they are determined automatically
+        %(InteractiveBase.parameters)s
+        """
+        self.arr = xarray_obj
+        super(InteractiveArray, self).__init__(*args, **kwargs)
+        self._registered_updates = {}
+        self._new_dims = {}
+        self.method = None
+
+    def init_accessor(self, base=None, idims=None, decoder=None,
+                      *args, **kwargs):
+        """
+        Initialize the accessor instance
+
+        This method initializes the accessor
+
+        Parameters
+        ----------
+        base: xr.Dataset
+            The base dataset for the data
+        idims: dict
+            A mapping from dimension name to indices. If not provided, it is
+            calculated when the :attr:`idims` attribute is accessed
+        decoder: CFDecoder
+            The decoder of this object
+        %(InteractiveBase.parameters)s
+        """
+        if base is not None:
+            self.base = base
+        self.idims = idims
+        if decoder is not None:
+            self.decoder = decoder
+        super(InteractiveArray, self).__init__(*args, **kwargs)
+
+    @property
+    def iter_base_variables(self):
+        """An iterator over the base variables in the :attr:`base` dataset"""
+        if 'variable' in self.arr.coords:
+            return (self.base.variables[name] for name in safe_list(
+                self.arr.coords['variable'].values.tolist()))
+        name = self.arr.name
+        if name is None:
+            return iter([self.arr._variable])
+        return iter([self.base.variables[name]])
+
+    @property
+    def base_variables(self):
+        """A mapping from the variable name to the variablein the :attr:`base`
+        dataset."""
+        if 'variable' in self.arr.coords:
+            return OrderedDict([
+                (name, self.base.variables[name]) for name in safe_list(
+                    self.arr.coords['variable'].values.tolist())])
+        name = self.arr.name
+        if name is None:
+            return {name: self.arr._variable}
+        else:
+            return {self.arr.name: self.base.variables[self.arr.name]}
+
+    docstrings.keep_params('setup_coords.parameters', 'dims')
+
+    @docstrings.get_sectionsf('InteractiveArray._register_update')
+    @docstrings.dedent
+    def _register_update(self, method='isel', replot=False, dims={}, fmt={},
+                         force=False, todefault=False):
+        """
+        Register new dimensions and formatoptions for updating
+
+        Parameters
+        ----------
+        method: {'isel', None, 'nearest', ...}
+            Selection method of the xarray.Dataset to be used for setting the
+            variables from the informations in `dims`.
+            If `method` is 'isel', the :meth:`xarray.Dataset.isel` method is
+            used. Otherwise it sets the `method` parameter for the
+            :meth:`xarray.Dataset.sel` method.
+        %(setup_coords.parameters.dims)s
+        %(InteractiveBase._register_update.parameters)s
+
+        See Also
+        --------
+        start_update"""
+        if self._new_dims and self.method != method:
+            raise ValueError(
+                "New dimensions were already specified for with the %s method!"
+                " I can not choose a new method %s" % (self.method, method))
+        else:
+            self.method = method
+        if 'name' in dims:
+            self._new_dims['name'] = dims.pop('name')
+        self._new_dims.update(self.decoder.correct_dims(
+            next(six.itervalues(self.base_variables)), dims))
+        InteractiveBase._register_update(
+            self, fmt=fmt, replot=replot or bool(self._new_dims), force=force,
+            todefault=todefault)
+
+    def _update_concatenated(self, dims, method):
+        """Updates a concatenated array to new dimensions"""
+
+        def is_unequal(v1, v2):
+            try:
+                return bool(v1 != v2)
+            except ValueError:  # arrays
+                try:
+                    (v1 == v2).all()
+                except AttributeError:
+                    return False
+
+        def filter_attrs(item):
+            """Checks whether the attribute is from the base variable"""
+            return (item[0] not in self.base.attrs or
+                    is_unequal(item[1], self.base.attrs[item[0]]))
+        saved_attrs = list(filter(filter_attrs, six.iteritems(self.arr.attrs)))
+        saved_name = self.arr.name
+        self.arr.name = 'None'
+        if 'name' in dims:
+            name = dims.pop('name')
+        else:
+            name = list(self.arr.coords['variable'].values)
+        if method == 'isel':
+            self.idims.update(dims)
+            dims = self.idims
+            res = self.base[name].isel(**dims).to_array()
+        else:
+            self._idims = None
+            for key, val in six.iteritems(self.arr.coords):
+                if key != 'variable':
+                    dims.setdefault(key, val)
+            if any(isinstance(idx, slice) for idx in dims.values()):
+                # ignore method argument
+                res = self.base[name].sel(**dims).to_array()
+            else:
+                res = self.base[name].sel(method=method, **dims).to_array()
+        if 'coordinates' in self.base[name[0]].encoding:
+            res.encoding['coordinates'] = self.base[name[0]].encoding[
+                'coordinates']
+        self.arr._variable = res._variable
+        self.arr._coords = res._coords
+        self.arr.name = saved_name
+        for key, val in saved_attrs:
+            self.arr.attrs[key] = val
+
+    def _update_array(self, dims, method):
+        """Updates the array to the new dims from then :attr:`base` dataset"""
+
+        def is_unequal(v1, v2):
+            try:
+                return bool(v1 != v2)
+            except ValueError:  # arrays
+                try:
+                    (v1 == v2).all()
+                except AttributeError:
+                    return False
+
+        def filter_attrs(item):
+            """Checks whether the attribute is from the base variable"""
+            return (item[0] not in base_var.attrs or
+                    is_unequal(item[1], base_var.attrs[item[0]]))
+
+        base_var = self.base.variables[self.arr.name]
+        if 'name' in dims:
+            name = dims.pop('name')
+            self.arr.name = name
+        else:
+            name = self.arr.name
+        # save attributes that have been changed by the user
+        saved_attrs = list(filter(filter_attrs, six.iteritems(self.arr.attrs)))
+        if method == 'isel':
+            self.idims.update(dims)
+            dims = self.idims
+            res = self.base[name].isel(**dims)
+        else:
+            self._idims = None
+            old_dims = self.arr.dims[:]
+            for key, val in six.iteritems(self.arr.coords):
+                dims.setdefault(key, val)
+            if any(isinstance(idx, slice) for idx in dims.values()):
+                # ignore method argument
+                res = self.base[name].sel(**dims)
+            else:
+                res = self.base[name].sel(method=method, **dims)
+            # squeeze the 0-dimensional dimensions
+            res = res.isel(**{
+                dim: 0 for i, dim in enumerate(res.dims) if (
+                    res.shape[i] == 1 and dim not in old_dims)})
+        self.arr._variable = res._variable
+        self.arr._coords = res._coords
+        # update to old attributes
+        for key, val in saved_attrs:
+            self.arr.attrs[key] = val
+
+    @docstrings.dedent
+    def start_update(self, draw=None, queues=None):
+        """
+        Conduct the formerly registered updates
+
+        This method conducts the updates that have been registered via the
+        :meth:`update` method. You can call this method if the
+        :attr:`no_auto_update` attribute of this instance is True and the
+        `auto_update` parameter in the :meth:`update` method has been set to
+        False
+
+        Parameters
+        ----------
+        %(InteractiveBase.start_update.parameters)s
+
+        Returns
+        -------
+        %(InteractiveBase.start_update.returns)s
+
+        See Also
+        --------
+        :attr:`no_auto_update`, update
+        """
+        def filter_attrs(item):
+            return (item[0] not in self.base.attrs or
+                    item[1] != self.base.attrs[item[0]])
+        if queues is not None:
+            # make sure that no plot is updated during gathering the data
+            queues[0].get()
+        try:
+            dims = self._new_dims
+            method = self.method
+            if dims:
+                if VARIABLELABEL in self.arr.coords:
+                    self._update_concatenated(dims, method)
+                else:
+                    self._update_array(dims, method)
+            if queues is not None:
+                queues[0].task_done()
+            self._new_dims = {}
+            self.onupdate.emit()
+        except Exception:
+            self._finish_all(queues)
+            raise
+        return InteractiveBase.start_update(self, draw=draw, queues=queues)
+
+    @docstrings.get_sectionsf('InteractiveArray.update',
+                              sections=['Parameters', 'Notes'])
+    @docstrings.dedent
+    def update(self, method='isel', dims={}, fmt={}, replot=False,
+               auto_update=False, draw=None, force=False, todefault=False,
+               **kwargs):
+        """
+        Update the coordinates and the plot
+
+        This method updates all arrays in this list with the given coordinate
+        values and formatoptions.
+
+        Parameters
+        ----------
+        %(InteractiveArray._register_update.parameters)s
+        auto_update: bool
+            Boolean determining whether or not the :meth:`start_update` method
+            is called after the end.
+        %(InteractiveBase.start_update.parameters)s
+        ``**kwargs``
+            Any other formatoption or dimension that shall be updated
+            (additionally to those in `fmt` and `dims`)
+
+        Notes
+        -----
+        %(InteractiveBase.update.notes)s"""
+        dims = dict(dims)
+        fmt = dict(fmt)
+        vars_and_coords = set(chain(
+            self.arr.dims, self.arr.coords, ['name', 'x', 'y', 'z', 't']))
+        furtherdims, furtherfmt = utils.sort_kwargs(kwargs, vars_and_coords)
+        dims.update(furtherdims)
+        fmt.update(furtherfmt)
+
+        self._register_update(method=method, replot=replot, dims=dims,
+                              fmt=fmt, force=force, todefault=todefault)
+
+        if not self.no_auto_update or auto_update:
+            self.start_update(draw=draw)
+
+    def _short_info(self, intend=0, maybe=False):
+        str_intend = ' ' * intend
+        if 'variable' in self.arr.coords:
+            name = ', '.join(self.arr.coords['variable'].values)
+        else:
+            name = self.arr.name
+        if self.arr.ndim > 0:
+            dims = ', with (%s)=%s' % (', '.join(self.arr.dims),
+                                       self.arr.shape)
+        else:
+            dims = ''
+        return str_intend + "%s: %i-dim %s of %s%s, %s" % (
+            self.arr_name, self.arr.ndim, self.arr.__class__.__name__, name,
+            dims, ", ".join(
+                "%s=%s" % (coord, format_item(val.values))
+                for coord, val in six.iteritems(self.arr.coords)
+                if val.ndim == 0))
+
+    def __getitem__(self, key):
+        ret = self.arr.__getitem__(key)
+        ret.psy._base = self.base
+        return ret
+
+    def isel(self, *args, **kwargs):
+        # reimplemented to keep the base. The doc is set below
+        ret = self.arr.isel(*args, **kwargs)
+        ret.psy._base = self._base
+        return ret
+
+    def sel(self, *args, **kwargs):
+        # reimplemented to keep the base. The doc is set below
+        ret = self.arr.sel(*args, **kwargs)
+        ret.psy._base = self._base
+        return ret
+
+    def copy(self, deep=False):
+        """Copy the array
+
+        This method returns a copy of the underlying array in the :attr:`arr`
+        attribute. It is more stable because it creates a new `psy` accessor"""
+        arr = self.arr.copy(deep)
+        arr.psy = InteractiveArray(arr)
+        return arr
+
+    def to_interactive_list(self):
+        return InteractiveList([self], arr_name=self.arr_name)
+
+    @docstrings.get_sectionsf('InteractiveArray.get_coord')
+    @docstrings.dedent
+    def get_coord(self, what, base=False):
+        """
+        The x-coordinate of this data array
+
+        Parameters
+        ----------
+        what: {'t', 'x', 'y', 'z'}
+            The letter of the axis
+        base: bool
+            If True, use the base variable in the :attr:`base` dataset."""
+        what = what.lower()
+        return getattr(self.decoder, 'get_' + what)(
+            next(six.itervalues(self.base_variables)) if base else self.arr,
+            self.arr.coords)
+
+    @docstrings.dedent
+    def get_dim(self, what, base=False):
+        """
+        The name of the x-dimension of this data array
+
+        Parameters
+        ----------
+        %(InteractiveArray.get_coord.parameters)s"""
+        what = what.lower()
+        return getattr(self.decoder, 'get_%sname' % what)(
+            next(six.itervalues(self.base_variables)) if base else self.arr)
+
+    # ------------------ Calculations -----------------------------------------
+
     def _gridweights(self):
         """Calculate the gridweights with a simple rectangular approximation"""
         arr = self.arr
-        xcoord = self.xcoord
-        ycoord = self.ycoord
+        xcoord = self.get_coord('x')
+        ycoord = self.get_coord('y')
         # convert the units
         xcoord_orig = xcoord
         ycoord_orig = ycoord
@@ -2263,7 +2622,7 @@ class InteractiveArray(InteractiveBase):
         """Estimate the gridweights using CDOs"""
         from cdo import Cdo
         from tempfile import NamedTemporaryFile
-        sdims = {self.ydim, self.xdim}
+        sdims = {self.get_dim('y'), self.get_dim('x')}
         cdo = Cdo()
         fname = NamedTemporaryFile(prefix='psy', suffix='.nc').name
         arr = self.arr
@@ -2289,9 +2648,9 @@ class InteractiveArray(InteractiveBase):
         """Convert the 2D weights into a DataArray and potentially enlarge it
         """
         arr = self.arr
-        xcoord = self.xcoord
-        ycoord = self.ycoord
-        sdims = (self.ydim, self.xdim)
+        xcoord = self.get_coord('x')
+        ycoord = self.get_coord('y')
+        sdims = (self.get_dim('y'), self.get_dim('x'))
         if sdims[0] == sdims[1]:   # unstructured grids
             sdims = sdims[:1]
         if (ycoord.name, xcoord.name) != sdims:
@@ -2366,16 +2725,16 @@ class InteractiveArray(InteractiveBase):
         """Masked array, xname, yname and axis for calculating the average"""
         arr = self.arr
         ma_arr = np.ma.array(arr, mask=arr.isnull())
-        sdims = (self.ydim, self.xdim)
+        sdims = (self.get_dim('y'), self.get_dim('x'))
         if sdims[0] == sdims[1]:
             sdims = sdims[:1]
         axis = tuple(map(arr.dims.index, sdims))
         return ma_arr, sdims, axis
 
     def _insert_fldmean_bounds(self, da, keepdims=False):
-        xcoord = self.xcoord
-        ycoord = self.ycoord
-        sdims = (self.ydim, self.xdim)
+        xcoord = self.get_coord('x')
+        ycoord = self.get_coord('y')
+        sdims = (self.get_dim('y'), self.get_dim('x'))
         xbounds = np.array([[xcoord.min(), xcoord.max()]])
         ybounds = np.array([[ycoord.min(), ycoord.max()]])
         xdims = (sdims[-1], 'bnds') if keepdims else ('bnds', )
@@ -2603,357 +2962,6 @@ class InteractiveArray(InteractiveBase):
                            attrs=arr.attrs.copy())
         self._insert_fldmean_bounds(ret, keepdims)
         return ret
-
-    logger = InteractiveBase.logger
-    _idims = None
-    _base = None
-
-    # -------------------------------------------------------------------------
-    # -------------------------------- SIGNALS --------------------------------
-    # -------------------------------------------------------------------------
-    #: :class:`Signal` to be emiited when the base of the object changes
-    onbasechange = Signal('_onbasechange')
-    _onbasechange = None
-
-    @docstrings.dedent
-    def __init__(self, xarray_obj, *args, **kwargs):
-        """
-        The ``*args`` and ``**kwargs`` are essentially the same as for the
-        :class:`xarray.DataArray` method, additional ``**kwargs`` are
-        described below.
-
-        Other Parameters
-        ----------------
-        base: xarray.Dataset
-            Default: None. Dataset that serves as the origin of the data
-            contained in this DataArray instance. This will be used if you want
-            to update the coordinates via the :meth:`update` method. If None,
-            this instance will serve as a base as soon as it is needed.
-        decoder: psyplot.CFDecoder
-            The decoder that decodes the `base` dataset and is used to get
-            bounds. If not given, a new :class:`CFDecoder` is created
-        idims: dict
-            Default: None. dictionary with integer values and/or slices in the
-            `base` dictionary. If not given, they are determined automatically
-        %(InteractiveBase.parameters)s
-        """
-        self.arr = xarray_obj
-        super(InteractiveArray, self).__init__(*args, **kwargs)
-        self._registered_updates = {}
-        self._new_dims = {}
-        self.method = None
-
-    def init_accessor(self, base=None, idims=None, decoder=None,
-                      *args, **kwargs):
-        """
-        Initialize the accessor instance
-
-        This method initializes the accessor
-
-        Parameters
-        ----------
-        base: xr.Dataset
-            The base dataset for the data
-        idims: dict
-            A mapping from dimension name to indices. If not provided, it is
-            calculated when the :attr:`idims` attribute is accessed
-        decoder: CFDecoder
-            The decoder of this object
-        %(InteractiveBase.parameters)s
-        """
-        if base is not None:
-            self.base = base
-        self.idims = idims
-        if decoder is not None:
-            self.decoder = decoder
-        super(InteractiveArray, self).__init__(*args, **kwargs)
-
-    @property
-    def iter_base_variables(self):
-        """An iterator over the base variables in the :attr:`base` dataset"""
-        if 'variable' in self.arr.coords:
-            return (self.base.variables[name] for name in safe_list(
-                self.arr.coords['variable'].values.tolist()))
-        name = self.arr.name
-        if name is None:
-            return iter([self.arr._variable])
-        return iter([self.base.variables[name]])
-
-    @property
-    def base_variables(self):
-        """A mapping from the variable name to the variablein the :attr:`base`
-        dataset."""
-        if 'variable' in self.arr.coords:
-            return OrderedDict([
-                (name, self.base.variables[name]) for name in safe_list(
-                    self.arr.coords['variable'].values.tolist())])
-        name = self.arr.name
-        if name is None:
-            return {name: self.arr._variable}
-        else:
-            return {self.arr.name: self.base.variables[self.arr.name]}
-
-    docstrings.keep_params('setup_coords.parameters', 'dims')
-
-    @docstrings.get_sectionsf('InteractiveArray._register_update')
-    @docstrings.dedent
-    def _register_update(self, method='isel', replot=False, dims={}, fmt={},
-                         force=False, todefault=False):
-        """
-        Register new dimensions and formatoptions for updating
-
-        Parameters
-        ----------
-        method: {'isel', None, 'nearest', ...}
-            Selection method of the xarray.Dataset to be used for setting the
-            variables from the informations in `dims`.
-            If `method` is 'isel', the :meth:`xarray.Dataset.isel` method is
-            used. Otherwise it sets the `method` parameter for the
-            :meth:`xarray.Dataset.sel` method.
-        %(setup_coords.parameters.dims)s
-        %(InteractiveBase._register_update.parameters)s
-
-        See Also
-        --------
-        start_update"""
-        if self._new_dims and self.method != method:
-            raise ValueError(
-                "New dimensions were already specified for with the %s method!"
-                " I can not choose a new method %s" % (self.method, method))
-        else:
-            self.method = method
-        if 'name' in dims:
-            self._new_dims['name'] = dims.pop('name')
-        self._new_dims.update(self.decoder.correct_dims(
-            next(six.itervalues(self.base_variables)), dims))
-        InteractiveBase._register_update(
-            self, fmt=fmt, replot=replot or bool(self._new_dims), force=force,
-            todefault=todefault)
-
-    def _update_concatenated(self, dims, method):
-        """Updates a concatenated array to new dimensions"""
-
-        def is_unequal(v1, v2):
-            try:
-                return bool(v1 != v2)
-            except ValueError:  # arrays
-                try:
-                    (v1 == v2).all()
-                except AttributeError:
-                    return False
-
-        def filter_attrs(item):
-            """Checks whether the attribute is from the base variable"""
-            return (item[0] not in self.base.attrs or
-                    is_unequal(item[1], self.base.attrs[item[0]]))
-        saved_attrs = list(filter(filter_attrs, six.iteritems(self.arr.attrs)))
-        saved_name = self.arr.name
-        self.arr.name = 'None'
-        if 'name' in dims:
-            name = dims.pop('name')
-        else:
-            name = list(self.arr.coords['variable'].values)
-        if method == 'isel':
-            self.idims.update(dims)
-            dims = self.idims
-            res = self.base[name].isel(**dims).to_array()
-        else:
-            self._idims = None
-            for key, val in six.iteritems(self.arr.coords):
-                if key != 'variable':
-                    dims.setdefault(key, val)
-            if any(isinstance(idx, slice) for idx in dims.values()):
-                # ignore method argument
-                res = self.base[name].sel(**dims).to_array()
-            else:
-                res = self.base[name].sel(method=method, **dims).to_array()
-        self.arr._variable = res._variable
-        self.arr._coords = res._coords
-        self.arr.name = saved_name
-        for key, val in saved_attrs:
-            self.arr.attrs[key] = val
-
-    def _update_array(self, dims, method):
-        """Updates the array to the new dims from then :attr:`base` dataset"""
-
-        def is_unequal(v1, v2):
-            try:
-                return bool(v1 != v2)
-            except ValueError:  # arrays
-                try:
-                    (v1 == v2).all()
-                except AttributeError:
-                    return False
-
-        def filter_attrs(item):
-            """Checks whether the attribute is from the base variable"""
-            return (item[0] not in base_var.attrs or
-                    is_unequal(item[1], base_var.attrs[item[0]]))
-
-        base_var = self.base.variables[self.arr.name]
-        if 'name' in dims:
-            name = dims.pop('name')
-            self.arr.name = name
-        else:
-            name = self.arr.name
-        # save attributes that have been changed by the user
-        saved_attrs = list(filter(filter_attrs, six.iteritems(self.arr.attrs)))
-        if method == 'isel':
-            self.idims.update(dims)
-            dims = self.idims
-            res = self.base[name].isel(**dims)
-        else:
-            self._idims = None
-            old_dims = self.arr.dims[:]
-            for key, val in six.iteritems(self.arr.coords):
-                dims.setdefault(key, val)
-            if any(isinstance(idx, slice) for idx in dims.values()):
-                # ignore method argument
-                res = self.base[name].sel(**dims)
-            else:
-                res = self.base[name].sel(method=method, **dims)
-            # squeeze the 0-dimensional dimensions
-            res = res.isel(**{
-                dim: 0 for i, dim in enumerate(res.dims) if (
-                    res.shape[i] == 1 and dim not in old_dims)})
-        self.arr._variable = res._variable
-        self.arr._coords = res._coords
-        # update to old attributes
-        for key, val in saved_attrs:
-            self.arr.attrs[key] = val
-
-    @docstrings.dedent
-    def start_update(self, draw=None, queues=None):
-        """
-        Conduct the formerly registered updates
-
-        This method conducts the updates that have been registered via the
-        :meth:`update` method. You can call this method if the
-        :attr:`no_auto_update` attribute of this instance is True and the
-        `auto_update` parameter in the :meth:`update` method has been set to
-        False
-
-        Parameters
-        ----------
-        %(InteractiveBase.start_update.parameters)s
-
-        Returns
-        -------
-        %(InteractiveBase.start_update.returns)s
-
-        See Also
-        --------
-        :attr:`no_auto_update`, update
-        """
-        def filter_attrs(item):
-            return (item[0] not in self.base.attrs or
-                    item[1] != self.base.attrs[item[0]])
-        if queues is not None:
-            # make sure that no plot is updated during gathering the data
-            queues[0].get()
-        try:
-            dims = self._new_dims
-            method = self.method
-            if dims:
-                if VARIABLELABEL in self.arr.coords:
-                    self._update_concatenated(dims, method)
-                else:
-                    self._update_array(dims, method)
-            if queues is not None:
-                queues[0].task_done()
-            self._new_dims = {}
-            self.onupdate.emit()
-        except Exception:
-            self._finish_all(queues)
-            raise
-        return InteractiveBase.start_update(self, draw=draw, queues=queues)
-
-    @docstrings.get_sectionsf('InteractiveArray.update',
-                              sections=['Parameters', 'Notes'])
-    @docstrings.dedent
-    def update(self, method='isel', dims={}, fmt={}, replot=False,
-               auto_update=False, draw=None, force=False, todefault=False,
-               **kwargs):
-        """
-        Update the coordinates and the plot
-
-        This method updates all arrays in this list with the given coordinate
-        values and formatoptions.
-
-        Parameters
-        ----------
-        %(InteractiveArray._register_update.parameters)s
-        auto_update: bool
-            Boolean determining whether or not the :meth:`start_update` method
-            is called after the end.
-        %(InteractiveBase.start_update.parameters)s
-        ``**kwargs``
-            Any other formatoption or dimension that shall be updated
-            (additionally to those in `fmt` and `dims`)
-
-        Notes
-        -----
-        %(InteractiveBase.update.notes)s"""
-        dims = dict(dims)
-        fmt = dict(fmt)
-        vars_and_coords = set(chain(
-            self.arr.dims, self.arr.coords, ['name', 'x', 'y', 'z', 't']))
-        furtherdims, furtherfmt = utils.sort_kwargs(kwargs, vars_and_coords)
-        dims.update(furtherdims)
-        fmt.update(furtherfmt)
-
-        self._register_update(method=method, replot=replot, dims=dims,
-                              fmt=fmt, force=force, todefault=todefault)
-
-        if not self.no_auto_update or auto_update:
-            self.start_update(draw=draw)
-
-    def _short_info(self, intend=0, maybe=False):
-        str_intend = ' ' * intend
-        if 'variable' in self.arr.coords:
-            name = ', '.join(self.arr.coords['variable'].values)
-        else:
-            name = self.arr.name
-        if self.arr.ndim > 0:
-            dims = ', with (%s)=%s' % (', '.join(self.arr.dims),
-                                       self.arr.shape)
-        else:
-            dims = ''
-        return str_intend + "%s: %i-dim %s of %s%s, %s" % (
-            self.arr_name, self.arr.ndim, self.arr.__class__.__name__, name,
-            dims, ", ".join(
-                "%s=%s" % (coord, format_item(val.values))
-                for coord, val in six.iteritems(self.arr.coords)
-                if val.ndim == 0))
-
-    def __getitem__(self, key):
-        ret = self.arr.__getitem__(key)
-        ret.psy._base = self.base
-        return ret
-
-    def isel(self, *args, **kwargs):
-        # reimplemented to keep the base. The doc is set below
-        ret = self.arr.isel(*args, **kwargs)
-        ret.psy._base = self._base
-        return ret
-
-    def sel(self, *args, **kwargs):
-        # reimplemented to keep the base. The doc is set below
-        ret = self.arr.sel(*args, **kwargs)
-        ret.psy._base = self._base
-        return ret
-
-    def copy(self, deep=False):
-        """Copy the array
-
-        This method returns a copy of the underlying array in the :attr:`arr`
-        attribute. It is more stable because it creates a new `psy` accessor"""
-        arr = self.arr.copy(deep)
-        arr.psy = InteractiveArray(arr)
-        return arr
-
-    def to_interactive_list(self):
-        return InteractiveList([self], arr_name=self.arr_name)
 
     isel.__doc__ = xr.DataArray.isel.__doc__
     sel.__doc__ = xr.DataArray.sel.__doc__
@@ -3243,6 +3251,17 @@ class ArrayList(list):
             else:
                 return sel_method(key, dims, names[0])
 
+        def ds2arr(arr):
+            base_var = next(var for key, var in arr.variables.items()
+                            if key not in arr.coords)
+            attrs = base_var.attrs
+            arr = arr.to_array()
+            if 'coordinates' in base_var.encoding:
+                arr.encoding['coordinates'] = base_var.encoding[
+                    'coordinates']
+            arr.attrs.update(attrs)
+            return arr
+
         if decoder is not None:
             def get_decoder(arr):
                 return decoder
@@ -3275,10 +3294,7 @@ class ArrayList(list):
                     arr = base[list(name)]
                 add_missing_dimensions(arr)
                 if not isinstance(arr, xr.DataArray):
-                    attrs = next(var for key, var in arr.variables.items()
-                                 if key not in arr.coords).attrs
-                    arr = arr.to_array()
-                    arr.attrs.update(attrs)
+                    arr = ds2arr(arr)
                 def_slice = slice(None) if default_slice is None else \
                     default_slice
                 decoder = get_decoder(arr)
@@ -3301,10 +3317,7 @@ class ArrayList(list):
                     arr = base[list(name)]
                 add_missing_dimensions(arr)
                 if not isinstance(arr, xr.DataArray):
-                    attrs = next(var for key, var in arr.variables.items()
-                                 if key not in arr.coords).attrs
-                    arr = arr.to_array()
-                    arr.attrs.update(attrs)
+                    arr = ds2arr(arr)
                 # idims will be calculated by the array (maybe not the most
                 # efficient way...)
                 decoder = get_decoder(arr)
