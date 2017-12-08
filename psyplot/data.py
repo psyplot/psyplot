@@ -2676,7 +2676,7 @@ class InteractiveArray(InteractiveBase):
             reps = tuple(s if dim not in sdims else 1
                          for s, dim in zip(arr.shape, arr.dims))
             weights = np.tile(weights, reps)
-            weights[arr.isnull().values] = np.nan
+            weights[arr.isnull().values] = 0
             summed = np.nansum(weights, axis=tuple(map(dims.index, sdims)),
                                keepdims=True)
             weights /= summed
