@@ -566,14 +566,14 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         fname = bt.get_file('test-t2m-u-v.nc')
         ds = psyd.open_dataset(fname)
         psyd.rcParams['gridweights.use_cdo'] = True
-        means = ds.psy.t2m.psy.fldmean()
-        ds.close()
+        means = ds.psy.t2m.psy.fldmean().values
         ref = Cdo().fldmean(input=fname, name='t2m')[0]
         self.assertAlmostArrayEqual(means, ref)
         # try it with the self defined gridweights
         psyd.rcParams['gridweights.use_cdo'] = False
-        means = ds.psy.t2m.psy.fldmean()
+        means = ds.psy.t2m.psy.fldmean().values
         self.assertAlmostArrayEqual(means, ref, rtol=1e-5)
+        ds.close()
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
     @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
@@ -582,10 +582,10 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         fname = bt.get_file('icon_test.nc')
         ds = psyd.open_dataset(fname)
         psyd.rcParams['gridweights.use_cdo'] = True
-        means = ds.psy.t2m.psy.fldmean()
-        ds.close()
+        means = ds.psy.t2m.psy.fldmean().values
         ref = Cdo().fldmean(input=fname, name='t2m')[0]
         self.assertAlmostArrayEqual(means, ref)
+        ds.close()
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
     @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
@@ -594,14 +594,14 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         fname = bt.get_file('test-t2m-u-v.nc')
         ds = psyd.open_dataset(fname)
         psyd.rcParams['gridweights.use_cdo'] = True
-        std = ds.psy.t2m.psy.fldstd(keepdims=True)
-        ds.close()
+        std = ds.psy.t2m.psy.fldstd(keepdims=True).values
         ref = Cdo().fldstd(input=fname, returnArray='t2m')
         self.assertAlmostArrayEqual(std, ref)
         # try it with the self defined gridweights
         psyd.rcParams['gridweights.use_cdo'] = False
-        std = ds.psy.t2m.psy.fldstd(keepdims=True)
+        std = ds.psy.t2m.psy.fldstd(keepdims=True).values
         self.assertAlmostArrayEqual(std, ref, rtol=1e-3)
+        ds.close()
 
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
     @unittest.skipIf(xr_version[:2] < (0, 9), 'xarray version too low')
@@ -610,7 +610,7 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         fname = bt.get_file('icon_test.nc')
         ds = psyd.open_dataset(fname)
         psyd.rcParams['gridweights.use_cdo'] = True
-        std = ds.psy.t2m.psy.fldstd()
+        std = ds.psy.t2m.psy.fldstd().values
         ds.close()
         ref = Cdo().fldstd(input=fname, name='t2m')[0]
         self.assertAlmostArrayEqual(std, ref)
@@ -620,10 +620,10 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
     def test_fldpctl_01_lola(self):
         fname = bt.get_file('test-t2m-u-v.nc')
         ds = psyd.open_dataset(fname)
-        pctl = ds.psy.t2m.psy.fldpctl(5)
+        pctl = ds.psy.t2m.psy.fldpctl(5).values
         self.assertEqual(pctl.shape, ds.t2m.shape[:-2])
 
-        pctl = ds.psy.t2m.psy.fldpctl([5, 95])
+        pctl = ds.psy.t2m.psy.fldpctl([5, 95]).values
         self.assertEqual(pctl.shape, (2, ) + ds.t2m.shape[:-2])
         self.assertTrue((pctl[1] >= pctl[0]).all(),
                         msg=('95th percentile should always be greater or '
@@ -636,10 +636,10 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
     def test_fldpctl_02_icon(self):
         fname = bt.get_file('icon_test.nc')
         ds = psyd.open_dataset(fname)
-        pctl = ds.psy.t2m.psy.fldpctl(5)
+        pctl = ds.psy.t2m.psy.fldpctl(5).values
         self.assertEqual(pctl.shape, ds.t2m.shape[:-1])
 
-        pctl = ds.psy.t2m.psy.fldpctl([5, 95])
+        pctl = ds.psy.t2m.psy.fldpctl([5, 95]).values
         self.assertEqual(pctl.shape, (2, ) + ds.t2m.shape[:-1])
         self.assertTrue((pctl[1] >= pctl[0]).all(),
                         msg=('95th percentile should always be greater or '

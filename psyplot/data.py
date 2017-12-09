@@ -26,6 +26,12 @@ from psyplot.warning import PsyPlotRuntimeWarning
 from warnings import warn
 import psyplot.utils as utils
 
+try:
+    import dask
+    with_dask = True
+except ImportError:
+    with_dask = False
+
 
 # No data variable. This is used for filtering if an attribute could not have
 # been accessed
@@ -2671,15 +2677,23 @@ class InteractiveArray(InteractiveBase):
             coords = {ycoord.name: ycoord, xcoord.name: xcoord}
             dims = sdims
         elif keepshape:
+            if with_dask:
+                from dask.array import broadcast_to, notnull
+            else:
+                from numpy import broadcast_to, isnan
+
+                def notnull(a):
+                    return ~isnan(a)
+
             dims = arr.dims
             coords = arr.coords
-            reps = tuple(s if dim not in sdims else 1
-                         for s, dim in zip(arr.shape, arr.dims))
-            weights = np.tile(weights, reps)
-            weights[arr.isnull().values] = 0
-            summed = np.nansum(weights, axis=tuple(map(dims.index, sdims)),
-                               keepdims=True)
-            weights /= summed
+            weights = broadcast_to(weights / weights.sum(), arr.shape)
+            # set nans to zero weigths. This step takes quite a lot of time for
+            # large arrays since it involves a copy of the entire `arr`
+            weights *= notnull(arr)
+            # normalize the weights
+            weights /= weights.sum(axis=tuple(map(dims.index, sdims)),
+                                   keepdims=True)
         else:
             dims = arr.dims
             coords = arr.isel(
@@ -2732,12 +2746,11 @@ class InteractiveArray(InteractiveBase):
     def _fldaverage_args(self):
         """Masked array, xname, yname and axis for calculating the average"""
         arr = self.arr
-        ma_arr = np.ma.array(arr, mask=arr.isnull())
         sdims = (self.get_dim('y'), self.get_dim('x'))
         if sdims[0] == sdims[1]:
             sdims = sdims[:1]
         axis = tuple(map(arr.dims.index, sdims))
-        return ma_arr, sdims, axis
+        return arr, sdims, axis
 
     def _insert_fldmean_bounds(self, da, keepdims=False):
         xcoord = self.get_coord('x')
@@ -2783,37 +2796,26 @@ class InteractiveArray(InteractiveBase):
         fldpctl: For calculating weighted percentiles
         """
         gridweights = self.gridweights(keepshape=True)
-        arr = self.arr
+        arr, sdims, axis = self._fldaverage_args()
 
         xcoord = self.decoder.get_x(next(six.itervalues(self.base_variables)),
                                     arr.coords)
         ycoord = self.decoder.get_y(next(six.itervalues(self.base_variables)),
                                     arr.coords)
-        ma_arr, sdims, axis = self._fldaverage_args()
-        ma_means = np.ma.average(ma_arr, weights=gridweights, axis=axis)
+        means = (arr * gridweights).sum(axis=axis)
         if keepdims:
-            ma_means = ma_means.reshape(
-                tuple(1 if i in axis else s for i, s in enumerate(arr.shape)))
-        means = np.array(ma_means.data)
-        means[ma_means.mask] = np.nan
+            means = means.expand_dims(sdims, axis=axis)
 
-        coords = dict(arr.coords)
         if keepdims:
-            coords[xcoord.name] = xcoord.mean().expand_dims(xcoord.dims[0])
-            coords[ycoord.name] = ycoord.mean().expand_dims(ycoord.dims[0])
-            dims = arr.dims
+            means[xcoord.name] = xcoord.mean().expand_dims(xcoord.dims[0])
+            means[ycoord.name] = ycoord.mean().expand_dims(ycoord.dims[0])
         else:
-            coords[xcoord.name] = xcoord.mean()
-            coords[ycoord.name] = ycoord.mean()
-            dims = tuple(d for d in arr.dims if d not in sdims)
-        coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
-        coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
-        coords = {name: c for name, c in coords.items()
-                  if set(c.dims) <= set(dims)}
-        ret = xr.DataArray(means, name=arr.name, dims=dims,
-                           coords=coords, attrs=arr.attrs.copy())
-        self._insert_fldmean_bounds(ret, keepdims)
-        return ret
+            means[xcoord.name] = xcoord.mean()
+            means[ycoord.name] = ycoord.mean()
+        means.coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
+        means.coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
+        self._insert_fldmean_bounds(means, keepdims)
+        return means
 
     def fldstd(self, keepdims=False):
         """Calculate the weighted standard deviation over x- and y-dimension
@@ -2841,27 +2843,21 @@ class InteractiveArray(InteractiveBase):
         fldmean: For calculating the weighted mean
         fldpctl: For calculating weighted percentiles
         """
-        arr = self.arr
-        ret = self.fldmean(keepdims=keepdims)
+        arr, sdims, axis = self._fldaverage_args()
+        means = self.fldmean(keepdims=True)
         weights = self.gridweights(keepshape=True)
-        if not keepdims:
-            means = ret.values.reshape(
-                tuple(1 if d not in ret.dims else s
-                      for d, s in zip(arr.dims, arr.shape)))
-        else:
-            means = ret.values
-        ma_arr, sdims, axis = self._fldaverage_args()
-        ma_variance = np.ma.average((ma_arr - means)**2, weights=weights,
-                                    axis=axis)
+        variance = ((arr - means.values)**2 * weights).sum(axis=axis)
         if keepdims:
-            ma_variance = ma_variance.reshape(
-                tuple(1 if i in axis else s for i, s in enumerate(arr.shape)))
-
-        variance = np.array(ma_variance.data)
-        variance[ma_variance.mask] = np.nan
-
-        ret.values[:] = np.sqrt(variance)
-        return ret
+            variance = variance.expand_dims(sdims, axis=axis)
+        for key, coord in six.iteritems(means.coords):
+            if key not in variance.coords:
+                variance[key] = coord if keepdims else coord.isel(
+                    **dict(zip(sdims, repeat(0))))
+        for key, coord in six.iteritems(means.psy.base.coords):
+            if key not in variance.psy.base.coords:
+                variance.psy.base[key] = coord if keepdims else coord.isel(
+                    **dict(zip(sdims, repeat(0))))
+        return variance**0.5
 
     def fldpctl(self, q, keepdims=False):
         """Calculate the percentiles along the x- and y-dimensions
@@ -2890,7 +2886,12 @@ class InteractiveArray(InteractiveBase):
         See Also
         --------
         fldstd: For calculating the weighted standard deviation
-        fldmean: For calculating the weighted mean"""
+        fldmean: For calculating the weighted mean
+
+        Warnings
+        --------
+        This method does load the entire array into memory! So take care if you
+        handle big data."""
         gridweights = self.gridweights(keepshape=True)
         arr = self.arr
 
