@@ -10,6 +10,5 @@ dependencies:
     - seaborn
     - scipy  # necessary for scipy engine test
     - pynio
-    - pyngl
     - pip:
         - pytest
