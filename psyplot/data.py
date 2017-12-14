@@ -2815,6 +2815,7 @@ class InteractiveArray(InteractiveBase):
         means.coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
         means.coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
         self._insert_fldmean_bounds(means, keepdims)
+        means.name = arr.name
         return means
 
     def fldstd(self, keepdims=False):
@@ -2851,13 +2852,17 @@ class InteractiveArray(InteractiveBase):
             variance = variance.expand_dims(sdims, axis=axis)
         for key, coord in six.iteritems(means.coords):
             if key not in variance.coords:
+                dims = set(sdims).intersection(coord.dims)
                 variance[key] = coord if keepdims else coord.isel(
-                    **dict(zip(sdims, repeat(0))))
+                    **dict(zip(dims, repeat(0))))
         for key, coord in six.iteritems(means.psy.base.coords):
             if key not in variance.psy.base.coords:
+                dims = set(sdims).intersection(coord.dims)
                 variance.psy.base[key] = coord if keepdims else coord.isel(
-                    **dict(zip(sdims, repeat(0))))
-        return variance**0.5
+                    **dict(zip(dims, repeat(0))))
+        std = variance**0.5
+        std.name = arr.name
+        return std
 
     def fldpctl(self, q, keepdims=False):
         """Calculate the percentiles along the x- and y-dimensions
@@ -2927,7 +2932,11 @@ class InteractiveArray(InteractiveBase):
                     sorter.__getitem__(indices)])
 
         # compute the percentiles
-        weights = np.nancumsum(weights, axis=0) - 0.5 * weights
+        try:
+            weights = np.nancumsum(weights, axis=0) - 0.5 * weights
+        except AttributeError:
+            notnull = ~np.isnan(weights)
+            weights[notnull] = np.cumsum(weights[notnull])
         all_indices = map(tuple, product(*map(range, data.shape[1:])))
         pctl = np.zeros((len(q), ) + data.shape[1:])
 
