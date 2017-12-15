@@ -403,7 +403,9 @@ class Formatoption(object):
 
     @docstrings.get_sectionsf('Formatoption')
     @dedent
-    def __init__(self, key, plotter=None, index_in_list=None, **kwargs):
+    def __init__(self, key, plotter=None, index_in_list=None,
+                 additional_children=[], additional_dependencies=[],
+                 **kwargs):
         """
         Parameters
         ----------
@@ -415,6 +417,11 @@ class Formatoption(object):
         index_in_list: int or None
             The index that shall be used if the data is a
             :class:`psyplot.InteractiveList`
+        additional_children: list or str
+            Additional children to use (see the :attr:`children` attribute)
+        additional_dependencies: list or str
+            Additional dependencies to use (see the :attr:`dependencies`
+            attribute)
         ``**kwargs``
             Further keywords may be used to specify different names for
             children, dependencies and connection formatoptions that match the
@@ -426,6 +433,10 @@ class Formatoption(object):
         self.plotter = plotter
         self.index_in_list = index_in_list
         self.shared = set()
+        self.additional_children = additional_children
+        self.additional_dependencies = additional_dependencies
+        self.children = self.children + additional_children
+        self.dependencies = self.dependencies + additional_dependencies
         self._child_mapping = dict(zip(*tee(chain(
             self.children, self.dependencies, self.connections,
             self.parents), 2)))
@@ -455,7 +466,10 @@ class Formatoption(object):
             return getattr(instance, '_' + self.key)
         except AttributeError:
             fmto = self.__class__(
-                self.key, instance, self.index_in_list, **self.init_kwargs)
+                self.key, instance, self.index_in_list,
+                additional_children=self.additional_children,
+                additional_dependencies=self.additional_dependencies,
+                **self.init_kwargs)
             setattr(instance, '_' + self.key, fmto)
             return fmto
 

@@ -23,6 +23,9 @@ Added
 * Added the ``gridweights``, ``fldmean``, ``fldstd`` and ``fldpctl`` methods
   to the ``psy`` DataArray accessor to calculate weighted means, standard
   deviations and percentiles over the spatial dimensions (x- and y).
+* Added the ``additional_children`` and ``additional_dependencies`` parameters
+  to the Formatoption intialization. These parameters can be used to provide
+  additional children for a formatoption for one plotter class
 
 
 v1.0.0
