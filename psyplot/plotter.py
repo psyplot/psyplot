@@ -1388,7 +1388,7 @@ class Plotter(dict):
             # get the formatoptions. We sort them here by key to make sure that
             # the order always stays the same (easier for debugging)
             fmtos = sorted(self._set_and_filter(), key=lambda fmto: fmto.key)
-        except:
+        except Exception:
             # restore last (working) state
             last_state = self._old_fmt.pop(-1)
             with self.no_validation:
@@ -1422,10 +1422,17 @@ class Plotter(dict):
             return True
         # otherwise we update it
         arr_draw = False
-        for priority, grouper in fmto_groups:
-            arr_draw = True
-            self._plot_by_priority(priority, grouper)
-        update_the_others()
+        try:
+            for priority, grouper in fmto_groups:
+                arr_draw = True
+                self._plot_by_priority(priority, grouper)
+            update_the_others()
+        except Exception:
+            raise
+        finally:
+            # make sure that all locks are released
+            self._release_all(finish=True,
+                              queue=None if queues is None else queues[1])
         if draw is None:
             draw = rcParams['auto_draw']
         if draw and arr_draw:
@@ -1433,8 +1440,6 @@ class Plotter(dict):
             if rcParams['auto_show']:
                 self.show()
         self.replot = False
-        # make sure that all locks are released
-        self._release_all(True, queue=None if queues is None else queues[1])
         return arr_draw
 
     def _release_all(self, finish=False, queue=None):
