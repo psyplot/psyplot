@@ -1960,6 +1960,10 @@ class InteractiveBase(object):
     @arr_name.setter
     def arr_name(self, value):
         self._arr_name = value
+        try:
+            del self._logger
+        except AttributeError:
+            pass
         self.onupdate.emit()
 
     _arr_name = None
