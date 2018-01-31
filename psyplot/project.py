@@ -972,6 +972,14 @@ class Project(ArrayList):
             d['plotter']['ax']['shared'] = set(
                 other.psy.arr_name for other in self
                 if other.psy.ax == plotter.ax)
+            if plotter.ax._sharex:
+                d['plotter']['ax']['sharex'] = next(
+                    (other.psy.arr_name for other in self
+                     if other.psy.ax == plotter.ax._sharex), None)
+            if plotter.ax._sharey:
+                d['plotter']['ax']['sharey'] = next(
+                    (other.psy.arr_name for other in self
+                     if other.psy.ax == plotter.ax._sharey), None)
             shared = d['plotter']['shared']
             for fmto in plotter._fmtos:
                 if fmto.shared:
@@ -1128,6 +1136,15 @@ class Project(ArrayList):
         Project
             The project in state of the saving point"""
         from pkg_resources import iter_entry_points
+
+        def get_ax_base(name, alternatives):
+            ax_base = next(iter(obj(arr_name=name).axes), None)
+            if ax_base is None:
+                ax_base = next(iter(obj(arr_name=alternatives).axes), None)
+            if ax_base is not None:
+                alternatives.difference_update(obj(ax=ax_base).arr_names)
+            return ax_base
+
         pwd = kwargs.pop('pwd', None)
         if isinstance(fname, six.string_types):
             with open(fname, 'rb') as f:
@@ -1163,6 +1180,8 @@ class Project(ArrayList):
             obj._main = gcp(True)
         axes = {}
         arr_names = obj.arr_names
+        sharex = defaultdict(set)
+        sharey = defaultdict(set)
         for arr, (arr_name, arr_dict) in zip(
                 obj, filter(lambda t: t[0] in arr_names,
                             six.iteritems(d['arrays']))):
@@ -1186,12 +1205,29 @@ class Project(ArrayList):
                     plot_dict['ax'].pop('shared', None)
                     plot_dict['ax']['fig'] = fig_map[
                         plot_dict['ax'].get('fig') or 1]
+                    if plot_dict['ax'].get('sharex'):
+                        sharex[plot_dict['ax'].pop('sharex')].add(
+                            arr.psy.arr_name)
+                    if plot_dict['ax'].get('sharey'):
+                        sharey[plot_dict['ax'].pop('sharey')].add(
+                            arr.psy.arr_name)
                     axes[arr.psy.arr_name] = ax = _ProjectLoader.load_axes(
                         plot_dict['ax'])
             plotter_cls(
                 arr, make_plot=False, draw=False, clear=False,
                 ax=ax, project=obj.main, enable_post=enable_post,
                 **plot_dict['fmt'])
+        # handle shared x and y-axes
+        for key, names in sharex.items():
+            ax_base = get_ax_base(key, names)
+            if ax_base is not None:
+                ax_base.get_shared_x_axes().join(
+                    ax_base, *obj(arr_name=names).axes)
+        for key, names in sharey.items():
+            ax_base = get_ax_base(key, names)
+            if ax_base is not None:
+                ax_base.get_shared_y_axes().join(
+                    ax_base, *obj(arr_name=names).axes)
         for arr in obj.with_plotter:
             shared = d['arrays'][arr.psy.arr_name]['plotter'].get('shared', {})
             for key, arr_names in six.iteritems(shared):

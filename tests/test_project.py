@@ -312,6 +312,67 @@ class TestProject(td.TestArrayList):
         sp = psy.Project.load_project(fname, enable_post=True)
         self.assertEqual(sp.plotters[0].ax.get_title(), 'test')
 
+    def test_save_and_load_07_sharedx(self):
+        """Test whether shared x- and y-axis are restored correctly"""
+        psy.register_plotter('test_plotter', import_plotter=True,
+                             module='test_plotter', plotter_name='TestPlotter')
+        ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'))
+        plt.close('all')
+        fig, axes = plt.subplots(1, 3, sharex=True)
+        sp = psy.plot.test_plotter(ds, name=['t2m', 'u', 'v'], x=0, y=4,
+                                   ax=axes)
+        axes[0].set_xlim(5, 10)
+        self.assertEqual(list(axes[1].get_xlim()), [5, 10])
+        # save the project
+        fname = 'test.pkl'
+        self._created_files.add(fname)
+        sp.save_project(fname)
+        psy.close('all')
+
+        # load the project
+        sp = psy.Project.load_project(fname)
+        self.assertEqual(len(sp.axes), 3, msg=sp.axes)
+        sp[0].psy.ax.set_xlim(10, 15)
+        self.assertEqual(list(sp[1].psy.ax.get_xlim()), [10, 15])
+
+        # now we test, if it still works, if we remove the source axes
+        names2use = sp.arr_names[1:]
+        psy.close('all')
+        sp = psy.Project.load_project(fname, only=names2use)
+        self.assertEqual(len(sp.axes), 2, msg=sp.axes)
+        sp[0].psy.ax.set_xlim(10, 15)
+        self.assertEqual(list(sp[1].psy.ax.get_xlim()), [10, 15])
+
+    def test_save_and_load_08_sharedy(self):
+        """Test whether shared x- and y-axis are restored correctly"""
+        psy.register_plotter('test_plotter', import_plotter=True,
+                             module='test_plotter', plotter_name='TestPlotter')
+        ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'))
+        plt.close('all')
+        fig, axes = plt.subplots(1, 3, sharey=True)
+        sp = psy.plot.test_plotter(ds, name=['t2m', 'u', 'v'], x=0, y=4,
+                                   ax=axes)
+        axes[0].set_ylim(5, 10)
+        self.assertEqual(list(axes[1].get_ylim()), [5, 10])
+        # save the project
+        fname = 'test.pkl'
+        self._created_files.add(fname)
+        sp.save_project(fname)
+        psy.close('all')
+
+        # load the project
+        sp = psy.Project.load_project(fname)
+        self.assertEqual(len(sp.axes), 3, msg=sp.axes)
+        sp[0].psy.ax.set_ylim(10, 15)
+        self.assertEqual(list(sp[1].psy.ax.get_ylim()), [10, 15])
+
+        # now we test, if it still works, if we remove the source axes
+        names2use = sp.arr_names[1:]
+        psy.close('all')
+        sp = psy.Project.load_project(fname, only=names2use)
+        self.assertEqual(len(sp.axes), 2, msg=sp.axes)
+        sp[0].psy.ax.set_ylim(10, 15)
+        self.assertEqual(list(sp[1].psy.ax.get_ylim()), [10, 15])
 
     def test_versions_and_patch(self):
         import warnings
