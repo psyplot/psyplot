@@ -1699,7 +1699,11 @@ class UGridDecoder(CFDecoder):
             triangles = self.get_triangles(var, coords)
             centers = triangles.x[triangles.triangles].mean(axis=-1)
             x = self.get_nodes(self.get_mesh(var, coords), coords)[0]
-            return xr.IndexVariable(x.name, centers, attrs=x.attrs.copy())
+            try:
+                cls = xr.IndexVariable
+            except AttributeError:  # xarray < 0.9
+                cls = xr.Coordinate
+            return cls(x.name, centers, attrs=x.attrs.copy())
 
     @docstrings.dedent
     def get_y(self, var, coords=None):
@@ -1723,7 +1727,11 @@ class UGridDecoder(CFDecoder):
             triangles = self.get_triangles(var, coords)
             centers = triangles.y[triangles.triangles].mean(axis=-1)
             y = self.get_nodes(self.get_mesh(var, coords), coords)[1]
-            return xr.IndexVariable(y.name, centers, attrs=y.attrs.copy())
+            try:
+                cls = xr.IndexVariable
+            except AttributeError:  # xarray < 0.9
+                cls = xr.Coordinate
+            return cls(y.name, centers, attrs=y.attrs.copy())
 
 
 # register the UGridDecoder
