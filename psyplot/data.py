@@ -1620,7 +1620,8 @@ class UGridDecoder(CFDecoder):
             xvert = arr[:, 0]
             yvert = arr[:, 1]
             if loc == 'face':
-                triangles = np.reshape(range(len(xvert)), (len(xvert) / 3, 3))
+                triangles = np.reshape(range(len(xvert)), (len(xvert) // 3,
+                                                           3))
 
         return Triangulation(xvert, yvert, triangles)
 
@@ -1698,7 +1699,7 @@ class UGridDecoder(CFDecoder):
             triangles = self.get_triangles(var, coords)
             centers = triangles.x[triangles.triangles].mean(axis=-1)
             x = self.get_nodes(self.get_mesh(var, coords), coords)[0]
-            return xr.Coordinate(x.name, centers, attrs=x.attrs.copy())
+            return xr.IndexVariable(x.name, centers, attrs=x.attrs.copy())
 
     @docstrings.dedent
     def get_y(self, var, coords=None):
@@ -1722,7 +1723,7 @@ class UGridDecoder(CFDecoder):
             triangles = self.get_triangles(var, coords)
             centers = triangles.y[triangles.triangles].mean(axis=-1)
             y = self.get_nodes(self.get_mesh(var, coords), coords)[1]
-            return xr.Coordinate(y.name, centers, attrs=y.attrs.copy())
+            return xr.IndexVariable(y.name, centers, attrs=y.attrs.copy())
 
 
 # register the UGridDecoder
