@@ -786,6 +786,15 @@ class PostTiming(Formatoption):
     def update(self, value):
         pass
 
+    def get_fmt_widget(self, parent, project):
+        from psyplot_gui.compat.qtcompat import QComboBox
+        combo = QComboBox(parent)
+        combo.addItems(['never', 'always', 'replot'])
+        combo.setCurrentText(
+            next((plotter[self.key] for plotter in project.plotters), 'never'))
+        combo.currentTextChanged.connect(parent.set_obj)
+        return combo
+
 
 class PostProcDependencies(object):
     """The dependencies of this formatoption"""
