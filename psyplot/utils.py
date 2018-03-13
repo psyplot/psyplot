@@ -279,3 +279,42 @@ def hashable(val):
         return repr(val)
     else:
         return val
+
+
+@docstrings.get_sectionsf('join_dicts')
+def join_dicts(dicts, delimiter=None, keep_all=False):
+    """Join multiple dictionaries into one
+
+    Parameters
+    ----------
+    dicts: list of dict
+        A list of dictionaries
+    delimiter: str
+        The string that shall be used as the delimiter in case that there
+        are multiple values for one attribute in the arrays. If None, they
+        will be returned as sets
+    keep_all: bool
+        If True, all formatoptions are kept. Otherwise only the intersection
+
+    Returns
+    -------
+    dict
+        The combined dictionary"""
+    if not dicts:
+        return {}
+    if keep_all:
+        all_keys = set(chain(*(d.keys() for d in dicts)))
+    else:
+        all_keys = set(dicts[0])
+        for d in dicts[1:]:
+            all_keys.intersection_update(d)
+    ret = {}
+    for key in all_keys:
+        vals = {hashable(d.get(key, None)) for d in dicts} - {None}
+        if len(vals) == 1:
+            ret[key] = next(iter(vals))
+        elif delimiter is None:
+            ret[key] = vals
+        else:
+            ret[key] = delimiter.join(map(str, vals))
+    return ret

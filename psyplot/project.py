@@ -604,14 +604,17 @@ class Project(ArrayList):
         import matplotlib.pyplot as plt
         plt.show(block=False)
 
-    def joined_attrs(self, delimiter=', ', enhanced=True, plot_data=False):
+    docstrings.keep_params('join_dicts.parameters', 'delimiter')
+    docstrings.keep_params('join_dicts.parameters', 'keep_all')
+
+    @docstrings.with_indent(8)
+    def joined_attrs(self, delimiter=', ', enhanced=True, plot_data=False,
+                     keep_all=True):
         """Join the attributes of the arrays in this project
 
         Parameters
         ----------
-        delimiter: str
-            The string that shall be used as the delimiter in case that there
-            are multiple values for one attribute in the arrays
+        %(join_dicts.parameters.delimiter)s
         enhanced: bool
             If True, the :meth:`psyplot.plotter.Plotter.get_enhanced_attrs`
             method is used, otherwise the :attr:`xarray.DataArray.attrs`
@@ -619,6 +622,7 @@ class Project(ArrayList):
         plot_data: bool
             It True, use the :attr:`psyplot.plotter.Plotter.plot_data`
             attribute of the plotters rather than the raw data in this project
+        %(join_dicts.parameters.keep_all)s
 
         Returns
         -------
@@ -637,16 +641,8 @@ class Project(ArrayList):
                              for plotter in self.plotters]
             else:
                 all_attrs = [arr.attrs for arr in self]
-        all_keys = set(chain(*(attrs.keys() for attrs in all_attrs)))
-        ret = {}
-        for key in all_keys:
-            vals = {utils.hashable(attrs.get(key, None))
-                    for attrs in all_attrs} - {None}
-            if len(vals) == 1:
-                ret[key] = next(iter(vals))
-            else:
-                ret[key] = delimiter.join(map(str, vals))
-        return ret
+        return utils.join_dicts(all_attrs, delimiter=delimiter,
+                                keep_all=keep_all)
 
     def export(self, output, tight=False, concat=True, close_pdf=None,
                use_time=False, **kwargs):
