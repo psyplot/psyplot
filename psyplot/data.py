@@ -1410,7 +1410,7 @@ class CFDecoder(object):
                 # check for absolute time units and make sure the data is not
                 # already decoded via dtype check
                 if v.attrs.get('units', '') == 'day as %Y%m%d.%f' and (
-                        np.issubdtype(v.dtype, float)):
+                        np.issubdtype(v.dtype, np.float64)):
                     decoded = xr.Variable(
                         v.dims, AbsoluteTimeDecoder(v), attrs=v.attrs,
                         encoding=v.encoding)
