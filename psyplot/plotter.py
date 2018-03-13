@@ -623,6 +623,28 @@ class Formatoption(object):
             Value to update"""
         pass
 
+    def get_fmt_widget(self, parent, project):
+        """Get a widget to update the formatoption in the GUI
+
+        This method should return a QWidget that is loaded by the psyplot-gui
+        when the formatoption is selected in the
+        :attr:`psyplot_gui.main.Mainwindow.fmt_widget`. It should call the
+        :method:`~psyplot_gui.fmt_widget.FormatoptionWidget.insert_text` method
+        when the update text for the formatoption should be changed.
+
+        Parameters
+        ----------
+        parent: psyplot_gui.fmt_widget.FormatoptionWidget
+            The parent widget that contains the returned QWidget
+        project: psyplot.project.Project
+            The current subproject (see :func:`psyplot.project.gcp`)
+
+        Returns
+        -------
+        PyQt5.QtWidgets.QWidget
+            The widget to control the formatoption"""
+        return None
+
     def share(self, fmto, initializing=False, **kwargs):
         """Share the settings of this formatoption with other data objects
 

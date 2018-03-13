@@ -26,6 +26,9 @@ Added
 * Added the ``additional_children`` and ``additional_dependencies`` parameters
   to the Formatoption intialization. These parameters can be used to provide
   additional children for a formatoption for one plotter class
+* We added the ``psyplot.plotter.Formatoption.get_fmt_widget`` method which can
+  be implemented to insert widgets in the formatoptions widget of the
+  graphical user interface
 
 
 v1.0.0
