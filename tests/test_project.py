@@ -674,9 +674,6 @@ class TestProject(td.TestArrayList):
         sp2.close(True, True, True)
         self.assertEqual(sp2, [])
         self.assertEqual(mp, [])
-        if not six.PY2:
-            with self.assertRaises((RuntimeError, AssertionError)):
-                ds.t2m.values
 
     def test_close_global(self):
         """Test the :func:`psyplot.project.close` function"""
@@ -712,9 +709,7 @@ class TestProject(td.TestArrayList):
         # close the current subproject
         ds = mp2[2].psy.base
         psy.close()
-        if not six.PY2:
-            with self.assertRaises((RuntimeError, AssertionError)):
-                ds.u.values
+
         self.assertIs(psy.gcp(True), mp2)
         self.assertEqual(psy.gcp(), [])
         self.assertEqual(sp2, [])
@@ -728,9 +723,7 @@ class TestProject(td.TestArrayList):
         self.assertEqual(mp2, [])
         self.assertIs(psy.gcp().main, mp1)
         self.assertEqual(psy.gcp().arr_names, mp1.arr_names)
-        if not six.PY2:
-            with self.assertRaises((RuntimeError, AssertionError)):
-                ds.u.values
+
         # close all projects
         ds0 = mp0[0].psy.base
         ds0.v.values  # check that the data can be loaded
@@ -742,10 +735,6 @@ class TestProject(td.TestArrayList):
         self.assertEqual(psy.gcp(), [])
         self.assertIsNot(psy.gcp(True), mp0)
         self.assertIsNot(psy.gcp(True), mp1)
-        if not six.PY2:
-            with self.assertRaises((RuntimeError, AssertionError)):
-                ds0.u.values
-                ds1.u.values
 
     def test_oncpchange_signal(self):
         """Test whether the correct signal is fired"""
