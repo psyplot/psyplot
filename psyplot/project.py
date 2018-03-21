@@ -1057,6 +1057,33 @@ class Project(ArrayList):
             setattr(TmpClass, fmto.key, type(fmto)(fmto.key))
         return TmpClass.show_docs(*args, **kwargs)
 
+    @classmethod
+    @docstrings.with_indent(8)
+    def from_dataset(cls, *args, **kwargs):
+        """Construct an ArrayList instance from an existing base dataset
+
+        Parameters
+        ----------
+        %(ArrayList.from_dataset.parameters)s
+        main: Project
+            The main project that this project corresponds to
+
+        Other Parameters
+        ----------------
+        %(ArrayList.from_dataset.other_parameters)s
+
+        Returns
+        -------
+        Project
+            The newly created project instance
+        """
+        main = kwargs.pop('main', None)
+        ret = super(Project, cls).from_dataset(*args, **kwargs)
+        if main is not None:
+            ret.main = main
+            main.extend(ret, new_name=False)
+        return ret
+
     docstrings.delete_params('ArrayList.from_dict.parameters', 'd', 'pwd')
     docstrings.keep_params('Project._add_data.parameters', 'make_plot')
     docstrings.keep_params('Project._add_data.parameters', 'clear')
