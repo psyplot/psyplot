@@ -3224,7 +3224,7 @@ class ArrayList(list):
                      decoder=None, auto_update=None, prefer_list=False,
                      squeeze=True, attrs=None, **kwargs):
         """
-        Construct an ArrayDict instance from an existing base dataset
+        Construct an ArrayList instance from an existing base dataset
 
         Parameters
         ----------
