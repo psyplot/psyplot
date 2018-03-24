@@ -2147,8 +2147,13 @@ class InteractiveArray(InteractiveBase):
         if self._base is None:
             if 'variable' in self.arr.dims:
                 def to_dataset(i):
-                    return self.isel(variable=i).drop('variable').to_dataset(
+                    ret = self.isel(variable=i).to_dataset(
                         name=self.arr.coords['variable'].values[i])
+                    try:
+                        return ret.drop('variable')
+                    except ValueError:  # 'variable' Variable not defined
+                        pass
+                    return ret
                 ds = to_dataset(0)
                 if len(self.arr.coords['variable']) > 1:
                     for i in range(1, len(self.arr.coords['variable'])):
