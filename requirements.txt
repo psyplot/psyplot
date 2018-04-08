@@ -1,6 +1,6 @@
 # Matplotlib
 #   https://github.com/matplotlib/matplotlib/blob/master/CHANGELOG
-matplotlib==2.0.2  # rq.filter: >=1.4, <2.1
+matplotlib==2.2.2  # rq.filter: >=1.4, <2.1
 
 # xarray
 #   https://github.com/pydata/xarray/blob/stable/doc/whats-new.rst
