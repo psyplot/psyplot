@@ -1,5 +1,9 @@
 v1.1.0
 ======
+This new release mainly adds new xarray accossors (``psy``) for DataArrays
+and Datasets. Additionally we provide methods to calculate the spatially
+weighted mean, such as fldmean, fldstd and fldpctl.
+
 Added
 -----
 * The yaxis_inverted and xaxis_inverted is now considered when loading and
