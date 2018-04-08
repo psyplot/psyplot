@@ -31,6 +31,8 @@ results = OrderedDict()
 
 class TestFormatoption(psyp.Formatoption):
 
+    removed = False
+
     @property
     def default(self):
         try:
@@ -46,6 +48,9 @@ class TestFormatoption(psyp.Formatoption):
             results.pop(key, None)
         else:
             results[key] = value
+
+    def remove(self):
+        self.removed = True
 
 
 @docstrings.save_docstring('_testing.SimpleFmt')

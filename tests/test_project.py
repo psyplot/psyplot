@@ -650,14 +650,23 @@ class TestProject(td.TestArrayList):
         psy.register_plotter('test_plotter', module='test_plotter',
                              plotter_name='TestPlotter')
         ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'))
+        sp0 = psy.plot.test_plotter(ds, name='t2m', time=[1])
         sp1 = psy.plot.test_plotter(ds, name='t2m', time=[1, 2])
         sp2 = psy.plot.test_plotter(ds, name='t2m', time=[3, 4])
         mp = psy.gcp(True)
+        names0 = sp0.arr_names
         names1 = sp1.arr_names
         names2 = sp2.arr_names
         # some checks in the beginning
+        self.assertIs(sp0.main, mp)
         self.assertIs(sp1.main, mp)
         self.assertIs(sp2.main, mp)
+        self.assertEqual(mp.arr_names, names0 + names1 + names2)
+        self.assertEqual(mp.with_plotter.arr_names, names0 + names1 + names2)
+        plotters = sp0.plotters
+        # close sp0 but only remove the formatoptions
+        sp0.close(data=True, remove_only=True)
+        self.assertTrue(plotters[0].fmt1.removed)
         self.assertEqual(mp.arr_names, names1 + names2)
         self.assertEqual(mp.with_plotter.arr_names, names1 + names2)
         # close sp1

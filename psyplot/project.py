@@ -402,7 +402,7 @@ class Project(ArrayList):
 
     @docstrings.get_sectionsf('Project.close')
     @dedent
-    def close(self, figs=True, data=False, ds=False):
+    def close(self, figs=True, data=False, ds=False, remove_only=False):
         """
         Close this project instance
 
@@ -413,12 +413,23 @@ class Project(ArrayList):
         data: bool
             delete the arrays from the (main) project
         ds: bool
-            If True, close the dataset as well"""
+            If True, close the dataset as well
+        remove_only: bool
+            If True and `figs` is True, the figures are not closed but the
+            plotters are removed"""
         import matplotlib.pyplot as plt
         close_ds = ds
         for arr in self[:]:
             if figs and arr.psy.plotter is not None:
-                plt.close(arr.psy.plotter.ax.get_figure().number)
+                if remove_only:
+                    for fmto in arr.psy.plotter._fmtos:
+                        try:
+                            fmto.remove()
+                        except Exception:
+                            pass
+                else:
+                    plt.close(arr.psy.plotter.ax.get_figure().number)
+                arr.psy.plotter = None
             if data:
                 self.remove(arr)
                 if not self.is_main:
@@ -432,10 +443,10 @@ class Project(ArrayList):
                         ds.close()
                 else:
                     arr.psy.base.close()
-
-            arr.psy.plotter = None
-        if self.is_main and self is gcp(True):
+        if self.is_main and self is gcp(True) and data:
             scp(None)
+        elif self.is_main and self is gcp(True):
+            self.oncpchange.emit(self)
         elif self.main is gcp(True):
             self.oncpchange.emit(self.main)
 
@@ -2298,7 +2309,7 @@ def project(num=None, *args, **kwargs):
 
 
 @docstrings.dedent
-def close(num=None, figs=True, data=True, ds=True):
+def close(num=None, figs=True, data=True, ds=True, remove_only=False):
     """
     Close the project
 
@@ -2316,7 +2327,7 @@ def close(num=None, figs=True, data=True, ds=True):
     See Also
     --------
     Project.close"""
-    kws = dict(figs=figs, data=data, ds=ds)
+    kws = dict(figs=figs, data=data, ds=ds, remove_only=remove_only)
     cp_num = gcp(True).num
     got_cp = False
     if num is None:
