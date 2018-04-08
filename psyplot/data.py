@@ -3227,7 +3227,7 @@ class ArrayList(list):
     @docstrings.dedent
     def from_dataset(cls, base, method='isel', default_slice=None,
                      decoder=None, auto_update=None, prefer_list=False,
-                     squeeze=True, attrs=None, **kwargs):
+                     squeeze=True, attrs=None, load=False, **kwargs):
         """
         Construct an ArrayList instance from an existing base dataset
 
@@ -3254,6 +3254,10 @@ class ArrayList(list):
         attrs: dict, optional
             Meta attributes that shall be assigned to the selected data arrays
             (additional to those stored in the `base` dataset)
+        load: bool or dict
+            If True, load the data from the dataset using the
+            :meth:`xarray.DataArray.load` method. If :class:`dict`, those will
+            be given to the above mentioned ``load`` method
 
         Other Parameters
         ----------------
@@ -3264,6 +3268,15 @@ class ArrayList(list):
         ArrayList
             The list with the specified :class:`InteractiveArray` instances
             that hold a reference to the given `base`"""
+        try:
+            load = dict(load)
+        except (TypeError, ValueError):
+            def maybe_load(arr):
+                return arr.load() if load else arr
+        else:
+            def maybe_load(arr):
+                return arr.load(**load)
+
         def iter_dims(dims):
             """Split the given dictionary into multiples and iterate over it"""
             if not dims:
@@ -3342,7 +3355,7 @@ class ArrayList(list):
                 # delete the variable dimension for the idims
                 dims.pop('variable', None)
                 ret.psy.init_accessor(arr_name=key, base=base, idims=dims)
-                return ret
+                return maybe_load(ret)
         else:
             def sel_method(key, dims, name=None):
                 if name is None:
@@ -3369,7 +3382,7 @@ class ArrayList(list):
                 else:
                     ret = squeeze_array(arr.sel(method=method, **dims))
                 ret.psy.init_accessor(arr_name=key, base=base)
-                return ret
+                return maybe_load(ret)
         kwargs.setdefault(
             'name', sorted(
                 key for key in base.variables if key not in base.coords))
