@@ -109,7 +109,7 @@ and the `HORNET grant (200021_169598)`_.
 .. _cartopy: http://scitools.org.uk/cartopy
 .. _Not yet visible: https://notyetvisible.de/
 .. _ACACIA grant (CR10I2_146314): http://p3.snf.ch/project-146314
-.. _HORNET grant (169598): http://p3.snf.ch/project-169598
+.. _HORNET grant (200021_169598): http://p3.snf.ch/project-169598
 
 
 
