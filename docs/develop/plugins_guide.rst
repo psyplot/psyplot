@@ -166,7 +166,7 @@ For complex formatoption, this might indeed be quite a challenge for the
 developer and there are two solutions to it:
 
 1. The simple solution for the developer: Allow a dictionary as a formatoption,
-   here we also have the :class:`psyplot.plotter.DictFormatoption` to help you
+   here we also have the :class:`psyplot.plotter.DictFormatoption` to help you.
 2. Interface to other formatoptions
 
 First solution: Use a :class:`dict`
