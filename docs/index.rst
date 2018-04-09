@@ -79,7 +79,7 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
 
     .. |conda| image:: https://anaconda.org/conda-forge/psyplot/badges/version.svg
         :alt: conda
-        :target: https://conda.anaconda.org/conda-forge/psyplot
+        :target: https://anaconda.org/conda-forge/psyplot
 
     .. |supported-versions| image:: https://img.shields.io/pypi/pyversions/psyplot.svg?style=flat
         :alt: Supported versions
