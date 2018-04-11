@@ -21,3 +21,10 @@ very long error message
 # Paste the output of the command ``psyplot -aV`` (ran from the command line)
 
 </details>
+
+#### NOTE
+This is a bug report.
+
+For requesting new features, use [this template](https://github.com/Chilipp/psyplot/issues/new?template=issue_template.md&title=NEW+FEATURE:).
+
+For changing existing features, use [this template](https://github.com/Chilipp/psyplot/issues/new?template=issue_template.md&title=CHANGE+FEATURE:).
