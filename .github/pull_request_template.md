@@ -1,0 +1,4 @@
+ - [ ] Closes #xxxx (remove if there is no corresponding issue, which should only be the case for minor changes)
+ - [ ] Tests added (for all bug fixes or enhancements)
+ - [ ] Tests passed (for all non-documentation changes)
+ - [ ] Fully documented, including `CHANGELOG.rst` for all changes
