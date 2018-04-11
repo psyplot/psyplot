@@ -1,5 +1,6 @@
 #### Summary
-[Describe the new requested feature in one or two lines.]
+[Describe the new requested feature in one or two lines. 
+This should also be mentioned in the title of this issue.]
 
 #### Reason
 [Why do you think, this is useful?]
