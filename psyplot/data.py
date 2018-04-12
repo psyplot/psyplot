@@ -299,9 +299,8 @@ def get_tdata(t_format, files):
     return to_datetime(Index(time, name='time')), files
 
 
-docstrings.get_sections(
-    dedents(xr.Dataset.to_netcdf.__doc__.split('\n', 1)[1]),
-    'xarray.Dataset.to_netcdf')
+docstrings.get_sections(xr.Dataset.to_netcdf.__doc__,
+                        'xarray.Dataset.to_netcdf')
 
 
 @docstrings.dedent
