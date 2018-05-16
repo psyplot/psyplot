@@ -3336,7 +3336,8 @@ class ArrayList(list):
             def sel_method(key, dims, name=None):
                 if name is None:
                     return recursive_selection(key, dims, dims.pop('name'))
-                elif isinstance(name, six.string_types):
+                elif (isinstance(name, six.string_types) or
+                      not utils.is_iterable(name)):
                     arr = base[name]
                 else:
                     arr = base[list(name)]
@@ -3359,7 +3360,8 @@ class ArrayList(list):
             def sel_method(key, dims, name=None):
                 if name is None:
                     return recursive_selection(key, dims, dims.pop('name'))
-                elif isinstance(name, six.string_types):
+                elif (isinstance(name, six.string_types) or
+                      not utils.is_iterable(name)):
                     arr = base[name]
                 else:
                     arr = base[list(name)]
@@ -3382,9 +3384,14 @@ class ArrayList(list):
                     ret = squeeze_array(arr.sel(method=method, **dims))
                 ret.psy.init_accessor(arr_name=key, base=base)
                 return maybe_load(ret)
-        kwargs.setdefault(
-            'name', sorted(
-                key for key in base.variables if key not in base.coords))
+        if 'name' not in kwargs:
+            default_names = list(
+                key for key in base.variables if key not in base.coords)
+            try:
+                default_names.sort()
+            except TypeError:
+                pass
+            kwargs['name'] = default_names
         names = setup_coords(**kwargs)
         # check coordinates
         possible_keys = ['t', 'x', 'y', 'z', 'name'] + list(base.dims)

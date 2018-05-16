@@ -3,7 +3,7 @@ import re
 import six
 from difflib import get_close_matches
 from itertools import chain
-from collections import Callable
+from collections import Callable, Iterable
 from psyplot.compat.pycompat import OrderedDict, filterfalse
 from psyplot.docstring import dedent, docstrings
 
@@ -318,3 +318,18 @@ def join_dicts(dicts, delimiter=None, keep_all=False):
         else:
             ret[key] = delimiter.join(map(str, vals))
     return ret
+
+
+def is_iterable(iterable):
+    """Test if an object is iterable
+
+    Parameters
+    ----------
+    iterable: object
+        The object to test
+
+    Returns
+    -------
+    bool
+        True, if the object is an iterable object"""
+    return isinstance(iterable, Iterable)
