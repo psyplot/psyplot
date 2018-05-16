@@ -1268,7 +1268,7 @@ class Plotter(dict):
 
     @docstrings.dedent
     def initialize_plot(self, data=None, ax=None, make_plot=True, clear=False,
-                        draw=None, remove=False):
+                        draw=None, remove=False, priority=None):
         """
         Initialize the plot for a data array
 
@@ -1285,7 +1285,12 @@ class Plotter(dict):
         %(InteractiveBase.start_update.parameters.draw)s
         remove: bool
             If True, old effects by the formatoptions in this plotter are
-            undone first"""
+            undone first
+        priority: int
+            If given, initialize only the formatoption with the given priority.
+            This value must be out of :data:`START`, :data:`BEFOREPLOTTING` or
+            :data:`END`
+        """
         if data is None and self.data is not None:
             data = self.data
         else:
@@ -1304,7 +1309,7 @@ class Plotter(dict):
             for fmto in self._fmtos:
                 try:
                     fmto.remove()
-                except:
+                except Exception:
                     self.logger.debug(
                         "Could not remove %s while initializing", fmto.key,
                         exc_info=True)
@@ -1318,8 +1323,10 @@ class Plotter(dict):
             sorted(self._fmtos, key=lambda fmto: fmto.key)))
         self.plot_data = self.data
         self._updating = True
-        for priority, grouper in fmto_groups:
-            self._plot_by_priority(priority, grouper, initializing=True)
+        for fmto_priority, grouper in fmto_groups:
+            if priority is None or fmto_priority == priority:
+                self._plot_by_priority(fmto_priority, grouper,
+                                       initializing=True)
         self._release_all(True)  # finish the update
         self.cleared = False
         self.replot = False
@@ -2335,8 +2342,8 @@ class Plotter(dict):
             if len(base_variables) > 1:  # multiple variables
                 for name, base_var in six.iteritems(base_variables):
                     attrs.update(
-                        {name+key: value for key, value in six.iteritems(
-                            base_var.attrs)})
+                        {six.text_type(name)+key: value
+                         for key, value in six.iteritems(base_var.attrs)})
             else:
                 base_var = next(six.itervalues(base_variables))
             attrs['name'] = arr.name

@@ -1,3 +1,12 @@
+v1.1.1
+======
+
+Added
+-----
+* The ``psyplot.plotter.Plotter.initialize_plot`` method now takes a
+  *priority* keyword to only initialize only formatoptions of a certain
+  priority
+
 v1.1.0
 ======
 This new release mainly adds new xarray accossors (``psy``) for DataArrays
