@@ -676,10 +676,10 @@ class CFDecoder(object):
         return str(var.attrs.get('grid_type')) == 'unstructured' or \
             self._check_triangular_bounds(var)[0]
 
-    @docstrings.get_sectionsf('CFDecoder._check_triangular_bounds', sections=[
+    @docstrings.get_sectionsf('CFDecoder.get_unstructured_bounds', sections=[
         'Parameters', 'Returns'])
     @dedent
-    def _check_triangular_bounds(self, var, coords=None, axis='x', nans=None):
+    def get_unstructured_bounds(self, var, coords=None, axis='x', nans=None):
         """
         Checks whether the bounds in the variable attribute are triangular
 
@@ -698,37 +698,80 @@ class CFDecoder(object):
 
         Returns
         -------
-        bool or None
-            True, if unstructered, None if it could not be determined
         xarray.Coordinate or None
             the bounds corrdinate (if existent)"""
         coord = self.get_variable_by_axis(var, axis, coords=coords)
         if coord is not None:
-            bounds = coord.attrs.get('bounds')
-            if bounds is not None:
-                bounds = self.ds.coords.get(bounds)
-                if coords is not None:
-                    bounds = bounds.sel(**{
-                        key: coords[key]
-                        for key in set(coords).intersection(bounds.dims)})
-                if nans == 'skip':
-                    bounds = bounds[~np.isnan(var.values)]
-                elif nans == 'only':
-                    bounds = bounds[np.isnan(var.values)]
-                elif nans is None:
-                    pass
-                else:
-                    raise ValueError(
-                        "`nans` must be either None, 'skip', or 'only'! "
-                        "Not {0}!".format(str(nans)))
-                if bounds is not None:
-                    return bounds.shape[-1] > 2, bounds
-                else:
-                    return None, bounds
-        return None, None
+            return self.get_unstructured_coord_bounds(coord, coords, nans,
+                                                      var=var)
+        return None
+
+    docstrings.delete_params('CFDecoder.get_unstructured_bounds.parameters',
+                             'var', 'axis')
 
     @docstrings.dedent
-    def is_unstructured(self, *args, **kwargs):
+    def get_unstructured_coord_bounds(self, coord, coords=None, nans=None,
+                                      var=None):
+        """
+        Get the boundaries of an unstructed coordinate
+
+        Parameters
+        ----------
+        coord: xr.Variable
+            The coordinate whose bounds should be returned
+        %(CFDecoder.get_unstructured_bounds.parameters.no_var|axis)s
+
+        Returns
+        -------
+        %(CFDecoder.get_unstructured_bounds.returns)s
+        """
+        bounds = coord.attrs.get('bounds')
+        if bounds is not None:
+            bounds = self.ds.coords.get(bounds)
+            if coords is not None:
+                bounds = bounds.sel(**{
+                    key: coords[key]
+                    for key in set(coords).intersection(bounds.dims)})
+            if nans is not None and var is None:
+                raise ValueError("Need the variable to deal with NaN!")
+            elif nans is None:
+                pass
+            elif nans == 'skip':
+                bounds = bounds[~np.isnan(var.values)]
+            elif nans == 'only':
+                bounds = bounds[np.isnan(var.values)]
+            else:
+                raise ValueError(
+                    "`nans` must be either None, 'skip', or 'only'! "
+                    "Not {0}!".format(str(nans)))
+            return bounds
+
+    @docstrings.get_sectionsf('CFDecoder._check_triangular_bounds', sections=[
+        'Parameters', 'Returns'])
+    @docstrings.dedent
+    def _check_triangular_bounds(self, var, coords=None, axis='x', nans=None):
+        """
+        Checks whether the bounds in the variable attribute are triangular
+
+        Parameters
+        ----------
+        %(CFDecoder.get_unstructured_bounds.parameters)s
+
+        Returns
+        -------
+        bool or None
+            True, if unstructered, None if it could not be determined
+        xarray.Coordinate or None
+            the bounds corrdinate (if existent)"""
+        bounds = self.get_unstructured_bounds(var, coords, axis=axis,
+                                              nans=nans)
+        if bounds is not None:
+            return bounds.shape[-1] == 3, bounds
+        else:
+            return None, None
+
+    @docstrings.dedent
+    def is_unstructured(self, var):
         """
         Test if a variable is on an unstructered grid
 
@@ -744,7 +787,31 @@ class CFDecoder(object):
         -----
         Currently this is the same as :meth:`is_triangular` method, but may
         change in the future to support hexagonal grids"""
-        return self.is_triangular(*args, **kwargs)
+        return str(var.attrs.get('grid_type')) == 'unstructured' or \
+            self._check_unstructered_bounds(var)[0]
+
+    @docstrings.dedent
+    def _check_unstructered_bounds(self, *args, **kwargs):
+        """
+        Checks whether the bounds in the variable attribute are triangular
+
+        Parameters
+        ----------
+        %(CFDecoder.get_unstructured_bounds.parameters)s
+
+        Returns
+        -------
+        %(CFDecoder._check_triangular_bounds.returns)s
+
+        Notes
+        -----
+        Currently this is the same as :meth:`_check_triangular_bounds` method,
+        but may change in the future to support hexagonal grids"""
+        bounds = self.get_unstructured_bounds(*args, **kwargs)
+        if bounds is not None:
+            return bounds.shape[-1] >= 3, bounds
+        else:
+            return None, None
 
     @docstrings.dedent
     def is_circumpolar(self, var):
@@ -760,25 +827,6 @@ class CFDecoder(object):
         %(CFDecoder.is_triangular.returns)s"""
         xcoord = self.get_x(var)
         return xcoord is not None and xcoord.ndim == 2
-
-    @docstrings.dedent
-    def _check_unstructered_bounds(self, *args, **kwargs):
-        """
-        Checks whether the bounds in the variable attribute are triangular
-
-        Parameters
-        ----------
-        %(CFDecoder._check_triangular_bounds.parameters)s
-
-        Returns
-        -------
-        %(CFDecoder._check_triangular_bounds.returns)s
-
-        Notes
-        -----
-        Currently this is the same as :meth:`_check_triangular_bounds` method,
-        but may change in the future to support hexagonal grids"""
-        return self._check_triangular_bounds(*args, **kwargs)
 
     def get_variable_by_axis(self, var, axis, coords=None):
         """Return the coordinate matching the specified axis
