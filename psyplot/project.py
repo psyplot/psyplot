@@ -462,7 +462,7 @@ class Project(ArrayList):
                                         'Returns'])
     @docstrings.dedent
     def _add_data(self, plotter_cls, filename_or_obj, fmt={}, make_plot=True,
-                  draw=None, mf_mode=False, ax=None, engine=None, delete=True,
+                  draw=False, mf_mode=False, ax=None, engine=None, delete=True,
                   share=False, clear=False, enable_post=None,
                   concat_dim=_concat_dim_default,
                   *args, **kwargs):
@@ -1103,7 +1103,7 @@ class Project(ArrayList):
     @docstrings.get_sectionsf('Project.load_project')
     @docstrings.dedent
     def load_project(cls, fname, auto_update=None, make_plot=True,
-                     draw=None, alternative_axes=None, main=False,
+                     draw=False, alternative_axes=None, main=False,
                      encoding=None, enable_post=False, new_fig=True,
                      clear=None, **kwargs):
         """

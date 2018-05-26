@@ -1094,7 +1094,7 @@ class Plotter(dict):
     @docstrings.get_sectionsf('Plotter')
     @docstrings.dedent
     def __init__(self, data=None, ax=None, auto_update=None, project=None,
-                 draw=None, make_plot=True, clear=False,
+                 draw=False, make_plot=True, clear=False,
                  enable_post=False, **kwargs):
         """
         Parameters
@@ -1268,7 +1268,7 @@ class Plotter(dict):
 
     @docstrings.dedent
     def initialize_plot(self, data=None, ax=None, make_plot=True, clear=False,
-                        draw=None, remove=False, priority=None):
+                        draw=False, remove=False, priority=None):
         """
         Initialize the plot for a data array
 
