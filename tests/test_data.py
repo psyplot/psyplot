@@ -276,6 +276,27 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
         self.assertFalse(decoder.is_triangular(ds.t2m[0, 0]))
         self.assertFalse(decoder.is_unstructured(ds.t2m[0, 0]))
 
+    def test_unstructured_bounds(self):
+        """Test the extraction of unstructured bounds"""
+        ds = psyd.open_dataset(os.path.join(bt.test_dir, 'icon_test.nc'))
+        decoder = psyd.CFDecoder(ds)
+        var = ds.t2m[0, 0]
+        var.attrs.pop('grid_type', None)
+        self.assertTrue(decoder.is_unstructured(var))
+        # x bounds
+        xbounds = decoder.get_unstructured_bounds(var, axis='x')
+        self.assertIsNotNone(xbounds)
+        self.assertEqual(xbounds.shape, ds.clon_bnds.shape)
+        # y bounds
+        ybounds = decoder.get_unstructured_bounds(var, axis='x')
+        self.assertIsNotNone(ybounds)
+        self.assertEqual(ybounds.shape, ds.clon_bnds.shape)
+
+        # Test for correct falsification
+        ds = psyd.open_dataset(os.path.join(bt.test_dir, 'test-t2m-u-v.nc'))
+        decoder = psyd.CFDecoder(ds)
+        self.assertFalse(decoder.is_unstructured(ds.t2m[0, 0]))
+
     def test_is_circumpolar(self):
         """Test whether the is_circumpolar method works"""
         ds = psyd.open_dataset(os.path.join(bt.test_dir,

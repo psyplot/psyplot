@@ -673,11 +673,15 @@ class CFDecoder(object):
         -------
         bool
             True, if the grid is triangular, else False"""
+        warn("The 'is_triangular' method is depreceated and will be removed "
+             "soon! Use the 'is_unstructured' method!", DeprecationWarning,
+             stacklevel=1)
         return str(var.attrs.get('grid_type')) == 'unstructured' or \
             self._check_triangular_bounds(var)[0]
 
-    @docstrings.get_sectionsf('CFDecoder.get_unstructured_bounds', sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sectionsf(
+        'CFDecoder.get_unstructured_bounds',
+        sections=['Parameters', 'Returns'])
     @dedent
     def get_unstructured_bounds(self, var, coords=None, axis='x', nans=None):
         """
@@ -698,20 +702,20 @@ class CFDecoder(object):
 
         Returns
         -------
-        xarray.Coordinate or None
+        xarray.DataArray or None
             the bounds corrdinate (if existent)"""
         coord = self.get_variable_by_axis(var, axis, coords=coords)
         if coord is not None:
-            return self.get_unstructured_coord_bounds(coord, coords, nans,
-                                                      var=var)
+            return self._get_unstructured_coord_bounds(coord, coords, nans,
+                                                       var=var)
         return None
 
     docstrings.delete_params('CFDecoder.get_unstructured_bounds.parameters',
                              'var', 'axis')
 
     @docstrings.dedent
-    def get_unstructured_coord_bounds(self, coord, coords=None, nans=None,
-                                      var=None):
+    def _get_unstructured_coord_bounds(self, coord, coords=None, nans=None,
+                                       var=None):
         """
         Get the boundaries of an unstructed coordinate
 
@@ -763,6 +767,7 @@ class CFDecoder(object):
             True, if unstructered, None if it could not be determined
         xarray.Coordinate or None
             the bounds corrdinate (if existent)"""
+        # !!! WILL BE REMOVED IN THE NEAR FUTURE! !!!
         bounds = self.get_unstructured_bounds(var, coords, axis=axis,
                                               nans=nans)
         if bounds is not None:
@@ -1336,7 +1341,7 @@ class CFDecoder(object):
     @docstrings.dedent
     def get_triangles(self, var, coords=None, convert_radian=True,
                       copy=False, src_crs=None, target_crs=None,
-                      nans=None):
+                      nans=None, stacklevel=1):
         """
         Get the triangles for the variable
 
@@ -1369,6 +1374,9 @@ class CFDecoder(object):
         ------
         ValueError
             If `src_crs` is not None and `target_crs` is None"""
+        warn("The 'get_triangles' method is depreceated and will be removed "
+             "soon! Use the 'get_unstructured_bounds' method!",
+             DeprecationWarning, stacklevel=stacklevel)
         from matplotlib.tri import Triangulation
 
         def get_vertices(axis):
@@ -1560,6 +1568,11 @@ class UGridDecoder(CFDecoder):
         are ignored"""
         return True
 
+    def is_unstructured(self, *args, **kwargs):
+        """Reimpletemented to return always True. Any ``*args`` and ``**kwargs``
+        are ignored"""
+        return True
+
     def get_mesh(self, var, coords=None):
         """Get the mesh variable for the given `var`
 
@@ -1602,7 +1615,7 @@ class UGridDecoder(CFDecoder):
 
     @docstrings.dedent
     def get_triangles(self, var, coords=None, convert_radian=True, copy=False,
-                      src_crs=None, target_crs=None, nans=None):
+                      src_crs=None, target_crs=None, nans=None, stacklevel=1):
         """
         Get the of the given coordinate.
 
@@ -1623,6 +1636,9 @@ class UGridDecoder(CFDecoder):
         .. todo::
             Implement the visualization for UGrid data shown on the edge of the
             triangles"""
+        warn("The 'get_triangles' method is depreceated and will be removed "
+             "soon! Use the 'get_unstructured_bounds' method!",
+             DeprecationWarning, stacklevel=stacklevel)
         from matplotlib.tri import Triangulation
 
         if coords is None:
@@ -1671,6 +1687,67 @@ class UGridDecoder(CFDecoder):
                                                            3))
 
         return Triangulation(xvert, yvert, triangles)
+
+    @docstrings.dedent
+    def get_unstructured_bounds(self, var, coords=None, axis='x', nans=None):
+        """
+        Checks whether the bounds in the variable attribute are triangular
+
+        Parameters
+        ----------
+        %(CFDecoder.get_unstructured_bounds.parameters)s
+
+        Returns
+        -------
+        %(CFDecoder.get_unstructured_bounds.returns)s"""
+        if coords is None:
+            coords = self.ds.coords
+
+        def get_coord(coord):
+            return coords.get(coord, self.ds.coords.get(coord))
+
+        mesh = self.get_mesh(var, coords)
+        if mesh is None:
+            return
+        nodes = self.get_nodes(mesh, coords)
+        if not len(nodes):
+            raise ValueError("Could not find the nodes variables for the %s "
+                             "coordinate!" % axis)
+        vert = nodes[0 if axis == 'x' else 1]
+        if vert is None:
+            raise ValueError("Could not find the nodes variables for the %s "
+                             "coordinate!" % axis)
+        loc = var.attrs.get('location', 'face')
+        if loc == 'node':
+            # we assume a triangular grid and use matplotlibs triangulation
+            from matplotlib.tri import Triangulation
+            xvert, yvert = nodes
+            triangles = Triangulation(xvert, yvert)
+            if axis == 'x':
+                bounds = triangles.x[triangles.triangles]
+            else:
+                bounds = triangles.y[triangles.triangles]
+        elif loc in ['edge', 'face']:
+            connectivity = get_coord(
+                mesh.attrs.get('%s_node_connectivity' % loc, ''))
+            if connectivity is None:
+                raise ValueError(
+                    "Could not find the connectivity information!")
+            connectivity = connectivity.values
+            bounds = vert.values[
+                np.where(np.isnan(connectivity), connectivity[:, :1],
+                         connectivity).astype(int)]
+        else:
+            raise ValueError(
+                "Could not interprete location attribute (%s) of mesh "
+                "variable %s!" % (loc, mesh.name))
+        dim0 = '__face' if loc == 'node' else var.dims[-1]
+        return xr.DataArray(
+            bounds,
+            coords={key: val for key, val in coords.items()
+                    if (dim0, ) == val.dims},
+            dims=(dim0, '__bnds', ),
+            name=vert.name + '_bnds',  attrs=vert.attrs.copy())
 
     @staticmethod
     @docstrings.dedent
@@ -1743,14 +1820,15 @@ class UGridDecoder(CFDecoder):
         # but if that doesn't work because we get the variable name in the
         # dimension of `var`, we use the means of the triangles
         if ret is None or ret.name in var.dims:
-            triangles = self.get_triangles(var, coords)
-            centers = triangles.x[triangles.triangles].mean(axis=-1)
-            x = self.get_nodes(self.get_mesh(var, coords), coords)[0]
-            try:
-                cls = xr.IndexVariable
-            except AttributeError:  # xarray < 0.9
-                cls = xr.Coordinate
-            return cls(x.name, centers, attrs=x.attrs.copy())
+            bounds = self.get_unstructured_bounds(var, axis='x', coords=coords)
+            if bounds is not None:
+                centers = bounds.mean(axis=-1)
+                x = self.get_nodes(self.get_mesh(var, coords), coords)[0]
+                try:
+                    cls = xr.IndexVariable
+                except AttributeError:  # xarray < 0.9
+                    cls = xr.Coordinate
+                return cls(x.name, centers, attrs=x.attrs.copy())
 
     @docstrings.dedent
     def get_y(self, var, coords=None):
@@ -1771,14 +1849,15 @@ class UGridDecoder(CFDecoder):
         # but if that doesn't work because we get the variable name in the
         # dimension of `var`, we use the means of the triangles
         if ret is None or ret.name in var.dims:
-            triangles = self.get_triangles(var, coords)
-            centers = triangles.y[triangles.triangles].mean(axis=-1)
-            y = self.get_nodes(self.get_mesh(var, coords), coords)[1]
-            try:
-                cls = xr.IndexVariable
-            except AttributeError:  # xarray < 0.9
-                cls = xr.Coordinate
-            return cls(y.name, centers, attrs=y.attrs.copy())
+            bounds = self.get_unstructured_bounds(var, axis='y', coords=coords)
+            if bounds is not None:
+                centers = bounds.mean(axis=-1)
+                y = self.get_nodes(self.get_mesh(var, coords), coords)[1]
+                try:
+                    cls = xr.IndexVariable
+                except AttributeError:  # xarray < 0.9
+                    cls = xr.Coordinate
+                return cls(y.name, centers, attrs=y.attrs.copy())
 
 
 # register the UGridDecoder
