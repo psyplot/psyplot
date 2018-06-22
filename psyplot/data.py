@@ -680,10 +680,10 @@ class CFDecoder(object):
             self._check_triangular_bounds(var)[0]
 
     @docstrings.get_sectionsf(
-        'CFDecoder.get_unstructured_bounds',
+        'CFDecoder.get_cell_node_coord',
         sections=['Parameters', 'Returns'])
     @dedent
-    def get_unstructured_bounds(self, var, coords=None, axis='x', nans=None):
+    def get_cell_node_coord(self, var, coords=None, axis='x', nans=None):
         """
         Checks whether the bounds in the variable attribute are triangular
 
@@ -704,18 +704,46 @@ class CFDecoder(object):
         -------
         xarray.DataArray or None
             the bounds corrdinate (if existent)"""
-        coord = self.get_variable_by_axis(var, axis, coords=coords)
+        if coords is None:
+            coords = self.ds.coords
+        axis = axis.lower()
+        get_coord = self.get_x if axis == 'x' else self.get_y
+        coord = get_coord(var, coords=coords)
         if coord is not None:
-            return self._get_unstructured_coord_bounds(coord, coords, nans,
-                                                       var=var)
+            bounds = self._get_coord_cell_node_coord(coord, coords, nans,
+                                                     var=var)
+            if bounds is None:
+                bounds = self.get_plotbounds(coord)
+                dim0 = coord.dims[-1]
+
+                bounds = xr.DataArray(
+                    np.dstack([bounds[:-1], bounds[1:]])[0],
+                    dims=(dim0, '_bnds'),  attrs=coord.attrs.copy(),
+                    name=coord.name + '_bnds')
+            if bounds is not None and bounds.shape[-1] == 2:
+                # normal CF-Conventions for rectangular grids
+                arr = bounds.values
+                if axis == 'y':
+                    stacked = np.repeat(
+                        np.dstack([arr, arr]).reshape((-1, 4)),
+                        len(self.get_x(var, coords)), axis=0)
+                else:
+                    stacked = np.tile(np.c_[arr, arr[:, ::-1]],
+                                      (len(self.get_y(var, coords)), 1))
+                bounds = xr.DataArray(
+                    stacked,
+                    dims=('cell', bounds.dims[1]), name=bounds.name,
+                    attrs=bounds.attrs)
+
+            return bounds
         return None
 
-    docstrings.delete_params('CFDecoder.get_unstructured_bounds.parameters',
+    docstrings.delete_params('CFDecoder.get_cell_node_coord.parameters',
                              'var', 'axis')
 
     @docstrings.dedent
-    def _get_unstructured_coord_bounds(self, coord, coords=None, nans=None,
-                                       var=None):
+    def _get_coord_cell_node_coord(self, coord, coords=None, nans=None,
+                                   var=None):
         """
         Get the boundaries of an unstructed coordinate
 
@@ -723,15 +751,16 @@ class CFDecoder(object):
         ----------
         coord: xr.Variable
             The coordinate whose bounds should be returned
-        %(CFDecoder.get_unstructured_bounds.parameters.no_var|axis)s
+        %(CFDecoder.get_cell_node_coord.parameters.no_var|axis)s
 
         Returns
         -------
-        %(CFDecoder.get_unstructured_bounds.returns)s
+        %(CFDecoder.get_cell_node_coord.returns)s
         """
         bounds = coord.attrs.get('bounds')
         if bounds is not None:
             bounds = self.ds.coords.get(bounds)
+        if bounds is not None:
             if coords is not None:
                 bounds = bounds.sel(**{
                     key: coords[key]
@@ -759,7 +788,7 @@ class CFDecoder(object):
 
         Parameters
         ----------
-        %(CFDecoder.get_unstructured_bounds.parameters)s
+        %(CFDecoder.get_cell_node_coord.parameters)s
 
         Returns
         -------
@@ -768,7 +797,7 @@ class CFDecoder(object):
         xarray.Coordinate or None
             the bounds corrdinate (if existent)"""
         # !!! WILL BE REMOVED IN THE NEAR FUTURE! !!!
-        bounds = self.get_unstructured_bounds(var, coords, axis=axis,
+        bounds = self.get_cell_node_coord(var, coords, axis=axis,
                                               nans=nans)
         if bounds is not None:
             return bounds.shape[-1] == 3, bounds
@@ -792,31 +821,13 @@ class CFDecoder(object):
         -----
         Currently this is the same as :meth:`is_triangular` method, but may
         change in the future to support hexagonal grids"""
-        return str(var.attrs.get('grid_type')) == 'unstructured' or \
-            self._check_unstructered_bounds(var)[0]
-
-    @docstrings.dedent
-    def _check_unstructered_bounds(self, *args, **kwargs):
-        """
-        Checks whether the bounds in the variable attribute are triangular
-
-        Parameters
-        ----------
-        %(CFDecoder.get_unstructured_bounds.parameters)s
-
-        Returns
-        -------
-        %(CFDecoder._check_triangular_bounds.returns)s
-
-        Notes
-        -----
-        Currently this is the same as :meth:`_check_triangular_bounds` method,
-        but may change in the future to support hexagonal grids"""
-        bounds = self.get_unstructured_bounds(*args, **kwargs)
-        if bounds is not None:
-            return bounds.shape[-1] >= 3, bounds
-        else:
-            return None, None
+        if str(var.attrs.get('grid_type')) == 'unstructured':
+            return True
+        xcoord = self.get_x(var)
+        if xcoord is not None:
+            bounds = self._get_coord_cell_node_coord(xcoord)
+            if bounds is not None and bounds.shape[-1] > 2:
+                return True
 
     @docstrings.dedent
     def is_circumpolar(self, var):
@@ -1375,7 +1386,7 @@ class CFDecoder(object):
         ValueError
             If `src_crs` is not None and `target_crs` is None"""
         warn("The 'get_triangles' method is depreceated and will be removed "
-             "soon! Use the 'get_unstructured_bounds' method!",
+             "soon! Use the 'get_cell_node_coord' method!",
              DeprecationWarning, stacklevel=stacklevel)
         from matplotlib.tri import Triangulation
 
@@ -1637,7 +1648,7 @@ class UGridDecoder(CFDecoder):
             Implement the visualization for UGrid data shown on the edge of the
             triangles"""
         warn("The 'get_triangles' method is depreceated and will be removed "
-             "soon! Use the 'get_unstructured_bounds' method!",
+             "soon! Use the 'get_cell_node_coord' method!",
              DeprecationWarning, stacklevel=stacklevel)
         from matplotlib.tri import Triangulation
 
@@ -1689,17 +1700,17 @@ class UGridDecoder(CFDecoder):
         return Triangulation(xvert, yvert, triangles)
 
     @docstrings.dedent
-    def get_unstructured_bounds(self, var, coords=None, axis='x', nans=None):
+    def get_cell_node_coord(self, var, coords=None, axis='x', nans=None):
         """
         Checks whether the bounds in the variable attribute are triangular
 
         Parameters
         ----------
-        %(CFDecoder.get_unstructured_bounds.parameters)s
+        %(CFDecoder.get_cell_node_coord.parameters)s
 
         Returns
         -------
-        %(CFDecoder.get_unstructured_bounds.returns)s"""
+        %(CFDecoder.get_cell_node_coord.returns)s"""
         if coords is None:
             coords = self.ds.coords
 
@@ -1820,7 +1831,7 @@ class UGridDecoder(CFDecoder):
         # but if that doesn't work because we get the variable name in the
         # dimension of `var`, we use the means of the triangles
         if ret is None or ret.name in var.dims:
-            bounds = self.get_unstructured_bounds(var, axis='x', coords=coords)
+            bounds = self.get_cell_node_coord(var, axis='x', coords=coords)
             if bounds is not None:
                 centers = bounds.mean(axis=-1)
                 x = self.get_nodes(self.get_mesh(var, coords), coords)[0]
@@ -1849,7 +1860,7 @@ class UGridDecoder(CFDecoder):
         # but if that doesn't work because we get the variable name in the
         # dimension of `var`, we use the means of the triangles
         if ret is None or ret.name in var.dims:
-            bounds = self.get_unstructured_bounds(var, axis='y', coords=coords)
+            bounds = self.get_cell_node_coord(var, axis='y', coords=coords)
             if bounds is not None:
                 centers = bounds.mean(axis=-1)
                 y = self.get_nodes(self.get_mesh(var, coords), coords)[1]

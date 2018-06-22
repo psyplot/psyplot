@@ -284,18 +284,21 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
         var.attrs.pop('grid_type', None)
         self.assertTrue(decoder.is_unstructured(var))
         # x bounds
-        xbounds = decoder.get_unstructured_bounds(var, axis='x')
+        xbounds = decoder.get_cell_node_coord(var, axis='x')
         self.assertIsNotNone(xbounds)
         self.assertEqual(xbounds.shape, ds.clon_bnds.shape)
         # y bounds
-        ybounds = decoder.get_unstructured_bounds(var, axis='x')
+        ybounds = decoder.get_cell_node_coord(var, axis='y')
         self.assertIsNotNone(ybounds)
         self.assertEqual(ybounds.shape, ds.clon_bnds.shape)
 
         # Test for correct falsification
         ds = psyd.open_dataset(os.path.join(bt.test_dir, 'test-t2m-u-v.nc'))
         decoder = psyd.CFDecoder(ds)
-        self.assertFalse(decoder.is_unstructured(ds.t2m[0, 0]))
+        var = ds.t2m[0, 0]
+        self.assertFalse(decoder.is_unstructured(var))
+        xbounds = decoder.get_cell_node_coord(var, axis='x')
+        self.assertEqual(xbounds.shape, (np.prod(var.shape), 4))
 
     def test_is_circumpolar(self):
         """Test whether the is_circumpolar method works"""
