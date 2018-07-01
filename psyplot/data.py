@@ -394,13 +394,13 @@ class Signal(object):
 
     def __get__(self, instance, owner):
         self.owner = owner
-        self.instance = instance
         if instance is None or self.cls_signal:
             return self
         ret = getattr(instance, self.name, None)
         if ret is None:
             setattr(instance, self.name, Signal(self.name))
             ret = getattr(instance, self.name, None)
+            ret.instance = instance
         return ret
 
 
