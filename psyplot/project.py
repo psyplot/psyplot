@@ -1386,21 +1386,13 @@ class _ProjectLoader(object):
         if subplotpars is not None:
             subplotpars.pop('validate', None)
             subplotpars = mfig.SubplotParams(**subplotpars)
-        nums = plt.get_fignums()
-        existing = d.get('num') in nums
-        if existing and new_fig:
-            d['num'] = next(
-                i for i in range(max(plt.get_fignums()) + 1, 0, -1)
-                if i not in nums)
-        ret = plt.figure(subplotpars=subplotpars, **d)
-        # HACK: To account for the _dpi_ratio as it is commonly used by Qt5
-        # backends, we have to check, that the dpi is the one we want
-        if ((not existing or new_fig) and 'dpi' in
-                d and ret.get_dpi() != d['dpi']):
-            d['dpi'] /= ret.get_dpi() / d['dpi']
-            plt.close(ret.number)
-            ret = plt.figure(subplotpars=subplotpars, **d)
-        return ret
+        if new_fig:
+            nums = plt.get_fignums()
+            if d.get('num') in nums:
+                d['num'] = next(
+                    i for i in range(max(plt.get_fignums()) + 1, 0, -1)
+                    if i not in nums)
+        return plt.figure(subplotpars=subplotpars, **d)
 
     @staticmethod
     def inspect_axes(ax):
