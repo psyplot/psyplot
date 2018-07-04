@@ -1371,7 +1371,7 @@ class _ProjectLoader(object):
         return fig.number, {
             'num': fig.number,
             'figsize': (fig.get_figwidth(), fig.get_figheight()),
-            'dpi': fig.get_dpi(),
+            'dpi': fig.get_dpi() / getattr(fig.canvas, '_dpi_ratio', 1),
             'facecolor': fig.get_facecolor(),
             'edgecolor': fig.get_edgecolor(),
             'frameon': fig.get_frameon(),
