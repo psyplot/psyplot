@@ -1210,8 +1210,6 @@ class Project(ArrayList):
             # we create a new project with the project factory to make sure
             # that everything is handled correctly
             obj = project(None, obj)
-        else:
-            obj._main = gcp(True)
         axes = {}
         arr_names = obj.arr_names
         sharex = defaultdict(set)
@@ -1257,11 +1255,15 @@ class Project(ArrayList):
             if ax_base is not None:
                 ax_base.get_shared_x_axes().join(
                     ax_base, *obj(arr_name=names).axes)
+                for ax in obj(arr_name=names).axes:
+                    ax._sharex = ax_base
         for key, names in sharey.items():
             ax_base = get_ax_base(key, names)
             if ax_base is not None:
                 ax_base.get_shared_y_axes().join(
                     ax_base, *obj(arr_name=names).axes)
+                for ax in obj(arr_name=names).axes:
+                    ax._sharey = ax_base
         for arr in obj.with_plotter:
             shared = d['arrays'][arr.psy.arr_name]['plotter'].get('shared', {})
             for key, arr_names in six.iteritems(shared):
@@ -1282,9 +1284,10 @@ class Project(ArrayList):
                     obj.show()
         if auto_update is None:
             auto_update = rcParams['lists.auto_update']
-        obj.no_auto_update = not auto_update
-        if not obj.is_main:
+        if not main:
+            obj._main = gcp(True)
             obj.main.extend(obj, new_name=True)
+        obj.no_auto_update = not auto_update
         scp(obj)
         return obj
 
