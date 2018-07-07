@@ -6,6 +6,7 @@ the core of the visualization in the :mod:`psyplot` package. Each
 key is represented by a :class:`Formatoption` subclass."""
 
 import six
+import weakref
 from abc import ABCMeta, abstractmethod
 from textwrap import TextWrapper
 import logging
@@ -159,9 +160,22 @@ class Formatoption(object):
     #: :class:`~psyplot.plotter.Plotter` class
     key = None
 
-    #: :class:`~psyplot.plotter.Plotter`. Plotter instance this formatoption
-    #: belongs to
-    plotter = None
+    _plotter = None
+
+    @property
+    def plotter(self):
+        """:class:`~psyplot.plotter.Plotter`. Plotter instance this
+        formatoption belongs to"""
+        if self._plotter is None:
+            return
+        return self._plotter()
+
+    @plotter.setter
+    def plotter(self, value):
+        if value is not None:
+            self._plotter = weakref.ref(value)
+        else:
+            self._plotter = value
 
     #: `list of str`. List of formatoptions that have to be updated before this
     #: one is updated. Those formatoptions are only updated if they exist in
@@ -954,7 +968,21 @@ class Plotter(dict):
         self._ax = value
 
     #: The :class:`psyplot.project.Project` instance this plotter belongs to
-    project = None
+    _project = None
+
+    @property
+    def project(self):
+        """:class:`psyplot.project.Project` instance this plotter belongs to"""
+        if self._project is None:
+            return
+        return self._project()
+
+    @project.setter
+    def project(self, value):
+        if value is not None:
+            self._project = weakref.ref(value)
+        else:
+            self._project = value
 
     @property
     @dedent
