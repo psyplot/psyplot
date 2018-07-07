@@ -209,6 +209,16 @@ class Project(ArrayList):
             *map(set, plotters[1:])))
 
     @property
+    def is_csp(self):
+        """Boolean that is True if the project is the current subproject"""
+        return self is gcp()
+
+    @property
+    def is_cmp(self):
+        """Boolean that is True if the project is the current main project"""
+        return self is gcp(True)
+
+    @property
     def figs(self):
         """A mapping from figures to data objects with the plotter in this
         figure"""
@@ -382,7 +392,11 @@ class Project(ArrayList):
     def extend(self, *args, **kwargs):
         len0 = len(self)
         ret = super(Project, self).extend(*args, **kwargs)
-        if len(self) > len0 and (self is gcp() or self is gcp(True)):
+        if self._main is None:
+            for arr in self:
+                if arr.psy.plotter is not None:
+                    arr.psy.plotter._project = self
+        if len(self) > len0 and self.is_csp or self.is_cmp:
             self.oncpchange.emit(self)
         return ret
 
@@ -392,7 +406,11 @@ class Project(ArrayList):
     def append(self, *args, **kwargs):
         len0 = len(self)
         ret = super(Project, self).append(*args, **kwargs)
-        if len(self) > len0 and (self is gcp() or self is gcp(True)):
+        if self._main is None:
+            for arr in self:
+                if arr.psy.plotter is not None:
+                    arr.psy.plotter._project = self
+        if len(self) > len0 and self.is_csp or self.is_cmp:
             self.oncpchange.emit(self)
         return ret
 
@@ -445,9 +463,9 @@ class Project(ArrayList):
                     arr.psy.base.close()
         if self.is_main and self is gcp(True) and data:
             scp(None)
-        elif self.is_main and self is gcp(True):
+        elif self.is_main and self.is_cmp:
             self.oncpchange.emit(self)
-        elif self.main is gcp(True):
+        elif self.main.is_cmp:
             self.oncpchange.emit(self.main)
 
     docstrings.keep_params('multiple_subplots.parameters', 'delete')
