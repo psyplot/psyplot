@@ -211,12 +211,12 @@ class Project(ArrayList):
     @property
     def is_csp(self):
         """Boolean that is True if the project is the current subproject"""
-        return self is gcp()
+        return self is _current_subproject
 
     @property
     def is_cmp(self):
         """Boolean that is True if the project is the current main project"""
-        return self is gcp(True)
+        return self is _current_project
 
     @property
     def figs(self):
@@ -396,7 +396,7 @@ class Project(ArrayList):
             for arr in self:
                 if arr.psy.plotter is not None:
                     arr.psy.plotter._project = self
-        if len(self) > len0 and self.is_csp or self.is_cmp:
+        if len(self) > len0 and (self.is_csp or self.is_cmp):
             self.oncpchange.emit(self)
         return ret
 
@@ -410,7 +410,7 @@ class Project(ArrayList):
             for arr in self:
                 if arr.psy.plotter is not None:
                     arr.psy.plotter._project = self
-        if len(self) > len0 and self.is_csp or self.is_cmp:
+        if len(self) > len0 and (self.is_csp or self.is_cmp):
             self.oncpchange.emit(self)
         return ret
 
