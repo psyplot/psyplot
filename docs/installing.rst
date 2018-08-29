@@ -12,9 +12,9 @@ choose the one, which is the most appropriate solution concerning your skills
 and your usage:
 
 The recommended installation
-    For people coding in python, we recommend to install it through anaconda
-    and the conda-forge channel (see :ref:`install-conda`) or, if you are
-    not using anaconda, you can use pip (see :ref:`install-pip`)
+    We recommend to use anaconda for installing python and psyplot (see
+    :ref:`install-conda`). If you however already have python installed on
+    your system, you can also use pip (see :ref:`install-pip`).
 The developer installation
     Install it from source (see :ref:`install-source`)
 
@@ -31,18 +31,14 @@ can use one of our :ref:`preconfigured environment files <install-conda-env>`.
 
 Manual installation
 ~~~~~~~~~~~~~~~~~~~~
-After downloading the installer from anaconda_, you can install psyplot simply
-via::
+After downloading the installer from anaconda_, you can install psyplot and
+the optional plugins (see  :ref:`optional_deps`) via::
+
+    $ conda install -c conda-forge psy-maps psyplot-gui psy-reg netCDF4
+
+If you only want to install the core, i.e. the raw framework, run::
 
     $ conda install -c conda-forge psyplot
-
-However, this only installs the raw framework. For your specific task, you
-should consider one of the below mentioned plugins (see  :ref:`optional_deps`).
-
-If you want to be able to read and write netCDF files, you can use for example
-the netCDF4_ package via::
-
-    $ conda install netCDF4
 
 If you want to be able to read GeoTiff Raster files, you will need to have
 gdal_ installed::
@@ -52,38 +48,6 @@ gdal_ installed::
 Please also visit the `xarray installation notes`_
 for more informations on how to best configure the `xarray`_
 package for your needs.
-
-.. _install-conda-env:
-
-Preconfigured environments
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-There are also some preconfigured environments that you can download which allow
-an efficient handling of netCDF files and the visualization of data on a globe.
-
-Those environments are
-
-- :download:`psyplot and psy-maps with netCDF4, dask and bottleneck <psyplot_environment.yml>`.
-  This environment contains the recommended modules to view geo-referenced netCDF
-  files without a GUI
-
-  .. only:: latex or epub
-
-      .. literalinclude:: psyplot_environment.yml
-          :language: yaml
-
-- :download:`psyplot with graphical user interface and the above packages <psyplot-gui_environment.yml>`.
-  The same environment as above plus graphical user interface
-
-  .. only:: latex or epub
-
-      .. literalinclude:: psyplot-gui_environment.yml
-          :language: yaml
-
-After you downloaded one of the files, you can create and activate the new
-virtual environment via::
-
-    $ conda env create -f <downloaded file>
-    $ source activate psyplot
 
 .. _install-pip:
 
