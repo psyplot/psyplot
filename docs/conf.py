@@ -85,7 +85,7 @@ if on_rtd:
               '--display-name python3').split())
 
 # create the api documentation
-if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
+if not osp.exists(osp.join(osp.dirname(__file__), 'api')) or on_rtd:
     spr.check_call(['bash', 'apigen.bash'])
 
 # The cdo example would require the installation of climate data operators
@@ -252,31 +252,6 @@ if six.PY3:
     intersphinx_mapping['python'] = ('https://docs.python.org/3.6/', None)
 else:
     intersphinx_mapping['python'] = ('https://docs.python.org/2.7/', None)
-
-
-# get link to conda files
-url = "https://api.github.com/repos/Chilipp/psyplot-conda/releases/latest"
-try:
-    response = urlopen(url)
-except Exception as e:
-    logging.getLogger(__name__).warning(
-        'Could not download latest psyplot-conda release from %s!', url,
-        exc_info=True)
-    psy_con_tag = 'v1.0.0'
-else:
-    s = response.read() if six.PY2 else response.read().decode()
-    d = json.loads(s)
-    psy_con_tag = d['tag_name']
-
-psy_con_base = (
-    'https://github.com/Chilipp/psyplot-conda/releases/download/%s' % (
-        psy_con_tag))
-psy_con_v = psy_con_tag[1:] if psy_con_tag.startswith('v') else psy_con_tag
-
-
-extlinks = {
-    'psycon': ('%s/psyplot-conda-%s-%%s' % (psy_con_base, psy_con_v), '')
-    }
 
 
 replacements = {

@@ -7,6 +7,13 @@ Added
   *priority* keyword to only initialize only formatoptions of a certain
   priority
 
+Removed
+-------
+* The installers from the `psyplot-conda <https://github.com/Chilipp/psyplot-conda>`__
+  repositories have been depreceated. Instead, now download the latest
+  `miniconda <https://conda.io/miniconda.html>`__ and install psyplot and the
+  plugins via ``conda install -c conda-forge psy-maps psyplot-gui psy-reg``
+
 v1.1.0
 ======
 This new release mainly adds new xarray accossors (``psy``) for DataArrays

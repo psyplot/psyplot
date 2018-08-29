@@ -15,9 +15,6 @@ splitted into several subprojects. Each of them is accessible via
   visualizing data on a map |psy-maps-github| |psy-maps-release|
 - the :ref:`psy-reg <psy_reg:psy-reg>` package: A psyplot plugin for visualizing
   and calculating regression fits |psy-reg-github| |psy-reg-release|
-- the psyplot-conda repository. A repository for the creation of standalone
-  installers for psyplot (see :ref:`install-standalone`) |psyplot-conda-github|
-  |psyplot-conda-release|
 
 See :ref:`plugins` for more informations on the plugins.
 

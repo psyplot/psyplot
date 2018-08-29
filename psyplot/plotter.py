@@ -643,7 +643,7 @@ class Formatoption(object):
         This method should return a QWidget that is loaded by the psyplot-gui
         when the formatoption is selected in the
         :attr:`psyplot_gui.main.Mainwindow.fmt_widget`. It should call the
-        :method:`~psyplot_gui.fmt_widget.FormatoptionWidget.insert_text` method
+        :meth:`~psyplot_gui.fmt_widget.FormatoptionWidget.insert_text` method
         when the update text for the formatoption should be changed.
 
         Parameters

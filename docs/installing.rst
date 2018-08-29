@@ -7,208 +7,17 @@ Installation
 
 How to install
 --------------
-There basically four different methodologies for the installation. You should
+There basically three different methodologies for the installation. You should
 choose the one, which is the most appropriate solution concerning your skills
 and your usage:
 
-The simple installation
-    Use standalone installers which will install all the necessary packages and
-    modules. See :ref:`install-standalone`
-The intermediate installation
+The recommended installation
     For people coding in python, we recommend to install it through anaconda
     and the conda-forge channel (see :ref:`install-conda`) or, if you are
     not using anaconda, you can use pip (see :ref:`install-pip`)
 The developer installation
     Install it from source (see :ref:`install-source`)
 
-
-.. _install-standalone:
-
-Installation via standalone installers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. only:: html and not epub
-
-    +--------------+--------------+----------------+
-    | | |win-logo| | | |osx-logo| | | |linux-logo| |
-    | | Windows    | | Mac OS X   | | Linux        |
-    +==============+==============+================+
-    | | |win-64|   | | |osx-pkg|  | |linux-64|     |
-    | | |win-32|   | | |osx-64|   |                |
-    +--------------+--------------+----------------+
-
-    .. |win-logo| image:: windows.png
-
-    .. |linux-logo| image:: linux.png
-
-    .. |osx-logo| image:: apple.png
-
-    .. |win-64| replace:: :psycon:`64-bit (.exe installer) <Windows-x86_64.exe>`
-
-    .. |win-32| replace:: :psycon:`32-bit (.exe installer) <Windows-x86.exe>`
-
-    .. |osx-pkg| replace:: :psycon:`64-bit (.pkg installer) <MacOSX-x86_64.pkg>`
-
-    .. |osx-64| replace:: :psycon:`64-bit (bash installer) <MacOSX-x86_64.sh>`
-
-    .. |linux-64| replace:: :psycon:`64-bit (bash installer) <Linux-x86_64.sh>`
-
-
-This section contains the necessary informations to install psyplot-conda, a
-standalone psyplot installation with the most important plugins and the
-graphical user interface (GUI).
-
-Executables can be downloaded from the links above. Older versions are also
-available through the the releases_ page, nightly builds for Linux and OSX are
-available here_.
-
-The installer provided here contain all necessary dependencies for psyplot_,
-psyplot-gui_, psy-simple_, psy-maps_ and psy-reg_ plus the conda package for
-managing virtual environments. These installers have been created using using
-the conda constructor_ package and the packages from the conda-forge_ channel.
-
-.. only:: html and not epub
-
-    The latest versions for the installers can be downloaded through the links
-    at the top.
-
-Files for all versions can be found in the psyplot-conda_ repository and
-explicitly on the releases_ page.
-
-.. _psyplot-conda: https://github.com/Chilipp/psyplot-conda
-.. _releases: https://github.com/Chilipp/psyplot-conda/releases
-
-.. note::
-
-    Under Linux and MacOSX you can also use ``cURL`` and to download the latest
-    installer. Just open a terminal and type
-
-    .. code-block:: bash
-
-        curl -o psyplot-conda.sh -LO `curl -s https://api.github.com/repos/Chilipp/psyplot-conda/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep OSNAME` | grep .sh
-
-    where ``OSNAME`` is one of ``Linux`` or ``MacOSX``.
-
-    Then install it simply via
-
-    .. code-block:: bash
-
-        bash psyplot-conda.sh
-
-
-.. include:: <isonum.txt>
-
-.. Contents::
-    :local:
-
-.. _install-standalone-linux:
-
-Installation on Linux
-~~~~~~~~~~~~~~~~~~~~~
-Download the bash script (file ending on ``'.sh'`` for linux) from
-the releases_ page and open a terminal window.
-
-Type::
-
-    bash '<path-to-the-downloaded-file.sh>'
-
-and simply follow the instructions.
-
-For more information on the command line options type::
-
-    bash '<Path-to-the-downloaded-file.sh>' --help
-
-It will ask you, whether you want to add a ``psyplot`` alias to your
-``.bashrc``, such that you can easily start the terminal and type
-``psyplot`` to start the GUI. You can avoid this by setting
-``NO_PSYPLOT_ALIAS=1``. Hence, to install ``psyplot-conda`` without any
-terminal interaction, run::
-
-    NO_PSYPLOT_ALIAS=1 bash '<Path-to-the-downloaded-file.sh>' -b -p <target-path>
-
-
-Installation on OS X
-~~~~~~~~~~~~~~~~~~~~~
-You can either install it from the terminal using a
-:ref:`bash-script <install-standalone-osx-bash>` (``.sh`` file),
-or you can install a standalone app using an
-:ref:`installer <install-standalone-osx-pkg>` (``.pkg`` file).
-
-The bash script will install a conda installation in your desired location.
-Both will create a ``Psyplot.app`` (see below).
-
-.. _install-standalone-osx-pkg:
-
-Installation using the OS X package
-+++++++++++++++++++++++++++++++++++
-This should be straight-forward, however Apple does not provide free Developer
-IDs for open-source developers. Therefore our installers are not signed and
-you have to give the permissions to open the files manually. The 4 steps below
-describe the process.
-
-1. Just download the ``.pkg`` file
-2. To open it, you have to
-
-   Right-click on the file |rarr| ``Open With`` |rarr| ``Installer``. In the appearing
-   window, click the ``Open`` button.
-
-3. Follow the instructions. It will create a ``Psyplot.app`` in the specified
-   location.
-4. To open the app the first time, change to the chosen installation directory
-   for the App (by default ``$HOME/Applications``), right-click the
-   ``Psyplot`` app and click on ``Open``. In the appearing window, again click
-   on ``Open``.
-
-.. _install-standalone-osx-bash:
-
-Installation using the bash script
-+++++++++++++++++++++++++++++++++++
-Download the bash script (file ending on ``'.sh'`` for MacOSX) from
-the releases_ page and open a terminal window.
-
-Type::
-
-    bash '<path-to-the-downloaded-file.sh>'
-
-and simply follow the instructions.
-
-For more informations on the command line options type::
-
-    bash '<Path-to-the-downloaded-file.sh>' --help
-
-By default, the installer asks whether you want to install a ``Psyplot.app``
-into your ``Applications`` directory. You can avoid this be setting
-``NO_PSYPLOT_APP=1``.
-
-Furthermore it will ask you, whether you want to add a ``psyplot`` alias to
-your ``.bash_profile``, such that you can easily start the terminal and type
-``psyplot`` to start the GUI. You can avoid this by setting
-``NO_PSYPLOT_ALIAS=1``. Hence, to install ``psyplot-conda`` without any
-terminal interaction, run::
-
-    NO_PSYPLOT_APP=1 NO_PSYPLOT_ALIAS=1 bash '<Path-to-the-downloaded-file.sh>' -b -p <target-path>
-
-.. _install-standalone-win:
-
-Installation on Windows
-~~~~~~~~~~~~~~~~~~~~~~~
-Just double click the downloaded file and follow the instructions. The
-installation will create an item in the windows menu
-(Start -> Programs -> Psyplot) which you can use to open the GUI. You can,
-however, also download installers that create no shortcut from the
-releases_ page.
-
-In any case, if you chose to modify your ``PATH`` variable during the
-installation, you can open a command window (``cmd``) and type ``psyplot``.
-
-.. _here: https://drive.switch.ch/index.php/s/lVwRVtFncOljb6y
-.. _psyplot: https://psyplot.readthedocs.io
-.. _psyplot-gui: https://psyplot.readthedocs.io/projects/psyplot-gui
-.. _psy-simple: https://psyplot.readthedocs.io/projects/psy-simple
-.. _psy-maps: https://psyplot.readthedocs.io/projects/psy-simple
-.. _psy-reg: https://psyplot.readthedocs.io/projects/psy-reg
-.. _constructor: https://github.com/conda/constructor
-.. _conda-forge: http://conda-forge.github.io/
 
 .. _install-conda:
 
@@ -399,8 +208,7 @@ Then build the docs via::
 Uninstallation
 --------------
 The uninstallation depends on the system you used to install psyplot. Either
-you did it via the :ref:`standalone installers <install-standalone>` (see
-:ref:`uninstall-standalone`), via :ref:`conda <install-conda>` (see
+you did it via :ref:`conda <install-conda>` (see
 :ref:`uninstall-conda`), via :ref:`pip <install-pip>` or from the
 :ref:`source files <install-source>` (see :ref:`uninstall-pip`).
 
@@ -409,76 +217,6 @@ not specify anything else (see :func:`psyplot.config.rcsetup.psyplot_fname`),
 the configuration files for psyplot are located in the user home directory.
 Under linux and OSX, this is ``$HOME/.config/psyplot``. On other platforms it
 is in the ``.psyplot`` directory in the user home.
-
-.. _uninstall-standalone:
-
-Uninstalling standalone app
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The complete uninstallation requires three steps:
-
-1. Delete the files (see the OS specific steps below)
-2. Unregister the locations from your ``PATH`` variable (see below)
-
-.. Contents::
-    :local:
-
-.. _uninstall-standalone-linux:
-
-Uninstallation on Linux
-~~~~~~~~~~~~~~~~~~~~~~~
-Just delete the folder where you installed ``psyplot-conda``. By default, this
-is ``$HOME/psyplot-conda``, so just type::
-
-    rm -rf $HOME/psyplot-conda
-
-If you added a ``psyplot`` alias to your ``.bashrc`` (see
-:ref:`installation instructions <install-standalone-linux>`) or chose to add the
-``bin`` directory to your ``PATH`` variable during the installation, open your
-``$HOME/.bashrc`` in an editor of your choice and delete those parts.
-
-
-.. _uninstall-standalone-osx:
-
-Uninstallation on OSX
-~~~~~~~~~~~~~~~~~~~~~
-The uninstallation depends on whether you have used the
-:ref:`package installer <install-standalone-osx-pkg>` or the
-:ref:`bash script <install-standalone-osx-bash>` for the installation.
-
-.. _uninstall-standalone-osx-pkg:
-
-Uninstall the App installed through the OS X package
-++++++++++++++++++++++++++++++++++++++++++++++++++++
-Just delete the app from your ``Applications`` folder. There have been no
-changes made to your ``PATH`` variable.
-
-.. _uninstall-standalone-osx-bash:
-
-Uninstall the App installed via bash script
-+++++++++++++++++++++++++++++++++++++++++++
-As for :ref:`linux <uninstall-standalone-linux>`, just delete the folder where you
-installed ``psyplot-conda``. By default, this is ``$HOME/psyplot-conda``.
-Open a terminal and just type::
-
-    rm -rf $HOME/psyplot-conda
-
-If you added a ``psyplot`` alias to your ``.bash_profile`` (see
-:ref:`installation instructions <install-standalone-osx-bash>`) or chose to add the
-``bin`` directory to your ``PATH`` variable during the installation, open your
-``$HOME/.bash_profile`` in an editor of your choice and delete those parts.
-
-If you chose to add a ``Psyplot`` app, just delete the symbolic link in
-``/Applications`` or ``$HOME/Applications``.
-
-.. _uninstall-standalone-win:
-
-Uninstallation on Windows
-~~~~~~~~~~~~~~~~~~~~~~~~~
-Just double-click the ``Uninstall-Anaconda.exe`` file in the directory where
-you installed ``psyplot-conda`` and follow the instructions.
-
-This will also revert the changes in your ``PATH`` variable.
-
 
 .. _uninstall-conda:
 
