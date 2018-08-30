@@ -1245,6 +1245,9 @@ class CFDecoder(object):
         arr: xarray.DataArray
             The data array for which to get the dimensions as integers, slices
             or list of integers from the dataset in the :attr:`base` attribute
+        coords: iterable
+            The coordinates to use. If not given all coordinates in the
+            ``arr.coords`` attribute are used
 
         Returns
         -------
@@ -1255,18 +1258,40 @@ class CFDecoder(object):
         --------
         xarray.Dataset.isel, InteractiveArray.idims"""
         if coords is None:
-            coord_items = six.iteritems(arr.coords)
+            coords = arr.coords
         else:
-            coord_items = ((label, coord) for label, coord in six.iteritems(
-                arr.coords) if label in coords)
-        ret = dict(
-                (label, get_index_from_coord(coord, self.ds.indexes[label]))
-                for label, coord in coord_items if label in self.ds.indexes)
+            coords = {
+                label: coord for label, coord in six.iteritems(arr.coords)
+                if label in coords}
+        ret = self.get_coord_idims(coords)
         # handle the coordinates that are not in the dataset
         missing = set(arr.dims).difference(ret)
         if missing:
             warn('Could not get slices for the following dimensions: %r' % (
                 missing, ), PsyPlotRuntimeWarning)
+        return ret
+
+    def get_coord_idims(self, coords):
+        """Get the slicers for the given coordinates from the base dataset
+
+        This method converts `coords` to slicers (list of
+        integers or ``slice`` objects)
+
+        Parameters
+        ----------
+        coords: dict
+            A subset of the ``ds.coords`` attribute of the base dataset
+            :attr:`ds`
+
+        Returns
+        -------
+        dict
+            Mapping from coordinate name to integer, list of integer or slice
+        """
+        ret = dict(
+            (label, get_index_from_coord(coord, self.ds.indexes[label]))
+            for label, coord in six.iteritems(coords)
+            if label in self.ds.indexes)
         return ret
 
     @docstrings.get_sectionsf('CFDecoder.get_plotbounds', sections=[
@@ -1714,8 +1739,12 @@ class UGridDecoder(CFDecoder):
         if coords is None:
             coords = self.ds.coords
 
+        idims = self.get_coord_idims(coords)
+
         def get_coord(coord):
-            return coords.get(coord, self.ds.coords.get(coord))
+            coord = coords.get(coord, self.ds.coords.get(coord))
+            return coord.isel(**{d: sl for d, sl in idims.items()
+                                 if d in coord.dims})
 
         mesh = self.get_mesh(var, coords)
         if mesh is None:
