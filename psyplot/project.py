@@ -482,7 +482,7 @@ class Project(ArrayList):
     def _add_data(self, plotter_cls, filename_or_obj, fmt={}, make_plot=True,
                   draw=False, mf_mode=False, ax=None, engine=None, delete=True,
                   share=False, clear=False, enable_post=None,
-                  concat_dim=_concat_dim_default,
+                  concat_dim=_concat_dim_default, load=False,
                   *args, **kwargs):
         """
         Extract data from a dataset and visualize it with the given plotter
@@ -534,6 +534,10 @@ class Project(ArrayList):
             formatoption in `fmt` or `kwargs`
         %(xarray.open_mfdataset.parameters.concat_dim)s
             This parameter only does have an effect if `mf_mode` is True.
+        load: bool
+            If True, load the complete dataset into memory before plotting.
+            This might be useful if the data of other variables in the dataset
+            has to be accessed multiple times, e.g. for unstructured grids.
         %(ArrayList.from_dataset.parameters.no_base)s
 
         Other Parameters
@@ -555,6 +559,11 @@ class Project(ArrayList):
             else:
                 filename_or_obj = open_dataset(filename_or_obj,
                                                engine=engine)
+        if load:
+            old = filename_or_obj
+            filename_or_obj = filename_or_obj.load()
+            old.close()
+
         fmt = dict(fmt)
         possible_fmts = list(plotter_cls._get_formatoptions())
         additional_fmt, kwargs = utils.sort_kwargs(

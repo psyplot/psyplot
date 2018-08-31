@@ -1222,7 +1222,7 @@ class TestPlotterInterface(unittest.TestCase):
                              import_plotter=True, module='test_plotter',
                              plotter_name='TestPlotter',
                              default_dims={'y': 0})
-        ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'))
+        ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'), load=True)
         sp = psy.plot.test_plotter(ds, name=[['u', 'v']], x=slice(3, 5))
         self.assertEqual(len(sp), 1)
         self.assertIn('variable', sp[0].dims)
