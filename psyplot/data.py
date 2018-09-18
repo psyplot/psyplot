@@ -1642,11 +1642,11 @@ class UGridDecoder(CFDecoder):
 
         Parameters
         ----------
-        %(CFDecoder.can_decode.parameters)%s
+        %(CFDecoder.can_decode.parameters)s
 
         Returns
         -------
-        %(CFDecoder.can_decode.returns)%s"""
+        %(CFDecoder.can_decode.returns)s"""
         return cls(ds).get_mesh(var) is not None
 
     @docstrings.dedent
