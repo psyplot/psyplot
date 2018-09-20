@@ -323,8 +323,8 @@ be really sure, use the `fmt` keyword via
 
 .. ipython::
 
-    In [28]: p psy.plot.mapplot('demo.nc', name='t2m', fmt={'title': 'my title',
-       ....:                                                'cbar': 'r'})
+    In [28]: psy.plot.mapplot('demo.nc', name='t2m', fmt={'title': 'my title',
+       ....:                                              'cbar': 'r'})
 
 The same methodology works for the interactive usage, i.e. you can use
 

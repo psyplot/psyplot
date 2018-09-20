@@ -24,9 +24,9 @@ object. Without any plugins, this looks like
     @verbatim
     In [1]: from psyplot import rcParams
 
-    # is not shown because we have to disable the plugins
-    @ suppress
-    In [1]: from psyplot.config.rcsetup import RcParams, defaultParams_orig
+    @suppress
+    In [1]: # is not shown because we have to disable the plugins
+       ...: from psyplot.config.rcsetup import RcParams, defaultParams_orig
        ...: rcParams = RcParams(defaultParams=defaultParams_orig)
        ...: rcParams.update_from_defaultParams()
 
@@ -55,12 +55,12 @@ To make our changes from above permanent, we could just do:
     In [4]: import yaml
        ...: from psyplot.config.rcsetup import psyplot_fname
 
-    In [5]: with open(psyplot_fname(), 'w') as f:
-       ...:     yaml.dump(dict{'project.import_seaborn': False}, f)
+    In [5]: with open(psyplot_fname(if_exists=False), 'w') as f:
+       ...:     yaml.dump({'project.import_seaborn': False}, f)
 
     # or we use the dump method
-    In [6]: rcParams.dump(psyplot_fname(),
-       ...:               overwrite=False,  # update the existing file
+    In [6]: rcParams.dump(psyplot_fname(if_exists=False),
+       ...:               overwrite=True,  # update the existing file
        ...:               include_keys=['project.import_seaborn'])
 
 Default formatoptions
@@ -83,7 +83,8 @@ default_key
 
     In [7]: import psyplot.project as psy
 
-    In [8]: psy.plot.lineplot.plotter_cls().title.default_key
+    In [8]: plotter = psy.plot.lineplot.plotter_cls()
+       ...: plotter.title.default_key
 
 As our plotters are based on inheritance, the default values use it, too.
 Therefore, the :class:`~psy_maps.plotters.FieldPlotter`, the underlying plotter
@@ -93,6 +94,7 @@ same configuration value in the
 
 .. ipython::
 
-    In [9]: psy.plot.mapplot.plotter_cls().title.default_key
+    In [9]: plotter = psy.plot.mapplot.plotter_cls()
+       ...: plotter.title.default_key
 
 .. _seaborn: http://seaborn.pydata.org/

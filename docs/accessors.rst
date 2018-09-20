@@ -100,7 +100,7 @@ Just use the :attr:`~psyplot.data.InteractiveBase.plot` attribute the accessor.
 
     @suppress
     In [6]: import matplotlib.pyplot as plt
-       ...: plt.close('all', ds=False)
+       ...: plt.close('all')
 
 The resulting plotter, an instance of the :class:`psyplot.plotter.Plotter`
 class, is the object that visualizes the data array. It can also
