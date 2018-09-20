@@ -451,7 +451,10 @@ class Project(ArrayList):
             if data:
                 self.remove(arr)
                 if not self.is_main:
-                    self.main.remove(arr)
+                    try:
+                        self.main.remove(arr)
+                    except ValueError:  # arr not in list
+                        pass
             if close_ds:
                 if isinstance(arr, InteractiveList):
                     for ds in [val['ds'] for val in six.itervalues(
