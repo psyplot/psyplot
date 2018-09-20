@@ -7,7 +7,8 @@ dependencies:
     - dask
     - xarray
     - netCDF4
-    - matplotlib
+    # Use matplotlib < 3.0. Otherwise, cartopy cannot handle it
+    - matplotlib<3.0
     - seaborn
     - ipython
     - nbconvert
