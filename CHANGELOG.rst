@@ -14,6 +14,16 @@ Removed
   `miniconda <https://conda.io/miniconda.html>`__ and install psyplot and the
   plugins via ``conda install -c conda-forge psy-maps psyplot-gui psy-reg``
 
+Changed
+-------
+* We generalized the handling of unstructured data as lined out in
+  `issue#6 <https://github.com/Chilipp/psyplot/issues/6>`__. The new method
+  ``psyplot.data.CFDecoder.get_cell_node_coord`` returns the coordinates of the
+  nodes for a given grid cell. These informations are used by the
+  psy-simple and psy-maps plugins for displaying any unstructured data. See
+  also the example on the
+  `visualization of unstructured grids <https://psyplot.readthedocs.io/projects/psy-maps/en/master/examples/example_ugrid.html#gallery-examples-example-ugrid-ipynb>`__
+
 v1.1.0
 ======
 This new release mainly adds new xarray accossors (``psy``) for DataArrays
