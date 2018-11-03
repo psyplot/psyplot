@@ -3,11 +3,11 @@ matrix:
   include:
   # linux environments
   - env:
-      - PYTHON_VERSION=3.6
+      - PYTHON_VERSION=3.7
       - XARRAY_VERSION=0.10
     os: linux
   - env:
-      - PYTHON_VERSION=3.6
+      - PYTHON_VERSION=3.7
       - XARRAY_VERSION=0.9
     os: linux
   - env:
@@ -32,11 +32,11 @@ matrix:
     os: linux
   # osx environments
   - env:
-      - PYTHON_VERSION=3.6
+      - PYTHON_VERSION=3.7
       - XARRAY_VERSION=0.10
     os: osx
   - env:
-      - PYTHON_VERSION=3.6
+      - PYTHON_VERSION=3.7
       - XARRAY_VERSION=0.9
     os: osx
   - env:
@@ -73,7 +73,7 @@ install:
   - conda info -a
   - 'ENVKEY=py"${PYTHON_VERSION}"_xr"${XARRAY_VERSION}"'
   - conda env create -f tests/envs/environment_$ENVKEY.yml
-  - source activate psyplot_$ENVKEY
+  - conda activate psyplot_$ENVKEY
   # install python cdo bindings
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         conda install -c conda-forge cdo python-cdo;
