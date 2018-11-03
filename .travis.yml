@@ -64,7 +64,7 @@ install:
   # make sure we use an 'innocent' default matplotlib environment
   - touch matplotlibrc
   - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
+  - . /home/travis/miniconda/etc/profile.d/conda.sh && conda activate base
   - pip install pyyaml  # is somehow not included in the current conda installation
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
