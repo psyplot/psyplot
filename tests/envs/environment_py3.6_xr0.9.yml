@@ -1,8 +1,8 @@
-name: psyplot_py3.7_xr0.9
+name: psyplot_py3.6_xr0.9
 channels:
     - conda-forge
 dependencies:
-    - python=3.7
+    - python=3.6
     - matplotlib
     - dask
     - xarray=0.9
