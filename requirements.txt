@@ -4,7 +4,7 @@ matplotlib==2.2.3  # rq.filter: >=1.4, <2.3
 
 # xarray
 #   https://github.com/pydata/xarray/blob/stable/doc/whats-new.rst
-xarray==0.10.8  # rq.filter: >=0.7.0, <0.11.0
+xarray==0.10.9  # rq.filter: >=0.7.0, <0.11.0
 
 # pandas
 #   http://pandas.pydata.org/pandas-docs/stable/whatsnew.html
