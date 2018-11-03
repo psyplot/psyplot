@@ -115,7 +115,7 @@ repository and run::
 
     $ python setup.py test
 
-or install pytest_ by yourself and run
+or install pytest_ by yourself and run::
 
     $ py.test
 
