@@ -68,6 +68,8 @@ install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
+  # install conda build and anaconda-client for deploy
+  - conda install conda-build anaconda-client
   # Useful for debugging any issues with conda
   - conda info -a
   - 'ENVKEY=py"${PYTHON_VERSION}"_xr"${XARRAY_VERSION}"'
@@ -88,16 +90,17 @@ install:
   - conda env export -n psyplot_$ENVKEY
   # print versions of all the important requirements
   - psyplot -aV
+  # add conda-forge channel for build
+  - conda config --add channels conda-forge
 script:
   - coverage run --source=psyplot setup.py pytest
+  - conda build ci/conda-recipe --python $PYTHON_VERSION
 
 after_success:
   - coveralls
 
-before_deploy:
-  - conda install conda-build anaconda-client
-  - conda build ci/conda-recipe --python $PYTHON_VERSION
-  - export BUILDS="$(ls $HOME/miniconda/conda-bld/${TRAVIS_OS_NAME}-64/*.tar.bz2)";
+before_deploy:  # deactivate to use anaconda client
+  - conda deactivate
 
 deploy:
   - provider: script
