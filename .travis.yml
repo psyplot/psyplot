@@ -1,4 +1,7 @@
 language: generic
+env:
+  global:
+    - secure: "RKFhdSfHUajpU0YoAOMPy4uam4vZu4+PwR4mCFy2LuleWmjNCkR21+qd4PmO+RyVrWgdmazH0IW968OUOuGehQJw5rC7R3Bd1ZteFLXjoR5Yp7uZce+skI6pz/BiGQ6R3glj00gSNM0lA0s4+c6rwoPkkP99q+UoNj9YpBN+jAo/NkkDrV5higW6J05uGQs8n5bZdSJLQlN+oCenBkQU0OHNIMw/iZ8xW11plf8ijR4nVfQMPzv1NOxV+Pp0sKy/FnI0+NxUYNRzaegv9fW5xEi4v/r9UjvkjKxjYrk91ig8tpBUm6LWXIO6a+L4BVr0eeOEWDYO8jsoSqzVSEJ0W9VR/xWEzOLffcxJvssARMCAAFckq3AL99QLMpfh10w0WlztjwIRW6k2lsR3X6yb5uMnlU8UcflouZ5DigKLqIvduANM4MmRrG5e9OApCTNHcQj6bXVwVZqvWQB0qa1nhSirPz0TT4qO3HzXF2+cHceR0AToUJ33f57VgwasddSbIWuFmkWReuM3IKDYVqCWfHNc+r7XqX7BJeG7Uy46B61a9mCpLpsGLMIQpiHCmuJMG4isXzpQyfPc75w6te37nxulVIRzAN2thngGpDGQYUCN2WfXyzV4oT6ci9GKcIRJ6gcil6Woi5pMRp2HNDUzvilDcb3zH2zgx4SbonuiDak="
 matrix:
   include:
   # linux environments
@@ -90,3 +93,15 @@ script:
 
 after_success:
   - coveralls
+
+before_deploy:
+  - conda install conda-build anaconda-client
+  - conda build ci/conda-recipe --python $PYTHON_VERSION
+  - export BUILDS="$(ls $HOME/miniconda/conda-bld/${TRAVIS_OS_NAME}-64/*.tar.bz2)";
+
+deploy:
+  - provider: script
+    script: ci/deploy_anaconda.sh
+    skip_cleanup: true
+    on:
+      condition: '$XARRAY_VERSION == 0.10'
