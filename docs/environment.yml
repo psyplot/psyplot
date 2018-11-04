@@ -3,12 +3,11 @@ channels:
     - chilipp/label/dev
     - conda-forge
 dependencies:
-    - python=3.6
+    - python=3.7
     - dask
     - xarray
     - netCDF4
-    # Use matplotlib < 3.0. Otherwise, cartopy cannot handle it
-    - matplotlib<3.0
+    - matplotlib
     - seaborn
     - ipython
     - nbconvert
