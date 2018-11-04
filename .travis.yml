@@ -105,3 +105,4 @@ deploy:
     skip_cleanup: true
     on:
       condition: '$XARRAY_VERSION == 0.10'
+      all_branches: true
