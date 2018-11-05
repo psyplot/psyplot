@@ -14,6 +14,8 @@ environment:
       XARRAY_VERSION: "0.9"
     - PYTHON_VERSION: "3.6"
       XARRAY_VERSION: "0.10"
+    - PYTHON_VERSION: "3.7"
+      XARRAY_VERSION: "0.10"
 install:
   # Install miniconda Python
   - "powershell ./ci/install_python.ps1"
