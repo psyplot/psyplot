@@ -7,6 +7,10 @@ matrix:
   # linux environments
   - env:
       - PYTHON_VERSION=3.7
+      - XARRAY_VERSION=0.11
+    os: linux
+  - env:
+      - PYTHON_VERSION=3.7
       - XARRAY_VERSION=0.10
     os: linux
   - env:
@@ -34,6 +38,10 @@ matrix:
       - XARRAY_VERSION=0.8
     os: linux
   # osx environments
+  - env:
+      - PYTHON_VERSION=3.7
+      - XARRAY_VERSION=0.11
+    os: osx
   - env:
       - PYTHON_VERSION=3.7
       - XARRAY_VERSION=0.10
