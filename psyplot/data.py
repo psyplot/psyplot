@@ -458,8 +458,14 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
     def dump_nc():
         # make sure that the data store is not closed by providing a
         # write argument
-        store = to_netcdf(ds, fname, writer=xarray_api.ArrayWriter(),
-                          **kwargs)
+        if xr.__version__ < '0.11.0':
+            kwargs.setdefault('writer', xarray_api.ArrayWriter())
+            store = to_netcdf(ds, fname, **kwargs)
+        else:
+            # `writer` parameter was removed by
+            # https://github.com/pydata/xarray/pull/2261
+            kwargs.setdefault('multifile', True)
+            store = to_netcdf(ds, fname, **kwargs)[1]
         store_mod = store.__module__
         store_cls = store.__class__.__name__
         ds._file_obj = store
