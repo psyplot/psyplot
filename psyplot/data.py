@@ -458,7 +458,7 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
     def dump_nc():
         # make sure that the data store is not closed by providing a
         # write argument
-        if xr.__version__ < '0.11.0':
+        if tuple(map(int, xr.__version__.split('.')[:2])) < (0, 11):
             kwargs.setdefault('writer', xarray_api.ArrayWriter())
             store = to_netcdf(ds, fname, **kwargs)
         else:
