@@ -46,6 +46,8 @@ logger = logging.getLogger(__name__)
 
 _ds_counter = count(1)
 
+xr_version = tuple(map(int, xr.__version__.split('.')[:2]))
+
 
 def _no_auto_update_getter(self):
     """:class:`bool`. Boolean controlling whether the :meth:`start_update`
@@ -328,7 +330,8 @@ def to_netcdf(ds, *args, **kwargs):
                 encoding=obj.encoding)
             to_update[v].attrs['units'] = units
     if to_update:
-        ds = ds.update(to_update, inplace=False)
+        ds = ds.copy()
+        ds.update(to_update)
     return xarray_api.to_netcdf(ds, *args, **kwargs)
 
 
@@ -458,7 +461,7 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
     def dump_nc():
         # make sure that the data store is not closed by providing a
         # write argument
-        if tuple(map(int, xr.__version__.split('.')[:2])) < (0, 11):
+        if xr_version < (0, 11):
             kwargs.setdefault('writer', xarray_api.ArrayWriter())
             store = to_netcdf(ds, fname, **kwargs)
         else:
@@ -617,7 +620,7 @@ class CFDecoder(object):
     @staticmethod
     @docstrings.get_sectionsf('CFDecoder.decode_coords', sections=[
         'Parameters', 'Returns'])
-    def decode_coords(ds, gridfile=None, inplace=True):
+    def decode_coords(ds, gridfile=None):
         """
         Sets the coordinates and bounds in a dataset
 
@@ -633,8 +636,6 @@ class CFDecoder(object):
         gridfile: str
             The path to a separate grid file or a xarray.Dataset instance which
             may store the coordinates used in `ds`
-        inplace: bool, optional
-            If True, `ds` is modified in place
 
         Returns
         -------
@@ -653,10 +654,13 @@ class CFDecoder(object):
             add_attrs(v)
         add_attrs(ds)
         if gridfile is not None:
-            ds = ds.update({k: v for k, v in six.iteritems(gridfile.variables)
-                            if k in extra_coords}, inplace=inplace)
-        ds = ds.set_coords(extra_coords.intersection(ds.variables),
-                           inplace=inplace)
+            ds.update({k: v for k, v in six.iteritems(gridfile.variables)
+                       if k in extra_coords})
+        if xr_version < (0, 11):
+            ds.set_coords(extra_coords.intersection(ds.variables),
+                          inplace=True)
+        else:
+            ds._coord_names.update(extra_coords.intersection(ds.variables))
         return ds
 
     @docstrings.get_sectionsf('CFDecoder.is_triangular', sections=[
@@ -1481,7 +1485,7 @@ class CFDecoder(object):
     @classmethod
     @docstrings.get_sectionsf('CFDecoder._decode_ds')
     @docstrings.dedent
-    def _decode_ds(cls, ds, gridfile=None, inplace=False, decode_coords=True,
+    def _decode_ds(cls, ds, gridfile=None, decode_coords=True,
                    decode_times=True):
         """
         Static method to decode coordinates and time informations
@@ -1500,8 +1504,7 @@ class CFDecoder(object):
             If True, decode the 'coordinates' attribute to identify coordinates
             in the resulting dataset."""
         if decode_coords:
-            ds = cls.decode_coords(ds, gridfile=gridfile,
-                                   inplace=inplace)
+            ds = cls.decode_coords(ds, gridfile=gridfile)
         if decode_times:
             for k, v in six.iteritems(ds.variables):
                 # check for absolute time units and make sure the data is not
@@ -1511,7 +1514,7 @@ class CFDecoder(object):
                     decoded = xr.Variable(
                         v.dims, AbsoluteTimeDecoder(v), attrs=v.attrs,
                         encoding=v.encoding)
-                    ds = ds.update({k: decoded}, inplace=inplace)
+                    ds.update({k: decoded})
         return ds
 
     @classmethod
@@ -1797,7 +1800,7 @@ class UGridDecoder(CFDecoder):
 
     @staticmethod
     @docstrings.dedent
-    def decode_coords(ds, gridfile=None, inplace=True):
+    def decode_coords(ds, gridfile=None):
         """
         Reimplemented to set the mesh variables as coordinates
 
@@ -1827,10 +1830,13 @@ class UGridDecoder(CFDecoder):
                             mesh_var.attrs['face_node_connectivity'])
         if gridfile is not None and not isinstance(gridfile, xr.Dataset):
             gridfile = open_dataset(gridfile)
-            ds = ds.update({k: v for k, v in six.iteritems(gridfile.variables)
-                            if k in extra_coords}, inplace=inplace)
-        ds = ds.set_coords(extra_coords.intersection(ds.variables),
-                           inplace=inplace)
+            ds.update({k: v for k, v in six.iteritems(gridfile.variables)
+                       if k in extra_coords})
+        if xr_version < (0, 11):
+            ds.set_coords(extra_coords.intersection(ds.variables),
+                          inplace=True)
+        else:
+            ds._coord_names.update(extra_coords.intersection(ds.variables))
         return ds
 
     def get_nodes(self, coord, coords):
@@ -1953,7 +1959,7 @@ def open_dataset(filename_or_obj, decode_cf=True, decode_times=True,
     if decode_cf:
         ds = CFDecoder.decode_ds(
             ds, decode_coords=decode_coords, decode_times=decode_times,
-            gridfile=gridfile, inplace=True)
+            gridfile=gridfile)
     return ds
 
 
@@ -2014,7 +2020,7 @@ def open_mfdataset(paths, decode_cf=True, decode_times=True,
         paths, decode_cf=decode_cf, decode_times=decode_times, engine=engine,
         decode_coords=False, **kwargs)
     if decode_cf:
-        ds = CFDecoder.decode_ds(ds, gridfile=gridfile, inplace=True,
+        ds = CFDecoder.decode_ds(ds, gridfile=gridfile,
                                  decode_coords=decode_coords,
                                  decode_times=decode_times)
     ds.psy._concat_dim = kwargs.get('concat_dim')
@@ -2329,7 +2335,7 @@ class InteractiveArray(InteractiveBase):
                 ds = to_dataset(0)
                 if len(self.arr.coords['variable']) > 1:
                     for i in range(1, len(self.arr.coords['variable'])):
-                        ds.merge(to_dataset(i), inplace=True)
+                        ds.update(ds.merge(to_dataset(i)))
                 self._base = ds
             else:
                 self._base = self.arr.to_dataset(
