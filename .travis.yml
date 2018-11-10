@@ -8,6 +8,7 @@ matrix:
   - env:
       - PYTHON_VERSION=3.7
       - XARRAY_VERSION=0.11
+      - DEPLOY_CONDA=true
     os: linux
   - env:
       - PYTHON_VERSION=3.7
@@ -41,6 +42,7 @@ matrix:
   - env:
       - PYTHON_VERSION=3.7
       - XARRAY_VERSION=0.11
+      - DEPLOY_CONDA=true
     os: osx
   - env:
       - PYTHON_VERSION=3.7
@@ -115,5 +117,5 @@ deploy:
     script: ci/deploy_anaconda.sh
     skip_cleanup: true
     on:
-      condition: '$XARRAY_VERSION == 0.10'
+      condition: '$DEPLOY_CONDA == true'
       all_branches: true
