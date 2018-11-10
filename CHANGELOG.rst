@@ -23,6 +23,10 @@ Changed
   psy-simple and psy-maps plugins for displaying any unstructured data. See
   also the example on the
   `visualization of unstructured grids <https://psyplot.readthedocs.io/projects/psy-maps/en/master/examples/example_ugrid.html#gallery-examples-example-ugrid-ipynb>`__
+* We removed the inplace parameter for the CFDecoder methods since it is
+  deprecated with xarray 0.12 (see
+  `issue #8 <https://github.com/Chilipp/psyplot/issues/8>`__). The
+  ``CFDecoder.decode_ds`` method now always decodes inplace
 
 v1.1.0
 ======
