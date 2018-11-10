@@ -45,7 +45,9 @@ warnings.filterwarnings('ignore', message="axes.color_cycle is deprecated")
 warnings.filterwarnings(
     'ignore', message=("This has been deprecated in mpl 1.5,"))
 warnings.filterwarnings('ignore', message="invalid value encountered in ")
-warnings.filterwarnings('ignore', message="\s?examples.directory")
+warnings.filterwarnings('ignore', message="\s*examples.directory")
+warnings.filterwarnings(
+    'ignore', message="\s*The inplace argument has been deprecated")
 
 # -- General configuration ------------------------------------------------
 
