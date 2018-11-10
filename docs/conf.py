@@ -45,6 +45,7 @@ warnings.filterwarnings('ignore', message="axes.color_cycle is deprecated")
 warnings.filterwarnings(
     'ignore', message=("This has been deprecated in mpl 1.5,"))
 warnings.filterwarnings('ignore', message="invalid value encountered in ")
+warnings.filterwarnings('ignore', message="\s?examples.directory")
 
 # -- General configuration ------------------------------------------------
 
@@ -231,13 +232,13 @@ epub_exclude_files = ['search.html']
 intersphinx_mapping = {
     'pandas': ('http://pandas.pydata.org/pandas-docs/stable/', None),
     'numpy': ('https://docs.scipy.org/doc/numpy/', None),
-    'matplotlib': ('http://matplotlib.org/', None),
+    'matplotlib': ('https://matplotlib.org/', None),
     'seaborn': ('http://seaborn.pydata.org/', None),
     'sphinx': ('http://www.sphinx-doc.org/en/stable/', None),
     'xarray': ('http://xarray.pydata.org/en/stable/', None),
-    'cartopy': ('http://scitools.org.uk/cartopy/docs/latest/', None),
+    'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
     'mpl_toolkits': ('http://matplotlib.org/basemap/', None),
-    'sphinx_nbexamples': ('http://sphinx-nbexamples.readthedocs.io/en/latest/',
+    'sphinx_nbexamples': ('https://sphinx-nbexamples.readthedocs.io/en/latest/',
                           None),
     'psy_maps': (
         'https://psyplot.readthedocs.io/projects/psy-maps/en/latest/', None),
@@ -246,7 +247,7 @@ intersphinx_mapping = {
     'psy_reg': ('https://psyplot.readthedocs.io/projects/psy-reg/en/latest/',
                 None),
     'psyplot_gui': (
-        'http://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/', None),
+        'https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/', None),
 }
 if six.PY3:
     intersphinx_mapping['python'] = ('https://docs.python.org/3.6/', None)
