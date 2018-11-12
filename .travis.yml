@@ -119,3 +119,4 @@ deploy:
     on:
       condition: '$DEPLOY_CONDA == true'
       all_branches: true
+      tags: true
