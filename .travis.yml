@@ -119,4 +119,9 @@ deploy:
     on:
       condition: '$DEPLOY_CONDA == true'
       all_branches: true
+  - provider: script
+    script: ci/deploy_anaconda.sh
+    skip_cleanup: true
+    on:
+      condition: '$DEPLOY_CONDA == true'
       tags: true
