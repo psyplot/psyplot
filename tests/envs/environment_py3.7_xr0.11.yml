@@ -7,6 +7,7 @@ dependencies:
     - dask
     - xarray=0.11.*
     - netCDF4
+    - pyqt   # [osx]
     - seaborn
     - scipy  # necessary for scipy engine test
     - gdal  # for psyplot.gdal_store
