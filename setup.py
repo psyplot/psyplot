@@ -47,7 +47,7 @@ setup(name='psyplot',
           'docrep',
           'funcargparse',
           'xarray',
-          'PyYAML'
+          'PyYAML>=4.2b4'
       ],
       package_data={'psyplot': [
           osp.join('psyplot', 'plugin-template-files', '*'),
