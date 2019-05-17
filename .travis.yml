@@ -84,6 +84,7 @@ install:
         conda install -c conda-forge cdo python-cdo;
         export CDO="$HOME/miniconda/envs/psyplot_$ENVKEY/bin/cdo";
     fi
+  - if [[ $TRAVIS_TAG == "" ]]; then export GIT_BRANCH=$TRAVIS_BRANCH; fi
   # install coveralls
   - pip install coveralls
   # install the test plugin

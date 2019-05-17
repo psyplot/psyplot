@@ -39,6 +39,7 @@ install:
   - python setup.py install
   - cd ../../
   - python setup.py install
+  - "IF NOT DEFINED APPVEYOR_REPO_TAG_NAME (SET GIT_BRANCH=%APPVEYOR_REPO_BRANCH%)"
   # export the environment for debugging
   - conda env export -n psyplot_%ENVKEY%
   # print versions of all the important requirements
@@ -48,3 +49,6 @@ build: false
 
 test_script:
   - python setup.py pytest
+
+deploy_script:
+  - cmd: "python ci\\deploy_anaconda.py"
