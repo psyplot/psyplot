@@ -4,10 +4,6 @@ environment:
   PYTHON: "C:\\Python34-conda64"
 
   matrix:
-    - PYTHON_VERSION: "3.5"
-      XARRAY_VERSION: "0.8"
-    - PYTHON_VERSION: "3.5"
-      XARRAY_VERSION: "0.9"
     - PYTHON_VERSION: "3.6"
       XARRAY_VERSION: "0.8"
     - PYTHON_VERSION: "3.6"
@@ -16,6 +12,8 @@ environment:
       XARRAY_VERSION: "0.10"
     - PYTHON_VERSION: "3.7"
       XARRAY_VERSION: "0.11"
+    - PYTHON_VERSION: "3.7"
+      XARRAY_VERSION: "0.12"
 install:
   # Install miniconda Python
   - "powershell ./ci/install_python.ps1"
