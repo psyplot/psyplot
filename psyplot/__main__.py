@@ -299,7 +299,7 @@ def get_parser(create=True):
 def _load_dict(fname):
     with open(fname) as f:
         if fname.endswith('.yml') or fname.endswith('.yaml'):
-            return yaml.load(f)
+            return yaml.load(f, Loader=yaml.SafeLoader)
         return pickle.load(f)
 
 

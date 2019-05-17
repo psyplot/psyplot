@@ -644,7 +644,7 @@ environment variable."""
         fname = fname or psyplot_fname()
         if fname and os.path.exists(fname):
             with open(fname) as f:
-                d = yaml.load(f)
+                d = yaml.load(f, Loader=yaml.SafeLoader)
                 self.update(d)
                 if (d.get('project.plotters.user') and
                         'project.plotters' in self):
@@ -1003,7 +1003,7 @@ def validate_dict(d):
         d = validate_path_exists(d)
         try:
             with open(d) as f:
-                return dict(yaml.load(f))
+                return dict(yaml.load(f, Loader=yaml.SafeLoader))
         except Exception:
             raise ValueError("Could not convert {} to dictionary!".format(d))
 

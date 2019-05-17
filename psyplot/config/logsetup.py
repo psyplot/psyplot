@@ -72,7 +72,7 @@ def setup_logging(default_path=None, default_level=logging.INFO,
         path = value
     if os.path.exists(path):
         with open(path, 'rt') as f:
-            config = yaml.load(f.read())
+            config = yaml.load(f.read(), Loader=yaml.SafeLoader)
         for handler in config.get('handlers', {}).values():
             if '~' in handler.get('filename', ''):
                 handler['filename'] = handler['filename'].replace(
