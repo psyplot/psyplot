@@ -1,23 +1,26 @@
 {% set name = "psyplot" %}
-{% set version = "1.2.0" %}
+{% set data = load_setup_py_data() %}
 
 package:
   name: {{ name|lower }}
-  version: {{ version }}
+  version: {{ data.get('version') }}
 
 source:
   path: ../../
 
 build:
-  number: 0
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
+  string: {{ environ.get('GIT_BUILD_STR', '') }}{% if environ.get('GIT_BRANCH') %}_{{ environ.get('GIT_BRANCH') }}{% endif %}
+  script: python -m pip install . --no-deps --ignore-installed -vvv
   entry_points:
-    - psyplot=psyplot.__main__:main
+  - psyplot = psyplot.__main__:main
+  - psyplot-plugin = psyplot.plugin_template:main
+  skip: true  # [py == 27]
 
 requirements:
   build:
   - python
-  - setuptools
+  - pip
   run:
   - python
   - matplotlib
