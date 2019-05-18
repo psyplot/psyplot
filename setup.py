@@ -1,9 +1,22 @@
 import os.path as osp
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
 import sys
 
-needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
-pytest_runner = ['pytest-runner'] if needs_pytest else []
+
+class PyTest(TestCommand):
+    user_options = [('pytest-args=', 'a', "Arguments to pass to pytest")]
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.pytest_args = ''
+
+    def run_tests(self):
+        import shlex
+        # import here, cause outside the eggs aren't loaded
+        import pytest
+        errno = pytest.main(shlex.split(self.pytest_args))
+        sys.exit(errno)
 
 
 def readme():
@@ -54,8 +67,8 @@ setup(name='psyplot',
           osp.join('psyplot', 'plugin-template-files', 'plugin_template', '*'),
           ]},
       include_package_data=True,
-      setup_requires=pytest_runner,
       tests_require=['pytest'],
+      cmdclass={'test': PyTest},
       entry_points={'console_scripts': [
           'psyplot=psyplot.__main__:main',
           'psyplot-plugin=psyplot.plugin_template:main']},

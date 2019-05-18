@@ -98,7 +98,7 @@ install:
   # add conda-forge channel for build
   - conda config --add channels conda-forge
 script:
-  - coverage run --source=psyplot setup.py pytest
+  - coverage run --source=psyplot setup.py test -a "-v"
   - conda build ci/conda-recipe --python $PYTHON_VERSION
 
 after_success:

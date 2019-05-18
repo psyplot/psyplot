@@ -48,7 +48,7 @@ install:
 build: false
 
 test_script:
-  - python setup.py pytest
+  - python setup.py test -a "-v"
 
 deploy_script:
   - cmd: "python ci\\deploy_anaconda.py"
