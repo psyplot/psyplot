@@ -50,10 +50,6 @@ matrix:
       - PYTHON_VERSION=3.7
         XARRAY_VERSION=0.10
     os: osx
-# install cdo
-addons:
-  apt:
-    packages: cdo
 
 install:
   # select the os name for the conda installer
