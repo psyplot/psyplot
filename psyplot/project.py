@@ -37,8 +37,9 @@ from psyplot.plotter import unique_everseen, Plotter
 from psyplot.compat.pycompat import (OrderedDict, range, getcwd,
                                      get_default_value as _get_default_value)
 try:
-    from cdo import Cdo as _CdoBase
+    from cdo import Cdo as _CdoBase, __version__ as cdo_version
     with_cdo = True
+    cdo_version = tuple(map(int, cdo_version.split('.')[:2]))
 except ImportError as e:
     Cdo = _MissingModule(e)
     with_cdo = False
@@ -2203,17 +2204,21 @@ if with_cdo:
             """)
 
         def __init__(self, *args, **kwargs):
-            kwargs.setdefault('cdfMod', CDF_MOD_NCREADER)
+            if cdo_version < (1, 5):
+                kwargs.setdefault('cdfMod', CDF_MOD_NCREADER)
             super(Cdo, self).__init__(*args, **kwargs)
             self.loadCdf()
 
         def loadCdf(self, *args, **kwargs):
             """Load data handler as specified by self.cdfMod"""
-            def open_nc(*args, **kwargs):
-                kwargs.pop('mode', None)
-                return open_dataset(*args, **kwargs)
-            if self.cdfMod == CDF_MOD_NCREADER:
-                self.cdf = open_nc
+            if cdo_version < (1, 5):
+                def open_nc(*args, **kwargs):
+                    kwargs.pop('mode', None)
+                    return open_dataset(*args, **kwargs)
+                if self.cdfMod == CDF_MOD_NCREADER:
+                    self.cdf = open_nc
+                else:
+                    super(Cdo, self).loadCdf(*args, **kwargs)
             else:
                 super(Cdo, self).loadCdf(*args, **kwargs)
 
@@ -2232,7 +2237,10 @@ if with_cdo:
                         dims = kwargs.pop('dims', {})
                         name = kwargs.pop('name', None)
                         method = kwargs.pop('method', 'isel')
-                        kwargs['returnCdf'] = True
+                        if cdo_version < (1, 5):
+                            kwargs['returnCdf'] = True
+                        else:
+                            kwargs['returnXDataset'] = True
                         ds = get(*args, **kwargs)
                         if isinstance(plot_method, six.string_types):
                             plot_method = getattr(plot, plot_method)
