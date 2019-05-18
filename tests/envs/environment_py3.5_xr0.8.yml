@@ -10,6 +10,7 @@ dependencies:
     - seaborn
     - scipy  # necessary for scipy engine test
     - gdal  # for psyplot.gdal_store
+    - pandas=0.23.*
     - pip
     - pip:
         - pytest
