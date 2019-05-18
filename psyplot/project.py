@@ -37,12 +37,13 @@ from psyplot.plotter import unique_everseen, Plotter
 from psyplot.compat.pycompat import (OrderedDict, range, getcwd,
                                      get_default_value as _get_default_value)
 try:
-    from cdo import Cdo as _CdoBase, __version__ as cdo_version
+    from cdo import Cdo as _CdoBase, CDO_PY_VERSION as cdo_version
     with_cdo = True
     cdo_version = tuple(map(int, cdo_version.split('.')[:2]))
 except ImportError as e:
     Cdo = _MissingModule(e)
     with_cdo = False
+    cdo_version = None
 
 try:  # try import show_colormaps for convenience
     from psy_simple.colors import show_colormaps, get_cmap
