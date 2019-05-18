@@ -2556,6 +2556,7 @@ class InteractiveArray(InteractiveBase):
                 'coordinates']
         self.arr._variable = res._variable
         self.arr._coords = res._coords
+        self.arr._indexes = res.indexes
         self.arr.name = saved_name
         for key, val in saved_attrs:
             self.arr.attrs[key] = val
@@ -2605,6 +2606,7 @@ class InteractiveArray(InteractiveBase):
                     res.shape[i] == 1 and dim not in old_dims)})
         self.arr._variable = res._variable
         self.arr._coords = res._coords
+        self.arr._indexes = res.indexes
         # update to old attributes
         for key, val in saved_attrs:
             self.arr.attrs[key] = val
