@@ -2208,7 +2208,8 @@ if with_cdo:
             if cdo_version < (1, 5):
                 kwargs.setdefault('cdfMod', CDF_MOD_NCREADER)
             super(Cdo, self).__init__(*args, **kwargs)
-            self.loadCdf()
+            if cdo_version < (1, 5):
+                self.loadCdf()
 
         def loadCdf(self, *args, **kwargs):
             """Load data handler as specified by self.cdfMod"""
@@ -2221,7 +2222,7 @@ if with_cdo:
                 else:
                     super(Cdo, self).loadCdf(*args, **kwargs)
             else:
-                super(Cdo, self).loadCdf(*args, **kwargs)
+                super(Cdo, self).readCdf(*args, **kwargs)
 
         def __getattr__(self, method_name):
             def my_get(get):
@@ -2257,14 +2258,10 @@ if with_cdo:
                     else:
                         return get(*args, **kwargs)
                 return wrapper
-            if method_name == 'cdf':
-                # initialize cdf module implicitly
-                self.loadCdf()
-                return self.cdf
-            else:
-                get = my_get(super(Cdo, self).__getattr__(method_name))
-                setattr(self.__class__, method_name, get)
-                return get.__get__(self)
+
+            get = my_get(super(Cdo, self).__getattr__(method_name))
+            setattr(self.__class__, method_name, get)
+            return get.__get__(self)
 
 
 @dedent
