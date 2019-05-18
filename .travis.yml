@@ -7,53 +7,54 @@ matrix:
   # linux environments
   - env:
       - PYTHON_VERSION=3.7
-      - XARRAY_VERSION=0.12
-      - DEPLOY_CONDA=true
+        XARRAY_VERSION=0.12
+        DEPLOY_CONDA=true
     os: linux
   - env:
       - PYTHON_VERSION=3.7
-      - XARRAY_VERSION=0.11
+        XARRAY_VERSION=0.11
     os: linux
   - env:
       - PYTHON_VERSION=3.7
-      - XARRAY_VERSION=0.10
+        XARRAY_VERSION=0.10
     os: linux
   - env:
       - PYTHON_VERSION=3.6
-      - XARRAY_VERSION=0.9
-      - DEPLOY_CONDA=true
+        XARRAY_VERSION=0.9
+        DEPLOY_CONDA=true
     os: linux
   - env:
       - PYTHON_VERSION=3.6
-      - XARRAY_VERSION=0.8
+        XARRAY_VERSION=0.8
     os: linux
   - env:
       - PYTHON_VERSION=3.5
-      - XARRAY_VERSION=0.9
-      - DEPLOY_CONDA=true
+        XARRAY_VERSION=0.9
+        DEPLOY_CONDA=true
     os: linux
   - env:
       - PYTHON_VERSION=3.5
-      - XARRAY_VERSION=0.8
+        XARRAY_VERSION=0.8
     os: linux
   # osx environments
   - env:
       - PYTHON_VERSION=3.7
-      - XARRAY_VERSION=0.12
-      - DEPLOY_CONDA=true
+        XARRAY_VERSION=0.12
+        DEPLOY_CONDA=true
     os: osx
-    - env:
-        - PYTHON_VERSION=3.7
-        - XARRAY_VERSION=0.11
-      os: osx
   - env:
       - PYTHON_VERSION=3.7
-      - XARRAY_VERSION=0.10
+        XARRAY_VERSION=0.11
     os: osx
-addons:  # install cdo
+  - env:
+      - PYTHON_VERSION=3.7
+        XARRAY_VERSION=0.10
+    os: osx
+# install cdo
+addons:
   apt:
-    packages:
-    - cdo
+    packages: cdo
+
 install:
   # select the os name for the conda installer
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
