@@ -12,6 +12,5 @@ dependencies:
     - gdal  # for psyplot.gdal_store
     - pandas=0.23.*
     - pip
-    - python-cdo  # [linux]
     - pip:
         - pytest
