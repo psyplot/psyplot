@@ -1,11 +1,11 @@
 # Matplotlib
 #   https://github.com/matplotlib/matplotlib/blob/master/CHANGELOG
-matplotlib==3.0.2  # rq.filter: >=1.4
+matplotlib==3.1.0  # rq.filter: >=1.4
 
 # xarray
 #   https://github.com/pydata/xarray/blob/stable/doc/whats-new.rst
-xarray==0.11.3  # rq.filter: >=0.7.0
+xarray==0.12.1  # rq.filter: >=0.7.0
 
 # pandas
 #   http://pandas.pydata.org/pandas-docs/stable/whatsnew.html
-pandas==0.24.1 # rq.filter: >= 0.18.0
+pandas==0.24.2 # rq.filter: >= 0.18.0
