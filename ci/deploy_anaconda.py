@@ -3,7 +3,7 @@ import os
 import re
 import conda_build.api
 import subprocess as spr
-fnames = list(conda_build.api.get_output_file_paths('conda-recipe'))
+fnames = list(conda_build.api.get_output_file_paths('ci/conda-recipe'))
 py_patt = re.compile('py\d\d')
 repl = 'py' + os.getenv('PYTHON_VERSION').replace('.', '')
 fnames = [py_patt.sub(repl, f) for f in fnames]
