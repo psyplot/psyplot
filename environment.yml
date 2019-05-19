@@ -11,5 +11,6 @@ dependencies:
     - netCDF4
     - matplotlib
     - seaborn
+    - pip
     - python-cdo
     - psy-maps
