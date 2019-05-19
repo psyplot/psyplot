@@ -1,0 +1,15 @@
+name: psyplot
+channels:
+    - conda-forge
+    - chilipp/label/dev
+    - chilipp/label/master
+    - chilipp
+dependencies:
+    - python=3.7
+    - dask
+    - xarray
+    - netCDF4
+    - matplotlib
+    - seaborn
+    - python-cdo
+    - psy-maps
