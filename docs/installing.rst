@@ -73,13 +73,16 @@ Dependencies
 ------------
 Required dependencies
 ^^^^^^^^^^^^^^^^^^^^^
-Psyplot has been tested for python 2.7, 3.4, 3.5 and 3.6. Furthermore the
-package is built upon multiple other packages, mainly
+Psyplot supports officially python 3.6 and 3.7. Previous versions are also
+available for python 2.7. Furthermore the package is built upon multiple other
+packages, mainly
 
 - xarray_>=0.8: Is used for the data management in the psyplot package
-- matplotlib_>=1.4.3: **The** python visualiation
-  package
+- matplotlib_>=1.4.3: **The** python visualiation package
 - `PyYAML <http://pyyaml.org/>`__: Needed for the configuration of psyplot
+- docrep_: A package for efficient documentation processing for large APIs
+- funcargparse_: A package to create command line parsers from function
+  docstrings
 
 
 .. _optional_deps:
@@ -103,6 +106,8 @@ We furthermore recommend to use
 .. _anaconda: https://www.anaconda.com/download/
 .. _miniconda: https://conda.io/miniconda.html
 .. _matplotlib: http://matplotlib.org
+.. _docrep: https://docrep.readthedocs.io
+.. _funcargparse: https://funcargparse.readthedocs.io
 .. _xarray installation notes: http://xarray.pydata.org/en/stable/installing.html
 .. _xarray: http://xarray.pydata.org/
 .. _cdo: https://code.zmaw.de/projects/cdo/wiki/Anaconda
@@ -145,19 +150,20 @@ Then build the docs via::
 
     The building of the docs always preprocesses the examples. You might want to
     disable that by setting ``process_examples = False``. Otherwise please note
-    that the examples are written as python3 notebooks. So if you are using
-    python2, you may have to install the python3 kernel. Just create a new
-    environment ``'py35'`` and install it for IPython via::
+    that the examples are written as python3 notebooks, hence you may have to
+    install a python3 kernel through ipykernel_. Just create a new environment
+    ``'py37'`` and install it via::
 
-        conda create -n py35 python=3.5
-        source activate py35
+        conda create -n py37 python=3.7
+        source activate py37
         conda install notebook ipykernel
         ipython kernel install --user
 
     You then have to install the necessary modules for each of the examples in
-    the new ``'py35'`` environment.
+    the new ``'py37'`` environment.
 
 .. _github: https://github.com/Chilipp/psyplot
+.. _ipykernel: https://ipykernel.readthedocs.io
 .. _pytest: https://pytest.org/latest/contents.html
 
 
