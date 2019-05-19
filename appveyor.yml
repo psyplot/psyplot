@@ -28,6 +28,10 @@ install:
   # make sure we use an 'innocent' default matplotlib environment
   - copy /y nul matplotlibrc
   - conda config --set always_yes yes --set changeps1 no
+  - conda config --add channels conda-forge
+  - conda config --add channels chilipp
+  - conda config --add channels chilipp/label/master
+  - conda config --add channels chilipp/label/dev
   # Useful for debugging any issues with conda
   - conda info -a
   - set ENVKEY=py%PYTHON_VERSION%_xr%XARRAY_VERSION%
