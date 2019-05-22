@@ -1,3 +1,7 @@
+v1.2.1
+======
+This patch fixes compatibility issues with xarray 0.12 and cdo 1.5. Additionally we now officially drop support for python 2.7.
+
 v1.2.0
 ======
 
