@@ -91,20 +91,8 @@ script:
 
 after_success:
   - coveralls
-
-before_deploy:  # deactivate to use anaconda client
-  - conda deactivate
-
-deploy:
-  - provider: script
-    script: ci/deploy_anaconda.sh
-    skip_cleanup: true
-    on:
-      condition: '$DEPLOY_CONDA == true'
-      all_branches: true
-  - provider: script
-    script: ci/deploy_anaconda.sh
-    skip_cleanup: true
-    on:
-      condition: '$DEPLOY_CONDA == true'
-      tags: true
+  # deploy here (don't use travis deploy because it requires homebrew)
+  - if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_REPO_SLUG == "Chilipp/psyplot" && $DEPLOY_CONDA == "true"]]; then
+        conda activate base;
+        ci/deploy_anaconda.py;
+    fi
