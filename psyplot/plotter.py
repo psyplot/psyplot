@@ -120,7 +120,9 @@ class FormatoptionMeta(ABCMeta):
     class"""
     def __new__(cls, clsname, bases, dct):
         """Assign an automatic documentation to the formatoption"""
-        dct['__doc__'] = docstrings.dedents(dct.get('__doc__', ''))
+        doc = dct.get('__doc__')
+        if doc is not None:
+            dct['__doc__'] = docstrings.dedents(doc)
         new_cls = super(FormatoptionMeta, cls).__new__(cls, clsname, bases,
                                                        dct)
         for childname in chain(new_cls.children, new_cls.dependencies,

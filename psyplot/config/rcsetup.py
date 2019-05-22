@@ -11,13 +11,14 @@ import sys
 import six
 import logging
 import re
+import inspect
 import yaml
 from itertools import chain
 from collections import defaultdict
 from psyplot.warning import warn
 from psyplot.compat.pycompat import (
     UserDict, DictMethods, getcwd, zip, isstring, map)
-from psyplot.docstring import docstrings, dedent, safe_modulo, dedents
+from psyplot.docstring import docstrings, dedent, safe_modulo
 from psyplot.config.logsetup import _get_home
 
 
@@ -1095,7 +1096,7 @@ defaultParams = {
     # user defined plotter keys
     'plotter.user': [
         {}, validate_dict,
-        dedents("""
+        inspect.cleandoc("""
         formatoption keys and values that are defined by the user to be used by
         the specified plotters. For example to modify the title of all
         :class:`psyplot.plotter.maps.FieldPlotter` instances, set

@@ -1966,7 +1966,7 @@ def open_dataset(filename_or_obj, decode_cf=True, decode_times=True,
 
 
 docstrings.get_sections(
-    dedents(xr.open_mfdataset.__doc__.split('\n', 1)[1]),
+    inspect.cleandoc(xr.open_mfdataset.__doc__.split('\n', 1)[1]),
     'xarray.open_mfdataset')
 docstrings.delete_params('xarray.open_mfdataset.parameters', 'engine')
 docstrings.keep_params('get_tdata.parameters', 't_format')

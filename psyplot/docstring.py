@@ -9,6 +9,11 @@ import six
 import inspect
 from docrep import DocstringProcessor, safe_modulo
 
+try:
+    from docrep import dedents  # for compatiblity reasons
+except ImportError:   # docrep.dedents is deprecated
+    pass
+
 
 def dedent(func):
     """
