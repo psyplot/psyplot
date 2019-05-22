@@ -6,7 +6,8 @@ We use the docrep_ package for managing our docstrings
 """
 import types
 import six
-from docrep import DocstringProcessor, dedents, safe_modulo
+import inspect
+from docrep import DocstringProcessor, safe_modulo
 
 
 def dedent(func):
@@ -19,7 +20,7 @@ def dedent(func):
         function with the documentation to dedent"""
     if isinstance(func, types.MethodType) and not six.PY3:
         func = func.im_func
-    func.__doc__ = func.__doc__ and dedents(func.__doc__)
+    func.__doc__ = func.__doc__ and inspect.cleandoc(func.__doc__)
     return func
 
 
