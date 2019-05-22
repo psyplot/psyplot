@@ -1,6 +1,7 @@
 from __future__ import division
 import os
 import os.path as osp
+import inspect
 from threading import Thread
 from functools import partial
 from glob import glob
@@ -18,7 +19,7 @@ import numpy as np
 import datetime as dt
 import logging
 from psyplot.config.rcsetup import rcParams, safe_list
-from psyplot.docstring import dedent, docstrings, dedents
+from psyplot.docstring import dedent, docstrings
 from psyplot.compat.pycompat import (
     zip, map, isstring, OrderedDict, filter, range, getcwd,
     Queue)
@@ -1916,8 +1917,9 @@ class UGridDecoder(CFDecoder):
 CFDecoder.register_decoder(UGridDecoder)
 
 docstrings.keep_params('CFDecoder.decode_coords.parameters', 'gridfile')
-docstrings.get_sections(dedents(xr.open_dataset.__doc__.split('\n', 1)[1]),
-                        'xarray.open_dataset')
+docstrings.get_sections(inspect.cleandoc(
+    xr.open_dataset.__doc__.split('\n', 1)[1]),
+    'xarray.open_dataset')
 docstrings.delete_params('xarray.open_dataset.parameters', 'engine')
 
 
