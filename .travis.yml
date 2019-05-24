@@ -88,11 +88,11 @@ install:
 script:
   - coverage run --source=psyplot setup.py test -a "-v"
   - conda build ci/conda-recipe --python $PYTHON_VERSION
-
-after_success:
-  - coveralls
   # deploy here (don't use travis deploy because it requires homebrew)
-  - if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_REPO_SLUG == "Chilipp/psyplot" && $DEPLOY_CONDA == "true"]]; then
+  - if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_REPO_SLUG == "Chilipp/psyplot" && $DEPLOY_CONDA == "true" ]]; then
         conda activate base;
         ci/deploy_anaconda.py;
     fi
+
+after_success:
+  - coveralls
