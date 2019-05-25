@@ -78,7 +78,7 @@ available for python 2.7. Furthermore the package is built upon multiple other
 packages, mainly
 
 - xarray_>=0.8: Is used for the data management in the psyplot package
-- matplotlib_>=1.4.3: **The** python visualiation package
+- matplotlib_>=1.4.3<3.1: **The** python visualiation package
 - `PyYAML <http://pyyaml.org/>`__: Needed for the configuration of psyplot
 - docrep_: A package for efficient documentation processing for large APIs
 - funcargparse_: A package to create command line parsers from function
