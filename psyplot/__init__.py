@@ -90,7 +90,11 @@ def get_versions(requirements=True, key=None):
             logger.debug('Loading entrypoint %s', ep)
             if key is not None and not key(ep.module_name):
                 continue
-            mod = ep.load()
+            try:
+                mod = ep.load()
+            except (ImportError, ModuleNotFoundError) as e:
+                logger.debug("Could not import %s" % ep, exc_info=True)
+                logger.warning("Could not import %s" % ep)
             try:
                 ret[str(ep.module_name)] = mod.get_versions(requirements)
             except AttributeError:
