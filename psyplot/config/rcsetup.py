@@ -800,7 +800,12 @@ environment variable."""
             return ret
 
         for ep in self._load_plugin_entrypoints():
-            plugin_mod = ep.load()
+            try:
+                plugin_mod = ep.load()
+            except (ModuleNotFoundError, ImportError):
+                logger.debug("Failed to import %s!" % ep, exc_info=True)
+                logger.warning("Failed to import %s!" % ep)
+                continue
             rc = plugin_mod.rcParams
 
             # load the plotters
