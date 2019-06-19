@@ -451,6 +451,7 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         self.assertIn('test', arr.attrs)
         self.assertEqual(arr.test, 4)
 
+    @unittest.skipIf(xr_version[:2] < (0, 10), "Not implemented for xr<0.10")
     def test_shiftlon(self):
         ds = psyd.open_dataset(bt.get_file('test-t2m-u-v.nc'))
         da = ds.t2m

@@ -2637,6 +2637,9 @@ class InteractiveArray(InteractiveBase):
         :class:`mpl_toolkits.basemap.Basemap` class. The only difference is
         that we do not mask values outside the map projection region
         """
+        if xr_version < (0, 10):
+            raise NotImplementedError(
+                "xarray>=0.10 is required for the shiftlon method!")
         arr = self.arr
         ret = arr.copy(True, arr.values.copy())
         if arr.ndim > 2:
