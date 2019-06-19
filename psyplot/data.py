@@ -2638,7 +2638,10 @@ class InteractiveArray(InteractiveBase):
         that we do not mask values outside the map projection region
         """
         arr = self.arr
-        ret = arr.copy(True, arr.values.copy())
+        if xr_version < (0, 10):
+            ret = arr.copy(True)
+        else:
+            ret = arr.copy(True, arr.values.copy())
         if arr.ndim > 2:
             xname = self.get_dim('x')
             yname = self.get_dim('y')
@@ -2659,7 +2662,10 @@ class InteractiveArray(InteractiveBase):
         lon = self.get_coord('x').variable
         xname = self.get_dim('x')
         ix = arr.dims.index(xname)
-        lon = lon.copy(True, lon.values.copy())
+        if xr_version < (0, 10):
+            lon = lon.copy(True)
+        else:
+            lon = lon.copy(True, lon.values.copy())
         lonsin = lon.values
         datain = arr.values.copy()
 
@@ -2701,7 +2707,10 @@ class InteractiveArray(InteractiveBase):
                     datain_save[1:] = datain
                     datain_save[0] = datain[-1]
                     datain = datain_save
-        ret = ret.copy(True, datain)
+        if xr_version < (0, 10):
+            ret = ret.copy(True)
+        else:
+            ret = ret.copy(True, datain)
         lon.values[:] = lonsin
         ret[lon.name] = lon
         return ret
