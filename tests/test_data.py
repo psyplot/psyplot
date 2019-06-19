@@ -451,6 +451,30 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         self.assertIn('test', arr.attrs)
         self.assertEqual(arr.test, 4)
 
+    def test_shiftlon(self):
+        ds = psyd.open_dataset(bt.get_file('test-t2m-u-v.nc'))
+        da = ds.t2m
+        nlon = da.lon.size
+
+        # shift to the mean (this should not change anything)
+        shifted = da.psy.shiftlon(ds.lon.values.mean())
+        self.assertAlmostArrayEqual(shifted.lon, da.lon)
+        self.assertAlmostArrayEqual(shifted, da)
+
+        # shift to left
+        shifted = da.psy.shiftlon(da.lon.min())
+        self.assertEqual(shifted.lon[nlon // 2 - 1], da.lon[0])
+        self.assertEqual(shifted.lon[-1], da.lon[nlon // 2])
+        self.assertAlmostArrayEqual(shifted[..., nlon // 2 - 1], da[..., 0])
+        self.assertAlmostArrayEqual(shifted[..., -1], da[..., nlon // 2])
+
+        # shift 25% to left
+        shifted = da.psy.shiftlon(da.lon[nlon // 4])
+        self.assertEqual(shifted.lon[0], da.lon[-nlon // 4 + 1] - 360)
+        self.assertAlmostArrayEqual(shifted[..., nlon // 2 - 1],
+                                    da[..., nlon // 4])
+        self.assertAlmostArrayEqual(shifted[..., 0], da[..., -nlon // 4 + 1])
+
     def test_update_02_sel(self):
         """test the update of a single array through the sel method"""
         ds = psyd.open_dataset(bt.get_file('test-t2m-u-v.nc'))
