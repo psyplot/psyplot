@@ -2624,8 +2624,7 @@ class InteractiveArray(InteractiveBase):
         Shift longitudes and the data so that they match map projection region.
 
         Only valid for cylindrical/pseudo-cylindrical global projections and
-        data on regular lat/lon grids. longitudes and data can be 1-d or 2-d,
-        if 2-d it is assumed longitudes are 2nd (rightmost) dimension.
+        data on regular lat/lon grids. longitudes need to be 1D.
 
         Parameters
         ----------
@@ -2666,48 +2665,42 @@ class InteractiveArray(InteractiveBase):
 
         clon = np.asarray(central_longitude)
 
-        if lonsin.ndim not in [1, 2]:
-            raise ValueError('1-d or 2-d longitudes required')
+        if lonsin.ndim not in [1]:
+            raise ValueError('1D longitudes required')
         elif clon.ndim:
             raise ValueError("Central longitude must be a scalar, not "
                              "%i-dimensional!" % clon.ndim)
 
-        # 2-d data.
-        if lonsin.ndim == 2:
-            raise NotImplementedError(
-                "Shifting of 2D-data is currently not supported")
-        # 1-d data.
-        elif lonsin.ndim == 1:
-            lonsin = np.where(lonsin > clon+180, lonsin-360, lonsin)
-            lonsin = np.where(lonsin < clon-180, lonsin+360, lonsin)
-            londiff = np.abs(lonsin[0:-1]-lonsin[1:])
-            londiff_sort = np.sort(londiff)
-            thresh = 360.-londiff_sort[-2]
-            itemindex = len(lonsin) - np.where(londiff >= thresh)[0]
-            if itemindex:
-                # check to see if cyclic (wraparound) point included
-                # if so, remove it.
-                if np.abs(lonsin[0]-lonsin[-1]) < 1.e-4:
-                    hascyclic = True
-                    lonsin_save = lonsin.copy()
-                    lonsin = lonsin[1:]
-                    if datain is not None:
-                        datain_save = datain.copy()
-                        datain = datain[1:]
-                else:
-                    hascyclic = False
-                lonsin = np.roll(lonsin, itemindex-1)
+        lonsin = np.where(lonsin > clon+180, lonsin-360, lonsin)
+        lonsin = np.where(lonsin < clon-180, lonsin+360, lonsin)
+        londiff = np.abs(lonsin[0:-1]-lonsin[1:])
+        londiff_sort = np.sort(londiff)
+        thresh = 360.-londiff_sort[-2]
+        itemindex = len(lonsin) - np.where(londiff >= thresh)[0]
+        if itemindex:
+            # check to see if cyclic (wraparound) point included
+            # if so, remove it.
+            if np.abs(lonsin[0]-lonsin[-1]) < 1.e-4:
+                hascyclic = True
+                lonsin_save = lonsin.copy()
+                lonsin = lonsin[1:]
                 if datain is not None:
-                    datain = np.roll(datain, itemindex-1, [ix])
-                # add cyclic point back at beginning.
-                if hascyclic:
-                    lonsin_save[1:] = lonsin
-                    lonsin_save[0] = lonsin[-1]-360.
-                    lonsin = lonsin_save
-                    if datain is not None:
-                        datain_save[1:] = datain
-                        datain_save[0] = datain[-1]
-                        datain = datain_save
+                    datain_save = datain.copy()
+                    datain = datain[1:]
+            else:
+                hascyclic = False
+            lonsin = np.roll(lonsin, itemindex-1)
+            if datain is not None:
+                datain = np.roll(datain, itemindex-1, [ix])
+            # add cyclic point back at beginning.
+            if hascyclic:
+                lonsin_save[1:] = lonsin
+                lonsin_save[0] = lonsin[-1]-360.
+                lonsin = lonsin_save
+                if datain is not None:
+                    datain_save[1:] = datain
+                    datain_save[0] = datain[-1]
+                    datain = datain_save
         ret = ret.copy(True, datain)
         lon.values[:] = lonsin
         ret[lon.name] = lon
