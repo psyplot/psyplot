@@ -725,12 +725,25 @@ class CFDecoder(object):
                                                      var=var)
             if bounds is None:
                 bounds = self.get_plotbounds(coord)
-                dim0 = coord.dims[-1]
-
-                bounds = xr.DataArray(
-                    np.dstack([bounds[:-1], bounds[1:]])[0],
-                    dims=(dim0, '_bnds'),  attrs=coord.attrs.copy(),
-                    name=coord.name + '_bnds')
+                if bounds.ndim == 1:
+                    dim0 = coord.dims[-1]
+                    bounds = xr.DataArray(
+                        np.dstack([bounds[:-1], bounds[1:]])[0],
+                        dims=(dim0, '_bnds'),  attrs=coord.attrs.copy(),
+                        name=coord.name + '_bnds')
+                elif bounds.ndim == 2:
+                    warn("2D bounds are not yet sufficiently tested!")
+                    bounds = xr.DataArray(
+                        np.dstack([bounds[1:, 1:].ravel(),
+                                   bounds[1:, :-1].ravel(),
+                                   bounds[:-1, :-1].ravel(),
+                                   bounds[:-1, 1:].ravel()])[0],
+                        dims=(''.join(var.dims[-2:]), '_bnds'),
+                        attrs=coord.attrs.copy(),
+                        name=coord.name + '_bnds')
+                else:
+                    raise NotImplementedError(
+                        "More than 2D-bounds are not supported")
             if bounds is not None and bounds.shape[-1] == 2:
                 # normal CF-Conventions for rectangular grids
                 arr = bounds.values
