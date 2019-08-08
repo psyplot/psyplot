@@ -3098,14 +3098,16 @@ class InteractiveArray(InteractiveBase):
         fldstd: For calculating the weighted standard deviation
         fldpctl: For calculating weighted percentiles
         """
-        gridweights = self.gridweights(keepshape=True)
+        gridweights = self.gridweights()
         arr, sdims, axis = self._fldaverage_args()
 
         xcoord = self.decoder.get_x(next(six.itervalues(self.base_variables)),
                                     arr.coords)
         ycoord = self.decoder.get_y(next(six.itervalues(self.base_variables)),
                                     arr.coords)
-        means = (arr * gridweights).sum(axis=axis)
+        means = ((arr * gridweights) *
+                 (arr.notnull().sum(axis=axis) / gridweights.size)).sum(
+                    axis=axis)
         if keepdims:
             means = means.expand_dims(sdims, axis=axis)
 
