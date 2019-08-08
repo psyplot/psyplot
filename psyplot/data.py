@@ -3118,9 +3118,8 @@ class InteractiveArray(InteractiveBase):
                                     arr.coords)
         ycoord = self.decoder.get_y(next(six.itervalues(self.base_variables)),
                                     arr.coords)
-        means = ((arr * gridweights) *
-                 (arr.notnull().sum(axis=axis) / gridweights.size)).sum(
-                    axis=axis)
+        means = ((arr * gridweights)).sum(axis=axis) * (
+            gridweights.size / arr.notnull().sum(axis=axis))
         if keepdims:
             means = means.expand_dims(sdims, axis=axis)
 
