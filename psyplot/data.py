@@ -1885,7 +1885,8 @@ class UGridDecoder(CFDecoder):
         ret = super(UGridDecoder, self).get_x(var, coords)
         # but if that doesn't work because we get the variable name in the
         # dimension of `var`, we use the means of the triangles
-        if ret is None or ret.name in var.dims:
+        if ret is None or ret.name in var.dims or (hasattr(var, 'mesh') and
+                                                   ret.name == var.mesh):
             bounds = self.get_cell_node_coord(var, axis='x', coords=coords)
             if bounds is not None:
                 centers = bounds.mean(axis=-1)
@@ -1895,6 +1896,8 @@ class UGridDecoder(CFDecoder):
                 except AttributeError:  # xarray < 0.9
                     cls = xr.Coordinate
                 return cls(x.name, centers, attrs=x.attrs.copy())
+        else:
+            return ret
 
     @docstrings.dedent
     def get_y(self, var, coords=None):
@@ -1914,7 +1917,8 @@ class UGridDecoder(CFDecoder):
         ret = super(UGridDecoder, self).get_y(var, coords)
         # but if that doesn't work because we get the variable name in the
         # dimension of `var`, we use the means of the triangles
-        if ret is None or ret.name in var.dims:
+        if ret is None or ret.name in var.dims or (hasattr(var, 'mesh') and
+                                                   ret.name == var.mesh):
             bounds = self.get_cell_node_coord(var, axis='y', coords=coords)
             if bounds is not None:
                 centers = bounds.mean(axis=-1)
@@ -1924,6 +1928,8 @@ class UGridDecoder(CFDecoder):
                 except AttributeError:  # xarray < 0.9
                     cls = xr.Coordinate
                 return cls(y.name, centers, attrs=y.attrs.copy())
+        else:
+            return ret
 
 
 # register the UGridDecoder
