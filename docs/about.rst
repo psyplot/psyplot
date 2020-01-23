@@ -43,19 +43,12 @@ please let me know if you have a different opinion.
 
 About the author
 ----------------
-I, (`Philipp Sommer`_), work as a PhD student for climate modeling in the
-Atmosphere-Regolith-Vegetation (ARVE) group in the Institute of Earth Surface
-Dynamics (IDYST) at the University of Lausanne. During my time at the
-`Max-Planck-Institute for Meteorology`_ I worked a lot with the
-`Max-Planck-Institute Earth-System-Model (MPI-ESM)`_ and the `ICON model`_
-in the working group on Terrestrial Hydrology of Stefan Hagemann. This
-included a lot of evaluation of climate model data. It finally gave the
-motivation for the visualization framework ``psyplot``.
+I, (`Philipp Sommer`_), work as a Data Scientist at the Helmholtz-Zentrum
+Geesthacht (Germany) in the Helmholtz Coastal Data Center. Checkout my homepage
+if you want to know more at philipp-s-sommer.de_
 
-.. _Philipp Sommer: http://arve.unil.ch/people/philipp-sommer
-.. _Max-Planck-Institute for Meteorology: http://www.mpimet.mpg.de
-.. _Max-Planck-Institute Earth-System-Model (MPI-ESM): http://www.mpimet.mpg.de/en/science/models/mpi-esm.html
-.. _ICON model: http://www.mpimet.mpg.de/en/science/models/icon.html
+.. _Philipp Sommer: http://www.philipp-s-sommer.de
+.. _philipp-s-sommer.de: http://www.philipp-s-sommer.de
 
 
 License

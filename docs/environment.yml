@@ -16,6 +16,7 @@ dependencies:
     - ipykernel
     - sphinx
     - psy-maps
+    - pip
     - pip:
         - autodocsumm
         - cdo

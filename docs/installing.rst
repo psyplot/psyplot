@@ -190,11 +190,10 @@ If you installed psyplot via :ref:`conda <install-conda>`, simply run::
 
     conda remove psyplot
 
-If you however installed it via a preconfigured environment (see
-:ref:`install-conda-env`), you can simply remove the entire virtual environment
+or, if you installed it into an own conda environment, remove the environment
 via::
 
-    conda env remove -n psyplot
+    conda env remove -n <environment-name>
 
 .. _uninstall-pip:
 
