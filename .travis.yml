@@ -106,7 +106,7 @@ script:
     - unset_secure
     # install conda
     - if [[ $USE_PIP == true ]]; then
-          coverage run --source=psyplot setup.py test -a "-v" && codecov
+          coverage run --source=psyplot setup.py test -a "-v" && codecov;
       else
           conda build ci/conda-recipe --python $PYTHON_VERSION;
       fi
