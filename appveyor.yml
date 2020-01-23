@@ -1,63 +1,42 @@
 environment:
 
   PYTHON_ARCH: "64"
-  PYTHON: "C:\\Python34-conda64"
+  PYTHON: "C:\\Miniconda36-x64"
 
   matrix:
-    - PYTHON_VERSION: "3.6"
-      XARRAY_VERSION: "0.8"
-    - PYTHON_VERSION: "3.6"
-      XARRAY_VERSION: "0.9"
     - PYTHON_VERSION: "3.7"
-      XARRAY_VERSION: "0.10"
-    - PYTHON_VERSION: "3.7"
-      XARRAY_VERSION: "0.11"
-    - PYTHON_VERSION: "3.7"
-      XARRAY_VERSION: "0.12"
+      XARRAY_VERSION: "0.14"
+    - PYTHON_VERSION: "3.8"
+      XARRAY_VERSION: "0.14"
+
 install:
-  # Install miniconda Python
-  - "powershell ./ci/install_python.ps1"
-   # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
-  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    # windows config (for installation)
+    - cmd: "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - cmd: setlocal
+    - cmd: set CONDA_REPO_TOKEN=
+    # conda config
+    - conda config --set always_yes yes --set changeps1 no
+    - conda config --add channels conda-forge
+    - conda config --add channels chilipp
+    - conda config --add channels chilipp/label/master
+    - conda config --add channels chilipp/label/dev
+    - conda update -q conda
+    - conda install conda-build anaconda-client
+    - conda info -a
+    - conda list
+    # windows config
+    - cmd: endlocal
+    - cmd: 'SET PYTHONWARNINGS=ignore:mode:DeprecationWarning:docutils.io:245'
+    - cmd: "IF NOT DEFINED APPVEYOR_REPO_TAG_NAME (SET GIT_BRANCH=%APPVEYOR_REPO_BRANCH%)"
+    - cmd: python ci\\setup_append.py ci\\conda-recipe xarray=%XARRAY_VERSION%
 
-  # Check that we have the expected version and architecture for Python
-  - "python --version"
-  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
-  # make sure we use an 'innocent' default matplotlib environment
-  - copy /y nul matplotlibrc
-  - conda config --set always_yes yes --set changeps1 no
-  - conda config --add channels conda-forge
-  - conda config --add channels chilipp
-  - conda config --add channels chilipp/label/master
-  - conda config --add channels chilipp/label/dev
-  # Useful for debugging any issues with conda
-  - conda info -a
-  - set ENVKEY=py%PYTHON_VERSION%_xr%XARRAY_VERSION%
-  - conda env create -f tests/envs/environment_%ENVKEY%.yml
-  - activate psyplot_%ENVKEY%
-  - pip install coveralls
-  # install the test plugin
-  - cd tests/test_plugin
-  - python setup.py install
-  - cd ../../
-  - python setup.py install
-  - "IF NOT DEFINED APPVEYOR_REPO_TAG_NAME (SET GIT_BRANCH=%APPVEYOR_REPO_BRANCH%)"
-  # export the environment for debugging
-  - conda env export -n psyplot_%ENVKEY%
-  # print versions of all the important requirements
-  - psyplot -aV
-
-build: false
+build: off
 
 test_script:
-  - python setup.py test -a "-v"
-  - conda build ci/conda-recipe --python %PYTHON_VERSION%
-
-before_deploy:
-  - activate base
-  - conda install conda-build anaconda-client
+    - cmd: setlocal
+    - cmd: set CONDA_REPO_TOKEN=
+    - cmd: conda build conda-recipe --python %PYTHON_VERSION%
+    - cmd: endlocal
 
 deploy_script:
-  - cmd: "python ci\\deploy_anaconda.py"
+    - cmd: "python ci\\deploy_anaconda.py"
