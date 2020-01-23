@@ -108,7 +108,7 @@ script:
     - if [[ $USE_PIP == true ]]; then
           coverage run --source=psyplot setup.py test -a "-v" && codecov
       else
-          conda build conda-recipe --python $PYTHON_VERSION;
+          conda build ci/conda-recipe --python $PYTHON_VERSION;
       fi
     # export the pw to make it available for the deploy
     - reset_secure

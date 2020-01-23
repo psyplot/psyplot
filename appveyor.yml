@@ -35,7 +35,7 @@ build: off
 test_script:
     - cmd: setlocal
     - cmd: set CONDA_REPO_TOKEN=
-    - cmd: conda build conda-recipe --python %PYTHON_VERSION%
+    - cmd: conda build ci/conda-recipe --python %PYTHON_VERSION%
     - cmd: endlocal
 
 deploy_script:
