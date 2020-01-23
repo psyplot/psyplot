@@ -2011,7 +2011,9 @@ def open_mfdataset(paths, decode_cf=True, decode_times=True,
             raise IOError('no files to open')
     if t_format is not None:
         time, paths = get_tdata(t_format, paths)
-        kwargs['concat_dim'] = time
+        kwargs['concat_dim'] = 'time'
+        if xr_version > (0, 11):
+            kwargs['combine'] = 'nested'
     if engine == 'gdal':
         from psyplot.gdal_store import GdalStore
         paths = list(map(GdalStore, paths))
@@ -2026,6 +2028,8 @@ def open_mfdataset(paths, decode_cf=True, decode_times=True,
                                  decode_coords=decode_coords,
                                  decode_times=decode_times)
     ds.psy._concat_dim = kwargs.get('concat_dim')
+    if t_format is not None:
+        ds['time'] = time
     return ds
 
 
@@ -2746,7 +2750,10 @@ class InteractiveArray(InteractiveBase):
         This method returns a copy of the underlying array in the :attr:`arr`
         attribute. It is more stable because it creates a new `psy` accessor"""
         arr = self.arr.copy(deep)
-        arr.psy = InteractiveArray(arr)
+        try:
+            arr.psy = InteractiveArray(arr)
+        except AttributeError:  # attribute is read-only for xarray >=0.13
+            pass
         return arr
 
     def to_interactive_list(self):

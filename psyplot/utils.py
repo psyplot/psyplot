@@ -3,7 +3,6 @@ import re
 import six
 from difflib import get_close_matches
 from itertools import chain
-from collections import Callable, Iterable
 from psyplot.compat.pycompat import OrderedDict, filterfalse
 from psyplot.docstring import dedent, docstrings
 
@@ -14,7 +13,7 @@ class DefaultOrderedDict(OrderedDict):
     Taken from http://stackoverflow.com/a/6190500/562769"""
     def __init__(self, default_factory=None, *a, **kw):
         if (default_factory is not None and
-           not isinstance(default_factory, Callable)):
+           not callable(default_factory)):
             raise TypeError('first argument must be callable')
         OrderedDict.__init__(self, *a, **kw)
         self.default_factory = default_factory
@@ -170,10 +169,10 @@ def unique_everseen(iterable, key=None):
 
 
 def is_remote_url(path):
-    patt = re.compile('^https?\://')
+    patt = re.compile(r'^https?\://')
     if not isinstance(path, six.string_types):
         return all(map(patt.search, (s or '' for s in path)))
-    return bool(re.search('^https?\://', path))
+    return bool(re.search(r'^https?\://', path))
 
 
 @docstrings.get_sectionsf('check_key', sections=['Parameters', 'Returns',
@@ -332,4 +331,9 @@ def is_iterable(iterable):
     -------
     bool
         True, if the object is an iterable object"""
-    return isinstance(iterable, Iterable)
+    try:
+        iter(iterable)
+    except TypeError:
+        return False
+    else:
+        return True

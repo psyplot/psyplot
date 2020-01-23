@@ -20,7 +20,10 @@ import six
 from numpy import arange, nan, dtype
 from xarray import Variable
 from collections import OrderedDict
-from xarray.core.utils import FrozenOrderedDict
+try:
+    from xarray.core.utils import FrozenOrderedDict
+except ImportError:
+    FrozenOrderedDict = dict
 from xarray.backends.common import AbstractDataStore
 from psyplot.compat.pycompat import range
 from psyplot.warning import warn

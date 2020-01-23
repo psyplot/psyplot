@@ -6,7 +6,7 @@ package:
   version: {{ data.get('version') }}
 
 source:
-  path: ../../
+  git_url: ../../
 
 build:
   number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
@@ -18,7 +18,7 @@ build:
   skip: true  # [py == 27]
 
 requirements:
-  build:
+  host:
   - python
   - pip
   run:
@@ -29,17 +29,31 @@ requirements:
   - pyyaml
 
 test:
+  requires:
+    - pytest
+    - codecov
+    - pytest-cov >=2.6.1
+    - gdal
+    - pyqt  # [osx]
+    - netcdf4
+    - dask
+    - scipy
+  source_files:
+    - tests
   commands:
     - psyplot --help
     - psyplot-plugin --help
+    - pytest -v --cov={{ name|lower }}
+    - codecov
   imports:
     - psyplot
+    - psyplot.gdal_store
     - psyplot.compat
     - psyplot.config
     - psyplot.sphinxext
 
 about:
-  home: https://github.com/Chilipp/psyplot
+  home: https://github.com/psyplot/psyplot
   license: GPL-2.0
   license_family: GPL
   license_file: LICENSE
@@ -51,4 +65,4 @@ about:
     the xarray package and integrates them into a software that can be used via
     command-line and via a GUI.
   doc_url: http://psyplot.readthedocs.io/en/latest/
-  dev_url: https://github.com/Chilipp/psyplot
+  dev_url: https://github.com/psyplot/psyplot

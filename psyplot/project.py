@@ -16,7 +16,7 @@ import inspect
 import pickle
 from importlib import import_module
 from itertools import chain, repeat, cycle, count, islice
-from collections import Iterable, defaultdict
+from collections import defaultdict
 from functools import wraps, partial
 import xarray
 import pandas as pd
@@ -809,7 +809,7 @@ class Project(ArrayList):
 
                 def close():
                     pass
-        elif isinstance(output, Iterable):  # a list of strings
+        elif utils.is_iterable(output):  # a list of strings
             output = cycle(output)
 
             def save(fig):
