@@ -95,7 +95,7 @@ install:
         conda install conda-build anaconda-client conda-verify
     - if [[ $TRAVIS_TAG == "" ]]; then
         export GIT_BRANCH=$TRAVIS_BRANCH;
-        conda config --add channels chilipp/label/${TRAVIS_BRANCH}
+        conda config --add channels chilipp/label/${TRAVIS_BRANCH};
       fi
     - python ci/setup_append.py ci/conda-recipe xarray=${XARRAY_VERSION}
     - if [[ $USE_PIP == true ]]; then pip install .; fi
