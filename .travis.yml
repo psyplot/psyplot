@@ -98,7 +98,7 @@ install:
         conda config --add channels chilipp/label/${TRAVIS_BRANCH};
       fi
     - python ci/setup_append.py ci/conda-recipe xarray=${XARRAY_VERSION}
-    - if [[ $USE_PIP == true ]]; then pip install .; fi
+    - if [[ $USE_PIP == true ]]; then pip install . pytest pytest-cov codecov; fi
     - conda info -a
     - conda list
     - reset_secure
@@ -106,7 +106,7 @@ script:
     - unset_secure
     # install conda
     - if [[ $USE_PIP == true ]]; then
-          coverage run --source=psyplot setup.py test -a "-v" && codecov;
+          pytest -v --cov=psyplot && codecov;
       else
           conda build ci/conda-recipe --python $PYTHON_VERSION;
       fi
