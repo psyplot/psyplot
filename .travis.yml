@@ -115,6 +115,6 @@ script:
     # export the pw to make it available for the deploy
     - reset_secure
     # deploy here (don't use travis deploy because it requires homebrew)
-    - if [[ $DEPLOY_CONDA == "true" && $USE_PIP == "false" && $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_REPO_SLUG == "Chilipp/psyplot" ]]; then
+    - if [[ $DEPLOY_CONDA == "true" && $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_REPO_SLUG == "Chilipp/psyplot" ]]; then
           ci/deploy_anaconda.py;
       fi
