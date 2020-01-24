@@ -1,6 +1,6 @@
 # requirements for testing psyplot
 netCDF4
-dask
+dask[complete]
 pytest
 pytest-cov
 codecov
