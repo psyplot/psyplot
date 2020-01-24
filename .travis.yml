@@ -98,7 +98,9 @@ install:
         conda config --add channels chilipp/label/${TRAVIS_BRANCH};
       fi
     - python ci/setup_append.py ci/conda-recipe xarray=${XARRAY_VERSION}
-    - if [[ $USE_PIP == true ]]; then pip install . pytest pytest-cov codecov; fi
+    - if [[ $USE_PIP == true ]]; then
+        python -m pip install . -r ci/requirements.txt;
+      fi
     - conda info -a
     - conda list
     - reset_secure

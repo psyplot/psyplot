@@ -1,0 +1,6 @@
+# requirements for testing psyplot
+netCDF4
+dask
+pytest
+pytest-cov
+codecov
