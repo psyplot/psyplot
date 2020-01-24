@@ -29,7 +29,7 @@ services:
 
 matrix:
     allow_failures:
-        - env: PYTHON_VERSION=3.8 USE_PIP=true DEPLOY_CONDA=false
+        - env: PYTHON_VERSION=3.8 USE_PIP=true
 
 before_install:
     - if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then export DEPLOY_CONDA=false; fi
