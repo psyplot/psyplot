@@ -259,23 +259,6 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
                         msg="Slice %s for dimension %s is wrong!" % (dims[dim],
                                                                      dim))
 
-    def test_triangles(self):
-        """Test the creation of triangles"""
-        ds = psyd.open_dataset(os.path.join(bt.test_dir, 'icon_test.nc'))
-        decoder = psyd.CFDecoder(ds)
-        var = ds.t2m[0, 0]
-        var.attrs.pop('grid_type', None)
-        self.assertTrue(decoder.is_triangular(var))
-        self.assertTrue(decoder.is_unstructured(var))
-        triangles = decoder.get_triangles(var)
-        self.assertEqual(len(triangles.triangles), var.size)
-
-        # Test for correct falsification
-        ds = psyd.open_dataset(os.path.join(bt.test_dir, 'test-t2m-u-v.nc'))
-        decoder = psyd.CFDecoder(ds)
-        self.assertFalse(decoder.is_triangular(ds.t2m[0, 0]))
-        self.assertFalse(decoder.is_unstructured(ds.t2m[0, 0]))
-
     def test_unstructured_bounds(self):
         """Test the extraction of unstructured bounds"""
         ds = psyd.open_dataset(os.path.join(bt.test_dir, 'icon_test.nc'))
