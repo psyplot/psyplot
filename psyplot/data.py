@@ -664,31 +664,8 @@ class CFDecoder(object):
             ds._coord_names.update(extra_coords.intersection(ds.variables))
         return ds
 
-    @docstrings.get_sectionsf('CFDecoder.is_triangular', sections=[
+    @docstrings.get_sectionsf('CFDecoder.is_unstructured', sections=[
         'Parameters', 'Returns'])
-    @dedent
-    def is_triangular(self, var):
-        """
-        Test if a variable is on a triangular grid
-
-        This method first checks the `grid_type` attribute of the variable (if
-        existent) whether it is equal to ``"unstructered"``, then it checks
-        whether the bounds are not two-dimensional.
-
-        Parameters
-        ----------
-        var: xarray.Variable or xarray.DataArray
-            The variable to check
-
-        Returns
-        -------
-        bool
-            True, if the grid is triangular, else False"""
-        warn("The 'is_triangular' method is depreceated and will be removed "
-             "soon! Use the 'is_unstructured' method!", DeprecationWarning,
-             stacklevel=1)
-        return str(var.attrs.get('grid_type')) == 'unstructured' or \
-            self._check_triangular_bounds(var)[0]
 
     @docstrings.get_sectionsf(
         'CFDecoder.get_cell_node_coord',
@@ -794,19 +771,23 @@ class CFDecoder(object):
             elif nans is None:
                 pass
             elif nans == 'skip':
-                bounds = bounds[~np.isnan(var.values)]
+                dims = [dim for dim in set(var.dims) - set(bounds.dims)]
+                mask = var.notnull().all(list(dims)) if dims else var.notnull()
+                bounds = bounds[mask.values]
             elif nans == 'only':
-                bounds = bounds[np.isnan(var.values)]
+                dims = [dim for dim in set(var.dims) - set(bounds.dims)]
+                mask = var.isnull().all(list(dims)) if dims else var.isnull()
+                bounds = bounds[mask.values]
             else:
                 raise ValueError(
                     "`nans` must be either None, 'skip', or 'only'! "
                     "Not {0}!".format(str(nans)))
             return bounds
 
-    @docstrings.get_sectionsf('CFDecoder._check_triangular_bounds', sections=[
+    @docstrings.get_sectionsf('CFDecoder._check_unstructured_bounds', sections=[
         'Parameters', 'Returns'])
     @docstrings.dedent
-    def _check_triangular_bounds(self, var, coords=None, axis='x', nans=None):
+    def _check_unstructured_bounds(self, var, coords=None, axis='x', nans=None):
         """
         Checks whether the bounds in the variable attribute are triangular
 
@@ -821,8 +802,7 @@ class CFDecoder(object):
         xarray.Coordinate or None
             the bounds corrdinate (if existent)"""
         # !!! WILL BE REMOVED IN THE NEAR FUTURE! !!!
-        bounds = self.get_cell_node_coord(var, coords, axis=axis,
-                                              nans=nans)
+        bounds = self.get_cell_node_coord(var, coords, axis=axis, nans=nans)
         if bounds is not None:
             return bounds.shape[-1] == 3, bounds
         else:
@@ -835,15 +815,15 @@ class CFDecoder(object):
 
         Parameters
         ----------
-        %(CFDecoder.is_triangular.parameters)s
+        %(CFDecoder.is_unstructured.parameters)s
 
         Returns
         -------
-        %(CFDecoder.is_triangular.returns)s
+        %(CFDecoder.is_unstructured.returns)s
 
         Notes
         -----
-        Currently this is the same as :meth:`is_triangular` method, but may
+        Currently this is the same as :meth:`is_unstructured` method, but may
         change in the future to support hexagonal grids"""
         if str(var.attrs.get('grid_type')) == 'unstructured':
             return True
@@ -860,11 +840,11 @@ class CFDecoder(object):
 
         Parameters
         ----------
-        %(CFDecoder.is_triangular.parameters)s
+        %(CFDecoder.is_unstructured.parameters)s
 
         Returns
         -------
-        %(CFDecoder.is_triangular.returns)s"""
+        %(CFDecoder.is_unstructured.returns)s"""
         xcoord = self.get_x(var)
         return xcoord is not None and xcoord.ndim == 2
 
@@ -1393,7 +1373,7 @@ class CFDecoder(object):
         ret[last_slices] = bounds[tuple(chain(last_slices, [1]))]
         return ret
 
-    docstrings.keep_params('CFDecoder._check_triangular_bounds.parameters',
+    docstrings.keep_params('CFDecoder._check_unstructured_bounds.parameters',
                            'nans')
 
     @docstrings.get_sectionsf('CFDecoder.get_triangles', sections=[
@@ -1423,7 +1403,7 @@ class CFDecoder(object):
         target_crs: cartopy.crs.Crs
             The target projection for which the triangles shall be transformed.
             Must only be provided if the `src_crs` is not None.
-        %(CFDecoder._check_triangular_bounds.parameters.nans)s
+        %(CFDecoder._check_unstructured_bounds.parameters.nans)s
 
         Returns
         -------
@@ -1440,7 +1420,7 @@ class CFDecoder(object):
         from matplotlib.tri import Triangulation
 
         def get_vertices(axis):
-            bounds = self._check_triangular_bounds(var, coords=coords,
+            bounds = self._check_unstructured_bounds(var, coords=coords,
                                                    axis=axis, nans=nans)[1]
             if coords is not None:
                 bounds = coords.get(bounds.name, bounds)
@@ -1621,11 +1601,6 @@ class UGridDecoder(CFDecoder):
     Warnings
     --------
     Currently only triangles are supported."""
-
-    def is_triangular(self, *args, **kwargs):
-        """Reimpletemented to return always True. Any ``*args`` and ``**kwargs``
-        are ignored"""
-        return True
 
     def is_unstructured(self, *args, **kwargs):
         """Reimpletemented to return always True. Any ``*args`` and ``**kwargs``
@@ -2970,8 +2945,8 @@ class InteractiveArray(InteractiveBase):
                 ds[bounds] = base.sel(
                     **{d: arr.coords[d].values for d in sdims}
                     ).coords[bounds]
-            ds = ds.drop([c.name for c in six.itervalues(ds.coords)
-                          if not c.ndim])
+            ds = ds.drop_vars([c.name for c in six.itervalues(ds.coords)
+                               if not c.ndim])
         to_netcdf(ds, fname)
         ret = cdo.gridweights(input=fname, returnArray='cell_weights')
         try:
