@@ -18,8 +18,6 @@ install:
     - conda config --set always_yes yes --set changeps1 no
     - conda config --add channels conda-forge
     - conda config --add channels chilipp
-    - conda config --add channels chilipp/label/master
-    - conda config --add channels chilipp/label/dev
     - conda update -q conda
     - conda install conda-build anaconda-client
     - conda info -a
@@ -28,6 +26,7 @@ install:
     - cmd: endlocal
     - cmd: 'SET PYTHONWARNINGS=ignore:mode:DeprecationWarning:docutils.io:245'
     - cmd: "IF NOT DEFINED APPVEYOR_REPO_TAG_NAME (SET GIT_BRANCH=%APPVEYOR_REPO_BRANCH%)"
+    - cmd: "IF NOT DEFINED APPVEYOR_REPO_TAG_NAME (conda config --add channels chilipp/label/%APPVEYOR_REPO_BRANCH%)"
     - cmd: python ci\\setup_append.py ci\\conda-recipe xarray=%XARRAY_VERSION%
 
 build: off
