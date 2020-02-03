@@ -725,12 +725,21 @@ class CFDecoder(object):
                 # normal CF-Conventions for rectangular grids
                 arr = bounds.values
                 if axis == 'y':
-                    stacked = np.repeat(
-                        np.dstack([arr, arr]).reshape((-1, 4)),
-                        len(self.get_x(var, coords)), axis=0)
+                    stacked = np.c_[arr[..., :1], arr[..., :1],
+                                    arr[..., 1:], arr[..., 1:]]
+                    if bounds.ndim == 2:
+                        stacked = np.repeat(
+                            stacked.reshape((-1, 4)),
+                            len(self.get_x(var, coords)), axis=0)
+                    else:
+                        stacked = stacked.reshape((-1, 4))
                 else:
-                    stacked = np.tile(np.c_[arr, arr[:, ::-1]],
-                                      (len(self.get_y(var, coords)), 1))
+                    stacked = np.c_[arr, arr[..., ::-1]]
+                    if bounds.ndim == 2:
+                        stacked = np.tile(
+                            stacked, (len(self.get_y(var, coords)), 1))
+                    else:
+                        stacked = stacked.reshape((-1, 4))
                 bounds = xr.DataArray(
                     stacked,
                     dims=('cell', bounds.dims[1]), name=bounds.name,
