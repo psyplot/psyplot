@@ -2566,7 +2566,8 @@ class InteractiveArray(InteractiveBase):
         self.arr._variable = res._variable
         self.arr._coords = res._coords
         try:
-            self.arr._indexes = res.indexes
+            self.arr._indexes = (
+                res._indexes.copy() if res._indexes is not None else None)
         except AttributeError:  # res.indexes not existent for xr<0.12
             pass
         self.arr.name = saved_name
@@ -2619,7 +2620,8 @@ class InteractiveArray(InteractiveBase):
         self.arr._variable = res._variable
         self.arr._coords = res._coords
         try:
-            self.arr._indexes = res.indexes
+            self.arr._indexes = (
+                res._indexes.copy() if res._indexes is not None else None)
         except AttributeError:  # res.indexes not existent for xr<0.12
             pass
         # update to old attributes
