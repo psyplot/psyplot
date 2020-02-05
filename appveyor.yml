@@ -7,7 +7,7 @@ environment:
     - PYTHON_VERSION: "3.7"
       XARRAY_VERSION: "0.14"
     - PYTHON_VERSION: "3.8"
-      XARRAY_VERSION: "0.14"
+      XARRAY_VERSION: "0.15"
 
 install:
     # windows config (for installation)
