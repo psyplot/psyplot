@@ -19,7 +19,7 @@ env:
         - PYTHON_VERSION=3.7 XARRAY_VERSION=0.13
         - PYTHON_VERSION=3.7 XARRAY_VERSION=0.12
     global:
-        - secure: "Bb2eZLr3mAb32loic84gcpPpFKHZPdOr3LLmXxj+jRO/2W/5FvWznGgMIcGeH1f4EHtjbafgY8P2ybzHuQOZnV40rpJ8KGnNF5MT8RkjsT2OVEe+SojpdZ3cxMWqaXrn+FBrhov7Uva1QYrsZmDtkPEcPiWPpNlrqeeIuWP/HfaO/SDB0Mc2gMPmTb/buwqoXycRBAaEE8jQm9QMuq0NVP1oZlTeGt5wr8TFMgIWRpGvZP5yJNGszaTKDxcE/mhmUTjOMWFgcPBT3t5meZ8SeLcgH9+PSNdsOGV2pGG8uxAssSy3H9ZK6zkdEu2609TP17ojjinO2DiqvKc6128LIwva2/iUR+MXT5mJ2KOzUZtGfUA2qGyc7UUwT3G922LyDo7vg/msSTykGo4vc+bpf8jBGW2tijhV5LFYwfP2M6MBloH2cUoleRkpmba2Zz7aC0IyYHL3dfSgwMN87FHuKsYkvIT8JXpsxp/KMrVmMZ4ugBN+QVUU+AgLy8psjbBXYrqwItU/p7jxM2uIW35y+nAdEkkn+6olWhTPCtF0cVxZZxelk/4ca3oCWWJmIy6Irc/Nz8f9fyUGFYGy8Wdw8wHZliSoXiW+QDs6Gm5lVxMNNvspwhC6PlBgMQk+/+XBOKon0UzH1FfWKajSG1Cy7aiQ8Y9F0JinIkZoE/lohOI="
+        secure: "XUhVE/QHgOl6uhPpKJ6Kn0POurK719Vly0xeuK9giTz+kpAFcC5b88S2PtaL/BnW+TgV2LxdoKiEqZy1rhhjLfo/8tktiAK2N774HTxbVFVGztgwbqL8u+5FFTMAfDKT7F0R2qvF5/xAGU3tAVEMgkbhc2ZreXO+ah/ndCYo2YVe5SfEw6rkqZErgqJUSZSddxVQ6J6Mz6Mh1fIYZxu1kKJN2uGNNfQGcnt4MpVAdepSjmtUkgPQ6oszwhX34UzJWn5wQCSJDBNpKSgo2WTGy4PVgDNaI/SeEPdKmNSKwfeiBwsojdK5CBL3w2QatwHMpRtBPdsi3l3qJGE/c36Zzrc8Zk5LqTQt/5IVLRZdH4OUZW8a3X/RILsMFzQ8FhJRzimzhkZqdlZFbBc90qed3TmiZUVMjkFMG3+/b4tyy6Oe37e3EzV06Fa/hAF7iS2kmEobCvSUT4kLYxIid7vpo79HjHukudiHMxJYWdBbnal1C3fAs7TZOX08ZOzIsU5wUz8bEjnmso0F4kjxU43q3+Kq/wIlV0Mz2azAv8ZOdm0nswJYILe0LJLl/JMRJ9TvekNuYGe/2dK4AimZYJD5fpdkS00kPHNi6lmqfOdqODXkU+HFm7EO3QuHBuoI8fsraInpDx+1nyqIvKG5wGDn57TiMNLE9JQInzl6A2t55sc="
 
 os:
     - linux
@@ -116,6 +116,6 @@ script:
     # export the pw to make it available for the deploy
     - reset_secure
     # deploy here (don't use travis deploy because it requires homebrew)
-    - if [[ $DEPLOY_CONDA == "true" && $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_REPO_SLUG == "Chilipp/psyplot" ]]; then
+    - if [[ $DEPLOY_CONDA == "true" && $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_REPO_SLUG == "psyplot/psyplot" ]]; then
           ci/deploy_anaconda.py;
       fi
