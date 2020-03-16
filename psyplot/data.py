@@ -782,7 +782,10 @@ class CFDecoder(object):
             elif nans == 'skip':
                 dims = [dim for dim in set(var.dims) - set(bounds.dims)]
                 mask = var.notnull().all(list(dims)) if dims else var.notnull()
-                bounds = bounds[mask.values]
+                try:
+                    bounds = bounds[mask.values]
+                except IndexError:  # 3D bounds
+                    bounds = bounds.where(mask)
             elif nans == 'only':
                 dims = [dim for dim in set(var.dims) - set(bounds.dims)]
                 mask = var.isnull().all(list(dims)) if dims else var.isnull()
