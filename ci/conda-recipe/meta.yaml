@@ -10,7 +10,7 @@ source:
 
 build:
   number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
-  string: py{{ environ.get('CONDA_PY') }}_{{ environ.get('GIT_BUILD_STR', '') }}{% if environ.get('GIT_BRANCH') %}_{{ environ.get('GIT_BRANCH') }}{% endif %}
+  string: py{{ environ.get('CONDA_PY') }}_{{ environ.get('GIT_BUILD_STR', '') }}{% if environ.get('GIT_BRANCH') %}_{{ environ.get('GIT_BRANCH').replace('-', '' }}{% endif %}
   script: python -m pip install . --no-deps --ignore-installed -vvv
   entry_points:
   - psyplot = psyplot.__main__:main
