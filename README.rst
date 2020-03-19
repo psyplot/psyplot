@@ -33,9 +33,9 @@ The psyplot interactive visualization framework
     :alt: Coverage
     :target: https://coveralls.io/github/Chilipp/psyplot?branch=master
 
-.. |requires| image:: https://requires.io/github/Chilipp/psyplot/requirements.svg?branch=master
+.. |requires| image:: https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master
     :alt: Requirements Status
-    :target: https://requires.io/github/Chilipp/psyplot/requirements/?branch=master
+    :target: https://requires.io/github/psyplot/psyplot/requirements/?branch=master
 
 .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
     :alt: PyPI Package latest release
