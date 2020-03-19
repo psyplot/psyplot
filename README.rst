@@ -25,7 +25,7 @@ The psyplot interactive visualization framework
     :alt: Travis
     :target: https://travis-ci.org/Chilipp/psyplot
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/3jk6ea1n4a4dl6vk/branch/master?svg=true
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true
     :alt: AppVeyor
     :target: https://ci.appveyor.com/project/Chilipp/psyplot/branch/master
 
