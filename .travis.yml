@@ -90,12 +90,12 @@ install:
         echo "Configuring conda."
         conda config --set always_yes yes --set changeps1 no
         conda config --add channels conda-forge
-        conda config --add channels chilipp
+        conda config --add channels psyplot
         conda update -q conda
         conda install conda-build anaconda-client conda-verify
     - if [[ $TRAVIS_TAG == "" ]]; then
         export GIT_BRANCH=$TRAVIS_BRANCH;
-        conda config --add channels chilipp/label/${TRAVIS_BRANCH};
+        conda config --add channels psyplot/label/${TRAVIS_BRANCH};
       fi
     - python ci/setup_append.py ci/conda-recipe xarray=${XARRAY_VERSION}
     - if [[ $USE_PIP == true ]]; then
