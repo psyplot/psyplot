@@ -38,6 +38,11 @@ test:
     - netcdf4
     - dask
     - scipy
+    # HACK: solve inconsistensies with libwebp
+    # this should be removed when
+    # https://github.com/conda-forge/libwebp-feedstock/issues/26
+    # is solved
+    - libtiff <4.1.0  # [osx]
   source_files:
     - tests
   commands:
