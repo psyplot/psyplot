@@ -6,8 +6,11 @@ environment:
   matrix:
     - PYTHON_VERSION: "3.7"
       XARRAY_VERSION: "0.14"
+      BUILD_STR_END: cf
+    - PYTHON_VERSION: "3.7"
     - PYTHON_VERSION: "3.8"
       XARRAY_VERSION: "0.15"
+      BUILD_STR_END: cf
 
 install:
     # windows config (for installation)
@@ -16,7 +19,7 @@ install:
     - cmd: set CONDA_REPO_TOKEN=
     # conda config
     - conda config --set always_yes yes --set changeps1 no
-    - conda config --add channels conda-forge
+    - IF NOT DEFINED BUILD_STR_END (conda config --add channels chilipp) ELSE (conda config --add channels conda-forge)
     - conda config --add channels psyplot
     - conda update -q conda
     - conda install conda-build anaconda-client
