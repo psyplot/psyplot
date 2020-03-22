@@ -4,16 +4,22 @@ channels:
     - psyplot/label/dev
     - psyplot/label/master
     - psyplot
-    - conda-forge
 dependencies:
     - python>3.5
     - dask
     - xarray
     - netCDF4
+    - matplotlib
     - seaborn
+    - ipython
+    - nbconvert
+    - jupyter_client
+    - ipykernel
+    - sphinx
     - psy-maps
-    - python-cdo
-    - cdo
-    - sphinx-argparse
-    - sphinx-nbexamples
     - pip
+    - pip:
+        - autodocsumm
+        - cdo
+        - sphinx-argparse
+        - sphinx-nbexamples
