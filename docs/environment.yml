@@ -4,6 +4,7 @@ channels:
     - psyplot/label/dev
     - psyplot/label/master
     - psyplot
+    - chilipp/label/conda-forge
 dependencies:
     - python>3.5
     - dask
