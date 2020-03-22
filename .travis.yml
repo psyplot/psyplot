@@ -10,14 +10,17 @@ env:
     matrix:
         # python 3.8
         - PYTHON_VERSION=3.8 DEPLOY_CONDA=true
+        - PYTHON_VERSION=3.8 DEPLOY_CONDA=true USE_CF=false
         - PYTHON_VERSION=3.8 XARRAY_VERSION=0.15
         - PYTHON_VERSION=3.8 XARRAY_VERSION=0.14
         - PYTHON_VERSION=3.8 USE_PIP=true
         # python 3.7
         - PYTHON_VERSION=3.7 DEPLOY_CONDA=true
+        - PYTHON_VERSION=3.7 DEPLOY_CONDA=true USE_CF=false
         - PYTHON_VERSION=3.7 XARRAY_VERSION=0.14
         - PYTHON_VERSION=3.7 XARRAY_VERSION=0.13
         - PYTHON_VERSION=3.7 XARRAY_VERSION=0.12
+
     global:
         secure: "cU0AKSwMJDE4kSPdohXX86URKIlVbbLjxJvwyL7T5pu1L+s4ZM6CxHRalUks2N/JSBefnpl2UokIpTePYKS2t1Xn7MKUaFOtLlA22lqz7JFuM9q0qQewtZLheMXClx6QhcZey78aE+oU8dG0RT5GKYPXyznGP41JSXKdOHiwj8sbHhYy1iJcUaKa7AoFYoQgnyhi+oobDm6neUvg9RHN3OwtSALAy2CjHs/fVUEImM14XXsg4WfjHfuNr3vBNSOHNfnXc+sqUOEyxKmb8Q45AElkueMLOt6x2TvKDByHQdQybQ0jBkByHGZ48us1Tx5N+Swwg9+KUVp2Aj8wom/im721exdUC5+sC6bZnp75vSVKk4jgpVU89FTJV57FGfTZzvu032+ybJgs4g3lBb+c1TkbYLJzlZqxZVy29vKZNGjFH553wtFxXJLBOr60ka7xj1o7x4s7IsVCsxRzBOaCcCRKY2B5HJMpw5lMzf/nvWNz38uT2Qw8EduhGxKOfbCew2NSmIZB8JoL0U6UfrETlurAgttKZO6ff7TAb7hICpuZagnovIA1Ve1GPmYj1Ste5C0WxEdWFTog+py3ki4mOXi9BxsbN0Ir8f/VyX67s3uA6kMaZRppauSXEvKEM5LBtIZdB7p4pfqMpbm1TC1whK12/lBWFn/12+FqEHi27Lg="
 os:
@@ -89,7 +92,11 @@ install:
         echo ""
         echo "Configuring conda."
         conda config --set always_yes yes --set changeps1 no
-        conda config --add channels conda-forge
+        if [[ ${USE_CF} != false ]]; then
+            conda config --add channels conda-forge
+        else
+            conda config --add channels chilipp
+        fi
         conda config --add channels psyplot
         conda update -q conda
         conda install conda-build anaconda-client conda-verify
@@ -100,6 +107,9 @@ install:
     - python ci/setup_append.py ci/conda-recipe xarray=${XARRAY_VERSION}
     - if [[ $USE_PIP == true ]]; then
         python -m pip install . -r ci/requirements.txt;
+      fi
+    - if [[ $USE_CF != false ]]; then
+        export BUILD_STR_END=cf;
       fi
     - conda info -a
     - conda list
