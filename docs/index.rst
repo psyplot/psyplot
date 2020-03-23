@@ -33,7 +33,7 @@ If you want more motivation: Have a look into the :ref:`about` section.
 
 The package is very new and there are many features that will be included in
 the future. So we are very pleased for feedback! Please simply raise an issue
-on `GitHub <https://github.com/Chilipp/psyplot>`__.
+on `GitHub <https://github.com/psyplot/psyplot>`__.
 
 
 .. start-badges
@@ -47,7 +47,7 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
         * - docs
           - |docs| |joss|
         * - tests
-          - |travis| |appveyor| |requires| |coveralls|
+          - |travis| |appveyor| |requires| |codecov|
         * - package
           - |version| |conda| |github|
         * - implementations
@@ -57,21 +57,21 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
         :alt: Documentation Status
         :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
 
-    .. |travis| image:: https://travis-ci.org/Chilipp/psyplot.svg?branch=master
+    .. |travis| image:: https://travis-ci.org/psyplot/psyplot.svg?branch=master
         :alt: Travis
-        :target: https://travis-ci.org/Chilipp/psyplot
+        :target: https://travis-ci.org/psyplot/psyplot
 
     .. |appveyor| image:: https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true
         :alt: AppVeyor
-        :target: https://ci.appveyor.com/project/Chilipp/psyplot/branch/master
+        :target: https://ci.appveyor.com/project/psyplot/psyplot/branch/master
 
-    .. |coveralls| image:: https://coveralls.io/repos/github/Chilipp/psyplot/badge.svg?branch=master
+    .. |codecov| image:: https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg
         :alt: Coverage
-        :target: https://coveralls.io/github/Chilipp/psyplot?branch=master
+        :target: https://codecov.io/gh/psyplot/psyplot
 
-    .. |requires| image:: https://requires.io/github/Chilipp/psyplot/requirements.svg?branch=master
+    .. |requires| image:: https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master
         :alt: Requirements Status
-        :target: https://requires.io/github/Chilipp/psyplot/requirements/?branch=master
+        :target: https://requires.io/github/psyplot/psyplot/requirements/?branch=master
 
     .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
         :alt: PyPI Package latest release
@@ -93,8 +93,8 @@ on `GitHub <https://github.com/Chilipp/psyplot>`__.
         :alt: Journal of Open Source Software
         :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
 
-    .. |github| image:: https://img.shields.io/github/release/Chilipp/psyplot.svg
-        :target: https://github.com/Chilipp/psyplot/releases/latest
+    .. |github| image:: https://img.shields.io/github/release/psyplot/psyplot.svg
+        :target: https://github.com/psyplot/psyplot/releases/latest
         :alt: Latest github release
 
 .. end-badges
@@ -161,7 +161,7 @@ releases page of the corresponding subproject.
 
 .. _the Journal of Open Source Software: http://joss.theoj.org/
 .. _zenodo.org: https://zenodo.org/
-.. _releases page of psyplot: https://github.com/Chilipp/psyplot/releases/
+.. _releases page of psyplot: https://github.com/psyplot/psyplot/releases/
 
 Acknowledgment
 --------------

@@ -16,7 +16,7 @@ Code of Conduct
 ---------------
 
 This project and everyone participating in it is governed by the
-`psyplot Code of Conduct <https://github.com/Chilipp/psyplot/blob/master/CODE_OF_CONDUCT.md>`__.
+`psyplot Code of Conduct <https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md>`__.
 By participating, you are expected to uphold this code.
 
 What should I know before I get started?
@@ -30,17 +30,17 @@ and visualization. Much of the functionality however is implemented by
 other packages. What package is the correct one for your bug
 report/feature request, can be determined by the following list
 
--  `psyplot-gui <https://github.com/Chilipp/psyplot-gui/issues>`__:
+-  `psyplot-gui <https://github.com/psyplot/psyplot-gui/issues>`__:
    Everything specific to the graphical user interface
--  `psy-simple <https://github.com/Chilipp/psy-simple/issues>`__:
+-  `psy-simple <https://github.com/psyplot/psy-simple/issues>`__:
    Everything concerning, e.g. the ``lineplot``, ``plot2d``, ``density``
    or ``vector`` plot methods
--  `psy-maps <https://github.com/Chilipp/psy-maps/issues>`__: Everything
+-  `psy-maps <https://github.com/psyplot/psy-maps/issues>`__: Everything
    concerning, e.g. the ``mapplot``, ``mapvector`` ``mapcombined`` plot
    methods
--  `psy-reg <https://github.com/Chilipp/psy-reg/issues>`__: Everything
+-  `psy-reg <https://github.com/psyplot/psy-reg/issues>`__: Everything
    concerning, e.g. the ``linreg`` or ``densityreg`` plot methods
--  `psyplot <https://github.com/Chilipp/psyplot/issues>`__: Everything
+-  `psyplot <https://github.com/psyplot/psyplot/issues>`__: Everything
    concerning the general framework, e.g. data handling, parallel
    update, etc.
 
@@ -53,7 +53,7 @@ implemented it via
     print(psy.plot.name-of-your-plot-method._plugin)
 
 If you still don’t know, where to open the issue, just go for
-`psyplot <https://github.com/Chilipp/psyplot/issues>`__.
+`psyplot <https://github.com/psyplot/psyplot/issues>`__.
 
 How Can I Contribute?
 ---------------------
@@ -70,7 +70,7 @@ Before creating bug reports, please check existing issues and pull
 requests as you might find out that you don’t need to create one. When
 you are creating a bug report, please `include as many details as
 possible <#how-do-i-submit-a-good-bug-report>`__. Fill out `the required
-template <https://github.com/Chilipp/psyplot/issues/new>`__, the information it asks for
+template <https://github.com/psyplot/psyplot/issues/new>`__, the information it asks for
 helps us resolve issues faster.
 
     **Note:** If you find a **Closed** issue that seems like it is the
@@ -84,7 +84,7 @@ Bugs are tracked as `GitHub
 issues <https://guides.github.com/features/issues/>`__. After you’ve
 determined `which repository <#the-psyplot-framework>`__ your bug is
 related to, create an issue on that repository and provide the following
-information by filling in `the template <https://github.com/Chilipp/psyplot/issues/new>`__.
+information by filling in `the template <https://github.com/psyplot/psyplot/issues/new>`__.
 
 Explain the problem and include additional details to help maintainers
 reproduce the problem:
@@ -129,9 +129,9 @@ psyplot, including completely new features and minor improvements to
 existing functionality.
 
 If you want to change an existing feature, use the `change feature
-template <https://github.com/Chilipp/psyplot/issues/new?template=change_feature.md&title=CHANGE+FEATURE:>`__,
+template <https://github.com/psyplot/psyplot/issues/new?template=change_feature.md&title=CHANGE+FEATURE:>`__,
 otherwise fill in the `new feature
-template <https://github.com/Chilipp/psyplot/issues/new?template=new_feature.md&title=NEW+FEATURE:>`__.
+template <https://github.com/psyplot/psyplot/issues/new?template=new_feature.md&title=NEW+FEATURE:>`__.
 
 How Do I Submit A (Good) Enhancement Suggestion?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -171,7 +171,7 @@ and provide the following information:
 Pull Requests
 ~~~~~~~~~~~~~
 
--  Fill in `the required template <https://github.com/Chilipp/psyplot/blob/master/.github/PULL_REQUEST_TEMPLATE.md>`__
+-  Fill in `the required template <https://github.com/psyplot/psyplot/blob/master/.github/PULL_REQUEST_TEMPLATE.md>`__
 -  Do not include issue numbers in the PR title
 -  Include screenshots and animated GIFs in your pull request whenever
    possible.
