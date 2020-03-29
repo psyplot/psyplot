@@ -10,7 +10,7 @@ source:
 
 build:
   number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
-  string: py{{ environ.get('CONDA_PY') }}_{{ environ.get('GIT_BUILD_STR', '') }}{% if environ.get('GIT_BRANCH') %}_{{ environ.get('GIT_BRANCH') }}{% endif %}
+  string: py{{ environ.get('CONDA_PY') }}_{{ environ.get('GIT_BUILD_STR', '') }}{% if environ.get('GIT_BRANCH') %}_{{ environ.get('GIT_BRANCH').replace('-', '') }}{% endif %}{% if environ.get("BUILD_STR_END") %}_{{ environ.get("BUILD_STR_END") }}{% endif %}
   script: python -m pip install . --no-deps --ignore-installed -vvv
   entry_points:
   - psyplot = psyplot.__main__:main
@@ -38,6 +38,11 @@ test:
     - netcdf4
     - dask
     - scipy
+    # HACK: solve inconsistensies with libwebp
+    # this should be removed when
+    # https://github.com/conda-forge/libwebp-feedstock/issues/26
+    # is solved
+    - libtiff <4.1.0  # [osx]
   source_files:
     - tests
   commands:

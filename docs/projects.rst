@@ -19,35 +19,35 @@ splitted into several subprojects. Each of them is accessible via
 See :ref:`plugins` for more informations on the plugins.
 
 .. |psyplot-gui-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/Chilipp/psyplot-gui
+    :target: https://github.com/psyplot/psyplot-gui
     :alt: github
 
 .. |psyplot-gui-release| image:: https://img.shields.io/github/release/Chilipp/psyplot-gui.svg?style=flat-square
-    :target: https://github.com/Chilipp/psyplot-gui/releases/latest
+    :target: https://github.com/psyplot/psyplot-gui/releases/latest
     :alt: Latest release
 
 .. |psy-simple-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/Chilipp/psy-simple
+    :target: https://github.com/psyplot/psy-simple
     :alt: github
 
 .. |psy-simple-release| image:: https://img.shields.io/github/release/Chilipp/psy-simple.svg?style=flat-square
-    :target: https://github.com/Chilipp/psy-simple/releases/latest
+    :target: https://github.com/psyplot/psy-simple/releases/latest
     :alt: Latest release
 
 .. |psy-maps-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/Chilipp/psy-maps
+    :target: https://github.com/psyplot/psy-maps
     :alt: github
 
 .. |psy-maps-release| image:: https://img.shields.io/github/release/Chilipp/psy-maps.svg?style=flat-square
-    :target: https://github.com/Chilipp/psy-maps/releases/latest
+    :target: https://github.com/psyplot/psy-maps/releases/latest
     :alt: Latest release
 
 .. |psy-reg-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/Chilipp/psy-reg
+    :target: https://github.com/psyplot/psy-reg
     :alt: github
 
 .. |psy-reg-release| image:: https://img.shields.io/github/release/Chilipp/psy-reg.svg?style=flat-square
-    :target: https://github.com/Chilipp/psy-reg/releases/latest
+    :target: https://github.com/psyplot/psy-reg/releases/latest
     :alt: Latest release
 
 .. |psyplot-conda-github| image:: GitHub-Mark-16px.png

@@ -11,7 +11,7 @@ The psyplot interactive visualization framework
     * - docs
       - |docs| |joss|
     * - tests
-      - |travis| |appveyor| |requires| |coveralls|
+      - |travis| |appveyor| |requires| |codecov|
     * - package
       - |version| |conda| |github|
     * - implementations
@@ -21,21 +21,21 @@ The psyplot interactive visualization framework
     :alt: Documentation Status
     :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
 
-.. |travis| image:: https://travis-ci.org/Chilipp/psyplot.svg?branch=master
+.. |travis| image:: https://travis-ci.org/psyplot/psyplot.svg?branch=master
     :alt: Travis
-    :target: https://travis-ci.org/Chilipp/psyplot
+    :target: https://travis-ci.org/psyplot/psyplot
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/3jk6ea1n4a4dl6vk/branch/master?svg=true
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true
     :alt: AppVeyor
-    :target: https://ci.appveyor.com/project/Chilipp/psyplot/branch/master
+    :target: https://ci.appveyor.com/project/psyplot/psyplot/branch/master
 
-.. |coveralls| image:: https://coveralls.io/repos/github/Chilipp/psyplot/badge.svg?branch=master
+.. |codecov| image:: https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg
     :alt: Coverage
-    :target: https://coveralls.io/github/Chilipp/psyplot?branch=master
+    :target: https://codecov.io/gh/psyplot/psyplot
 
-.. |requires| image:: https://requires.io/github/Chilipp/psyplot/requirements.svg?branch=master
+.. |requires| image:: https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master
     :alt: Requirements Status
-    :target: https://requires.io/github/Chilipp/psyplot/requirements/?branch=master
+    :target: https://requires.io/github/psyplot/psyplot/requirements/?branch=master
 
 .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
     :alt: PyPI Package latest release
@@ -57,8 +57,8 @@ The psyplot interactive visualization framework
     :alt: Journal of Open Source Software
     :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
 
-.. |github| image:: https://img.shields.io/github/release/Chilipp/psyplot.svg
-    :target: https://github.com/Chilipp/psyplot/releases/latest
+.. |github| image:: https://img.shields.io/github/release/psyplot/psyplot.svg
+    :target: https://github.com/psyplot/psyplot/releases/latest
     :alt: Latest github release
 
 .. end-badges
@@ -77,7 +77,7 @@ provides a graphical user interface for an easier interactive usage.
 
 The package is very new and there are many features that will be included in
 the future. So we are very pleased for feedback! Please simply raise an issue
-on `GitHub <https://github.com/Chilipp/psyplot>`__ (see also
+on `GitHub <https://github.com/psyplot/psyplot>`__ (see also
 `How to contribute`_ in the docs).
 
 .. _psyplot-gui: http://psyplot.readthedocs.io/projects/psyplot-gui/en/latest

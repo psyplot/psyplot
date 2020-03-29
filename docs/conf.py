@@ -96,7 +96,7 @@ if not osp.exists(osp.join(osp.dirname(__file__), 'api')) or on_rtd:
 # which is a bit of an overkill
 example_gallery_config = dict(
     dont_preprocess=['../examples/example_cdo.ipynb'],
-    urls='https://github.com/Chilipp/psyplot/blob/master/examples',
+    urls='https://github.com/psyplot/psyplot/blob/master/examples',
     binder_url='https://mybinder.org/v2/gh/Chilipp/psyplot/master?filepath=examples',
     )
 

@@ -1,14 +1,16 @@
 name: psyplot_docs
 channels:
-    - chilipp/label/dev
-    - chilipp/label/master
-    - chilipp
+    - psyplot/label/gh-migration
+    - psyplot/label/dev
+    - psyplot/label/master
+    - psyplot
+    - chilipp/label/conda-forge
 dependencies:
-    - python=3.7
+    - python>3.5
     - dask
     - xarray
     - netCDF4
-    - matplotlib=3.0.*
+    - matplotlib
     - seaborn
     - ipython
     - nbconvert

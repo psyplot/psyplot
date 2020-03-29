@@ -51,7 +51,7 @@ setup(name='psyplot',
       project_urls={
           'Documentation': 'https://psyplot.readthedocs.io',
       },
-      url='https://github.com/Chilipp/psyplot',
+      url='https://github.com/psyplot/psyplot',
       author='Philipp Sommer',
       author_email='philipp.sommer@unil.ch',
       license="GPLv2",
