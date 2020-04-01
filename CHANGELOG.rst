@@ -1,3 +1,8 @@
+v1.2.2
+======
+* psyplot has been moved from https://github.com/Chilipp/psyplot to https://github.com/psyplot/psyplot,
+  see `#16 <https://github.com/psyplot/psyplot/pull/16>`__
+
 v1.2.1
 ======
 This patch fixes compatibility issues with xarray 0.12 and cdo 1.5. Additionally we now officially drop support for python 2.7.
