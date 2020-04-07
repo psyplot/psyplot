@@ -646,6 +646,8 @@ class CFDecoder(object):
             if 'coordinates' in obj.attrs:
                 extra_coords.update(obj.attrs['coordinates'].split())
                 obj.encoding['coordinates'] = obj.attrs.pop('coordinates')
+            if 'grid_mapping' in obj.attrs:
+                extra_coords.add(obj.attrs['grid_mapping'])
             if 'bounds' in obj.attrs:
                 extra_coords.add(obj.attrs['bounds'])
         if gridfile is not None and not isinstance(gridfile, xr.Dataset):
@@ -920,10 +922,13 @@ class CFDecoder(object):
                     coord_names, var.dims))):
             # check for the axis attribute or whether the coordinate is in the
             # list of possible coordinate names
-            if (coord.name not in (c.name for c in ret) and
-                    (coord.attrs.get('axis', '').lower() == axis or
-                     coord.name in getattr(self, axis))):
-                ret.append(coord)
+            if coord.name not in (c.name for c in ret):
+                if coord.name in getattr(self, axis):
+                    ret.clear()
+                    ret.append(coord)
+                    break
+                elif coord.attrs.get('axis', '').lower() == axis:
+                    ret.append(coord)
         if ret:
             return None if len(ret) > 1 else ret[0]
         # If the coordinates attribute is specified but the coordinate
