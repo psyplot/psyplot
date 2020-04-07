@@ -81,6 +81,15 @@ class AlmostArrayEqualMixin(object):
 class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
     """Test the :class:`psyplot.data.CFDecoder` class"""
 
+    def test_decode_grid_mapping(self):
+        ds = xr.Dataset()
+        ds['var'] = (('x', 'y'), np.zeros((5, 4)), {'grid_mapping': 'crs'})
+        ds['crs'] = ((), 1)
+
+        self.assertNotIn('crs', ds.coords)
+        ds = psyd.CFDecoder.decode_coords(ds)
+        self.assertIn('crs', ds.coords)
+
     def test_1D_cf_bounds(self):
         """Test whether the CF Conventions for 1D bounaries are correct"""
         final_bounds = np.arange(-180, 181, 30)
