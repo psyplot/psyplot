@@ -917,6 +917,7 @@ class CFDecoder(object):
         if not coord_names:
             return
         ret = []
+        matched = []
         for coord in map(lambda dim: coords[dim], filter(
                 lambda dim: dim in coords, chain(
                     coord_names, var.dims))):
@@ -924,12 +925,18 @@ class CFDecoder(object):
             # list of possible coordinate names
             if coord.name not in (c.name for c in ret):
                 if coord.name in getattr(self, axis):
-                    ret.clear()
-                    ret.append(coord)
-                    break
+                    matched.append(coord)
                 elif coord.attrs.get('axis', '').lower() == axis:
                     ret.append(coord)
-        if ret:
+        if matched:
+            if len(matched) > 1:
+                warn("Found multiple matches for %s coordinate in the "
+                     "coordinates: %s. I use %s" % (
+                         axis, ', '.join([c.name for c in matched]),
+                         matched[0].name),
+                     PsyPlotRuntimeWarning)
+            return matched[0]
+        elif ret:
             return None if len(ret) > 1 else ret[0]
         # If the coordinates attribute is specified but the coordinate
         # variables themselves have no 'axis' attribute, we interpret the
