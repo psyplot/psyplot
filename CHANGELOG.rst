@@ -1,7 +1,18 @@
 v1.2.2
 ======
+Added
+-----
+* `psyplot.data.open_dataset` now decodes grid_mappings attributes,
+see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
+
+Changed
+-------
 * psyplot has been moved from https://github.com/Chilipp/psyplot to https://github.com/psyplot/psyplot,
   see `#16 <https://github.com/psyplot/psyplot/pull/16>`__
+* Specifying names in `x`, `y`, `t` and `z` attributes of the `CFDecoder` class
+  now means that any other attribute (such as the `coordinates` or `axis` attribute)
+  are ignored
+
 
 v1.2.1
 ======
