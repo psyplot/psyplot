@@ -4,6 +4,12 @@ Added
 -----
 * `psyplot.data.open_dataset` now decodes grid_mappings attributes,
 see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
+* psyplot projects now support the with syntax, e.g. something like::
+
+    with psy.plot.mapplot('file.nc') as sp:
+      sp.export('output.png')
+
+  sp will be closed automatically (see commit `ee7415b <https://github.com/psyplot/psyplot/commit/ee7415befce61247b5a08d9cfafab96ceb06f6f8>`__)
 
 Changed
 -------

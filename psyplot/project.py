@@ -390,6 +390,12 @@ class Project(ArrayList):
         ret.main = self.main
         return ret
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close(True, True, True)
+
     @_first_main
     def extend(self, *args, **kwargs):
         len0 = len(self)

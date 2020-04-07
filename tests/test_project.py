@@ -54,6 +54,19 @@ class TestProject(td.TestArrayList):
                         pass
             self._created_files.clear()
 
+    def test_with(self):
+        """Test __enter__ and __exit__ methods"""
+        psy.register_plotter('test_plotter', import_plotter=True,
+                             module='test_plotter', plotter_name='TestPlotter')
+        self.assertFalse(psy.gcp(True))
+        self.assertFalse(psy.gcp())
+        with psy.plot.test_plotter(bt.get_file('test-t2m-u-v.nc')) as sp:
+            self.assertTrue(psy.gcp(True))
+            self.assertTrue(psy.gcp())
+
+        self.assertFalse(psy.gcp(True))
+        self.assertFalse(psy.gcp())
+
     def test_save_and_load_01_simple(self):
         """Test the saving and loading of a Project"""
         psy.register_plotter('test_plotter', import_plotter=True,
