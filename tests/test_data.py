@@ -346,6 +346,19 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
         # close the dataset
         ds.close()
 
+    def test_get_variable_by_axis_02(self):
+        """Test the :meth:`CFDecoder.get_variable_by_axis` method with missing
+        coordinates, see https://github.com/psyplot/psyplot/pull/19"""
+        fname = os.path.join(bt.test_dir, 'icon_test.nc')
+        with psyd.open_dataset(fname) as ds:
+            ds['ncells'] = ('ncells', np.arange(ds.dims['ncells']))
+            decoder = psyd.CFDecoder(ds)
+            arr = ds.psy['t2m'].psy.isel(ncells=slice(3, 10))
+            del arr['clon']
+            xcoord = decoder.get_variable_by_axis(arr, 'x', arr.coords)
+            self.assertEqual(xcoord.name, 'clon')
+            self.assertEqual(list(xcoord.ncells), list(arr.ncells))
+
     def test_plot_bounds_1d(self):
         """Test to get 2d-interval breaks"""
         x = xr.Variable(('x', ), np.arange(1, 5))
