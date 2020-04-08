@@ -9,7 +9,7 @@ see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
     with psy.plot.mapplot('file.nc') as sp:
       sp.export('output.png')
 
-  sp will be closed automatically (see commit `ee7415b <https://github.com/psyplot/psyplot/commit/ee7415befce61247b5a08d9cfafab96ceb06f6f8>`__)
+  sp will be closed automatically (see `#18 <https://github.com/psyplot/psyplot/pull/18>`__)
 
 Changed
 -------
@@ -18,6 +18,8 @@ Changed
 * Specifying names in `x`, `y`, `t` and `z` attributes of the `CFDecoder` class
   now means that any other attribute (such as the `coordinates` or `axis` attribute)
   are ignored
+* If a given variable cannot be found in the provided coords to ``CFDecoder.get_variable_by_axis``,
+  we fall back to the ``CFDecoder.ds.coords`` attribute, see `#19 <https://github.com/psyplot/psyplot/pull/19>`__
 
 
 v1.2.1
