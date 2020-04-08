@@ -905,6 +905,23 @@ class CFDecoder(object):
         See Also
         --------
         get_x, get_y, get_z, get_t"""
+
+        def get_coord(cname, raise_error=True):
+            try:
+                return coords[cname]
+            except KeyError:
+                if cname not in self.ds.coords:
+                    if raise_error:
+                        raise
+                    return None
+                ret = self.ds.coords[cname]
+                try:
+                    idims = var.psy.idims
+                except AttributeError:  # got xarray.Variable
+                    idims = {}
+                return ret.isel(**{d: sl for d, sl in idims.items()
+                                   if d in ret.dims})
+
         axis = axis.lower()
         if axis not in list('xyzt'):
             raise ValueError("Axis must be one of X, Y, Z, T, not {0}".format(
@@ -949,23 +966,23 @@ class CFDecoder(object):
         if axis == 'x':
             for cname in filter(lambda cname: re.search('lon', cname),
                                 coord_names):
-                return coords[cname]
-            return coords.get(coord_names[-1])
+                return get_coord(cname)
+            return get_coord(coord_names[-1], raise_error=False)
         elif axis == 'y' and len(coord_names) >= 2:
             for cname in filter(lambda cname: re.search('lat', cname),
                                 coord_names):
-                return coords[cname]
-            return coords.get(coord_names[-2])
+                return get_coord(cname)
+            return get_coord(coord_names[-2], raise_error=False)
         elif (axis == 'z' and len(coord_names) >= 3 and
               coord_names[-3] not in tnames):
-            return coords.get(coord_names[-3])
+            return get_coord(coord_names[-3], raise_error=False)
         elif axis == 't' and tnames:
             tname = next(iter(tnames))
             if len(tnames) > 1:
                 warn("Found multiple matches for time coordinate in the "
                      "coordinates: %s. I use %s" % (', '.join(tnames), tname),
                      PsyPlotRuntimeWarning)
-            return coords.get(tname)
+            return get_coord(tname, raise_error=False)
 
     @docstrings.get_sectionsf("CFDecoder.get_x", sections=[
         'Parameters', 'Returns'])
