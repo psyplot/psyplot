@@ -581,6 +581,17 @@ class Formatoption(object):
                 decoder = [decoder] * len(self.plotter.plot_data)
             self.plotter.plot_data_decoder = decoder
 
+    def get_decoder(self, i=None):
+        # we do not modify the raw data but instead set it on the plotter
+        # TODO: This is not safe for encapsulated InteractiveList instances!
+        if i is not None and isinstance(
+                self.plotter.plot_data, InteractiveList):
+            n = len(self.plotter.plot_data)
+            decoders = self.plotter.plot_data_decoder or [None] * n
+            return decoders[i] or self.plotter.plot_data[i].psy.decoder
+        else:
+            return self.decoder
+
     def check_and_set(self, value, todefault=False, validate=True):
         """Checks the value and sets the value if it changed
 
