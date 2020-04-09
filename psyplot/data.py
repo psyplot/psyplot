@@ -3643,7 +3643,6 @@ class ArrayList(list):
         decoder_input = decoder
 
         def get_decoder(arr):
-            print(decoder_input)
             if decoder_input is None:
                 return CFDecoder.get_decoder(base, arr)
             elif isinstance(decoder_input, CFDecoder):
