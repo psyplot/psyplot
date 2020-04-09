@@ -1144,6 +1144,34 @@ class TestArrayList(unittest.TestCase):
         self.assertEqual(len(l[0]), 2)
         self.assertEqual(len(l[1]), 2)
 
+    def test_from_dataset_13_decoder_class(self):
+        ds = xr.Dataset(*self._from_dataset_test_variables)
+
+        class MyDecoder(psyd.CFDecoder):
+            pass
+
+        l = self.list_class.from_dataset(ds, name="v2", decoder=MyDecoder)
+        self.assertIsInstance(l[0].psy.decoder, MyDecoder)
+
+    def test_from_dataset_14_decoder_instance(self):
+        ds = xr.Dataset(*self._from_dataset_test_variables)
+
+        class MyDecoder(psyd.CFDecoder):
+            pass
+
+        decoder = MyDecoder(ds)
+
+        l = self.list_class.from_dataset(ds, name="v2", decoder=decoder)
+        self.assertIs(l[0].psy.decoder, decoder)
+
+    def test_from_dataset_15_decoder_kws(self):
+        ds = xr.Dataset(*self._from_dataset_test_variables)
+
+        l = self.list_class.from_dataset(ds, name="v2",
+                                         decoder=dict(x={'myx'}))
+        self.assertEqual(l[0].psy.decoder.x, {'myx'})
+
+
     def test_array_info(self):
         variables, coords = self._from_dataset_test_variables
         variables['v4'] = variables['v3'].copy()

@@ -2,6 +2,11 @@ v1.2.2
 ======
 Added
 -----
+* ``ArrayList.from_dataset`` (and consecutively all plotmethods) now support
+  different input types for the decoder. You can pass an instance of the
+  ``CFDecoder`` class, a sub class of ``CFDecoder``, or keyword arguments
+  that are used to initialize the decoder,
+  see `#20 <https://github.com/psyplot/psyplot/pull/20>`__
 * `psyplot.data.open_dataset` now decodes grid_mappings attributes,
 see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
 * psyplot projects now support the with syntax, e.g. something like::
@@ -20,6 +25,8 @@ Changed
   are ignored
 * If a given variable cannot be found in the provided coords to ``CFDecoder.get_variable_by_axis``,
   we fall back to the ``CFDecoder.ds.coords`` attribute, see `#19 <https://github.com/psyplot/psyplot/pull/19>`__
+* A bug has been fixed for initializing a ``CFDecoder`` with ``x, y, z`` and
+  ``t`` parameters (see `#20 <https://github.com/psyplot/psyplot/pull/20>`__)
 
 
 v1.2.1
