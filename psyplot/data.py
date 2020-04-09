@@ -550,9 +550,9 @@ class CFDecoder(object):
     def __init__(self, ds=None, x=None, y=None, z=None, t=None):
         self.ds = ds
         self.x = rcParams['decoder.x'].copy() if x is None else set(x)
-        self.y = rcParams['decoder.y'].copy() if x is None else set(y)
-        self.z = rcParams['decoder.z'].copy() if x is None else set(z)
-        self.t = rcParams['decoder.t'].copy() if x is None else set(t)
+        self.y = rcParams['decoder.y'].copy() if y is None else set(y)
+        self.z = rcParams['decoder.z'].copy() if z is None else set(z)
+        self.t = rcParams['decoder.t'].copy() if t is None else set(t)
 
     @staticmethod
     def register_decoder(decoder_class, pos=0):
@@ -599,7 +599,7 @@ class CFDecoder(object):
 
     @classmethod
     @docstrings.dedent
-    def get_decoder(cls, ds, var):
+    def get_decoder(cls, ds, var, *args, **kwargs):
         """
         Class method to get the right decoder class that can decode the
         given dataset and variable
@@ -615,8 +615,8 @@ class CFDecoder(object):
             `var`"""
         for decoder_cls in cls._registry:
             if decoder_cls.can_decode(ds, var):
-                return decoder_cls(ds)
-        return CFDecoder(ds)
+                return decoder_cls(ds, *args, **kwargs)
+        return CFDecoder(ds, *args, **kwargs)
 
     @staticmethod
     @docstrings.get_sectionsf('CFDecoder.decode_coords', sections=[
@@ -3568,8 +3568,14 @@ class ArrayList(list):
             Index (e.g. 0 if `method` is 'isel') that shall be used for
             dimensions not covered by `dims` and `furtherdims`. If None, the
             whole slice will be used.
-        decoder: CFDecoder
-            The decoder that shall be used to decoder the `base` dataset
+        decoder: CFDecoder or dict
+            Arguments for the decoder. This can be one of
+
+            - an instance of :class:`CFDecoder`
+            - a subclass of :class:`CFDecoder`
+            - a dictionary with keyword-arguments to the automatically
+              determined decoder class
+            - None to automatically set the decoder
         squeeze: bool, optional
             Default True. If True, and the created arrays have a an axes with
             length 1, it is removed from the dimension list (e.g. an array
@@ -3634,12 +3640,18 @@ class ArrayList(list):
             arr.attrs.update(attrs)
             return arr
 
-        if decoder is not None:
-            def get_decoder(arr):
-                return decoder
-        else:
-            def get_decoder(arr):
+        decoder_input = decoder
+
+        def get_decoder(arr):
+            print(decoder_input)
+            if decoder_input is None:
                 return CFDecoder.get_decoder(base, arr)
+            elif isinstance(decoder_input, CFDecoder):
+                return decoder_input
+            elif isinstance(decoder_input, dict):
+                return CFDecoder.get_decoder(base, arr, **decoder_input)
+            else:
+                return decoder_input(base)
 
         def add_missing_dimensions(arr):
             # add the missing dimensions to the dataset. This is not anymore
@@ -3678,7 +3690,8 @@ class ArrayList(list):
                 ret = squeeze_array(arr.isel(**dims))
                 # delete the variable dimension for the idims
                 dims.pop('variable', None)
-                ret.psy.init_accessor(arr_name=key, base=base, idims=dims)
+                ret.psy.init_accessor(arr_name=key, base=base, idims=dims,
+                                      decoder=decoder)
                 return maybe_load(ret)
         else:
             def sel_method(key, dims, name=None):
@@ -3706,7 +3719,7 @@ class ArrayList(list):
                     ret = squeeze_array(arr.sel(**dims))
                 else:
                     ret = squeeze_array(arr.sel(method=method, **dims))
-                ret.psy.init_accessor(arr_name=key, base=base)
+                ret.psy.init_accessor(arr_name=key, base=base, decoder=decoder)
                 return maybe_load(ret)
         if 'name' not in kwargs:
             default_names = list(
