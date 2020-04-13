@@ -4422,9 +4422,7 @@ class ArrayList(list):
         try:
             name = val if isstring(val) else val.psy.arr_name
         except AttributeError:
-            raise ValueError(
-                "Only interactive arrays can be inserted in the %s" % (
-                    self.__class__.__name__))
+            return False
         else:
             return name in self.arr_names and (
                 isstring(val) or self._contains_array(val))
