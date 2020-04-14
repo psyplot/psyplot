@@ -36,16 +36,6 @@ matrix:
 
 before_install:
     - if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]]; then export DEPLOY_CONDA=false; fi
-    # Remove homebrew.
-    - |
-      if [[ $TRAVIS_OS_NAME == "osx" ]]; then
-          echo ""
-          echo "Removing homebrew from Travis CI to avoid conflicts."
-          curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall > ~/uninstall_homebrew
-          chmod +x ~/uninstall_homebrew
-          ~/uninstall_homebrew -fq
-          rm ~/uninstall_homebrew
-      fi
     # define functions to unset and reset encrypted variables
     - function unset_secure {
           CONDA_TOKEN_SAVE=$CONDA_REPO_TOKEN;
