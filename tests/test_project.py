@@ -1492,10 +1492,17 @@ class TestPlotterInterface(unittest.TestCase):
                 checks, messages = super(TestPlotter, cls).check_data(
                     name, dims, is_unstructured)
                 self.assertEqual(name, ['t2m'])
+
                 for n, d in zip(name, dims):
+                    if test_x:  # changed x-coordinate
+                        removed = {'lev', 'time'}
+                    else:
+                        removed = {'lev', 'lon'}
                     self.assertEqual(len(d),
-                                     len(set(ds.t2m.dims) - {'lev', 'lon'}))
-                    self.assertEqual(set(d), set(ds.t2m.dims) - {'lev', 'lon'})
+                                     len(set(ds.t2m.dims) - removed))
+                    self.assertEqual(set(d), set(ds.t2m.dims) - removed)
+
+        test_x = False
 
         ds = psy.open_dataset(bt.get_file('test-t2m-u-v.nc'))
 
@@ -1504,6 +1511,11 @@ class TestPlotterInterface(unittest.TestCase):
                              default_dims={'x': 1}, default_slice=slice(1, 3))
 
         psy.plot.test_plotter.check_data(ds, 't2m', {'lev': 3})
+
+        test_x = True
+        psy.plot.test_plotter.check_data(ds, 't2m', {'lev': 3},
+                                         {'x': {'time'}})
+
         psy.unregister_plotter('test_plotter')
 
 
