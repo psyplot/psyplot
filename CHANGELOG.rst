@@ -6,7 +6,9 @@ Added
   different input types for the decoder. You can pass an instance of the
   ``CFDecoder`` class, a sub class of ``CFDecoder``, or keyword arguments
   that are used to initialize the decoder,
-  see `#20 <https://github.com/psyplot/psyplot/pull/20>`__
+  see `#20 <https://github.com/psyplot/psyplot/pull/20>`__. Furthermore, the
+  `check_data` method of the various plotmethods now also accept a `decoder`
+  parameter, see `#22 <https://github.com/psyplot/psyplot/pull/22>`__
 * `psyplot.data.open_dataset` now decodes grid_mappings attributes,
 see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
 * psyplot projects now support the with syntax, e.g. something like::

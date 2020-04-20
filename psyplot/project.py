@@ -1857,7 +1857,7 @@ class PlotterInterface(object):
         return self.plotter_cls.show_docs(*args, **kwargs)
 
     @docstrings.dedent
-    def check_data(self, ds, name, dims):
+    def check_data(self, ds, name, dims, decoder=None, *args, **kwargs):
         """
         A validation method for the data shape
 
@@ -1872,6 +1872,10 @@ class PlotterInterface(object):
             dimensions of this plot method
         is_unstructured: bool or list of bool
             True if the corresponding array is unstructured.
+        decoder: :class:`psyplot.data.CFDecoder`, dict or a list of them
+            The decoders to use per array. Dictionaries are parsed as keyword
+            arguments to the :meth:`psyplot.data.CFDecoder.get_decoder`
+            method
 
         Returns
         -------
@@ -1880,10 +1884,19 @@ class PlotterInterface(object):
         if isinstance(name, six.string_types):
             name = [name]
             dims = [dims]
+            decoders = [decoder]
         else:
             dims = list(dims)
+            decoders = list(decoder if decoder is not None else [None])
         variables = [ds[safe_list(n)[0]] for n in name]
-        decoders = [CFDecoder.get_decoder(ds, var) for var in variables]
+        if decoders is None:
+            decoders = [CFDecoder.get_decoder(ds, var) for var in variables]
+        else:
+            for i, (decoder, var) in enumerate(zip(decoders, variables)):
+                if decoder is None:
+                    decoder = {}
+                if isinstance(decoder, dict):
+                    decoders[i] = CFDecoder.get_decoder(ds, var, **decoder)
         default_slice = slice(None) if self._default_slice is None else \
             self._default_slice
         for i, (dim_dict, var, decoder) in enumerate(zip(
