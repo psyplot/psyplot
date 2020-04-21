@@ -2549,8 +2549,14 @@ class InteractiveArray(InteractiveBase):
             self.method = method
         if 'name' in dims:
             self._new_dims['name'] = dims.pop('name')
-        self._new_dims.update(self.decoder.correct_dims(
-            next(six.itervalues(self.base_variables)), dims))
+        if 'name' in self._new_dims:
+            name = self._new_dims['name']
+            if not isstring(name):
+                name = name[0]  # concatenated array
+            arr = self.base[name]
+        else:
+            arr= next(six.itervalues(self.base_variables))
+        self._new_dims.update(self.decoder.correct_dims(arr, dims))
         InteractiveBase._register_update(
             self, fmt=fmt, replot=replot or bool(self._new_dims), force=force,
             todefault=todefault)
@@ -2581,6 +2587,10 @@ class InteractiveArray(InteractiveBase):
         if method == 'isel':
             self.idims.update(dims)
             dims = self.idims
+            for dim in set(self.base[name].dims) - set(dims):
+                dims[dim] = slice(None)
+            for dim in set(dims) - set(self.base[name].dims):
+                del dims[dim]
             res = self.base[name].isel(**dims).to_array()
         else:
             self._idims = None
@@ -2634,6 +2644,10 @@ class InteractiveArray(InteractiveBase):
         if method == 'isel':
             self.idims.update(dims)
             dims = self.idims
+            for dim in set(self.base[name].dims) - set(dims):
+                dims[dim] = slice(None)
+            for dim in set(dims) - set(self.base[name].dims):
+                del dims[dim]
             res = self.base[name].isel(**dims)
         else:
             self._idims = None
@@ -2821,6 +2835,14 @@ class InteractiveArray(InteractiveBase):
 
         Notes
         -----
+        When updating to a new array while trying to set the dimensions at the
+        same time, you have to specify the new dimensions via the `dims`
+        parameter, e.g.::
+
+            da.psy.update(name='new_name', dims={'new_dim': 3})
+
+        if ``'new_dim'`` is not yet a dimension of this array
+
         %(InteractiveBase.update.notes)s"""
         dims = dict(dims)
         fmt = dict(fmt)

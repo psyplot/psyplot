@@ -595,6 +595,80 @@ class TestInteractiveArray(unittest.TestCase, AlmostArrayEqualMixin):
         self.assertEqual(arr.test, 4)
         self.assertEqual(arr.name, 'something')
 
+    def test_update_07_variable_with_new_dims(self):
+        ds = xr.Dataset()
+        ds['test1'] = (tuple('ab'), np.zeros((5, 4)))
+        ds['test2'] = (tuple('abc'), np.zeros((5, 4, 3)))
+        ds['a'] = ('a', np.arange(5))
+        ds['b'] = ('b', np.arange(4))
+        ds['c'] = ('c', np.arange(3))
+
+        da = ds.psy['test1'].psy.isel(a=slice(1, 3))
+        self.assertEqual(da.name, 'test1')
+        self.assertEqual(da.shape, (2, 4))
+        self.assertEqual(da.psy.idims, {'a': slice(1, 3, 1), 'b': slice(None)})
+
+        # update to test2
+        da.psy.update(name='test2')
+        self.assertEqual(da.name, 'test2')
+        self.assertEqual(da.shape, (2, 4, 3))
+        self.assertEqual(da.psy.idims, {'a': slice(1, 3, 1), 'b': slice(None),
+                                        'c': slice(None)})
+
+        # update back to test1
+        da.psy.update(name='test1')
+        self.assertEqual(da.name, 'test1')
+        self.assertEqual(da.shape, (2, 4))
+        self.assertEqual(da.psy.idims, {'a': slice(1, 3, 1), 'b': slice(None)})
+
+        # update to test2 but this time with specifying a dimension for c
+        # does not yet work with c=1
+        da.psy.update(name='test2', dims=dict(c=1))
+        self.assertEqual(da.name, 'test2')
+        self.assertEqual(da.shape, (2, 4))
+        self.assertEqual(da.psy.idims, {'a': slice(1, 3, 1), 'b': slice(None),
+                                        'c': 1})
+        self.assertEqual(da['c'], 1)
+
+    def test_update_08_2variables_with_new_dims(self):
+        ds = xr.Dataset()
+        ds['test1'] = (tuple('ab'), np.zeros((5, 4)))
+        ds['test11'] = (tuple('ab'), np.zeros((5, 4)))
+        ds['test2'] = (tuple('abc'), np.zeros((5, 4, 3)))
+        ds['test22'] = (tuple('abc'), np.zeros((5, 4, 3)))
+        ds['a'] = ('a', np.arange(5))
+        ds['b'] = ('b', np.arange(4))
+        ds['c'] = ('c', np.arange(3))
+
+        da = ds.psy.create_list(name=[['test1', 'test11']], prefer_list=False,
+                                a=slice(1, 3, 1))[0]
+        self.assertEqual(da.shape, (2, 2, 4))
+        self.assertEqual(list(da['variable']), ['test1', 'test11'])
+        self.assertEqual(da.psy.idims, {'a': slice(1, 3, 1), 'b': slice(None)})
+
+        # update to test2
+        da.psy.update(name=['test2', 'test22'])
+        self.assertEqual(da.shape, (2, 2, 4, 3))
+        self.assertEqual(list(da['variable']), ['test2', 'test22'])
+        self.assertEqual(da.psy.idims, {'a': slice(1, 3, 1), 'b': slice(None),
+                                        'c': slice(None)})
+
+        # update back to test1
+        da.psy.update(name=['test1', 'test11'])
+        self.assertEqual(da.shape, (2, 2, 4))
+        self.assertEqual(list(da['variable']), ['test1', 'test11'])
+        self.assertEqual(da.psy.idims, {'a': slice(1, 3, 1), 'b': slice(None)})
+
+        # update to test2 but this time with specifying a dimension for c
+        # does not yet work with c=1
+        da.psy.update(name=['test2', 'test22'], dims=dict(c=1))
+        self.assertEqual(list(da['variable']), ['test2', 'test22'])
+        self.assertEqual(da.shape, (2, 2, 4))
+        self.assertEqual(da.psy.idims, {'a': slice(1, 3, 1), 'b': slice(None),
+                                        'c': 1})
+        self.assertEqual(da['c'], 1)
+
+
     @unittest.skipIf(not with_cdo, 'CDOs are not installed')
     def test_gridweights_01_lola(self):
         fname = bt.get_file('test-t2m-u-v.nc')

@@ -17,6 +17,8 @@ see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
       sp.export('output.png')
 
   sp will be closed automatically (see `#18 <https://github.com/psyplot/psyplot/pull/18>`__)
+* the update to variables with other dimensions works now as well
+  (see `#22 <https://github.com/psyplot/psyplot/pull/22>`__)
 
 Changed
 -------
