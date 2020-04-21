@@ -2587,6 +2587,10 @@ class InteractiveArray(InteractiveBase):
         if method == 'isel':
             self.idims.update(dims)
             dims = self.idims
+            for dim in set(self.base[name].dims) - set(dims):
+                dims[dim] = slice(None)
+            for dim in set(dims) - set(self.base[name].dims):
+                del dims[dim]
             res = self.base[name].isel(**dims).to_array()
         else:
             self._idims = None
@@ -2640,6 +2644,10 @@ class InteractiveArray(InteractiveBase):
         if method == 'isel':
             self.idims.update(dims)
             dims = self.idims
+            for dim in set(self.base[name].dims) - set(dims):
+                dims[dim] = slice(None)
+            for dim in set(dims) - set(self.base[name].dims):
+                del dims[dim]
             res = self.base[name].isel(**dims)
         else:
             self._idims = None
@@ -2827,6 +2835,14 @@ class InteractiveArray(InteractiveBase):
 
         Notes
         -----
+        When updating to a new array while trying to set the dimensions at the
+        same time, you have to specify the new dimensions via the `dims`
+        parameter, e.g.::
+
+            da.psy.update(name='new_name', dims={'new_dim': 3})
+
+        if ``'new_dim'`` is not yet a dimension of this array
+
         %(InteractiveBase.update.notes)s"""
         dims = dict(dims)
         fmt = dict(fmt)
