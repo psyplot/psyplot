@@ -2549,8 +2549,14 @@ class InteractiveArray(InteractiveBase):
             self.method = method
         if 'name' in dims:
             self._new_dims['name'] = dims.pop('name')
-        self._new_dims.update(self.decoder.correct_dims(
-            next(six.itervalues(self.base_variables)), dims))
+        if 'name' in self._new_dims:
+            name = self._new_dims['name']
+            if not isstring(name):
+                name = name[0]  # concatenated array
+            arr = self.base[name]
+        else:
+            arr= next(six.itervalues(self.base_variables))
+        self._new_dims.update(self.decoder.correct_dims(arr, dims))
         InteractiveBase._register_update(
             self, fmt=fmt, replot=replot or bool(self._new_dims), force=force,
             todefault=todefault)
