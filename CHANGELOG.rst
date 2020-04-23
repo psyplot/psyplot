@@ -9,7 +9,7 @@ Added
   see `#20 <https://github.com/psyplot/psyplot/pull/20>`__. Furthermore, the
   `check_data` method of the various plotmethods now also accept a `decoder`
   parameter, see `#22 <https://github.com/psyplot/psyplot/pull/22>`__
-* `psyplot.data.open_dataset` now decodes grid_mappings attributes,
+* ``psyplot.data.open_dataset`` now decodes grid_mappings attributes,
 see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
 * psyplot projects now support the with syntax, e.g. something like::
 
@@ -19,6 +19,8 @@ see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
   sp will be closed automatically (see `#18 <https://github.com/psyplot/psyplot/pull/18>`__)
 * the update to variables with other dimensions works now as well
   (see `#22 <https://github.com/psyplot/psyplot/pull/22>`__)
+* a ``psyplot.project.Project`` now has a new ``format_string`` method to
+  format a string with the meta attributes of the data in the projects
 
 Changed
 -------

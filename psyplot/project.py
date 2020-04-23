@@ -656,6 +656,7 @@ class Project(ArrayList):
     docstrings.keep_params('join_dicts.parameters', 'delimiter')
     docstrings.keep_params('join_dicts.parameters', 'keep_all')
 
+    @docstrings.get_sectionsf('Project.joined_attrs')
     @docstrings.with_indent(8)
     def joined_attrs(self, delimiter=', ', enhanced=True, plot_data=False,
                      keep_all=True):
@@ -693,6 +694,52 @@ class Project(ArrayList):
         return utils.join_dicts(all_attrs, delimiter=delimiter,
                                 keep_all=keep_all)
 
+    @docstrings.get_sectionsf('Project.format_string')
+    @docstrings.with_indent(8)
+    def format_string(self, s, use_time=False, format_args=None, *args,
+                      **kwargs):
+        """Format a string with the attributes in this project
+
+        Parameters
+        ----------
+        s: str
+            The string that is subject to be formatted
+        use_time: bool
+            If True, formatting strings for the
+            :meth:`datetime.datetime.strftime` are expected to be found in
+            `output` (e.g. ``'%%m'``, ``'%%Y'``, etc.). If so, other formatting
+            strings must be escaped by double ``'%%'`` (e.g. ``'%%%i'``
+            instead of (``'%%i'``))
+        format_args: tuple
+            A tuple of arguments that shall be inserted in `s` via
+            ``s %% format_args``. (There will be no error, when this fails!)
+        %(Project.joined_attrs.parameters)s
+
+        Returns
+        -------
+        str
+            The formatted string `s`
+        """
+        attrs = self.joined_attrs(*args, **kwargs)
+        if use_time:
+            tnames = self._get_tnames()
+            tname = next(iter(tnames)) if len(tnames) == 1 else None
+
+            time = attrs[tname]
+            try:  # assume a valid datetime.datetime instance
+                s = pd.to_datetime(time).strftime(s)
+            except ValueError:
+                pass
+        if format_args is not None:
+            try:
+                s = safe_modulo(s, format_args, print_warning=False)
+            except TypeError:
+                pass
+        return safe_modulo(s, attrs)
+
+    docstrings.keep_params('Project.format_string.parameters', 'use_time')
+
+    @docstrings.with_indent(8)
     def export(self, output, tight=False, concat=True, close_pdf=None,
                use_time=False, **kwargs):
         """Exports the figures of the project to one or more image files
@@ -707,7 +754,7 @@ class Project(ArrayList):
             If string (or iterable of strings), attribute names in the
             xarray.DataArray.attrs attribute as well as index dimensions
             are replaced by the respective value (see examples below).
-            Furthermore a single format string without key (e.g. %i, %s, %d,
+            Furthermore a single format string without key (e.g. %%i, %%s, %%d,
             etc.) is replaced by a counter.
         tight: bool
             If True, it is tried to figure out the tight bbox of the figure
@@ -721,12 +768,7 @@ class Project(ArrayList):
             If None and `output` is a string, it is the same as
             ``close_pdf=True``, if None and `output` is neither a string nor an
             iterable, it is the same as ``close_pdf=False``
-        use_time: bool
-            If True, formatting strings for the
-            :meth:`datetime.datetime.strftime` are expected to be found in
-            `output` (e.g. ``'%m'``, ``'%Y'``, etc.). If so, other formatting
-            strings must be escaped by double ``'%'`` (e.g. ``'%%i'`` instead
-            of (``'%i'``))
+        %(Project.format_string.parameters.use_time)s
         ``**kwargs``
             Any valid keyword for the :func:`matplotlib.pyplot.savefig`
             function
@@ -747,18 +789,18 @@ class Project(ArrayList):
         Save all figures into separate pngs with increasing numbers (e.g.
         ``'my_plots_1.png'``)::
 
-            >>> p.export('my_plots_%i.png')
+            >>> p.export('my_plots_%%i.png')
 
         Save all figures into separate pngs with the name of the variables
         shown in each figure (e.g. ``'my_plots_t2m.png'``)::
 
-            >>> p.export('my_plots_%(name)s.png')
+            >>> p.export('my_plots_%%(name)s.png')
 
         Save all figures into separate pngs with the name of the variables
         shown in each figure and with increasing numbers (e.g.
         ``'my_plots_1_t2m.png'``)::
 
-            >>> p.export('my_plots_%i_%(name)s.png')
+            >>> p.export('my_plots_%%i_%%(name)s.png')
 
         Specify the names for each figure directly via a list::
 
@@ -768,79 +810,46 @@ class Project(ArrayList):
         if tight:
             kwargs['bbox_inches'] = 'tight'
 
-        if use_time:
-            def insert_time(s, attrs):
-                time = attrs[tname]
-                try:  # assume a valid datetime.datetime instance
-                    s = pd.to_datetime(time).strftime(s)
-                except ValueError:
-                    pass
-                return s
-
-            tnames = self._get_tnames()
-            tname = next(iter(tnames)) if len(tnames) == 1 else None
-        else:
-            def insert_time(s, attrs):
-                return s
-
-            tname = None
+        not_enough_files_warnings = (
+            "Not enough output files specified! %i figures are open "
+            "but only %i filenames have been given! This will cause "
+            "that some figures may be overwritten after being "
+            "exported! Use a pdf instead if you want to save all "
+            "figures or include a '%%i' string in the filename to "
+            "avoid duplicates.")
 
         if isinstance(output, six.string_types):  # a single string
             out_fmt = kwargs.pop('format', os.path.splitext(output))[1][1:]
             if out_fmt.lower() == 'pdf' and concat:
-                attrs = self.joined_attrs('-')
-                if tname is not None and tname in attrs:
-                    output = insert_time(output, attrs)
-                pdf = PdfPages(safe_modulo(output, attrs))
+                output = self.format_string(output, use_time, delimiter='-')
+                pdf = PdfPages(output)
 
-                def save(fig):
+                for fig in self.figs:
                     pdf.savefig(fig, **kwargs)
-
-                def close():
-                    if close_pdf is None or close_pdf:
-                        pdf.close()
-                        return
+                if close_pdf is None or close_pdf:
+                    pdf.close()
+                    return
+                else:
                     return pdf
             else:
-                def save(fig):
-                    attrs = self.figs[fig].joined_attrs('-')
-                    out = output
-                    if tname is not None and tname in attrs:
-                        out = insert_time(out, attrs)
-                    try:
-                        out = safe_modulo(out, i, print_warning=False)
-                    except TypeError:
-                        pass
-                    fig.savefig(safe_modulo(out, attrs), **kwargs)
+                output = [output] * len(self.figs)
 
-                def close():
-                    pass
-        elif utils.is_iterable(output):  # a list of strings
-            output = cycle(output)
+        if utils.is_iterable(output):  # a list of strings
+            output = [sp.format_string(out, use_time, i, delimiter='-')
+                      for i, (out, sp) in enumerate(
+                          zip(output, self.figs.values()), 1)]
+            if len(set(output)) != len(output):
+                warn(not_enough_files_warnings % (
+                    len(output), len(self.figs)))
+            output = iter(output)
 
-            def save(fig):
-                attrs = self.figs[fig].joined_attrs('-')
-                out = next(output)
-                if tname is not None and tname in attrs:
-                    out = insert_time(out, attrs)
-                try:
-                    out = safe_modulo(next(output), i, print_warning=False)
-                except TypeError:
-                    pass
-                fig.savefig(safe_modulo(out, attrs), **kwargs)
-
-            def close():
-                pass
+            for fig, out in zip(self.figs, output):
+                fig.savefig(out, **kwargs)
         else:  # an instances of matplotlib.backends.backend_pdf.PdfPages
-            def save(fig):
+            for fig in self.figs:
                 output.savefig(fig, **kwargs)
-
-            def close():
-                if close_pdf:
-                    output.close()
-        for i, fig in enumerate(self.figs, 1):
-            save(fig)
-        return close()
+            if close_pdf:
+                output.close()
 
     docstrings.keep_params('Plotter.share.parameters', 'keys')
     docstrings.delete_params('Plotter.share.parameters', 'keys', 'plotters')
