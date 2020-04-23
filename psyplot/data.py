@@ -4329,7 +4329,7 @@ class ArrayList(list):
                 arr.psy.plotter._figs2draw.clear()
         self.logger.debug("Done drawing.")
 
-    def __call__(self, types=None, method='isel', **attrs):
+    def __call__(self, types=None, method='isel', fmts=[], **attrs):
         """Get the arrays specified by their attributes
 
         Parameters
@@ -4344,6 +4344,9 @@ class ArrayList(list):
             to integer values as they are found in the
             :attr:`InteractiveArray.idims` attribute.
             Otherwise the :meth:`xarray.DataArray.coords` attribute is used.
+        fmts: list
+            List of formatoption strings. Only arrays with plotters who have
+            this formatoption are returned
         ``**attrs``
             Parameters may be any attribute of the arrays in this instance,
             including the matplotlib axes (``ax``), matplotlib figure
@@ -4432,13 +4435,21 @@ class ArrayList(list):
                         arr.psy.decoder.correct_dims(next(six.itervalues(
                             arr.psy.base_variables)), attrs, remove=False)))
         attrs = dict(starmap(safe_item_list, six.iteritems(attrs)))
-        return self.__class__(
+        ret = self.__class__(
             # iterable
             (arr for arr in self if
              (types is None or isinstance(arr.psy.plotter, types)) and
              filter_by_attrs(arr)),
             # give itself as base and the auto_update parameter
             auto_update=bool(self.auto_update))
+        # now filter for the formatoptions
+        if fmts:
+            fmts = set(safe_list(fmts))
+            ret = self.__class__(
+                filter(lambda arr: (arr.psy.plotter and
+                                    fmts <= set(arr.psy.plotter)),
+                       ret))
+        return ret
 
     def __contains__(self, val):
         try:

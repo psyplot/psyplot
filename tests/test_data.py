@@ -936,6 +936,22 @@ class TestArrayList(unittest.TestCase):
             [arr.psy.arr_name for arr in l(fig=figs[1])],
             [l[1].psy.arr_name])
 
+    def test_filter_8_fmts(self):
+        import matplotlib.pyplot as plt
+        from test_plotter import TestPlotter, SimpleFmt
+        ds = self._filter_test_ds
+        l = self.list_class.from_dataset(ds, ydim=[0, 1], name='v0')
+
+        class TestPlotter2(TestPlotter):
+
+            fmt_test = SimpleFmt('fmt_test')
+
+        TestPlotter(l[0])
+        TestPlotter2(l[1])
+
+        self.assertEqual(l(fmts=['fmt1']).arr_names, l.arr_names)
+        self.assertEqual(l(fmts=['fmt_test']).arr_names, [l[1].psy.arr_name])
+
     def test_list_filter_1_name(self):
         """Test the filtering of InteractiveList by the variable name"""
         ds = self._filter_test_ds

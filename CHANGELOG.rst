@@ -21,6 +21,13 @@ see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
   (see `#22 <https://github.com/psyplot/psyplot/pull/22>`__)
 * a ``psyplot.project.Project`` now has a new ``format_string`` method to
   format a string with the meta attributes of the data in the projects
+* The ``ArrayList`` class now supports filtering by formatoption keys. You can
+  filter for plotters that have a ``cmap`` formatoption via::
+
+    sp1 = psy.plot.mapplot(ds)
+    sp2 = psy.plot.lineplot(ds)
+    full_sp = sp1 + sp2
+    full_sp(fmts='cmap')  # gives equivalent results as addressing sp1 directly
 
 Changed
 -------
