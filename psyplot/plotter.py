@@ -513,13 +513,8 @@ class Formatoption(object):
         if self.key in self.plotter._shared:
             return
         with self.plotter.no_validation:
-            try:
-                self.plotter[self.key] = value if not validate else \
-                    self.validate(value)
-            except ValueError as e:
-                critical("Error while setting %s!" % self.key,
-                         logger=self.logger)
-                raise e
+            self.plotter[self.key] = value if not validate else \
+                self.validate(value)
 
     def set_data(self, data, i=None):
         """
@@ -1215,12 +1210,7 @@ class Plotter(dict):
         ``*args`` and ``**kwargs``
             Anything that is passed to `fmto`s :meth:`~Formatoption.set_value`
             method"""
-        try:
-            fmto.set_value(*args, **kwargs)
-        except Exception as e:
-            critical("Error while setting %s!" % fmto.key,
-                     logger=getattr(self, 'logger', None))
-            raise e
+        fmto.set_value(*args, **kwargs)
 
     def __getitem__(self, key):
         try:
