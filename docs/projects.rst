@@ -22,7 +22,7 @@ See :ref:`plugins` for more informations on the plugins.
     :target: https://github.com/psyplot/psyplot-gui
     :alt: github
 
-.. |psyplot-gui-release| image:: https://img.shields.io/github/release/Chilipp/psyplot-gui.svg?style=flat-square
+.. |psyplot-gui-release| image:: https://img.shields.io/github/release/psyplot/psyplot-gui.svg?style=flat-square
     :target: https://github.com/psyplot/psyplot-gui/releases/latest
     :alt: Latest release
 
@@ -30,7 +30,7 @@ See :ref:`plugins` for more informations on the plugins.
     :target: https://github.com/psyplot/psy-simple
     :alt: github
 
-.. |psy-simple-release| image:: https://img.shields.io/github/release/Chilipp/psy-simple.svg?style=flat-square
+.. |psy-simple-release| image:: https://img.shields.io/github/release/psyplot/psy-simple.svg?style=flat-square
     :target: https://github.com/psyplot/psy-simple/releases/latest
     :alt: Latest release
 
@@ -38,7 +38,7 @@ See :ref:`plugins` for more informations on the plugins.
     :target: https://github.com/psyplot/psy-maps
     :alt: github
 
-.. |psy-maps-release| image:: https://img.shields.io/github/release/Chilipp/psy-maps.svg?style=flat-square
+.. |psy-maps-release| image:: https://img.shields.io/github/release/psyplot/psy-maps.svg?style=flat-square
     :target: https://github.com/psyplot/psy-maps/releases/latest
     :alt: Latest release
 
@@ -48,12 +48,4 @@ See :ref:`plugins` for more informations on the plugins.
 
 .. |psy-reg-release| image:: https://img.shields.io/github/release/Chilipp/psy-reg.svg?style=flat-square
     :target: https://github.com/psyplot/psy-reg/releases/latest
-    :alt: Latest release
-
-.. |psyplot-conda-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/Chilipp/psyplot-conda
-    :alt: github
-
-.. |psyplot-conda-release| image:: https://img.shields.io/github/release/Chilipp/psyplot-conda.svg?style=flat-square
-    :target: https://github.com/Chilipp/psyplot-conda/releases/latest
     :alt: Latest release
