@@ -946,7 +946,7 @@ class CFDecoder(object):
                 elif coord.attrs.get('axis', '').lower() == axis:
                     ret.append(coord)
         if matched:
-            if len(matched) > 1:
+            if len(set(matched)) > 1:
                 warn("Found multiple matches for %s coordinate in the "
                      "coordinates: %s. I use %s" % (
                          axis, ', '.join([c.name for c in matched]),
