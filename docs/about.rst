@@ -56,34 +56,6 @@ What it is, and what it is not
 There are tons of software tools around for visualization, so what is special
 about psyplot? The following list should hopefully provide you some guidance.
 
-What it is not
-**************
-- it is not the fastest. If matplotlib or the standard visualization utilities
-  from R, NCL, etc. are sufficient for you, you can go with psyplot. If you
-  want to create a global map with tens of millions of grid cells, you are
-  better of using a more powerful (but more complex and in many respects less
-  flexible) GPU-based software, such as Paraview_.
-- it is not the best for interactive web-applications. Although it would be
-  pretty simple to set up a backend server with psyplot and tornado_ or Flask_,
-  for instance, it's limited to sending rastered image data around, due to the
-  `options provided by matplotlib`_. This might change in the future, when we
-  are using `other visualization backends`_.
-- it is not as fast as ncview_. psyplot (and psy-view_ in particular) are
-  written in python and therefore, we are very flexible (much more than ncview),
-  but we will never beat the speed of the (compiled) ncview software.
-- our GUI is not the most interactive one. psyplot is a `command-line-first`
-  software, i.e. we put the most effort in making the usage from command-line
-  and scripts as easy as possible. The GUI is something on top and is limited by
-  the speed and functionalities of matplotlib (which is, nevertheless, pretty
-  rich)
-- it is not made for statistical visualizations. Although there are some
-  functionalities implemented by psy-reg_, it will never beat the possibilities
-  by packages like seaborn_ or R_. The only advantage of psy-reg over these
-  other software tools, is the possibility to adapt everything using the full
-  power of matplotlib artists within and outside of the psyplot framework
-- it is not the best software for manipulating shapefiles, although some support
-  of this might come in the future.
-
 What it is
 **********
 - It is fast. Not necessarily when it comes down to being the fastest
@@ -100,7 +72,15 @@ What it is
   visualization. No GUI, independent of it's intuitiveness, can ever beat the
   speed of a scientist that knows a bit of coding and how to use the different
   formatoptions in psyplot.
-- it is very flexible (I think we made this point already).
+- it visualizes :ref:`unstructured grids <psy_maps:gallery_examples_example_ugrid.ipynb>`,
+  such as ICON or UGRID model data
+- it automatically decodes CF-conventions
+- it intuitively integrates the structure of netCDF files. So if you often
+  work with netCDF files, psyplot might be a good option
+- it is pythonic. If you are using python anyway, psyplot is worth a try and we
+  are always keen to help new users getting started.
+- it is very flexible (I think we made this point already), from command-line
+  and GUI.
 
   * We can implement tons of new visualization and data analysis techniques and
     :ref:`you can implement your own <plugins_guide>`.
@@ -111,16 +91,45 @@ What it is
   * it's modular framework allows to tackle new scientific questions and handle
     handled them in separate psyplot plugins with it's own formatoptions and
     plotting methods
-- it intuitively integrates the structure of netCDF files. So if you often
-  work with netCDF files, psyplot might be a good option
-- it is pythonic. If you are using python anyway, psyplot is worth a try and we
-  are always keen to help new users getting started.
 - it will always be free and open-source under the GPL License.
+
+What it is not
+**************
+No software can do everything, neither can psyplot. Our main focus on
+flexibility, easy command-line usage and the GUI integration inevitably comes
+with a few downsides.
+
+- it is not the fastest, because we use matplotlib to be flexible in our
+  visualization, and this runs on the CPU, rather than the GPU. But if
+  matplotlib or the standard visualization utilities from R, NCL, etc. are
+  sufficient for you, you can go with psyplot.
+- it is not the best for interactive web-applications. Although it would be
+  pretty simple to set up a backend server with psyplot and tornado_ or Flask_,
+  for instance, it's limited to sending rastered image data around, due to the
+  `options provided by matplotlib`_.
+- it is not as fast as ncview_. psyplot (and psy-view_ in particular) are
+  written in the dynamically interpreted python language (which allows the
+  combination of GUI and command-line, and the high flexibility). But we will
+  never beat the speed of the (compiled but less flexible) ncview software.
+- our GUI is not the most interactive one. psyplot is a `command-line-first`
+  software, i.e. we put the most effort in making the usage from command-line
+  and scripts as easy as possible. The GUI is something on top and is limited by
+  the speed and functionalities of matplotlib (which is, nevertheless, pretty
+  rich). But we are constantly improving the GUI, see psy-view_ for instance.
+- it is not made for statistical visualizations. We will never beat the
+  possibilities by packages like seaborn_ or R_. The only advantage of psy-reg_
+  over these other software tools, is the possibility to adapt everything using
+  the full power of matplotlib artists within and outside of the psyplot
+  framework
+- it is not the best software for manipulating shapefiles, although some support
+  of this might come in the future.
 
 .. _Paraview: https://www.paraview.org
 .. _tornado: https://www.tornadoweb.org
+.. _flask: https://flask.palletsprojects.com
 .. _options provided by matplotlib: https://matplotlib.org/3.1.1/faq/howto_faq.html#how-to-use-matplotlib-in-a-web-application-server
-.. _other visualization backends: https://github.com/psyplot/psy-view
+.. _other visualization backends: https://github.com/psyplot/psy-vtk
+.. _psy-view: https://github.com/psyplot/psy-view
 .. _ncview: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 .. _psy-reg: https://psyplot.readthedocs.io/projects/psy-reg
 .. _seaborn: https://seaborn.pydata.org
