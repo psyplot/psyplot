@@ -88,8 +88,8 @@ What it is
   * the user can do his statistical and numerical computations with software
     like xarray, numpy, scipy, etc. and then use the psyplot visualization
     methods in the same script
-  * it's modular framework allows to tackle new scientific questions and handle
-    handled them in separate psyplot plugins with it's own formatoptions and
+  * its modular framework allows to tackle new scientific questions and handle
+    them in separate psyplot plugins with it's own formatoptions and
     plotting methods
 - it will always be free and open-source under the GPL License.
 
