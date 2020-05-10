@@ -2,6 +2,17 @@ v1.2.2
 ======
 Added
 -----
+* the ``rcParams`` do now have a ``catch`` method that allows a temporary change
+  of formatoptions.
+  
+  Usage::
+
+    rcParams['some_key'] = 0
+    with rcParams.catch():
+        rcParams['some_key'] = 1
+        assert rcParams['some_key'] == 1
+    assert rcParams['some_key'] == 0
+
 * ``ArrayList.from_dataset`` (and consecutively all plotmethods) now support
   different input types for the decoder. You can pass an instance of the
   ``CFDecoder`` class, a sub class of ``CFDecoder``, or keyword arguments

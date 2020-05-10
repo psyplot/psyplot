@@ -84,6 +84,16 @@ class RcParamsTest(unittest.TestCase):
         self.assertRegex(s, r'# The documentation\n\s*some.test')
         self.assertRegex(s, r'# Another documentation\n\s*some.other_test')
 
+    def test_catch(self):
+        rc = RcParams(defaultParams={
+            'some.test': [1, lambda i: int(i), 'The documentation'],
+            'some.other_test': [2, lambda i: int(i), 'Another documentation']})
+        rc.update_from_defaultParams()
+        with rc.catch():
+            rc['some.test'] = 2
+            self.assertEqual(rc['some.test'], 2)
+        self.assertEqual(rc['some.test'], 1)
+
     @unittest.skipIf(six.PY2, 'Method not available on Python2')
     def test_error(self):
         """Test whether the correct Error is raised"""

@@ -13,6 +13,7 @@ import logging
 import re
 import inspect
 import yaml
+import contextlib
 from itertools import chain
 from collections import defaultdict
 from psyplot.warning import warn
@@ -862,6 +863,22 @@ environment variable."""
     def copy(self):
         """Make sure, the right class is retained"""
         return RcParams(self)
+
+    @contextlib.contextmanager
+    def catch(self):
+        """Context manager to reset the rcParams afterwards
+
+        Usage::
+
+            rcParams['some_key'] = 0
+            with rcParams.catch():
+                rcParams['some_key'] = 1
+                assert rcParams['some_key'] == 1
+            assert rcParams['some_key'] == 0
+        """
+        save = dict(self)
+        yield
+        super().update(save)  # reset settings
 
 
 def psyplot_fname(env_key='PSYPLOTRC', fname='psyplotrc.yml',
