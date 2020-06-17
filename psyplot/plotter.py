@@ -1484,18 +1484,18 @@ class Plotter(dict):
         fmto_groups = self._grouped_fmtos(self._sorted_by_priority(fmtos[:]))
         # if any formatoption requires a clearing of the axes is updated,
         # we reinitialize the plot
-        if self.cleared:
-            self.reinit(draw=draw)
-            update_the_others()
-            self._release_all(queue=None if queues is None else queues[1])
-            return True
-        # otherwise we update it
-        arr_draw = False
         try:
-            for priority, grouper in fmto_groups:
+            if self.cleared:
+                self.reinit(draw=draw)
+                update_the_others()
                 arr_draw = True
-                self._plot_by_priority(priority, grouper)
-            update_the_others()
+            else:
+                # otherwise we update it
+                arr_draw = False
+                for priority, grouper in fmto_groups:
+                    arr_draw = True
+                    self._plot_by_priority(priority, grouper)
+                update_the_others()
         except Exception:
             raise
         finally:
