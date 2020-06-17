@@ -19,10 +19,10 @@ install:
     - cmd: set CONDA_REPO_TOKEN=
     # conda config
     - conda config --set always_yes yes --set changeps1 no
-    - IF NOT DEFINED BUILD_STR_END (conda config --add channels chilipp) ELSE (conda config --add channels conda-forge)
-    - conda config --add channels psyplot
     - conda update -q conda
     - conda install conda-build anaconda-client
+    - IF NOT DEFINED BUILD_STR_END (conda config --add channels chilipp) ELSE (conda config --add channels conda-forge)
+    - conda config --add channels psyplot
     - conda info -a
     - conda list
     # windows config
