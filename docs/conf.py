@@ -234,14 +234,14 @@ epub_exclude_files = ['search.html']
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'pandas': ('http://pandas.pydata.org/pandas-docs/stable/', None),
-    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
+    'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
+    'numpy': ('https://numpy.org/doc/stable/', None),
     'matplotlib': ('https://matplotlib.org/', None),
     'seaborn': ('http://seaborn.pydata.org/', None),
-    'sphinx': ('http://www.sphinx-doc.org/en/stable/', None),
+    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
     'xarray': ('http://xarray.pydata.org/en/stable/', None),
     'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
-    'mpl_toolkits': ('http://matplotlib.org/basemap/', None),
+    'mpl_toolkits': ('https://matplotlib.org/basemap/', None),
     'sphinx_nbexamples': ('https://sphinx-nbexamples.readthedocs.io/en/latest/',
                           None),
     'psy_maps': (
@@ -254,7 +254,7 @@ intersphinx_mapping = {
         'https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/', None),
 }
 if six.PY3:
-    intersphinx_mapping['python'] = ('https://docs.python.org/3.6/', None)
+    intersphinx_mapping['python'] = ('https://docs.python.org/3.8/', None)
 else:
     intersphinx_mapping['python'] = ('https://docs.python.org/2.7/', None)
 
