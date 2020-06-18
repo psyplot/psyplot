@@ -425,21 +425,31 @@ class Project(ArrayList):
         the available presets, run ``psyplot -lp`` from the command-line"""
         if isinstance(preset, dict):
             config = preset
-        elif osp.exists(preset):
-            with open(preset) as f:
+        else:
+            path = Project._resolve_preset_path(preset)
+            with open(path) as f:
                 config = yaml.load(f, yaml.Loader)
+        return config
+
+    @staticmethod
+    def _resolve_preset_path(preset, if_exists=True):
+        if osp.exists(preset):
+            return preset
         else:
             confdir = get_configdir()
             presets_dir = osp.join(confdir, 'presets')
             if osp.exists(osp.join(presets_dir, preset)):
-                with open(osp.join(presets_dir, preset)) as f:
-                    config = yaml.load(f, yaml.Loader)
+                return osp.join(presets_dir, preset)
             elif osp.exists(osp.join(presets_dir, preset + '.yml')):
-                with open(osp.join(presets_dir, preset + '.yml')) as f:
-                    config = yaml.load(f, yaml.Loader)
+                return osp.exists(osp.join(presets_dir, preset + '.yml'))
             else:
-                raise ValueError(f"Could not find a preset with name {preset}")
-        return config
+                if if_exists:
+                    raise ValueError(
+                        f"Could not find a preset with name {preset}")
+                else:
+                    if not preset.endswith('.yml'):
+                        return osp.join(presets_dir, preset + '.yml')
+                    return preset
 
     @docstrings.dedent
     def load_preset(self, preset: str, **kwargs):
@@ -473,6 +483,47 @@ class Project(ArrayList):
                         fmts.update(pm_config.get(pm, {}))
                         sp.update(fmt=fmts, **kwargs)
         self.start_update()
+
+    def save_preset(self, fname=None, include_defaults=False, update=False):
+        """Save the formatoptions of this project as a preset
+
+        This method takes the formatoptions in the plotters of this project and
+        saves it as a preset file"""
+
+        def include(fmto, plotters):
+            key = fmto.key
+            for plotter in plotters:
+                if fmto.diff(plotter[key]):
+                    return False
+            return True if include_defaults else fmto.changed
+
+        if update:
+            with open(f) as f:
+                preset = yaml.load(f, yaml.Loader)
+        else:
+            preset = {}
+        plotters = self.plotters
+
+        for fmto in self._fmtos:
+            if include(fmto, plotters):
+                preset[fmto.key] = fmto.value
+
+        for pm in self.plot._plot_methods:
+            method = getattr(self.plot, pm)
+            if method.is_imported:
+                sp = getattr(self, pm)
+                plotters = sp.plotters
+                for fmto in sp._fmtos:
+                    if fmto.key not in preset and include(fmto, plotters):
+                        preset.setdefault(pm, {})
+                        preset[pm][fmto.key] = fmto.value
+        if fname is not None:
+            fname = self._resolve_preset_path(fname, False)
+            os.makedirs(osp.dirname(fname))
+            with open(fname, 'w') as f:
+                yaml.dump(preset, f)
+        else:
+            return preset
 
     @_first_main
     def extend(self, *args, **kwargs):

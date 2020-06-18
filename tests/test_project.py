@@ -56,6 +56,20 @@ def test_load_preset(project, preset, path):
         os.remove(path)
 
 
+def test_save_preset(project):
+    sp = project.plot.test_plotter(xr.Dataset({"x": (('a'), [1])}),
+                                   name=['x', 'x'])
+    assert sp.save_preset() == {}
+    assert sp.save_preset(include_defaults=True)['fmt1'] == \
+        sp.plotters[0]['fmt1']
+
+    sp[1].psy.update(fmt1='changed')
+    assert sp.save_preset() == {}
+
+    sp[0].psy.update(fmt1='changed')
+    assert sp.save_preset() == {'fmt1': 'changed'}
+
+
 class TestProject(td.TestArrayList):
     """Testclass for the :class:`psyplot.project.Project` class"""
 
