@@ -656,6 +656,54 @@ To restore your project, simply use the
     :ref:`own-scripts`)
 
 
+.. _presets:
+
+Using presets
+-------------
+You can save and load presets to reuse the formatoption settings. For instance,
+let's say temperature should always use a ``'Reds'`` cmap, the colorbar label
+should show the long name and the title should be ``'time'``. This is of course
+possible via
+
+.. ipython::
+
+    @savefig docs_presets_1.png width=4in
+    In [34]: sp = psy.plot.mapplot(
+       ....:     'demo.nc', name='t2m', cmap="Reds", clabel="%(long_name)s",
+       ....:     title='%(time)s')
+
+But instead of writing this all the time, you can also save it as a preset
+
+.. ipython::
+
+    In [35]: sp.save_preset("t2m-preset")
+
+    @suppress
+    In [35]: psy.close('all')
+
+and reload this preset either via the `preset` keyword
+
+.. ipython::
+
+    @savefig docs_presets_2.png width=4in
+    In [36]: sp = psy.plot.mapplot('demo.nc', name='t2m', preset='t2m-preset')
+
+or the :meth:`~psyplot.project.Project.load_preset` method
+
+.. ipython::
+
+    In [37]: sp.load_preset('t2m-preset')
+
+You can list the available presets from the command line
+
+.. ipython::
+
+    In [38]: !psyplot --list-presets
+
+    @suppress
+    In [37]: !rm {sp._resolve_preset_path('t2m-preset')}
+       ....: psy.close('all')
+
 .. _own-scripts:
 
 Adding your own script: The :attr:`~psyplot.plotter.Plotter.post` formatoption
