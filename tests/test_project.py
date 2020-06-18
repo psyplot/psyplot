@@ -45,6 +45,7 @@ def project():
                                           'test.yml')),
                     ("test.yml", "test.yml")])
 def test_load_preset(project, preset, path):
+    os.makedirs(osp.dirname(path), exist_ok=True)
     with open(path, 'w') as f:
         yaml.dump({"fmt1": "test", "fmt2": "this should be ignored"}, f)
     try:

@@ -519,7 +519,7 @@ class Project(ArrayList):
                         preset[pm][fmto.key] = fmto.value
         if fname is not None:
             fname = self._resolve_preset_path(fname, False)
-            os.makedirs(osp.dirname(fname))
+            os.makedirs(osp.dirname(fname), exist_ok=True)
             with open(fname, 'w') as f:
                 yaml.dump(preset, f)
         else:
