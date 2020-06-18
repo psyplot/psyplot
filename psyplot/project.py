@@ -441,7 +441,7 @@ class Project(ArrayList):
             if osp.exists(osp.join(presets_dir, preset)):
                 return osp.join(presets_dir, preset)
             elif osp.exists(osp.join(presets_dir, preset + '.yml')):
-                return osp.exists(osp.join(presets_dir, preset + '.yml'))
+                return osp.join(presets_dir, preset + '.yml')
             else:
                 if if_exists:
                     raise ValueError(
@@ -477,7 +477,7 @@ class Project(ArrayList):
                 if method.is_imported:
                     sp = getattr(self, pm)
                     if sp:
-                        valid = method.plotter_cls._get_formatoptions()
+                        valid = list(method.plotter_cls._get_formatoptions())
                         fmts = {key: val for key, val in defaults.items()
                                 if key in valid}
                         fmts.update(pm_config.get(pm, {}))
@@ -613,6 +613,7 @@ class Project(ArrayList):
     docstrings.delete_kwargs('ArrayList.from_dataset.other_parameters',
                              kwargs='kwargs')
     docstrings.keep_params('xarray.open_mfdataset.parameters', 'concat_dim')
+    docstrings.keep_params('Project._load_preset.parameters', 'preset')
 
     @_only_main
     @docstrings.get_sectionsf('Project._add_data',
@@ -727,6 +728,7 @@ class Project(ArrayList):
         else:
             axes = iter(ax)
         clear = clear or (isinstance(ax, tuple) and proj is not None)
+
         for arr in sub_project:
             plotter_cls(arr, make_plot=(not bool(share) and make_plot),
                         draw=False, ax=next(axes), clear=clear,
@@ -1884,6 +1886,7 @@ class PlotterInterface(object):
         Parameters
         ----------
         %(ProjectPlotter._add_data.parameters.no_plotter_cls)s
+        %(Project._load_preset.parameters.preset)s
 
         Other Parameters
         ----------------
@@ -1894,6 +1897,20 @@ class PlotterInterface(object):
         -------
         %(ProjectPlotter._add_data.returns)s
         """
+        preset = kwargs.pop('preset', None)
+        if preset:
+            preset = self._project_plotter.project._load_preset(preset)
+            if len(args) >= 2:
+                fmt = args[1]
+            else:
+                fmt = kwargs.setdefault('fmt', {})
+            for key, val in preset.get(self._method, {}).items():
+                fmt.setdefault(key, val)
+            valid = list(self.plotter_cls._get_formatoptions())
+            for key, val in preset.items():
+                if key in valid:
+                    fmt.setdefault(key, val)
+
         return self._project_plotter._add_data(
             self.plotter_cls, *args, **dict(chain(
                 [('prefer_list', self._prefer_list),
