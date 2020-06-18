@@ -8,6 +8,8 @@ keep reference to the main project without holding all array instances
 Furthermore this module contains an easy pyplot-like API to the current
 subproject."""
 import os
+import os.path as osp
+import yaml
 import sys
 import six
 from copy import deepcopy as _deepcopy
@@ -27,6 +29,7 @@ import numpy as np
 import psyplot
 from psyplot import rcParams, get_versions
 import psyplot.utils as utils
+from psyplot.config.rcsetup import get_configdir
 from psyplot.warning import warn, critical
 from psyplot.docstring import docstrings, dedent, safe_modulo
 import psyplot.data as psyd
@@ -395,6 +398,81 @@ class Project(ArrayList):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close(True, True, True)
+
+    @staticmethod
+    @docstrings.get_sectionsf('Project._load_preset',
+                              sections=["Parameters", "Notes"])
+    def _load_preset(preset: str):
+        """Load a preset from disk
+
+        Parameters
+        ----------
+        preset: str or dict
+            The filename or identifier of a preset. If the given `preset` is
+            the path to an existing yaml file, it will be loaded. Otherwise we
+            look up the `preset` in the psyplot configuration directory (see
+            :func:`~psyplot.config.rcsetup.get_configdir`).
+            If a dictionary is provided, we assume that this is the preset
+
+        Returns
+        -------
+        dict
+            The loaded preset
+
+        Notes
+        -----
+        An identifier is the filename without extension. If you want to list
+        the available presets, run ``psyplot -lp`` from the command-line"""
+        if isinstance(preset, dict):
+            config = preset
+        elif osp.exists(preset):
+            with open(preset) as f:
+                config = yaml.load(f, yaml.Loader)
+        else:
+            confdir = get_configdir()
+            presets_dir = osp.join(confdir, 'presets')
+            if osp.exists(osp.join(presets_dir, preset)):
+                with open(osp.join(presets_dir, preset)) as f:
+                    config = yaml.load(f, yaml.Loader)
+            elif osp.exists(osp.join(presets_dir, preset + '.yml')):
+                with open(osp.join(presets_dir, preset + '.yml')) as f:
+                    config = yaml.load(f, yaml.Loader)
+            else:
+                raise ValueError(f"Could not find a preset with name {preset}")
+        return config
+
+    @docstrings.dedent
+    def load_preset(self, preset: str, **kwargs):
+        """Load a preset from disk and apply it to the open project.
+
+        This method loads a preset and updates the corresponding plots
+
+        Parameters
+        ----------
+        %(Project._load_preset.parameters)s
+        ``**kwargs``
+            Any other parameter that shall be passed to the
+            :meth:`~psyplot.data.ArrayList.update` method
+
+        Notes
+        -----
+        %(Project._load_preset.notes)s
+        """
+        config = self._load_preset(preset)
+        plotmethods = self.plot._plot_methods
+        pm_config, defaults = utils.sort_kwargs(config, plotmethods)
+        with self.no_auto_update:
+            for pm in plotmethods:
+                method = getattr(self.plot, pm)
+                if method.is_imported:
+                    sp = getattr(self, pm)
+                    if sp:
+                        valid = method.plotter_cls._get_formatoptions()
+                        fmts = {key: val for key, val in defaults.items()
+                                if key in valid}
+                        fmts.update(pm_config.get(pm, {}))
+                        sp.update(fmt=fmts, **kwargs)
+        self.start_update()
 
     @_first_main
     def extend(self, *args, **kwargs):
@@ -1701,6 +1779,11 @@ class PlotterInterface(object):
         name = '%s.%s.%s' % (self.__module__, self.__class__.__name__,
                              self._method)
         return logging.getLogger(name)
+
+    @property
+    def is_imported(self):
+        """True if the module for this plot method has been imported already"""
+        return self.module in sys.modules
 
     @property
     def plotter_cls(self):

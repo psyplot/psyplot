@@ -3,7 +3,9 @@ import os
 import os.path as osp
 import shutil
 import six
+import pytest
 import unittest
+import yaml
 from itertools import chain
 import _base_testing as bt
 import test_data as td
@@ -13,6 +15,7 @@ import psyplot.data as psyd
 import psyplot.plotter as psyp
 import psyplot.project as psy
 import matplotlib.pyplot as plt
+from psyplot.config.rcsetup import get_configdir
 
 try:
     from cdo import Cdo
@@ -23,6 +26,34 @@ else:
     with_cdo = True
 
 remove_temp_files = True
+
+
+@pytest.fixture
+def project():
+    try:
+        psy.register_plotter('test_plotter', import_plotter=True,
+                             module='test_plotter', plotter_name='TestPlotter')
+    except ValueError:
+        pass
+    yield psy.Project()
+    for identifier in list(psy.registered_plotters):
+        psy.unregister_plotter(identifier)
+
+@pytest.mark.parametrize(
+    "preset,path", [("test", osp.join(get_configdir(), 'presets', 'test.yml')),
+                    ("test.yml", osp.join(get_configdir(), 'presets',
+                                          'test.yml')),
+                    ("test.yml", "test.yml")])
+def test_load_preset(project, preset, path):
+    with open(path, 'w') as f:
+        yaml.dump({"fmt1": "test", "fmt2": "this should be ignored"}, f)
+    try:
+        sp = project.plot.test_plotter(xr.Dataset({"x": (('a'), [1])}))
+        sp.load_preset(preset)
+        plotter = sp.plotters[0]
+        assert plotter.fmt1.value == 'test'
+    finally:
+        os.remove(path)
 
 
 class TestProject(td.TestArrayList):
