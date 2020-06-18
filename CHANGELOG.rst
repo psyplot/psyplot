@@ -2,9 +2,12 @@ v1.2.2
 ======
 Added
 -----
+* You can now save and load presets for the formatoptions of a project which
+  applies the formatoptions that you stored in a file to a specific plot method,
+  see `#24 <https://github.com/psyplot/psyplot/pull/24>`__
 * the ``rcParams`` do now have a ``catch`` method that allows a temporary change
   of formatoptions.
-  
+
   Usage::
 
     rcParams['some_key'] = 0
@@ -21,11 +24,11 @@ Added
   `check_data` method of the various plotmethods now also accept a `decoder`
   parameter, see `#22 <https://github.com/psyplot/psyplot/pull/22>`__
 * ``psyplot.data.open_dataset`` now decodes grid_mappings attributes,
-see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
+  see `#17 <https://github.com/psyplot/psyplot/pull/17>`__
 * psyplot projects now support the with syntax, e.g. something like::
 
-    with psy.plot.mapplot('file.nc') as sp:
-      sp.export('output.png')
+      with psy.plot.mapplot('file.nc') as sp:
+          sp.export('output.png')
 
   sp will be closed automatically (see `#18 <https://github.com/psyplot/psyplot/pull/18>`__)
 * the update to variables with other dimensions works now as well
