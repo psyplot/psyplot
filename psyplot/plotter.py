@@ -1781,7 +1781,7 @@ class Plotter(dict):
         Iterator over formatoptions
 
         This class method returns an iterator that contains all the
-        formatoptions descriptors that are in this class and that are defined
+        formatoption keys that are in this class and that are defined
         in the base classes
 
         Notes
@@ -1790,7 +1790,7 @@ class Plotter(dict):
         initialization, since all formatoptions are in the plotter itself.
         Just type::
 
-        >>> list(plotter)
+            >>> list(plotter)
 
         to get the formatoptions.
 
