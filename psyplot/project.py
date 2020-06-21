@@ -484,6 +484,36 @@ class Project(ArrayList):
                         sp.update(fmt=fmts, **kwargs)
         self.start_update()
 
+    @staticmethod
+    def extract_fmts_from_preset(preset: str, plotmethod: str):
+        """Extract the formatoptions for a plotmethod from a given preset
+
+        This method takes the preset and extracts the formatoptions valid for
+        the given plotmethod
+
+        Parameters
+        ----------
+        %(Project._load_preset.parameters)s
+        plotmethod: str
+            The plotmethod to use"""
+        preset = Project._load_preset(preset)
+        try:
+            plotmethod._method
+        except AttributeError:
+            method = getattr(plot, plotmethod)
+        else:
+            method = plotmethod
+            plotmethod = method._method
+
+        plotmethods = plot._plot_methods
+        pm_config, defaults = utils.sort_kwargs(preset, plotmethods)
+        valid = list(method.plotter_cls._get_formatoptions())
+        fmts = {key: val for key, val in defaults.items()
+                if key in valid}
+        fmts.update(pm_config.get(plotmethod, {}))
+        return fmts
+
+
     def save_preset(self, fname=None, include_defaults=False, update=False):
         """Save the formatoptions of this project as a preset
 

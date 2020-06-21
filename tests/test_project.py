@@ -58,6 +58,13 @@ def test_load_preset(project, preset, path):
         os.remove(path)
 
 
+def test_extract_preset(project):
+    preset = {"fmt1": "test1", "test_plotter": {"fmt2": "test2"},
+              "not_existent": 1}
+    fmts = project.extract_fmts_from_preset(preset, "test_plotter")
+    assert fmts == {"fmt1": "test1", "fmt2": "test2"}
+
+
 def test_save_preset(project):
     sp = project.plot.test_plotter(xr.Dataset({"x": (('a'), [1])}),
                                    name=['x', 'x'])
