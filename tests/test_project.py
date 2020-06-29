@@ -45,6 +45,8 @@ def project():
                                           'test.yml')),
                     ("test.yml", "test.yml")])
 def test_load_preset(project, preset, path):
+    if osp.dirname(path):
+        os.makedirs(osp.dirname(path), exist_ok=True)
     with open(path, 'w') as f:
         yaml.dump({"fmt1": "test", "fmt2": "this should be ignored"}, f)
     try:
@@ -54,6 +56,13 @@ def test_load_preset(project, preset, path):
         assert plotter.fmt1.value == 'test'
     finally:
         os.remove(path)
+
+
+def test_extract_preset(project):
+    preset = {"fmt1": "test1", "test_plotter": {"fmt2": "test2"},
+              "not_existent": 1}
+    fmts = project.extract_fmts_from_preset(preset, "test_plotter")
+    assert fmts == {"fmt1": "test1", "fmt2": "test2"}
 
 
 def test_save_preset(project):
