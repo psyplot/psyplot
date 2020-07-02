@@ -29,7 +29,7 @@ import numpy as np
 import psyplot
 from psyplot import rcParams, get_versions
 import psyplot.utils as utils
-from psyplot.config.rcsetup import get_configdir
+from psyplot.config.rcsetup import get_configdir, psyplot_fname
 from psyplot.warning import warn, critical
 from psyplot.docstring import docstrings, dedent, safe_modulo
 import psyplot.data as psyd
@@ -427,8 +427,22 @@ class Project(ArrayList):
             config = preset
         else:
             path = Project._resolve_preset_path(preset)
+            if path in rcParams['presets.trusted']:
+                loader = yaml.Loader
+            else:
+                loader = yaml.SafeLoader
             with open(path) as f:
-                config = yaml.load(f, yaml.Loader)
+                try:
+                    config = yaml.load(f, loader)
+                except yaml.constructor.ConstructorError as e:
+                    e.note = (e.note or '') + (
+                        ' You might want to add it to the trusted presets '
+                        'via\n\npsy.rcParams["presets.trusted"].append("{}")\n\n'
+                        'and run this method again. To permanently store '
+                        'this preset, edit the file at\n\n{} ').format(
+                            path, psyplot_fname())
+                    raise
+
         return config
 
     @staticmethod

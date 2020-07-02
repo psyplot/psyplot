@@ -58,6 +58,20 @@ def test_load_preset(project, preset, path):
         os.remove(path)
 
 
+def test_safe_load_preset(project, tmpdir):
+    import matplotlib.pyplot as plt
+    preset = osp.join(tmpdir, 'test.yml')
+    with open(preset, 'w') as f:
+        yaml.dump({'cmap': plt.get_cmap('Reds')}, f)
+
+    with pytest.raises(yaml.constructor.ConstructorError):
+        project.load_preset(preset)
+
+    with psy.rcParams.catch():
+        psy.rcParams['presets.trusted'].append(preset)
+        project.load_preset(preset)
+
+
 def test_extract_preset(project):
     preset = {"fmt1": "test1", "test_plotter": {"fmt2": "test2"},
               "not_existent": 1}

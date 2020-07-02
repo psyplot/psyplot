@@ -1005,6 +1005,12 @@ def validate_path_exists(s):
         raise ValueError('"%s" should be a path but it does not exist' % s)
 
 
+def validate_files_exist(l):
+    """Validate if all pathnames in a given list exists"""
+    return [validate_str(s) and validate_path_exists(s)
+            for s in l]
+
+
 def validate_dict(d):
     """Validate a dictionary
 
@@ -1186,6 +1192,11 @@ defaultParams = {
         "Plot methods that are defined by the user and overwrite those in the"
         "``'project.plotters'`` key. Use this if you want to define your own "
         "plotters without writing a plugin"],
+
+    # presets
+    'presets.trusted': [
+        [], validate_files_exist,
+        "A list of filenames with trusted presets"]
     }
 
 
