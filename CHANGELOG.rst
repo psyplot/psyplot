@@ -1,5 +1,7 @@
-v1.2.2
+v1.3.0
 ======
+New repository, presets and compatibility fixes
+
 Added
 -----
 * You can now save and load presets for the formatoptions of a project which
