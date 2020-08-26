@@ -1,3 +1,3 @@
 # version of psyplot
 
-__version__ = "1.2.2.dev0"
+__version__ = "1.3.0"
