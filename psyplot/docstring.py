@@ -60,7 +60,7 @@ class PsyplotDocstringProcessor(DocstringProcessor):
         'Possible types']
 
     @_docstrings.dedent
-    def get_sections(self, s, base, sections=[
+    def get_sections(self, s=None, base=None, sections=[
             'Parameters', 'Other Parameters', 'Possible types']):
         """
         Extract the specified sections out of the given string
