@@ -4942,6 +4942,7 @@ def _open_ds_from_store(fname, store_mod=None, store_cls=None, **kwargs):
                          for sm, sc, f in zip(store_mod, store_cls, fname)]
                 kwargs['engine'] = None
                 kwargs['lock'] = False
+                kwargs.setdefault('combine', 'nested')
                 return open_mfdataset(fname, **kwargs)
     if store_mod is not None and store_cls is not None:
         fname = _open_store(store_mod, store_cls, fname)

@@ -1368,7 +1368,8 @@ class TestArrayList(unittest.TestCase):
         self._created_files.add(fname2)
 
         # now open the mfdataset
-        ds = psyd.open_mfdataset([fname1, fname2], concat_dim='time')
+        ds = psyd.open_mfdataset([fname1, fname2], concat_dim='time',
+                                 combine='nested')
         l = self.list_class.from_dataset(ds, name=['v0'], time=[0, 1])
         self.assertEqual(
             self.list_class.from_dict(l.array_info()).array_info(),
