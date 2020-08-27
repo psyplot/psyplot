@@ -109,6 +109,14 @@ def _open_store(store_mod, store_cls, fname):
         return getattr(import_module(store_mod), store_cls)(fname)
 
 
+def _fix_times(dims):
+    # xarray 0.16 fails with pandas 1.1.0 for datetime, see
+    # https://github.com/pydata/xarray/issues/4283
+    for key, val in dims.items():
+        if np.issubdtype(np.asarray(val).dtype, np.datetime64):
+            dims[key] = to_datetime(val)
+
+
 @docstrings.get_sectionsf('setup_coords')
 @dedent
 def setup_coords(arr_names=None, sort=[], dims={}, **kwargs):
@@ -2598,11 +2606,16 @@ class InteractiveArray(InteractiveBase):
             for key, val in six.iteritems(self.arr.coords):
                 if key != 'variable':
                     dims.setdefault(key, val)
-            if any(isinstance(idx, slice) for idx in dims.values()):
-                # ignore method argument
-                res = self.base[name].sel(**dims).to_array()
-            else:
-                res = self.base[name].sel(method=method, **dims).to_array()
+            kws = dims.copy()
+            # the sel method does not work with slice objects
+            if not any(isinstance(idx, slice) for idx in dims.values()):
+                kws['method'] = method
+            try:
+                res = self.base[name].sel(**kws)
+            except KeyError:
+                _fix_times(kws)
+                res = self.base[name].sel(**kws)
+            res = res.to_array()
         if 'coordinates' in self.base[name[0]].encoding:
             res.encoding['coordinates'] = self.base[name[0]].encoding[
                 'coordinates']
@@ -2655,11 +2668,15 @@ class InteractiveArray(InteractiveBase):
             old_dims = self.arr.dims[:]
             for key, val in six.iteritems(self.arr.coords):
                 dims.setdefault(key, val)
-            if any(isinstance(idx, slice) for idx in dims.values()):
-                # ignore method argument
-                res = self.base[name].sel(**dims)
-            else:
-                res = self.base[name].sel(method=method, **dims)
+            kws = dims.copy()
+            # the sel method does not work with slice objects
+            if not any(isinstance(idx, slice) for idx in dims.values()):
+                kws['method'] = method
+            try:
+                res = self.base[name].sel(**kws)
+            except KeyError:
+                _fix_times(kws)
+                res = self.base[name].sel(**kws)
             # squeeze the 0-dimensional dimensions
             res = res.isel(**{
                 dim: 0 for i, dim in enumerate(res.dims) if (
@@ -3683,13 +3700,6 @@ class ArrayList(list):
             for dim in missing:
                 base[dim] = arr.coords[dim] = np.arange(base.dims[dim])
 
-        def fix_times(dims):
-            # xarray 0.16 fails with pandas 1.1.0 for datetime, see
-            # https://github.com/pydata/xarray/issues/4283
-            for key, val in dims.items():
-                if np.issubdtype(np.asarray(val).dtype, np.datetime64):
-                    dims[key] = to_datetime(val)
-
         if squeeze:
             def squeeze_array(arr):
                 return arr.isel(**{dim: 0 for i, dim in enumerate(arr.dims)
@@ -3749,7 +3759,7 @@ class ArrayList(list):
                 try:
                     ret = arr.sel(**kws)
                 except KeyError:
-                    fix_times(kws)
+                    _fix_times(kws)
                     ret = arr.sel(**kws)
                 ret = squeeze_array(ret)
                 ret.psy.init_accessor(arr_name=key, base=base, decoder=decoder)
