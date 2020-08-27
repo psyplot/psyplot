@@ -2063,6 +2063,7 @@ def open_mfdataset(paths, decode_cf=True, decode_times=True,
                                  decode_coords=decode_coords,
                                  decode_times=decode_times)
     ds.psy._concat_dim = kwargs.get('concat_dim')
+    ds.psy._combine = kwargs.get('combine')
     if t_format is not None:
         ds['time'] = time
     return ds
@@ -3776,7 +3777,7 @@ class ArrayList(list):
 
     @classmethod
     def _get_dsnames(cls, data, ignore_keys=['attrs', 'plotter', 'ds'],
-                     concat_dim=False):
+                     concat_dim=False, combine=False):
         """Recursive method to get all the file names out of a dictionary
         `data` created with the :meth`array_info` method"""
         def filter_ignores(item):
@@ -3784,8 +3785,10 @@ class ArrayList(list):
         if 'fname' in data:
             return {tuple(
                 [data['fname'], data['store']] +
-                ([data.get('concat_dim')] if concat_dim else []))}
+                ([data.get('concat_dim')] if concat_dim else []) +
+                ([data.get('combine')] if combine else []))}
         return set(chain(*map(partial(cls._get_dsnames, concat_dim=concat_dim,
+                                      combine=combine,
                                       ignore_keys=ignore_keys),
                               dict(filter(filter_ignores,
                                           six.iteritems(data))).values())))
@@ -3953,16 +3956,22 @@ class ArrayList(list):
         # first open all datasets if not already done
         if datasets is None:
             replace_concat_dim = 'concat_dim' not in kwargs
+            replace_combine = 'combine' not in kwargs
 
-            names_and_stores = cls._get_dsnames(d, concat_dim=True)
+            names_and_stores = cls._get_dsnames(
+                d, concat_dim=True, combine=True)
             datasets = {}
-            for fname, (store_mod, store_cls), concat_dim in names_and_stores:
+            for fname, (store_mod, store_cls), concat_dim, combine in names_and_stores:
                 fname_use = fname
                 got = True
                 if replace_concat_dim and concat_dim is not None:
                     kwargs['concat_dim'] = concat_dim
                 elif replace_concat_dim and concat_dim is None:
                     kwargs.pop('concat_dim', None)
+                if replace_combine and combine is not None:
+                    kwargs['combine'] = combine
+                elif replace_combine and combine is None:
+                    kwargs.pop('combine', None)
                 try:
                     fname_use = alternative_paths[fname]
                 except KeyError:
@@ -4177,6 +4186,8 @@ class ArrayList(list):
                             d['fname'] = tuple(safe_list(fname))
                         if arr.psy.base.psy._concat_dim is not None:
                             d['concat_dim'] = arr.psy.base.psy._concat_dim
+                        if arr.psy.base.psy._combine is not None:
+                            d['combine'] = arr.psy.base.psy._combine
                 if 'ds' in ds_description:
                     if full_ds:
                         d['ds'] = copy_obj(arr.psy.base)
@@ -4620,6 +4631,9 @@ class DatasetAccessor(object):
     #: The concatenation dimension for datasets opened with open_mfdataset
     _concat_dim = None
 
+    #: The combine method to open multiple datasets with open_mfdataset
+    _combine = None
+
     @property
     def num(self):
         """A unique number for the dataset"""
@@ -4942,7 +4956,6 @@ def _open_ds_from_store(fname, store_mod=None, store_cls=None, **kwargs):
                          for sm, sc, f in zip(store_mod, store_cls, fname)]
                 kwargs['engine'] = None
                 kwargs['lock'] = False
-                kwargs.setdefault('combine', 'nested')
                 return open_mfdataset(fname, **kwargs)
     if store_mod is not None and store_cls is not None:
         fname = _open_store(store_mod, store_cls, fname)
