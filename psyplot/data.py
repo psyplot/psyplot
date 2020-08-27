@@ -3683,6 +3683,13 @@ class ArrayList(list):
             for dim in missing:
                 base[dim] = arr.coords[dim] = np.arange(base.dims[dim])
 
+        def fix_times(dims):
+            # xarray 0.16 fails with pandas 1.1.0 for datetime, see
+            # https://github.com/pydata/xarray/issues/4283
+            for key, val in dims.items():
+                if np.issubdtype(np.asarray(val).dtype, np.datetime64):
+                    dims[key] = to_datetime(val)
+
         if squeeze:
             def squeeze_array(arr):
                 return arr.isel(**{dim: 0 for i, dim in enumerate(arr.dims)
@@ -3735,12 +3742,16 @@ class ArrayList(list):
                     dims.update({
                         key: default_slice for key in set(arr.dims).difference(
                             dims) if key != 'variable'})
+                kws = dims.copy()
                 # the sel method does not work with slice objects
-                if any(isinstance(idx, slice) for idx in dims.values()):
-                    # ignore method argument
-                    ret = squeeze_array(arr.sel(**dims))
-                else:
-                    ret = squeeze_array(arr.sel(method=method, **dims))
+                if not any(isinstance(idx, slice) for idx in dims.values()):
+                    kws['method'] = method
+                try:
+                    ret = arr.sel(**kws)
+                except KeyError:
+                    fix_times(kws)
+                    ret = arr.sel(**kws)
+                ret = squeeze_array(ret)
                 ret.psy.init_accessor(arr_name=key, base=base, decoder=decoder)
                 return maybe_load(ret)
         if 'name' not in kwargs:
