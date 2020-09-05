@@ -10,7 +10,7 @@ from psyplot.data import (
     ArrayList, InteractiveArray, InteractiveList, open_dataset, open_mfdataset)
 from psyplot.version import __version__
 
-__author__ = "Philipp Sommer (philipp.sommer@unil.ch)"
+__author__ = "Philipp Sommer (philipp.sommer@hzg.de)"
 
 logger = _logging.getLogger(__name__)
 logger.debug(
