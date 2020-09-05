@@ -1,12 +1,10 @@
 name: psyplot_docs
 channels:
-    - psyplot/label/gh-migration
-    - psyplot/label/dev
     - psyplot/label/master
     - psyplot
     - chilipp/label/conda-forge
 dependencies:
-    - python>3.5
+    - python>3.6
     - dask
     - xarray
     - netCDF4
