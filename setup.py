@@ -58,7 +58,7 @@ setup(name='psyplot',
       packages=find_packages(exclude=['docs', 'tests*', 'examples']),
       install_requires=[
           'matplotlib',
-          'docrep',
+          'docrep>=0.3',
           'funcargparse',
           'xarray',
           'PyYAML>=4.2b4'
