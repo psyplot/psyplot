@@ -1,6 +1,4 @@
-"""Compatibility module for different python versions
-
-That's a test"""
+"""Compatibility module for different python versions"""
 import os
 import six
 import inspect
