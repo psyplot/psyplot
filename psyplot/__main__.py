@@ -177,7 +177,7 @@ def get_parser(create=True):
     psyplot.parser.FuncArgParser
         The :class:`argparse.ArgumentParser` instance"""
     #: The parse that is used to parse arguments from the command line
-    epilog = docstrings.get_sections(docstrings.dedents("""
+    epilog = docstrings.get_sections(docstrings.dedent("""
         Examples
         --------
 
