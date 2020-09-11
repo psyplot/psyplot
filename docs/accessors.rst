@@ -27,6 +27,7 @@ It can be used to visualize the variables in the dataset directly from the
 dataset itself, e.g.
 
 .. ipython::
+    :okwarning:
 
     In [1]: import psyplot
 
