@@ -226,7 +226,7 @@ Example
 
 .. code:: python
 
-    @docstrings.get_sectionsf('new_function')
+    @docstrings.get_sections(base='new_function')
     def new_function(a=1):
         """Make some cool new feature
 

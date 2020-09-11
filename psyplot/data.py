@@ -117,7 +117,7 @@ def _fix_times(dims):
             dims[key] = to_datetime(val)
 
 
-@docstrings.get_sectionsf('setup_coords')
+@docstrings.get_sections(base='setup_coords')
 @dedent
 def setup_coords(arr_names=None, sort=[], dims={}, **kwargs):
     """
@@ -265,7 +265,7 @@ t_patterns = {
     }
 
 
-@docstrings.get_sectionsf('get_tdata')
+@docstrings.get_sections(base='get_tdata')
 @dedent
 def get_tdata(t_format, files):
     """
@@ -420,7 +420,7 @@ class Signal(object):
 get_fname_funcs = [_get_fname_netCDF4, _get_fname_scipy, _get_fname_nio]
 
 
-@docstrings.get_sectionsf('get_filename_ds')
+@docstrings.get_sections(base='get_filename_ds')
 @docstrings.dedent
 def get_filename_ds(ds, dump=True, paths=None, **kwargs):
     """
@@ -578,7 +578,7 @@ class CFDecoder(object):
         CFDecoder._registry.insert(pos, decoder_class)
 
     @classmethod
-    @docstrings.get_sectionsf('CFDecoder.can_decode', sections=['Parameters',
+    @docstrings.get_sections(base='CFDecoder.can_decode', sections=['Parameters',
                                                                 'Returns'])
     def can_decode(cls, ds, var):
         """
@@ -627,7 +627,7 @@ class CFDecoder(object):
         return CFDecoder(ds, *args, **kwargs)
 
     @staticmethod
-    @docstrings.get_sectionsf('CFDecoder.decode_coords', sections=[
+    @docstrings.get_sections(base='CFDecoder.decode_coords', sections=[
         'Parameters', 'Returns'])
     def decode_coords(ds, gridfile=None):
         """
@@ -674,10 +674,10 @@ class CFDecoder(object):
             ds._coord_names.update(extra_coords.intersection(ds.variables))
         return ds
 
-    @docstrings.get_sectionsf('CFDecoder.is_unstructured', sections=[
+    @docstrings.get_sections(base='CFDecoder.is_unstructured', sections=[
         'Parameters', 'Returns'])
 
-    @docstrings.get_sectionsf(
+    @docstrings.get_sections(base=
         'CFDecoder.get_cell_node_coord',
         sections=['Parameters', 'Returns'])
     @dedent
@@ -806,7 +806,7 @@ class CFDecoder(object):
                     "Not {0}!".format(str(nans)))
             return bounds
 
-    @docstrings.get_sectionsf('CFDecoder._check_unstructured_bounds', sections=[
+    @docstrings.get_sections(base='CFDecoder._check_unstructured_bounds', sections=[
         'Parameters', 'Returns'])
     @docstrings.dedent
     def _check_unstructured_bounds(self, var, coords=None, axis='x', nans=None):
@@ -992,7 +992,7 @@ class CFDecoder(object):
                      PsyPlotRuntimeWarning)
             return get_coord(tname, raise_error=False)
 
-    @docstrings.get_sectionsf("CFDecoder.get_x", sections=[
+    @docstrings.get_sections(base="CFDecoder.get_x", sections=[
         'Parameters', 'Returns'])
     @dedent
     def get_x(self, var, coords=None):
@@ -1059,7 +1059,7 @@ class CFDecoder(object):
         # otherwise we return the coordinate in the last position
         return var.dims[-1]
 
-    @docstrings.get_sectionsf("CFDecoder.get_y", sections=[
+    @docstrings.get_sections(base="CFDecoder.get_y", sections=[
         'Parameters', 'Returns'])
     @dedent
     def get_y(self, var, coords=None):
@@ -1130,7 +1130,7 @@ class CFDecoder(object):
             return var.dims[-1]
         return var.dims[-2 if var.ndim > 1 else -1]
 
-    @docstrings.get_sectionsf("CFDecoder.get_z", sections=[
+    @docstrings.get_sections(base="CFDecoder.get_z", sections=[
         'Parameters', 'Returns'])
     @dedent
     def get_z(self, var, coords=None):
@@ -1208,7 +1208,7 @@ class CFDecoder(object):
             return var.dims[icheck]
         return None
 
-    @docstrings.get_sectionsf("CFDecoder.get_t", sections=[
+    @docstrings.get_sections(base="CFDecoder.get_t", sections=[
         'Parameters', 'Returns'])
     @dedent
     def get_t(self, var, coords=None):
@@ -1347,7 +1347,7 @@ class CFDecoder(object):
             if label in self.ds.indexes)
         return ret
 
-    @docstrings.get_sectionsf('CFDecoder.get_plotbounds', sections=[
+    @docstrings.get_sections(base='CFDecoder.get_plotbounds', sections=[
         'Parameters', 'Returns'])
     @dedent
     def get_plotbounds(self, coord, kind=None, ignore_shape=False):
@@ -1425,7 +1425,7 @@ class CFDecoder(object):
     docstrings.keep_params('CFDecoder._check_unstructured_bounds.parameters',
                            'nans')
 
-    @docstrings.get_sectionsf('CFDecoder.get_triangles', sections=[
+    @docstrings.get_sections(base='CFDecoder.get_triangles', sections=[
         'Parameters', 'Returns'])
     @docstrings.dedent
     def get_triangles(self, var, coords=None, convert_radian=True,
@@ -1526,7 +1526,7 @@ class CFDecoder(object):
             return interp2d(x, y, coord, kind=kind, copy=False)(new_x, new_y)
 
     @classmethod
-    @docstrings.get_sectionsf('CFDecoder._decode_ds')
+    @docstrings.get_sections(base='CFDecoder._decode_ds')
     @docstrings.dedent
     def _decode_ds(cls, ds, gridfile=None, decode_coords=True,
                    decode_times=True):
@@ -1966,7 +1966,7 @@ docstrings.get_sections(inspect.cleandoc(
 docstrings.delete_params('xarray.open_dataset.parameters', 'engine')
 
 
-@docstrings.get_sectionsf('open_dataset')
+@docstrings.get_sections(base='open_dataset')
 @docstrings.dedent
 def open_dataset(filename_or_obj, decode_cf=True, decode_times=True,
                  decode_coords=True, engine=None, gridfile=None, **kwargs):
@@ -2175,7 +2175,7 @@ class InteractiveBase(object):
     _plotter = None
 
     @property
-    @docstrings.save_docstring('InteractiveBase._njobs')
+    @docstrings.get_docstring(base='InteractiveBase._njobs')
     @dedent
     def _njobs(self):
         """
@@ -2207,7 +2207,7 @@ class InteractiveBase(object):
 
     _no_auto_update = None
 
-    @docstrings.get_sectionsf('InteractiveBase')
+    @docstrings.get_sections(base='InteractiveBase')
     @dedent
     def __init__(self, plotter=None, arr_name='arr0', auto_update=None):
         """
@@ -2237,7 +2237,7 @@ class InteractiveBase(object):
                 for i in range(n):
                     queue.task_done()
 
-    @docstrings.get_sectionsf('InteractiveBase._register_update')
+    @docstrings.get_sections(base='InteractiveBase._register_update')
     @dedent
     def _register_update(self, replot=False, fmt={}, force=False,
                          todefault=False):
@@ -2272,7 +2272,7 @@ class InteractiveBase(object):
             self.plotter._register_update(replot=self.replot, fmt=fmt,
                                           force=force, todefault=todefault)
 
-    @docstrings.get_sectionsf('InteractiveBase.start_update',
+    @docstrings.get_sections(base='InteractiveBase.start_update',
                               sections=['Parameters', 'Returns'])
     @dedent
     def start_update(self, draw=None, queues=None):
@@ -2313,7 +2313,7 @@ class InteractiveBase(object):
 
     docstrings.keep_params('InteractiveBase.start_update.parameters', 'draw')
 
-    @docstrings.get_sectionsf('InteractiveBase.update',
+    @docstrings.get_sections(base='InteractiveBase.update',
                               sections=['Parameters', 'Notes'])
     @docstrings.dedent
     def update(self, fmt={}, replot=False, draw=None, auto_update=False,
@@ -2529,7 +2529,7 @@ class InteractiveArray(InteractiveBase):
 
     docstrings.keep_params('setup_coords.parameters', 'dims')
 
-    @docstrings.get_sectionsf('InteractiveArray._register_update')
+    @docstrings.get_sections(base='InteractiveArray._register_update')
     @docstrings.dedent
     def _register_update(self, method='isel', replot=False, dims={}, fmt={},
                          force=False, todefault=False):
@@ -2828,7 +2828,7 @@ class InteractiveArray(InteractiveBase):
             raise
         return InteractiveBase.start_update(self, draw=draw, queues=queues)
 
-    @docstrings.get_sectionsf('InteractiveArray.update',
+    @docstrings.get_sections(base='InteractiveArray.update',
                               sections=['Parameters', 'Notes'])
     @docstrings.dedent
     def update(self, method='isel', dims={}, fmt={}, replot=False,
@@ -2926,7 +2926,7 @@ class InteractiveArray(InteractiveBase):
     def to_interactive_list(self):
         return InteractiveList([self], arr_name=self.arr_name)
 
-    @docstrings.get_sectionsf('InteractiveArray.get_coord')
+    @docstrings.get_sections(base='InteractiveArray.get_coord')
     @docstrings.dedent
     def get_coord(self, what, base=False):
         """
@@ -3491,7 +3491,7 @@ class ArrayList(list):
             ([arr] if not isinstance(arr, InteractiveList) else arr.arrays
              for arr in self)))
 
-    @docstrings.get_sectionsf('ArrayList.rename', sections=[
+    @docstrings.get_sections(base='ArrayList.rename', sections=[
         'Parameters', 'Raises'])
     @dedent
     def rename(self, arr, new_name=True):
@@ -3543,7 +3543,7 @@ class ArrayList(list):
     docstrings.keep_params('ArrayList.rename.parameters', 'new_name')
     docstrings.keep_params('InteractiveBase.parameters', 'auto_update')
 
-    @docstrings.get_sectionsf('ArrayList')
+    @docstrings.get_sections(base='ArrayList')
     @docstrings.dedent
     def __init__(self, iterable=[], attrs={}, auto_update=None, new_name=True):
         """
@@ -3585,7 +3585,7 @@ class ArrayList(list):
     docstrings.keep_params('InteractiveArray.update.parameters', 'method')
 
     @classmethod
-    @docstrings.get_sectionsf('ArrayList.from_dataset', sections=[
+    @docstrings.get_sections(base='ArrayList.from_dataset', sections=[
         'Parameters', 'Other Parameters', 'Returns'])
     @docstrings.dedent
     def from_dataset(cls, base, method='isel', default_slice=None,
@@ -3856,7 +3856,7 @@ class ArrayList(list):
                           map(func, six.itervalues(data))))
 
     @classmethod
-    @docstrings.get_sectionsf('ArrayList.from_dict')
+    @docstrings.get_sections(base='ArrayList.from_dict')
     @docstrings.dedent
     def from_dict(cls, d, alternative_paths={}, datasets=None,
                   pwd=None, ignore_keys=['attrs', 'plotter', 'ds'],
@@ -4059,7 +4059,7 @@ class ArrayList(list):
 
     docstrings.delete_params('get_filename_ds.parameters', 'ds', 'dump')
 
-    @docstrings.get_sectionsf('ArrayList.array_info')
+    @docstrings.get_sections(base='ArrayList.array_info')
     @docstrings.dedent
     def array_info(self, dump=None, paths=None, attrs=True,
                    standardize_dims=True, pwd=None, use_rel_paths=True,
@@ -4249,7 +4249,7 @@ class ArrayList(list):
             arr.psy._register_update(method=method, replot=replot, dims=dims,
                                      fmt=fmt, force=force, todefault=todefault)
 
-    @docstrings.get_sectionsf('ArrayList.start_update')
+    @docstrings.get_sections(base='ArrayList.start_update')
     @dedent
     def start_update(self, draw=None):
         """
@@ -4304,7 +4304,7 @@ class ArrayList(list):
     docstrings.keep_params('InteractiveArray.update.parameters',
                            'auto_update')
 
-    @docstrings.get_sectionsf('ArrayList.update')
+    @docstrings.get_sections(base='ArrayList.update')
     @docstrings.dedent
     def update(self, method='isel', dims={}, fmt={}, replot=False,
                auto_update=False, draw=None, force=False, todefault=False,

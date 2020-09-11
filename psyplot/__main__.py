@@ -48,7 +48,7 @@ def main(args=None):
         parser.parse_known2func(args)
 
 
-@docstrings.get_sectionsf('make_plot')
+@docstrings.get_sections(base='make_plot')
 @docstrings.dedent
 def make_plot(fnames=[], name=[], dims=None, plot_method=None,
               output=None, project=None, engine=None, formatoptions=None,

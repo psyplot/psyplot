@@ -47,7 +47,7 @@ def append_original_doc(parent, num=0):
 
 _docstrings = DocstringProcessor()
 
-_docstrings.get_sectionsf('DocstringProcessor.get_sections')(
+_docstrings.get_sections(base='DocstringProcessor.get_sections')(
         dedent(DocstringProcessor.get_sections))
 
 

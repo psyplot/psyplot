@@ -175,7 +175,7 @@ def is_remote_url(path):
     return bool(re.search(r'^https?\://', path))
 
 
-@docstrings.get_sectionsf('check_key', sections=['Parameters', 'Returns',
+@docstrings.get_sections(base='check_key', sections=['Parameters', 'Returns',
                                                  'Raises'])
 @dedent
 def check_key(key, possible_keys, raise_error=True,
@@ -280,7 +280,7 @@ def hashable(val):
         return val
 
 
-@docstrings.get_sectionsf('join_dicts')
+@docstrings.get_sections(base='join_dicts')
 def join_dicts(dicts, delimiter=None, keep_all=False):
     """Join multiple dictionaries into one
 

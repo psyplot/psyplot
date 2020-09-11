@@ -122,7 +122,7 @@ class FormatoptionMeta(ABCMeta):
         """Assign an automatic documentation to the formatoption"""
         doc = dct.get('__doc__')
         if doc is not None:
-            dct['__doc__'] = docstrings.dedents(doc)
+            dct['__doc__'] = docstrings.dedent(doc)
         new_cls = super(FormatoptionMeta, cls).__new__(cls, clsname, bases,
                                                        dct)
         for childname in chain(new_cls.children, new_cls.dependencies,
@@ -417,7 +417,7 @@ class Formatoption(object):
         """
         return self.value
 
-    @docstrings.get_sectionsf('Formatoption')
+    @docstrings.get_sections(base='Formatoption')
     @dedent
     def __init__(self, key, plotter=None, index_in_list=None,
                  additional_children=[], additional_dependencies=[],
@@ -494,7 +494,7 @@ class Formatoption(object):
         with instance.no_validation:
             instance[self.key] = fmto.default
 
-    @docstrings.get_sectionsf('Formatoption.set_value')
+    @docstrings.get_sections(base='Formatoption.set_value')
     @dedent
     def set_value(self, value, validate=True, todefault=False):
         """
@@ -1127,7 +1127,7 @@ class Plotter(dict):
 
     docstrings.keep_params('InteractiveBase.parameters', 'auto_update')
 
-    @docstrings.get_sectionsf('Plotter')
+    @docstrings.get_sections(base='Plotter')
     @docstrings.dedent
     def __init__(self, data=None, ax=None, auto_update=None, project=None,
                  draw=False, make_plot=True, clear=False,
@@ -1254,7 +1254,7 @@ class Plotter(dict):
             name='formatoption keyword', *args, **kwargs)
 
     @classmethod
-    @docstrings.get_sectionsf('Plotter.check_data', sections=['Parameters',
+    @docstrings.get_sections(base='Plotter.check_data', sections=['Parameters',
                                                               'Returns'])
     @dedent
     def check_data(cls, name, dims, is_unstructured):
@@ -1374,7 +1374,7 @@ class Plotter(dict):
     docstrings.keep_params('InteractiveBase._register_update.parameters',
                            'force', 'todefault')
 
-    @docstrings.get_sectionsf('Plotter._register_update')
+    @docstrings.get_sections(base='Plotter._register_update')
     @docstrings.dedent
     def _register_update(self, fmt={}, replot=False, force=False,
                          todefault=False):
@@ -1811,10 +1811,10 @@ class Plotter(dict):
         return unique_everseen(chain(fmtos, *map(base_fmtos, cls.__mro__)))
 
     docstrings.keep_types('check_key.parameters', 'kwargs',
-                          '``\*args,\*\*kwargs``')
+                          r'``\*args,\*\*kwargs``')
 
     @classmethod
-    @docstrings.get_sectionsf('Plotter._enhance_keys')
+    @docstrings.get_sections(base='Plotter._enhance_keys')
     @docstrings.dedent
     def _enhance_keys(cls, keys=None, *args, **kwargs):
         """
@@ -1864,7 +1864,7 @@ class Plotter(dict):
         return keys
 
     @classmethod
-    @docstrings.get_sectionsf(
+    @docstrings.get_sections(base=
         'Plotter.show_keys', sections=['Parameters', 'Returns',
                                        'Other Parameters'])
     @docstrings.dedent
@@ -2090,7 +2090,7 @@ class Plotter(dict):
         base_str = self._get_rc_strings()
         # to make sure that the '.' is not interpreted as a regex pattern,
         # we specify the pattern_base by ourselves
-        pattern_base = map(lambda s: s.replace('.', '\.'), base_str)
+        pattern_base = map(lambda s: s.replace('.', r'\.'), base_str)
         # pattern for valid keys being all formatoptions in this plotter
         pattern = '(%s)(?=$)' % '|'.join(self._get_formatoptions())
         self._rc = rcParams.find_and_replace(base_str, pattern=pattern,
@@ -2170,7 +2170,7 @@ class Plotter(dict):
         keys.difference_update(fmto_groups)
         return keys
 
-    @docstrings.get_sectionsf('Plotter.share')
+    @docstrings.get_sections(base='Plotter.share')
     @docstrings.dedent
     def share(self, plotters, keys=None, draw=None, auto_update=False):
         """
@@ -2261,7 +2261,7 @@ class Plotter(dict):
                                update_other=False)
         self.update(force=keys, auto_update=auto_update, draw=draw)
 
-    @docstrings.get_sectionsf('Plotter.unshare_me')
+    @docstrings.get_sections(base='Plotter.unshare_me')
     @docstrings.dedent
     def unshare_me(self, keys=None, auto_update=False, draw=None,
                    update_other=True):

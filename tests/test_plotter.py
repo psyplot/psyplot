@@ -54,7 +54,7 @@ class TestFormatoption(psyp.Formatoption):
 
 
 @docstrings.save_docstring('_testing.SimpleFmt')
-@docstrings.get_sectionsf('_testing.SimpleFmt')
+@docstrings.get_sections(base='_testing.SimpleFmt')
 class SimpleFmt(TestFormatoption):
     """
     Just a simple formatoption to check the sharing possibility

@@ -82,7 +82,7 @@ def _update_versions():
             _versions.update(get_versions(key=lambda s: s == plugin))
 
 
-@docstrings.get_sectionsf('multiple_subplots')
+@docstrings.get_sections(base='multiple_subplots')
 @docstrings.dedent
 def multiple_subplots(rows=1, cols=1, maxplots=None, n=1, delete=True,
                       for_maps=False, *args, **kwargs):
@@ -325,7 +325,7 @@ class Project(ArrayList):
         """The set of dataset names in this instance"""
         return {t[0] for t in self._get_dsnames(self.array_info()) if t[0]}
 
-    @docstrings.get_sectionsf('Project')
+    @docstrings.get_sections(base='Project')
     @docstrings.dedent
     def __init__(self, *args, **kwargs):
         """
@@ -346,7 +346,7 @@ class Project(ArrayList):
             super(Project, self).__init__(*args, **kwargs)
 
     @classmethod
-    @docstrings.get_sectionsf('Project._register_plotter')
+    @docstrings.get_sections(base='Project._register_plotter')
     @dedent
     def _register_plotter(cls, identifier, module, plotter_name,
                           plotter_cls=None):
@@ -400,7 +400,7 @@ class Project(ArrayList):
         self.close(True, True, True)
 
     @staticmethod
-    @docstrings.get_sectionsf('Project._load_preset',
+    @docstrings.get_sections(base='Project._load_preset',
                               sections=["Parameters", "Notes"])
     def _load_preset(preset: str):
         """Load a preset from disk
@@ -599,7 +599,7 @@ class Project(ArrayList):
 
     __call__.__doc__ = ArrayList.__call__.__doc__
 
-    @docstrings.get_sectionsf('Project.close')
+    @docstrings.get_sections(base='Project.close')
     @dedent
     def close(self, figs=True, data=False, ds=False, remove_only=False):
         """
@@ -660,7 +660,7 @@ class Project(ArrayList):
     docstrings.keep_params('Project._load_preset.parameters', 'preset')
 
     @_only_main
-    @docstrings.get_sectionsf('Project._add_data',
+    @docstrings.get_sections(base='Project._add_data',
                               sections=['Parameters', 'Other Parameters',
                                         'Returns'])
     @docstrings.dedent
@@ -831,7 +831,7 @@ class Project(ArrayList):
     docstrings.keep_params('join_dicts.parameters', 'delimiter')
     docstrings.keep_params('join_dicts.parameters', 'keep_all')
 
-    @docstrings.get_sectionsf('Project.joined_attrs')
+    @docstrings.get_sections(base='Project.joined_attrs')
     @docstrings.with_indent(8)
     def joined_attrs(self, delimiter=', ', enhanced=True, plot_data=False,
                      keep_all=True):
@@ -869,7 +869,7 @@ class Project(ArrayList):
         return utils.join_dicts(all_attrs, delimiter=delimiter,
                                 keep_all=keep_all)
 
-    @docstrings.get_sectionsf('Project.format_string')
+    @docstrings.get_sections(base='Project.format_string')
     @docstrings.with_indent(8)
     def format_string(self, s, use_time=False, format_args=None, *args,
                       **kwargs):
@@ -1107,7 +1107,7 @@ class Project(ArrayList):
 
     docstrings.delete_params('ArrayList.array_info.parameters', 'pwd', 'copy')
 
-    @docstrings.get_sectionsf('Project.save_project')
+    @docstrings.get_sections(base='Project.save_project')
     @docstrings.dedent
     def save_project(self, fname=None, pwd=None, pack=False, **kwargs):
         """
@@ -1322,7 +1322,7 @@ class Project(ArrayList):
     docstrings.keep_params('Project._add_data.parameters', 'clear')
 
     @classmethod
-    @docstrings.get_sectionsf('Project.load_project')
+    @docstrings.get_sections(base='Project.load_project')
     @docstrings.dedent
     def load_project(cls, fname, auto_update=None, make_plot=True,
                      draw=False, alternative_axes=None, main=False,
@@ -1514,7 +1514,7 @@ class Project(ArrayList):
         return obj
 
     @classmethod
-    @docstrings.get_sectionsf('Project.scp')
+    @docstrings.get_sections(base='Project.scp')
     @dedent
     def scp(cls, project):
         """
@@ -1721,7 +1721,7 @@ class ProjectPlotter(object):
             "%s\n    %s" % t for t in six.iteritems(self._plot_methods))
         return print_func(s)
 
-    @docstrings.get_sectionsf('ProjectPlotter._add_data',
+    @docstrings.get_sections(base='ProjectPlotter._add_data',
                               sections=['Parameters', 'Other Parameters',
                                         'Returns'])
     @docstrings.dedent
@@ -1747,7 +1747,7 @@ class ProjectPlotter(object):
         return self.project._add_data(*args, **kwargs)
 
     @classmethod
-    @docstrings.get_sectionsf('ProjectPlotter._register_plotter')
+    @docstrings.get_sections(base='ProjectPlotter._register_plotter')
     @docstrings.dedent
     def _register_plotter(cls, identifier, module, plotter_name,
                           plotter_cls=None, summary='', prefer_list=False,
@@ -1824,7 +1824,7 @@ class ProjectPlotter(object):
     def _gen_doc(cls, summary, full_name, identifier, example_call, doc_str,
                  show_examples):
         """Generate the documentation docstring for a PlotMethod"""
-        ret = docstrings.dedents("""
+        ret = docstrings.dedent("""
             %s
 
             This plotting method adds data arrays and plots them via
@@ -1843,7 +1843,7 @@ class ProjectPlotter(object):
     @classmethod
     def _gen_examples(cls, identifier):
         """Generate examples how to axes the formatoption docs"""
-        return docstrings.dedents("""
+        return docstrings.dedent("""
             Examples
             --------
             To explore the formatoptions and their documentations, use the
@@ -2171,7 +2171,7 @@ class DatasetPlotter(ProjectPlotter):
     docstrings.delete_params('ProjectPlotter._add_data.parameters',
                              'filename_or_obj')
 
-    @docstrings.get_sectionsf('ProjectPlotter._add_data',
+    @docstrings.get_sections(base='ProjectPlotter._add_data',
                               sections=['Parameters', 'Other Parameters',
                                         'Returns'])
     @docstrings.dedent
@@ -2203,7 +2203,7 @@ class DatasetPlotter(ProjectPlotter):
         """Generate the documentation docstring for a PlotMethod"""
         # leave out the first argument
         example_call = ', '.join(map(str.strip, example_call.split(',')[1:]))
-        ret = docstrings.dedents("""
+        ret = docstrings.dedent("""
             %s
 
             This plotting method adds data arrays and plots them via
@@ -2222,7 +2222,7 @@ class DatasetPlotter(ProjectPlotter):
     @classmethod
     def _gen_examples(cls, identifier):
         """Generate examples how to axes the formatoption docs"""
-        return docstrings.dedents("""
+        return docstrings.dedent("""
             Examples
             --------
             To explore the formatoptions and their documentations, use the
@@ -2320,7 +2320,7 @@ class DataArrayPlotter(ProjectPlotter):
         """Generate the documentation docstring for a PlotMethod"""
         # leave out the first argument
         example_call = ', '.join(map(str.strip, example_call.split(',')[1:]))
-        ret = docstrings.dedents("""
+        ret = docstrings.dedent("""
             %s
 
             This plotting method visualizes the data via a
@@ -2339,7 +2339,7 @@ class DataArrayPlotter(ProjectPlotter):
     @classmethod
     def _gen_examples(cls, identifier):
         """Generate examples how to axes the formatoption docs"""
-        return docstrings.dedents("""
+        return docstrings.dedent("""
             Examples
             --------
             To explore the formatoptions and their documentations, use the
@@ -2368,7 +2368,7 @@ if with_cdo:
 
     class Cdo(_CdoBase):
 
-        __doc__ = docstrings.dedents(
+        __doc__ = docstrings.dedent(
             """
             Subclass of the original cdo.Cdo class in the cdo.py module
 

@@ -23,7 +23,7 @@ from psyplot.docstring import docstrings, dedent, safe_modulo
 from psyplot.config.logsetup import _get_home
 
 
-@docstrings.get_sectionsf('safe_list')
+@docstrings.get_sections(base='safe_list')
 @dedent
 def safe_list(l):
     """Function to create a list
@@ -117,7 +117,7 @@ base rcParams dictionary."""
     #: :class:`bool`. If True, changes are traced back to the :attr:`base` dict
     trace = False
 
-    @docstrings.get_sectionsf('SubDict.add_base_str')
+    @docstrings.get_sections(base='SubDict.add_base_str')
     @dedent
     def add_base_str(self, base_str, pattern='.+', pattern_base=None,
                      append=True):
@@ -167,7 +167,7 @@ base rcParams dictionary."""
 
     docstrings.delete_params('SubDict.add_base_str.parameters', 'append')
 
-    @docstrings.get_sectionsf('SubDict')
+    @docstrings.get_sections(base='SubDict')
     @docstrings.dedent
     def __init__(self, base, base_str, pattern='.+', pattern_base=None,
                  trace=False, replace=True):
