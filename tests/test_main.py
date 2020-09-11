@@ -141,6 +141,8 @@ class TestCommandLine(unittest.TestCase):
         proc.wait()
         self.assertFalse(proc.poll(), msg=proc.stderr.read())
         d = yaml.load(proc.stdout.read())
+        d.pop('psyplot_gui', None)
+        ref.pop('psyplot_gui', None)
         self.assertEqual(d, ref)
 
     def test_list_plugins(self):
@@ -150,7 +152,7 @@ class TestCommandLine(unittest.TestCase):
                          stdout=spr.PIPE, stderr=spr.PIPE)
         proc.wait()
         self.assertFalse(proc.poll(), msg=proc.stderr.read())
-        d = yaml.load(proc.stdout.read())
+        d = yaml.load(proc.stdout.read(), yaml.Loader)
         self.assertEqual(d, ref)
 
     def test_list_plot_methods(self):
@@ -166,5 +168,5 @@ class TestCommandLine(unittest.TestCase):
             except:
                 pass
         ref = psy.plot._plot_methods
-        d = yaml.load(proc.stdout.read())
+        d = yaml.load(proc.stdout.read(), yaml.Loader)
         self.assertEqual(d, ref)
