@@ -50,6 +50,8 @@ setup(name='psyplot',
       keywords='visualization netcdf raster cartopy earth-sciences',
       project_urls={
           'Documentation': 'https://psyplot.readthedocs.io',
+          'Source': 'https://github.com/psyplot/psyplot',
+          'Tracker': 'https://github.com/psyplot/psyplot/issues',
       },
       url='https://github.com/psyplot/psyplot',
       author='Philipp Sommer',

@@ -19,10 +19,10 @@ build:
 
 requirements:
   host:
-  - python
+  - python >=3.6
   - pip
   run:
-  - python
+  - python >=3.6
   - matplotlib
   - funcargparse
   - xarray
@@ -59,7 +59,7 @@ test:
 
 about:
   home: https://github.com/psyplot/psyplot
-  license: GPL-2.0
+  license: GPL-2.0-only
   license_family: GPL
   license_file: LICENSE
   summary: Python package for interactive data visualization
