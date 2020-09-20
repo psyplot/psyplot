@@ -23,6 +23,7 @@ requirements:
   - pip
   run:
   - python >=3.6
+  - docrep >=0.3
   - matplotlib
   - funcargparse
   - xarray
