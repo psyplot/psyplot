@@ -28,6 +28,20 @@ else:
 remove_temp_files = True
 
 
+def get_col_num(ax):
+    try:
+        return ax.get_subplotspec().colspan.start
+    except AttributeError:
+        return ax.colNum
+
+
+def get_row_num(ax):
+    try:
+        return ax.get_subplotspec().rowspan.start
+    except AttributeError:
+        return ax.rowNum
+
+
 @pytest.fixture
 def project():
     try:
@@ -145,13 +159,13 @@ class TestProject(td.TestArrayList):
                                    ax=(2, 2, 1), fmt1='test')
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[0].psy.ax.rowNum, 0)
-        self.assertEqual(sp[0].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
         self.assertEqual(sp[0].psy.ax.numCols, 2)
         self.assertEqual(sp[0].psy.ax.numRows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(sp[1].psy.ax.rowNum, 0)
-        self.assertEqual(sp[1].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
         self.assertEqual(sp[1].psy.ax.numCols, 2)
         self.assertEqual(sp[1].psy.ax.numRows, 2)
         arr_names = sp.arr_names
@@ -165,13 +179,13 @@ class TestProject(td.TestArrayList):
         sp = psy.Project.load_project(fname)
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[0].psy.ax.rowNum, 0)
-        self.assertEqual(sp[0].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
         self.assertEqual(sp[0].psy.ax.numCols, 2)
         self.assertEqual(sp[0].psy.ax.numRows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(sp[1].psy.ax.rowNum, 0)
-        self.assertEqual(sp[1].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
         self.assertEqual(sp[1].psy.ax.numCols, 2)
         self.assertEqual(sp[1].psy.ax.numRows, 2)
 
@@ -186,13 +200,13 @@ class TestProject(td.TestArrayList):
                                    ax=(2, 2, 1), fmt1='test')
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[0].psy.ax.rowNum, 0)
-        self.assertEqual(sp[0].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
         self.assertEqual(sp[0].psy.ax.numCols, 2)
         self.assertEqual(sp[0].psy.ax.numRows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(sp[1].psy.ax.rowNum, 0)
-        self.assertEqual(sp[1].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
         self.assertEqual(sp[1].psy.ax.numCols, 2)
         self.assertEqual(sp[1].psy.ax.numRows, 2)
         arr_names = sp.arr_names
@@ -207,13 +221,13 @@ class TestProject(td.TestArrayList):
         sp = psy.Project.load_project(fname, alternative_axes=axes.ravel())
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[0].psy.ax.rowNum, 0)
-        self.assertEqual(sp[0].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
         self.assertEqual(sp[0].psy.ax.numCols, 2)
         self.assertEqual(sp[0].psy.ax.numRows, 1)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[1].psy.ax.rowNum, 0)
-        self.assertEqual(sp[1].psy.ax.colNum, 1)
+        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[1].psy.ax), 1)
         self.assertEqual(sp[1].psy.ax.numCols, 2)
         self.assertEqual(sp[1].psy.ax.numRows, 1)
 
@@ -228,13 +242,13 @@ class TestProject(td.TestArrayList):
                                    ax=(2, 2, 1), fmt1='test')
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[0].psy.ax.rowNum, 0)
-        self.assertEqual(sp[0].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
         self.assertEqual(sp[0].psy.ax.numCols, 2)
         self.assertEqual(sp[0].psy.ax.numRows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(sp[1].psy.ax.rowNum, 0)
-        self.assertEqual(sp[1].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
         self.assertEqual(sp[1].psy.ax.numCols, 2)
         self.assertEqual(sp[1].psy.ax.numRows, 2)
         arr_names = sp.arr_names
@@ -250,13 +264,13 @@ class TestProject(td.TestArrayList):
         sp = psy.Project.load_project(fname, datasets=[ds], new_fig=False)
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[0].psy.ax.rowNum, 0)
-        self.assertEqual(sp[0].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
         self.assertEqual(sp[0].psy.ax.numCols, 2)
         self.assertEqual(sp[0].psy.ax.numRows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(sp[1].psy.ax.rowNum, 0)
-        self.assertEqual(sp[1].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
         self.assertEqual(sp[1].psy.ax.numCols, 2)
         self.assertEqual(sp[1].psy.ax.numRows, 2)
         self.assertIs(sp[0].psy.base, ds)
@@ -273,13 +287,13 @@ class TestProject(td.TestArrayList):
                                    ax=(2, 2, 1), fmt1='test')
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[0].psy.ax.rowNum, 0)
-        self.assertEqual(sp[0].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
         self.assertEqual(sp[0].psy.ax.numCols, 2)
         self.assertEqual(sp[0].psy.ax.numRows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(sp[1].psy.ax.rowNum, 0)
-        self.assertEqual(sp[1].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
         self.assertEqual(sp[1].psy.ax.numCols, 2)
         self.assertEqual(sp[1].psy.ax.numRows, 2)
         arr_names = sp.arr_names
@@ -296,13 +310,13 @@ class TestProject(td.TestArrayList):
             new_fig=False)
         self.assertEqual(len(sp), 2)
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(sp[0].psy.ax.rowNum, 0)
-        self.assertEqual(sp[0].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
         self.assertEqual(sp[0].psy.ax.numCols, 2)
         self.assertEqual(sp[0].psy.ax.numRows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(sp[1].psy.ax.rowNum, 0)
-        self.assertEqual(sp[1].psy.ax.colNum, 0)
+        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
         self.assertEqual(sp[1].psy.ax.numCols, 2)
         self.assertEqual(sp[1].psy.ax.numRows, 2)
         self.assertEqual(psyd.get_filename_ds(sp[0].psy.base)[0],
