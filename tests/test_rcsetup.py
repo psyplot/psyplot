@@ -15,7 +15,7 @@ class SubDictTest(unittest.TestCase):
         """
         d = {'test.1': 'test1', 'test.2': 'test2',
              'test1.1': 'test11', 'test1.2': 'test12'}
-        sub = SubDict(d, 'test.', pattern_base='test\.')
+        sub = SubDict(d, 'test.', pattern_base=r'test\.')
         self.assertIn('1', sub)
         self.assertIn('2', sub)
         self.assertEqual(sub['1'], 'test1')
@@ -30,7 +30,7 @@ class SubDictTest(unittest.TestCase):
         """
         d = {'test.1': 'test1', 'test.2': 'test2',
              'test1.1': 'test11', 'test1.2': 'test12'}
-        sub = SubDict(d, 'test.', pattern_base='test\.')
+        sub = SubDict(d, 'test.', pattern_base=r'test\.')
         sub['test'] = 5  # test something that is not traced back to d
         self.assertNotIn('test.1', sub)
         self.assertIn('1', sub)
@@ -49,7 +49,7 @@ class SubDictTest(unittest.TestCase):
         """Test the backtracing to the origin dictionary"""
         d = {'test.1': 'test1', 'test.2': 'test2',
              'test1.1': 'test11', 'test1.2': 'test12'}
-        sub = SubDict(d, 'test.', pattern_base='test\.', trace=True)
+        sub = SubDict(d, 'test.', pattern_base=r'test\.', trace=True)
         self.assertIn('1', sub)
         sub['1'] = 'change in d'
         sub['test.3'] = 'test3'  # new item
