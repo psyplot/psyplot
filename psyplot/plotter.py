@@ -919,7 +919,7 @@ class PostProcessing(Formatoption):
         if value is None:
             return
         if not self.plotter.enable_post:
-            self.logger.warn(
+            warn(
                 "Post processing is disabled. Set the ``enable_post`` "
                 "attribute to True to run the script")
         else:
