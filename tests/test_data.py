@@ -1432,7 +1432,7 @@ class AbsoluteTimeTest(unittest.TestCase, AlmostArrayEqualMixin):
     def _test_ds(self):
         import xarray as xr
         import pandas as pd
-        time = xr.Coordinate('time', pd.to_datetime(
+        time = xr.Variable('time', pd.to_datetime(
             ['1979-01-01T12:00:00', '1979-01-01T18:00:00',
              '1979-01-01T18:30:00']),
             encoding={'units': 'day as %Y%m%d.%f'})
