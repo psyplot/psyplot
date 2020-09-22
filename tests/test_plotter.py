@@ -53,7 +53,7 @@ class TestFormatoption(psyp.Formatoption):
         self.removed = True
 
 
-@docstrings.save_docstring('_testing.SimpleFmt')
+@docstrings.get_docstring(base='_testing.SimpleFmt')
 @docstrings.get_sections(base='_testing.SimpleFmt')
 class SimpleFmt(TestFormatoption):
     """
