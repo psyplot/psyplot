@@ -2753,7 +2753,7 @@ class InteractiveArray(InteractiveBase):
         londiff_sort = np.sort(londiff)
         thresh = 360.-londiff_sort[-2]
         itemindex = len(lonsin) - np.where(londiff >= thresh)[0]
-        if itemindex:
+        if itemindex.size:
             # check to see if cyclic (wraparound) point included
             # if so, remove it.
             if np.abs(lonsin[0]-lonsin[-1]) < 1.e-4:
