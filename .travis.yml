@@ -83,7 +83,8 @@ install:
         echo "Configuring conda."
         conda config --set always_yes yes --set changeps1 no
         if [[ ${BUILD_STR_END} == "cf" ]]; then
-            conda config --add channels conda-forge
+            conda config --add channels conda-forge;
+            ARGS="gdal="
         else
             conda config --add channels chilipp
         fi
@@ -94,7 +95,7 @@ install:
         export GIT_BRANCH=$TRAVIS_BRANCH;
         conda config --add channels psyplot/label/${TRAVIS_BRANCH};
       fi
-    - python ci/setup_append.py ci/conda-recipe xarray=${XARRAY_VERSION}
+    - python ci/setup_append.py ci/conda-recipe xarray=${XARRAY_VERSION} ${ARGS}
     - if [[ $USE_PIP == true ]]; then
         python -m pip install . -r ci/requirements.txt;
       fi

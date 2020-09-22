@@ -34,7 +34,6 @@ test:
     - pytest
     - codecov
     - pytest-cov >=2.6.1
-    - gdal
     - pyqt  # [osx]
     - netcdf4
     - dask
