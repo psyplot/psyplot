@@ -58,7 +58,7 @@ class TestCommandLine(unittest.TestCase):
 
     def test_get_parser(self):
         parser = main.get_parser()
-        args = inspect.getargspec(main.make_plot)[0]
+        args = inspect.getfullargspec(main.make_plot)[0]
         for arg in args:
             self.assertIn(arg, parser.unfinished_arguments,
                           msg='Missing ' + arg)
@@ -140,7 +140,7 @@ class TestCommandLine(unittest.TestCase):
                          stdout=spr.PIPE, stderr=spr.PIPE)
         proc.wait()
         self.assertFalse(proc.poll(), msg=proc.stderr.read())
-        d = yaml.load(proc.stdout.read())
+        d = yaml.load(proc.stdout.read(), yaml.Loader)
         d.pop('psyplot_gui', None)
         ref.pop('psyplot_gui', None)
         self.assertEqual(d, ref)

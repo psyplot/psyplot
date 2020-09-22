@@ -676,7 +676,7 @@ class PlotterTest(unittest.TestCase):
             fmt_clear = ClearingFormatoption('fmt_clear')
             fmt_remove = AnotherFormatoption('fmt_remove')
         import matplotlib.pyplot as plt
-        ax = plt.axes()
+        ax = plt.axes(label="new axis")
         ax.plot([6, 7])
 
         plotter = ThisTestPlotter()
