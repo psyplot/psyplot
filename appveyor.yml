@@ -5,11 +5,11 @@ environment:
 
   matrix:
     - PYTHON_VERSION: "3.7"
-      XARRAY_VERSION: "0.14"
+      XARRAY_VERSION: "0.15"
       BUILD_STR_END: cf
     - PYTHON_VERSION: "3.7"
     - PYTHON_VERSION: "3.8"
-      XARRAY_VERSION: "0.15"
+      XARRAY_VERSION: "0.16"
       BUILD_STR_END: cf
 
 install:
