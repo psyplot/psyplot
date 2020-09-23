@@ -248,7 +248,10 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
                 msg="Slice %s for dimension %s is wrong!" % (dims[dim], dim))
         # test with unknown dimensions
         if xr_version[:2] >= (0, 9):
-            ds = ds.drop_vars('time')
+            try:
+                ds = ds.drop_vars('time')
+            except AttributeError:  # xarray <=0.13
+                ds = ds.drop('time')
             arr = ds.t2m[1:, 1]
             arr.psy.init_accessor(base=ds)
             if not six.PY2:
