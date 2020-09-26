@@ -2378,7 +2378,7 @@ class InteractiveArray(InteractiveBase):
                     ret = self.isel(variable=i).to_dataset(
                         name=self.arr.coords['variable'].values[i])
                     try:
-                        return ret.drop('variable')
+                        return ret.drop_vars('variable')
                     except ValueError:  # 'variable' Variable not defined
                         pass
                     return ret
