@@ -91,6 +91,11 @@ install:
         conda config --add channels psyplot
         conda update -q conda
         conda install conda-build anaconda-client conda-verify
+    # HACK: tkinter is deleting the wrong thread so we are using pyqt
+    # see https://bugs.python.org/issue39093
+    - if [[ $XARRAY_VERSION == "0.13" ]]; then
+          ARGS="${ARGS} pyqt=";
+      fi
     - if [[ $TRAVIS_TAG == "" ]]; then
         export GIT_BRANCH=$TRAVIS_BRANCH;
         conda config --add channels psyplot/label/${TRAVIS_BRANCH};
