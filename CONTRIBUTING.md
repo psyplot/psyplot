@@ -32,6 +32,7 @@ This project and everyone participating in it is governed by the [psyplot Code o
 `psyplot` is just the framework that allows interactive data analysis and visualization. Much of the functionality however is implemented by other packages. What package is the correct one for your bug report/feature request, can be determined by the following list
 
 * [psyplot-gui](https://github.com/psyplot/psyplot-gui/issues): Everything specific to the graphical user interface
+* [psy-view](https://github.com/psyplot/psy-view/issues): Everything specific to the psy-view graphical user interface
 * [psy-simple](https://github.com/psyplot/psy-simple/issues): Everything concerning, e.g. the `lineplot`, `plot2d`, `density` or `vector` plot methods
 * [psy-maps](https://github.com/psyplot/psy-maps/issues): Everything concerning, e.g. the `mapplot`, `mapvector` `mapcombined` plot methods
 * [psy-reg](https://github.com/psyplot/psy-reg/issues): Everything concerning, e.g. the `linreg` or `densityreg` plot methods

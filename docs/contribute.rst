@@ -32,6 +32,8 @@ report/feature request, can be determined by the following list
 
 -  `psyplot-gui <https://github.com/psyplot/psyplot-gui/issues>`__:
    Everything specific to the graphical user interface
+- `psy-view <https://github.com/psyplot/psy-view/issues>`__:
+  Everything specific to the psy-view graphical user interface
 -  `psy-simple <https://github.com/psyplot/psy-simple/issues>`__:
    Everything concerning, e.g. the ``lineplot``, ``plot2d``, ``density``
    or ``vector`` plot methods
