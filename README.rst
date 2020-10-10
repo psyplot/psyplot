@@ -134,13 +134,14 @@ Sommer, P. S.: The psyplot interactive visualization framework,
 *The Journal of Open Source Software*, 2, doi:10.21105/joss.00363,
 https://doi.org/10.21105/joss.00363, 2017.
 
-Furthermore, each release of psyplot and it's :ref:`subprojects <projects>` is
+Furthermore, each release of psyplot and it's subprojects_ is
 associated with a DOI using zenodo.org_. If you want to cite a specific
 version or plugin, please refer to the `releases page of psyplot` or the
 releases page of the corresponding subproject.
 
 
 .. _the Journal of Open Source Software: http://joss.theoj.org/
+.. _subprojects: https://psyplot.readthedocs.io/en/latest/projects.html
 .. _zenodo.org: https://zenodo.org/
 .. _releases page of psyplot: https://github.com/psyplot/psyplot/releases/
 
