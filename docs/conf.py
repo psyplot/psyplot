@@ -49,6 +49,8 @@ warnings.filterwarnings('ignore', message=r"\s*examples.directory")
 warnings.filterwarnings('ignore', message='numpy.dtype size changed')
 warnings.filterwarnings(
     'ignore', message='Using an implicitly registered datetime converter')
+warnings.filterwarnings(
+    'ignore', message=r"\s*The on_mappable_changed function")
 
 # -- General configuration ------------------------------------------------
 
