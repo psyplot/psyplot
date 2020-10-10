@@ -27,7 +27,8 @@ The ultimate goal is to help scientists in their daily work by providing a
 flexible visualization tool that can be enhanced by their own visualization
 scripts. ``psyplot`` can be used via command line and with the
 graphical user interface (GUI) from the
-:ref:`psyplot-gui <psyplot_gui:psyplot-gui>` module.
+:ref:`psyplot-gui <psyplot_gui:psyplot-gui>` and
+:ref:`psy-view <psy_view:psy-view>` module.
 
 If you want more motivation: Have a look into the :ref:`about` section.
 

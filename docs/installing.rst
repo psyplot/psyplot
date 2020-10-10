@@ -27,7 +27,7 @@ We highly recommend to use conda_ for installing psyplot. After having
 downloaded the installer from anaconda_ or miniconda_, you can install psyplot
 and the optional plugins (see  :ref:`optional_deps`) via::
 
-    $ conda install -c conda-forge psy-maps psyplot-gui psy-reg netCDF4
+    $ conda install -c conda-forge psy-view psy-reg
 
 If you only want to install the core, i.e. the raw framework, run::
 
@@ -92,6 +92,8 @@ Optional dependencies
 We furthermore recommend to use
 
 - :ref:`psyplot-gui <psyplot_gui:install>`: A graphical user interface to psyplot
+- :ref:`psy-view <psy_view:install>`: An ncview-like interface based on psyplot
+  and psy-maps
 - :ref:`psy-simple <psy_simple:install>`: A psyplot plugin to make simple plots
 - :ref:`psy-maps <psy_maps:install>`: A psyplot plugin for visualizing data on a
   map

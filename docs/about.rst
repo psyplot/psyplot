@@ -138,10 +138,13 @@ with a few downsides.
 
 About the author
 ----------------
-I, (`Philipp Sommer`_), work as a Data Scientist at the Helmholtz-Zentrum
-Geesthacht (Germany) in the Helmholtz Coastal Data Center. Checkout my homepage
+I, (`Philipp Sommer`_), work as a Data Scientist at the
+`Helmholtz-Zentrum Geesthacht, Centre for Materials and Coastal Research (HZG)`
+(Germany) in the `Helmholtz Coastal Data Center (HCDC)`. Checkout my homepage
 if you want to know more at philipp-s-sommer.de_
 
+.. _Helmholtz Coastal Data Center (HCDC): https://hcdc.hzg.de
+.. _Helmholtz-Zentrum Geesthacht, Centre for Materials and Coastal Research (HZG): https://hzg.de
 .. _Philipp Sommer: http://www.philipp-s-sommer.de
 .. _philipp-s-sommer.de: http://www.philipp-s-sommer.de
 
