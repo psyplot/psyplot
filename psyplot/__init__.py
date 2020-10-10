@@ -8,7 +8,11 @@ from psyplot.config.rcsetup import rcParams
 import psyplot.config as config
 from psyplot.data import (
     ArrayList, InteractiveArray, InteractiveList, open_dataset, open_mfdataset)
-from psyplot.version import __version__
+
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
+
 
 __author__ = "Philipp S. Sommer"
 __copyright__ = "Copyright 2015 - 2020, Philipp S. Sommer"

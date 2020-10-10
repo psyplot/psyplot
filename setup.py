@@ -1,7 +1,19 @@
+import os
 import os.path as osp
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
+
+
+if os.getenv("READTHEDOCS") == "True":
+    # to make versioneer working, we need to unshallow this repo
+    # because RTD does a checkout with --depth 50
+    import subprocess as spr
+    rootdir = osp.dirname(__file__)
+    spr.call(["git", "-C", rootdir, "fetch", "--unshallow", "origin"])
+
+
+import versioneer
 
 
 class PyTest(TestCommand):
@@ -19,6 +31,9 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
+version = versioneer.get_version()
+
+
 def readme():
     with open('README.rst') as f:
         return f.read()
@@ -30,9 +45,10 @@ with open(osp.join('psyplot', 'version.py')) as f:
 
 
 setup(name='psyplot',
-      version=__version__,
+      version=version,
       description='Python package for interactive data visualization',
       long_description=readme(),
+      long_description_content_type="text/x-rst",
       classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

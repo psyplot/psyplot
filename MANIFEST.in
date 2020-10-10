@@ -2,3 +2,5 @@ include README.rst
 include LICENSE
 include psyplot/plugin-template-files/*
 include psyplot/plugin-template-files/plugin_template/*
+include versioneer.py
+include psyplot/_version.py
