@@ -52,6 +52,8 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
           - |version| |conda| |github|
         * - implementations
           - |supported-versions| |supported-implementations|
+        * - get in touch
+          - |gitter| |mailing-list| |issues|
 
     .. |docs| image:: http://readthedocs.org/projects/psyplot/badge/?version=latest
         :alt: Documentation Status
@@ -97,6 +99,18 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         :target: https://github.com/psyplot/psyplot/releases/latest
         :alt: Latest github release
 
+    .. |gitter| image:: https://img.shields.io/gitter/room/psyplot/community.svg?style=flat
+        :target: https://gitter.im/psyplot/community
+        :alt: Gitter
+
+    .. |mailing-list| image:: https://img.shields.io/badge/join-mailing%20list-brightgreen.svg?style=flat
+        :target: https://www.listserv.dfn.de/sympa/subscribe/psyplot
+        :alt: DFN mailing list
+
+    .. |issues| image:: https://img.shields.io/github/issues-raw/psyplot/psyplot.svg?style=flat
+        :target: https://github.com/psyplot/psyplot/issues
+        :alt: GitHub issues
+
 .. end-badges
 
 
@@ -132,6 +146,24 @@ Examples
     psy_maps
     psy_reg
 
+
+Get in touch
+------------
+Any quesions? Do not hessitate to get in touch with the psyplot developers.
+
+- Create an issue at the `bug tracker`_
+- Chat with the developers in out `channel on gitter`_
+- Subscribe to the `mailing list`_ and ask for support
+
+See also the `code of conduct`_, and our
+:ref:`contribution guide <how-to-contribute>`_ for more information and a guide
+about good bug reports.
+
+.. _bug tracker: https://github.com/psyplot/psyplot
+.. _channel on gitter: https://gitter.im/psyplot/community
+.. _mailing list: https://www.listserv.dfn.de/sympa/subscribe/psyplot
+.. _code of conduct: https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md
+.. _contribution guide: https://github.com/psyplot/psyplot/blob/master/CONTRIBUTING.md
 
 .. _citation:
 
