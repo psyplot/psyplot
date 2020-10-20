@@ -1480,7 +1480,7 @@ def get_version():
     return get_versions()["version"]
 
 
-def get_cmdclass():
+def get_cmdclass(cmdclass=None):
     """Get the custom setuptools/distutils subclasses used by Versioneer."""
     if "versioneer" in sys.modules:
         del sys.modules["versioneer"]
@@ -1497,7 +1497,7 @@ def get_cmdclass():
         # happens, we protect the child from the parent's versioneer too.
         # Also see https://github.com/warner/python-versioneer/issues/52
 
-    cmds = {}
+    cmds = {} if cmdclass is None else cmdclass.copy()
 
     # we add "version" to both distutils and setuptools
     from distutils.core import Command

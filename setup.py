@@ -43,6 +43,7 @@ def readme():
 with open(osp.join('psyplot', 'version.py')) as f:
     exec(f.read())
 
+cmdclass = versioneer.get_cmdclass({'test': PyTest})
 
 setup(name='psyplot',
       version=version,
@@ -88,7 +89,7 @@ setup(name='psyplot',
           ]},
       include_package_data=True,
       tests_require=['pytest'],
-      cmdclass={'test': PyTest},
+      cmdclass=cmdclass,
       entry_points={'console_scripts': [
           'psyplot=psyplot.__main__:main',
           'psyplot-plugin=psyplot.plugin_template:main']},
