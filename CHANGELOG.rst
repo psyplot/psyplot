@@ -1,3 +1,11 @@
+v1.3.1
+======
+
+Fixed
+-----
+- 3D bounds of coordinate are not interpreted as unstructured anymore (see
+  `#29 <https://github.com/psyplot/psyplot/pull/29>`__
+
 v1.3.0
 ======
 New repository, presets and compatibility fixes
