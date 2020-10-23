@@ -852,7 +852,7 @@ class CFDecoder(object):
         xcoord = self.get_x(var)
         if xcoord is not None:
             bounds = self._get_coord_cell_node_coord(xcoord)
-            if bounds is not None and bounds.shape[-1] > 2:
+            if bounds is not None and bounds.ndim == 2 and bounds.shape[-1] > 2:
                 return True
 
     @docstrings.dedent
