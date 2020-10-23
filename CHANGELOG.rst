@@ -4,7 +4,7 @@ v1.3.1
 Fixed
 -----
 - 3D bounds of coordinate are not interpreted as unstructured anymore (see
-  `#29 <https://github.com/psyplot/psyplot/pull/29>`__
+  `660c703 <https://github.com/psyplot/psyplot/commit/660c70303ae3181c03d78a6f984d07fe6e886c07>`__
 
 v1.3.0
 ======
