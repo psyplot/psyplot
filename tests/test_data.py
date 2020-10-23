@@ -295,6 +295,13 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
         xbounds = decoder.get_cell_node_coord(var, axis='x')
         self.assertEqual(xbounds.shape, (np.prod(var.shape), 4))
 
+    def test_is_unstructured_2D_bounds(self):
+        """Test that 3D bounds are not interpreted as unstructured"""
+        with psyd.open_dataset(
+                os.path.join(bt.test_dir, "rotated-pole-test.nc")) as ds:
+            decoder = psyd.CFDecoder(ds)
+            self.assertFalse(decoder.is_unstructured(ds.psy["HSURF"]))
+
     def test_is_circumpolar(self):
         """Test whether the is_circumpolar method works"""
         ds = psyd.open_dataset(os.path.join(bt.test_dir,
