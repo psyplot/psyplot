@@ -1,3 +1,10 @@
+v1.3.2
+======
+Fixed
+-----
+- The ``get_xname``-like methods of the decoder have been fixed if they get a
+  variable without any dimensions. See `#30 <https://github.com/psyplot/psyplot/pull/30>`__
+
 v1.3.1
 ======
 
