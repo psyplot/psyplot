@@ -1057,7 +1057,8 @@ class CFDecoder(object):
                      PsyPlotRuntimeWarning)
             return dimlist[0]
         # otherwise we return the coordinate in the last position
-        return var.dims[-1]
+        if var.dims:
+            return var.dims[-1]
 
     @docstrings.get_sections(base="CFDecoder.get_y", sections=[
         'Parameters', 'Returns'])
@@ -1126,9 +1127,10 @@ class CFDecoder(object):
             return dimlist[0]
         # otherwise we return the coordinate in the last or second last
         # position
-        if self.is_unstructured(var):
-            return var.dims[-1]
-        return var.dims[-2 if var.ndim > 1 else -1]
+        if var.dims:
+            if self.is_unstructured(var):
+                return var.dims[-1]
+            return var.dims[-2 if var.ndim > 1 else -1]
 
     @docstrings.get_sections(base="CFDecoder.get_z", sections=[
         'Parameters', 'Returns'])
@@ -1200,12 +1202,13 @@ class CFDecoder(object):
                      PsyPlotRuntimeWarning)
             return dimlist[0]
         # otherwise we return the coordinate in the third last position
-        is_unstructured = self.is_unstructured(var)
-        icheck = -2 if is_unstructured else -3
-        min_dim = abs(icheck) if 'variable' not in var.dims else abs(icheck-1)
-        if var.ndim >= min_dim and var.dims[icheck] != self.get_tname(
-                var, coords):
-            return var.dims[icheck]
+        if var.dims:
+            is_unstructured = self.is_unstructured(var)
+            icheck = -2 if is_unstructured else -3
+            min_dim = abs(icheck) if 'variable' not in var.dims else abs(icheck-1)
+            if var.ndim >= min_dim and var.dims[icheck] != self.get_tname(
+                    var, coords):
+                return var.dims[icheck]
         return None
 
     @docstrings.get_sections(base="CFDecoder.get_t", sections=[
