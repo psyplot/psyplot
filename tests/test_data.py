@@ -150,6 +150,46 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
         check_ds(circ_name)
         ds.close()
 
+    def test_xname_no_dims(self):
+        """Test the get_xname method for a variable without dimensions"""
+        da = xr.DataArray(1)
+        self.assertIsNone(da.psy.get_dim('x'))
+
+    def test_yname_no_dims(self):
+        """Test the get_yname method for a variable without dimensions"""
+        da = xr.DataArray(1)
+        self.assertIsNone(da.psy.get_dim('y'))
+
+    def test_zname_no_dims(self):
+        """Test the get_zname method for a variable without dimensions"""
+        da = xr.DataArray(1)
+        self.assertIsNone(da.psy.get_dim('z'))
+
+    def test_tname_no_dims(self):
+        """Test the get_tname method for a variable without dimensions"""
+        da = xr.DataArray(1)
+        self.assertIsNone(da.psy.get_dim('t'))
+
+    def test_xcoord_no_dims(self):
+        """Test the get_x method for a variable without dimensions"""
+        da = xr.DataArray(1)
+        self.assertIsNone(da.psy.get_coord('x'))
+
+    def test_ycoord_no_dims(self):
+        """Test the get_y method for a variable without dimensions"""
+        da = xr.DataArray(1)
+        self.assertIsNone(da.psy.get_coord('y'))
+
+    def test_zcoord_no_dims(self):
+        """Test the get_z method for a variable without dimensions"""
+        da = xr.DataArray(1)
+        self.assertIsNone(da.psy.get_coord('z'))
+
+    def test_tcoord_no_dims(self):
+        """Test the get_t method for a variable without dimensions"""
+        da = xr.DataArray(1)
+        self.assertIsNone(da.psy.get_coord('t'))
+
     def _test_coord(self, func_name, name, uname=None, name2d=False,
                     circ_name=None):
         def check_ds(name):
