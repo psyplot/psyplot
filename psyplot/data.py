@@ -1645,20 +1645,36 @@ class CFDecoder(object):
             dims[name_map[dim]] = dims.pop(dim)
         return dims
 
+    def clear_cache(self):
+        """Clear any cached data.
+
+        The default method does nothing but can be reimplemented by subclasses
+        to clear data has been computed. """
+        pass
+
 
 class UGridDecoder(CFDecoder):
     """
-    Decoder for UGrid data sets
+    Decoder for UGrid data sets"""
 
-    Warnings
-    --------
-    Currently only triangles are supported."""
+    #: mapping from grid name to the :class:`gridded.pyugrid.ugrid.UGrid`
+    # object representing it
+    _grids = {}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._grids = {}
+
+    def clear_cache(self):
+        """Clear the cache and remove the UGRID instances."""
+        self._grids.clear()
 
     def is_unstructured(self, *args, **kwargs):
         """Reimpletemented to return always True. Any ``*args`` and ``**kwargs``
         are ignored"""
         return True
 
+    @docstrings.get_sections(base="UGridDecoder.get_mesh")
     def get_mesh(self, var, coords=None):
         """Get the mesh variable for the given `var`
 
@@ -1680,6 +1696,109 @@ class UGridDecoder(CFDecoder):
         if coords is None:
             coords = self.ds.coords
         return coords.get(mesh, self.ds.coords.get(mesh))
+
+    @docstrings.with_indent(8)
+    def get_ugrid(self, var, coords=None, loc="infer"):
+        """Get the :class:`~gridded.pyugrid.ugrid.UGrid` mesh object.
+
+        This method creates a :class:`gridded.pyugrid.ugrid.UGrid` object for
+        a given variable, depending on the corresponding ``'mesh'`` attribute.
+
+        Parameters
+        ----------
+        %(UGridDecoder.get_mesh.parameters)s
+        dual: {"infer", "node", "edge", "face"}
+            If "node" or "edge", the dual grid will be computed.
+
+        Returns
+        -------
+        gridded.pyugrid.ugrid.UGrid
+            The UGrid object representing the mesh.
+        """
+        from gridded.pyugrid.ugrid import UGrid
+
+        def get_coord(cname, raise_error=True):
+            try:
+                ret = coords[cname]
+            except KeyError:
+                if cname not in self.ds.coords:
+                    if raise_error:
+                        raise
+                    return None
+                else:
+                    ret = self.ds.coords[cname]
+                    try:
+                        idims = var.psy.idims
+                    except AttributeError:  # got xarray.Variable
+                        idims = {}
+                    ret = ret.isel(**{
+                        d: sl for d, sl in idims.items() if d in ret.dims}
+                    )
+            if "start_index" in ret.attrs:
+                return ret.values - int(ret.start_index)
+            else:
+                return ret.values
+
+        mesh = self.get_mesh(var, coords)
+
+        if mesh.name in self._grids:
+            grid = self._grids[mesh.name]
+        else:
+            required_parameters = ["faces"]
+
+            parameters = {
+                "faces": "face_node_connectivity",
+                "face_face_connectivity": "face_face_connectivity",
+                "edges": "edge_node_connectivity",
+                "boundaries": "boundary_node_connectivity",
+                "face_coordinates": "face_coordinates",
+                "edge_coordinates": "edge_coordinates",
+                "boundary_coordinates": "boundary_coordinates",
+            }
+
+            x_nodes, y_nodes = self.get_nodes(mesh, coords)
+
+            kws = {
+                "node_lon": x_nodes, "node_lat": y_nodes, "mesh_name": mesh.name
+            }
+
+            coords = coords or {}
+
+            for key, attr in parameters.items():
+                if attr in mesh.attrs:
+                    kws[key] = get_coord(
+                        mesh.attrs[attr], key in required_parameters
+                    )
+
+            # now we have to turn NaN into masked integer arrays
+            connectivity_parameters = [
+                "faces", "face_face_connectivity", "edges", "boundaries"
+            ]
+            for param in connectivity_parameters:
+                if kws.get(param) is not None:
+                    arr = kws[param]
+                    mask = np.isnan(arr)
+                    if mask.any():
+                        arr = np.where(mask, -999, arr).astype(int)
+                    kws[param] = np.ma.masked_where(mask, arr)
+
+            grid = UGrid(**kws)
+            self._grids[mesh.name] = grid
+
+        # create the dual mesh if necessary
+        if loc == "infer":
+            loc = self.infer_location(var, coords, grid)
+
+        if loc in ["node", "edge"]:
+            dual_name = grid.mesh_name + "_dual_" + loc
+            if dual_name in self._grids:
+                grid = self._grids[dual_name]
+            else:
+                grid = grid.create_dual_mesh(loc)
+                grid.mesh_name = dual_name
+                self._grids[dual_name] = grid
+
+        return grid
 
     @classmethod
     @docstrings.dedent
@@ -1807,37 +1926,55 @@ class UGridDecoder(CFDecoder):
         if vert is None:
             raise ValueError("Could not find the nodes variables for the %s "
                              "coordinate!" % axis)
-        loc = var.attrs.get('location', 'face')
-        if loc == 'node':
-            # we assume a triangular grid and use matplotlibs triangulation
-            from matplotlib.tri import Triangulation
-            xvert, yvert = nodes
-            triangles = Triangulation(xvert, yvert)
-            if axis == 'x':
-                bounds = triangles.x[triangles.triangles]
-            else:
-                bounds = triangles.y[triangles.triangles]
-        elif loc in ['edge', 'face']:
-            connectivity = get_coord(
-                mesh.attrs.get('%s_node_connectivity' % loc, ''))
-            if connectivity is None:
-                raise ValueError(
-                    "Could not find the connectivity information!")
-            connectivity = connectivity.values
-            bounds = vert.values[
-                np.where(np.isnan(connectivity), connectivity[:, :1],
-                         connectivity).astype(int)]
-        else:
-            raise ValueError(
-                "Could not interprete location attribute (%s) of mesh "
-                "variable %s!" % (loc, mesh.name))
+
+        grid = self.get_ugrid(var, coords)
+
+        faces = grid.faces
+        if np.ma.isMA(faces) and faces.mask.any():
+            isnull = faces.mask
+            faces = faces.filled(-999).astype(int)
+            for i in range(faces.shape[1]):
+                mask = isnull[:, i]
+                if mask.any():
+                    for j in range(i, faces.shape[1]):
+                        faces[mask, j] = faces[mask, j - i]
+
+        node = grid.nodes[..., 0 if axis == "x" else 1]
+        bounds = node[faces]
+
+        loc = self.infer_location(var, coords)
+
         dim0 = '__face' if loc == 'node' else var.dims[-1]
         return xr.DataArray(
             bounds,
             coords={key: val for key, val in coords.items()
                     if (dim0, ) == val.dims},
             dims=(dim0, '__bnds', ),
-            name=vert.name + '_bnds',  attrs=vert.attrs.copy())
+            name=vert.name + '_bnds', attrs=vert.attrs.copy())
+
+    @docstrings.with_indent(8)
+    def infer_location(self, var, coords=None, grid=None):
+        """Infer the location for the variable.
+
+        Parameters
+        ----------
+        %(UGridDecoder.get_mesh.parameters)s
+        grid: gridded.pyugrid.ugrid.UGrid
+            The grid for this variable. If None, it will be created using the
+            :meth:`get_ugrid` method (if necessary)
+
+        Returns
+        -------
+        str
+            ``"node"``, ``"face"`` or ``"edge"``
+        """
+        if not var.attrs.get('location'):
+            if grid is None:
+                grid = self.get_ugrid(var, coords, loc="face")
+            loc = grid.infer_location(var)
+        else:
+            loc = var.attrs["location"]
+        return loc
 
     @staticmethod
     @docstrings.dedent
@@ -1880,19 +2017,70 @@ class UGridDecoder(CFDecoder):
             ds._coord_names.update(extra_coords.intersection(ds.variables))
         return ds
 
-    def get_nodes(self, coord, coords):
+    def get_nodes(self, coord, coords=None):
         """Get the variables containing the definition of the nodes
 
         Parameters
         ----------
         coord: xarray.Coordinate
             The mesh variable
-        coords: dict
-            The coordinates to use to get node coordinates"""
+        coords: dict, optional
+            The coordinates to use to get node coordinates """
+        if coords is None:
+            coords = {}
         def get_coord(coord):
             return coords.get(coord, self.ds.coords.get(coord))
         return list(map(get_coord,
                         coord.attrs.get('node_coordinates', '').split()[:2]))
+
+    @docstrings.with_indent(8)
+    def get_xname(self, var, coords=None):
+        """Get the name of the spatial dimension
+
+        Parameters
+        ----------
+        %(CFDecoder.get_y.parameters)s
+
+        Returns
+        -------
+        str
+            The dimension name
+        """
+
+        def get_dim(name):
+            coord = coords.get(
+                name, ds.coords.get(name, ds.variables.get(name))
+            )
+            if coord is None:
+                raise KeyError(f"Missing {loc} coordinate {name}")
+            else:
+                return coord.dims[0]
+
+        ds = self.ds
+        loc = self.infer_location(var, coords)
+        mesh = self.get_mesh(var, coords)
+        coords = coords or ds.coords
+        if loc == "node":
+            return get_dim(mesh.node_coordinates.split()[0])
+        elif loc == "edge":
+            return get_dim(mesh.edge_node_connectivity)
+        else:
+            return get_dim(mesh.face_node_connectivity)
+
+    @docstrings.with_indent(8)
+    def get_yname(self, var, coords=None):
+        """Get the name of the spatial dimension
+
+        Parameters
+        ----------
+        %(CFDecoder.get_y.parameters)s
+
+        Returns
+        -------
+        str
+            The dimension name
+        """
+        return self.get_xname(var, coords)  # x- and y-dimensions are the same
 
     @docstrings.dedent
     def get_x(self, var, coords=None):
@@ -1911,18 +2099,25 @@ class UGridDecoder(CFDecoder):
         # first we try the super class
         ret = super(UGridDecoder, self).get_x(var, coords)
         # but if that doesn't work because we get the variable name in the
-        # dimension of `var`, we use the means of the triangles
+        # dimension of `var`, we use the means of the faces
         if ret is None or ret.name in var.dims or (hasattr(var, 'mesh') and
                                                    ret.name == var.mesh):
-            bounds = self.get_cell_node_coord(var, axis='x', coords=coords)
-            if bounds is not None:
-                centers = bounds.mean(axis=-1)
-                x = self.get_nodes(self.get_mesh(var, coords), coords)[0]
+            loc = self.infer_location(var, coords)
+            x = self.get_nodes(self.get_mesh(var, coords), coords)[0]
+            if loc == "node":
+                return x
+            else:
+                grid = self.get_ugrid(var, coords, loc)
+                if grid.face_coordinates is None:
+                    grid.build_face_coordinates()
                 try:
                     cls = xr.IndexVariable
                 except AttributeError:  # xarray < 0.9
                     cls = xr.Coordinate
-                return cls(x.name, centers, attrs=x.attrs.copy())
+                return cls(
+                    x.name, grid.face_coordinates[..., 1],
+                    attrs=x.attrs.copy()
+                )
         else:
             return ret
 
@@ -1946,15 +2141,22 @@ class UGridDecoder(CFDecoder):
         # dimension of `var`, we use the means of the triangles
         if ret is None or ret.name in var.dims or (hasattr(var, 'mesh') and
                                                    ret.name == var.mesh):
-            bounds = self.get_cell_node_coord(var, axis='y', coords=coords)
-            if bounds is not None:
-                centers = bounds.mean(axis=-1)
-                y = self.get_nodes(self.get_mesh(var, coords), coords)[1]
+            loc = self.infer_location(var, coords)
+            y = self.get_nodes(self.get_mesh(var, coords), coords)[1]
+            if loc == "node":
+                return y
+            else:
+                grid = self.get_ugrid(var, coords, loc)
+                if grid.face_coordinates is None:
+                    grid.build_face_coordinates()
                 try:
                     cls = xr.IndexVariable
                 except AttributeError:  # xarray < 0.9
                     cls = xr.Coordinate
-                return cls(y.name, centers, attrs=y.attrs.copy())
+                return cls(
+                    y.name, grid.face_coordinates[..., 1],
+                    attrs=y.attrs.copy()
+                )
         else:
             return ret
 
@@ -2818,6 +3020,7 @@ class InteractiveArray(InteractiveBase):
             dims = self._new_dims
             method = self.method
             if dims:
+                self.decoder.clear_cache()
                 if VARIABLELABEL in self.arr.coords:
                     self._update_concatenated(dims, method)
                 else:
