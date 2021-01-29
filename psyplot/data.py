@@ -2082,6 +2082,32 @@ class UGridDecoder(CFDecoder):
         """
         return self.get_xname(var, coords)  # x- and y-dimensions are the same
 
+    @docstrings.with_indent(8)
+    def get_zname(self, var, coords=None):
+        """Get the name of the vertical dimension
+
+        Parameters
+        ----------
+        %(CFDecoder.get_y.parameters)s
+
+        Returns
+        -------
+        str
+            The dimension name
+        """
+        # reimplement to make sure we do not interfere with x- and y-dimension
+
+        dim = super().get_zname(var, coords)
+
+        t_or_x = [self.get_tname(var, coords), self.get_xname(var, coords)]
+
+        if dim and var.dims and dim in t_or_x:
+            # wrong dimension has been chosen by the default approach
+            for dim in var.dims:
+                if dim not in t_or_x:
+                    break
+        return dim
+
     @docstrings.dedent
     def get_x(self, var, coords=None):
         """
