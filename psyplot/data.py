@@ -13,6 +13,7 @@ from itertools import chain, product, repeat, starmap, count, cycle, islice
 import xarray as xr
 from xarray.core.utils import NDArrayMixin
 from xarray.core.formatting import first_n_items, format_item
+
 import xarray.backends.api as xarray_api
 from pandas import to_datetime
 import numpy as np
@@ -32,6 +33,11 @@ try:
     with_dask = True
 except ImportError:
     with_dask = False
+
+try:
+    import xarray.backends.plugins as xr_plugins
+except ImportError:
+    xr_plugins = None  # type: ignore
 
 
 # No data variable. This is used for filtering if an attribute could not have
@@ -487,6 +493,38 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
         while True:
             yield NamedTemporaryFile(suffix='.nc').name
 
+    def _legacy_get_filename_ds(ds):
+        # try to get the filename from the data store of the obj
+        #
+        # Outdated possibility since the backend plugin methodology of
+        # xarray 0.18
+        if store_mod is not None:
+            store = ds._file_obj
+            # try several engines
+            if hasattr(store, 'file_objs'):
+                fname = []
+                store_mod = []
+                store_cls = []
+                for obj in store.file_objs:  # mfdataset
+                    _fname = None
+                    for func in get_fname_funcs:
+                        if _fname is None:
+                            _fname = func(obj)
+                            if _fname is not None:
+                                fname.append(_fname)
+                                store_mod.append(obj.__module__)
+                                store_cls.append(obj.__class__.__name__)
+                fname = tuple(fname)
+                store_mod = tuple(store_mod)
+                store_cls = tuple(store_cls)
+            else:
+                for func in get_fname_funcs:
+                    fname = func(store)
+                    if fname is not None:
+                        break
+
+        return fname, store_mod, store_cls
+
     fname = None
     if paths is True or (dump and paths is None):
         paths = tmp_it()
@@ -495,32 +533,15 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
             paths = iter([paths])
         else:
             paths = iter(paths)
-    # try to get the filename from  the data store of the obj
     store_mod, store_cls = ds.psy.data_store
-    if store_mod is not None:
-        store = ds._file_obj
-        # try several engines
-        if hasattr(store, 'file_objs'):
-            fname = []
-            store_mod = []
-            store_cls = []
-            for obj in store.file_objs:  # mfdataset
-                _fname = None
-                for func in get_fname_funcs:
-                    if _fname is None:
-                        _fname = func(obj)
-                        if _fname is not None:
-                            fname.append(_fname)
-                            store_mod.append(obj.__module__)
-                            store_cls.append(obj.__class__.__name__)
-            fname = tuple(fname)
-            store_mod = tuple(store_mod)
-            store_cls = tuple(store_cls)
-        else:
-            for func in get_fname_funcs:
-                fname = func(store)
-                if fname is not None:
-                    break
+    if xr_plugins is None:
+        fname, store_mod, store_cls = _legacy_get_filename_ds(ds)
+    elif "source" in ds.encoding:
+        fname = ds.encoding["source"]
+        store_mod = None
+        store_cls = None
+
+
     # check if paths is provided and if yes, save the file
     if fname is None and paths is not None:
         fname = next(paths, None)
@@ -2004,6 +2025,8 @@ def open_dataset(filename_or_obj, decode_cf=True, decode_times=True,
     ds = xr.open_dataset(filename_or_obj, decode_cf=decode_cf,
                          decode_coords=False, engine=engine,
                          decode_times=decode_times, **kwargs)
+    if isstring(filename_or_obj):
+        ds.psy.filename = filename_or_obj
     if decode_cf:
         ds = CFDecoder.decode_ds(
             ds, decode_coords=decode_coords, decode_times=decode_times,
@@ -2060,15 +2083,21 @@ def open_mfdataset(paths, decode_cf=True, decode_times=True,
         kwargs['concat_dim'] = 'time'
         if xr_version > (0, 11):
             kwargs['combine'] = 'nested'
+    if all(map(isstring, paths)):
+        filenames = list(paths)
+    else:
+        filenames = None
     if engine == 'gdal':
         from psyplot.gdal_store import GdalStore
         paths = list(map(GdalStore, paths))
         engine = None
-        kwargs['lock'] = False
+        if xr_version < (0, 18):
+            kwargs['lock'] = False
 
     ds = xr.open_mfdataset(
         paths, decode_cf=decode_cf, decode_times=decode_times, engine=engine,
         decode_coords=False, **kwargs)
+    ds.psy.filename = filenames
     if decode_cf:
         ds = CFDecoder.decode_ds(ds, gridfile=gridfile,
                                  decode_coords=decode_coords,
@@ -4980,6 +5009,9 @@ def _open_ds_from_store(fname, store_mod=None, store_cls=None, **kwargs):
                          for sm, sc, f in zip(store_mod, store_cls, fname)]
                 kwargs['engine'] = None
                 kwargs['lock'] = False
+                return open_mfdataset(fname, **kwargs)
+            else:
+                # try guessing with open_dataset
                 return open_mfdataset(fname, **kwargs)
     if store_mod is not None and store_cls is not None:
         fname = _open_store(store_mod, store_cls, fname)
