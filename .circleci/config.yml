@@ -1,0 +1,9 @@
+version: 2.1
+
+orbs:
+  psyplot: psyplot/psyplot-ci-orb@1.3.2
+
+workflows:
+  build-and-test:
+    jobs:
+      - psyplot/install-and-build
