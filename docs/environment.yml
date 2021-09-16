@@ -1,7 +1,7 @@
 name: psyplot_docs
 channels:
+    - local
     - psyplot/label/master
-    - psyplot
     - chilipp/label/conda-forge
 dependencies:
     - python>3.6
@@ -10,6 +10,7 @@ dependencies:
     - netCDF4
     - matplotlib=3.2  # mainly for matplotlib compatibility
     - seaborn
+    - sphinx_rtd_theme
     - ipython
     - nbconvert
     - jupyter_client
