@@ -10,3 +10,5 @@ workflows:
           setup_env: false
       - psyplot/deploy-docs:
           fingerprint: "fc:e3:0f:d0:c6:5a:6a:a5:0e:7c:d6:47:37:48:dd:67"
+          requires:
+            - psyplot/install-and-build
