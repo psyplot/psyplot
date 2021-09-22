@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.config.rcsetup module &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psyplot.sphinxext package" href="psyplot.sphinxext.html" />
+    <link rel="prev" title="psyplot.config.logsetup module" href="psyplot.config.logsetup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psyplot
+            <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psyplot.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="psyplot.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psyplot.compat.html">psyplot.compat package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="psyplot.config.html">psyplot.config package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="psyplot.config.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.sphinxext.html">psyplot.sphinxext package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="psyplot.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psyplot.html">API Reference</a> &raquo;</li>
+          <li><a href="psyplot.config.html">psyplot.config package</a> &raquo;</li>
+      <li>psyplot.config.rcsetup module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psyplot.config.rcsetup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psyplot.config.rcsetup">
+<span id="psyplot-config-rcsetup-module"></span><h1>psyplot.config.rcsetup module<a class="headerlink" href="#module-psyplot.config.rcsetup" title="Permalink to this headline">¶</a></h1>
+<p>Default management of the psyplot package</p>
+<p>This module defines the necessary classes, data and functions for the default
+configuration of the module.
+The structure is motivated and to larger parts taken from the <a class="reference external" href="http://matplotlib.org/api/">matplotlib</a>
+package.</p>
+<p><strong>Classes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams" title="psyplot.config.rcsetup.RcParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RcParams</span></code></a>(*args, **kwargs)</p></td>
+<td><p>A dictionary object including validation</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict" title="psyplot.config.rcsetup.SubDict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubDict</span></code></a>(base, base_str[, pattern, ...])</p></td>
+<td><p>Class that keeps week reference to the base dictionary</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultParams</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> with default values and validation functions</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rcParams</span></code></a></p></td>
+<td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams" title="psyplot.config.rcsetup.RcParams"><code class="xref py py-class docutils literal notranslate"><span class="pre">RcParams</span></code></a> instance that stores default formatoptions and configuration settings.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.get_configdir" title="psyplot.config.rcsetup.get_configdir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_configdir</span></code></a>([name, env_key])</p></td>
+<td><p>Return the string representing the configuration directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.psyplot_fname" title="psyplot.config.rcsetup.psyplot_fname"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psyplot_fname</span></code></a>([env_key, fname, if_exists])</p></td>
+<td><p>Get the location of the config file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.safe_list" title="psyplot.config.rcsetup.safe_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">safe_list</span></code></a>(l)</p></td>
+<td><p>Function to create a list</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.validate_bool" title="psyplot.config.rcsetup.validate_bool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_bool</span></code></a>(b)</p></td>
+<td><p>Convert b to a boolean or raise</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.validate_bool_maybe_none" title="psyplot.config.rcsetup.validate_bool_maybe_none"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_bool_maybe_none</span></code></a>(b)</p></td>
+<td><p>Convert b to a boolean or raise</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.validate_dict" title="psyplot.config.rcsetup.validate_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_dict</span></code></a>(d)</p></td>
+<td><p>Validate a dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.validate_files_exist" title="psyplot.config.rcsetup.validate_files_exist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_files_exist</span></code></a>(l)</p></td>
+<td><p>Validate if all pathnames in a given list exists</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.validate_path_exists" title="psyplot.config.rcsetup.validate_path_exists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_path_exists</span></code></a>(s)</p></td>
+<td><p>If s is a path, return s, else False</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.validate_str" title="psyplot.config.rcsetup.validate_str"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_str</span></code></a>(s)</p></td>
+<td><p>Validate a string</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.validate_stringlist" title="psyplot.config.rcsetup.validate_stringlist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_stringlist</span></code></a>(s)</p></td>
+<td><p>Validate a list of strings</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.validate_stringset" title="psyplot.config.rcsetup.validate_stringset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_stringset</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Validate a set of strings</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">RcParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<p>A dictionary object including validation</p>
+<p>validating functions are defined and associated with rc parameters in
+<a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-data docutils literal notranslate"><span class="pre">defaultParams</span></code></a></p>
+<p>This class is essentially the same as in maplotlibs
+<a class="reference external" href="https://matplotlib.org/api/matplotlib_configuration_api.html#matplotlib.RcParams" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RcParams</span></code></a> but has the additional
+<a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_and_replace()</span></code></a> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>defaultParams</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – The defaultParams to use (see the <a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">defaultParams</span></code></a> attribute).
+By default, the <a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.config.rcsetup.defaultParams</span></code></a>
+dictionary is used</p></li>
+<li><p><strong>``*args</strong> – <p>Any key-value pair for the initialization of the dictionary</p>
+</p></li>
+<li><p><strong>**kwargs``</strong> – Any key-value pair for the initialization of the dictionary</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.HEADER" title="psyplot.config.rcsetup.RcParams.HEADER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HEADER</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.defaultParams" title="psyplot.config.rcsetup.RcParams.defaultParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultParams</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.descriptions" title="psyplot.config.rcsetup.RcParams.descriptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">descriptions</span></code></a></p></td>
+<td><p>The description of each keyword in the rcParams dictionary</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.msg_depr" title="psyplot.config.rcsetup.RcParams.msg_depr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msg_depr</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.msg_depr_ignore" title="psyplot.config.rcsetup.RcParams.msg_depr_ignore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msg_depr_ignore</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.validate" title="psyplot.config.rcsetup.RcParams.validate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate</span></code></a></p></td>
+<td><p>Dictionary with validation methods as values</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.catch" title="psyplot.config.rcsetup.RcParams.catch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">catch</span></code></a>()</p></td>
+<td><p>Context manager to reset the rcParams afterwards</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.connect" title="psyplot.config.rcsetup.RcParams.connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connect</span></code></a>(key, func)</p></td>
+<td><p>Connect a function to the given formatoption</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.copy" title="psyplot.config.rcsetup.RcParams.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<td><p>Make sure, the right class is retained</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.disconnect" title="psyplot.config.rcsetup.RcParams.disconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disconnect</span></code></a>([key, func])</p></td>
+<td><p>Disconnect the connections to the an rcParams key</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.dump" title="psyplot.config.rcsetup.RcParams.dump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump</span></code></a>([fname, overwrite, include_keys, ...])</p></td>
+<td><p>Dump this instance to a yaml file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_all" title="psyplot.config.rcsetup.RcParams.find_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_all</span></code></a>(pattern)</p></td>
+<td><p>Return the subset of this RcParams dictionary whose keys match, using <a class="reference external" href="https://docs.python.org/3.8/library/re.html#re.search" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">re.search()</span></code></a>, the given <code class="docutils literal notranslate"><span class="pre">pattern</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_and_replace</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Like <a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_all" title="psyplot.config.rcsetup.RcParams.find_all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_all()</span></code></a> but the given strings are replaced</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.keys" title="psyplot.config.rcsetup.RcParams.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>()</p></td>
+<td><p>Return sorted list of keys.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.load_from_file" title="psyplot.config.rcsetup.RcParams.load_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_from_file</span></code></a>([fname])</p></td>
+<td><p>Update rcParams from user-defined settings</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.load_plugins" title="psyplot.config.rcsetup.RcParams.load_plugins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_plugins</span></code></a>([raise_error])</p></td>
+<td><p>Load the plotters and defaultParams from the plugins</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.remove" title="psyplot.config.rcsetup.RcParams.remove"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove</span></code></a>(key, func)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.update" title="psyplot.config.rcsetup.RcParams.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>([E, ]**F)</p></td>
+<td><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k] If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v In either case, this is followed by: for k in F:  D[k] = F[k]</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.update_from_defaultParams" title="psyplot.config.rcsetup.RcParams.update_from_defaultParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_from_defaultParams</span></code></a>([defaultParams, ...])</p></td>
+<td><p>Update from the a dictionary like the <a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">defaultParams</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.values" title="psyplot.config.rcsetup.RcParams.values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code></a>()</p></td>
+<td><p>Return values in order of sorted keys.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.HEADER">
+<span class="sig-name descname"><span class="pre">HEADER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Configuration</span> <span class="pre">parameters</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">psyplot</span> <span class="pre">module\n\nYou</span> <span class="pre">can</span> <span class="pre">copy</span> <span class="pre">this</span> <span class="pre">file</span> <span class="pre">(or</span> <span class="pre">parts</span> <span class="pre">of</span> <span class="pre">it)</span> <span class="pre">to</span> <span class="pre">another</span> <span class="pre">path</span> <span class="pre">and</span> <span class="pre">save</span> <span class="pre">it</span> <span class="pre">as\npsyplotrc.yml.</span> <span class="pre">The</span> <span class="pre">directory</span> <span class="pre">should</span> <span class="pre">then</span> <span class="pre">be</span> <span class="pre">stored</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">PSYPLOTCONFIGDIR\nenvironment</span> <span class="pre">variable.'</span></em><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.HEADER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.catch">
+<span class="sig-name descname"><span class="pre">catch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.catch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.catch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context manager to reset the rcParams afterwards</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;some_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">with</span> <span class="n">rcParams</span><span class="o">.</span><span class="n">catch</span><span class="p">():</span>
+    <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;some_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;some_key&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="k">assert</span> <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;some_key&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect a function to the given formatoption</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The rcParams key</p></li>
+<li><p><strong>func</strong> (<em>function</em>) – The function that shall be called when the rcParams key changes.
+It must accept a single value that is the new value of the
+key.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure, the right class is retained</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.defaultParams">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">defaultParams</span></span><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.defaultParams" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.descriptions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">descriptions</span></span><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.descriptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>The description of each keyword in the rcParams dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect the connections to the an rcParams key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The rcParams key. If None, all keys are used</p></li>
+<li><p><strong>func</strong> (<em>function</em>) – The function that is connected. If None, all functions are
+connected</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.dump">
+<span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['project.plotters']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_descriptions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dump this instance to a yaml file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – file name to write to. If None, the string that would be written
+to a file is returned</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True and <cite>fname</cite> already exists, it will be overwritten</p></li>
+<li><p><strong>include_keys</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em> or </em><em>list of str</em>) – Keys in the dictionary to be included. If None, all keys are
+included</p></li>
+<li><p><strong>exclude_keys</strong> (<em>list of str</em>) – Keys from the <a class="reference internal" href="#psyplot.config.rcsetup.RcParams" title="psyplot.config.rcsetup.RcParams"><code class="xref py py-class docutils literal notranslate"><span class="pre">RcParams</span></code></a> instance to be excluded</p></li>
+<li><p><strong>**kwargs</strong> – Any other parameter for the <code class="xref py py-func docutils literal notranslate"><span class="pre">yaml.dump()</span></code> function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>if fname is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the string is returned. Otherwise, <code class="docutils literal notranslate"><span class="pre">None</span></code>
+is returned</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a> or <a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)">None</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#IOError" title="(in Python v3.8)"><strong>IOError</strong></a> – If <cite>fname</cite> already exists and <cite>overwrite</cite> is False</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.load_from_file" title="psyplot.config.rcsetup.RcParams.load_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_from_file</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.find_all">
+<span class="sig-name descname"><span class="pre">find_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.find_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.find_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the subset of this RcParams dictionary whose keys match,
+using <a class="reference external" href="https://docs.python.org/3.8/library/re.html#re.search" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">re.search()</span></code></a>, the given <code class="docutils literal notranslate"><span class="pre">pattern</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pattern</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – pattern as suitable for re.compile</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>RcParams instance with entries that match the given <cite>pattern</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams" title="psyplot.config.rcsetup.RcParams">RcParams</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Changes to the returned dictionary are (different from
+<a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_and_replace()</span></code></a> are <em>not</em> propagated to the parent RcParams
+dictionary.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_and_replace</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.find_and_replace">
+<span class="sig-name descname"><span class="pre">find_and_replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.find_and_replace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_all" title="psyplot.config.rcsetup.RcParams.find_all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_all()</span></code></a> but the given strings are replaced</p>
+<p>This method returns a dictionary-like object that keeps weak reference
+to this rcParams instance. The resulting <cite>SubDict</cite> instance takes the
+keys from this rcParams instance but leaves away what is found in
+<cite>base_str</cite>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> are determined by the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict" title="psyplot.config.rcsetup.SubDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubDict</span></code></a>
+class, where the <cite>base</cite> dictionary is this one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_str</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>list of str</em>) – Strings that are used as to look for keys to get and set keys in
+the <code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code> dictionary. If a string does not contain
+<code class="docutils literal notranslate"><span class="pre">'%(key)s'</span></code>, it will be appended at the end. <code class="docutils literal notranslate"><span class="pre">'%(key)s'</span></code> will
+be replaced by the specific key for getting and setting an item.</p></li>
+<li><p><strong>pattern</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Default: <code class="docutils literal notranslate"><span class="pre">'.+'</span></code>. This is the pattern that is inserted for
+<code class="docutils literal notranslate"><span class="pre">%(key)s</span></code> in a base string to look for matches (using the
+<a class="reference external" href="https://docs.python.org/3.8/library/re.html#module-re" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code></a> module) in the <cite>base</cite> dictionary. The default <cite>pattern</cite>
+matches everything without white spaces.</p></li>
+<li><p><strong>pattern_base</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – If None, the whatever is given in the <cite>base_str</cite> is used.
+Those strings will be used for generating the final search
+patterns. You can specify this parameter by yourself to avoid the
+misinterpretation of patterns. For example for a <cite>base_str</cite> like
+<code class="docutils literal notranslate"><span class="pre">'my.str'</span></code> it is recommended to additionally provide the
+<cite>pattern_base</cite> keyword with <code class="docutils literal notranslate"><span class="pre">'my\.str'</span></code>.
+Like for <cite>base_str</cite>, the <code class="docutils literal notranslate"><span class="pre">%(key)s</span></code> is appended if not already in
+the string.</p></li>
+<li><p><strong>trace</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Default: False. If True, changes in the SubDict are traced back to
+the <cite>base</cite> dictionary. You can change this behaviour also
+afterwards by changing the <code class="xref py py-attr docutils literal notranslate"><span class="pre">trace</span></code> attribute</p></li>
+<li><p><strong>replace</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Default: True. If True, everything but the ‘%(key)s’ part in a
+base string is replaced (see examples below)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>SubDict with this rcParams instance as reference.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict" title="psyplot.config.rcsetup.SubDict">SubDict</a></p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>The syntax is the same as for the initialization of the
+<a class="reference internal" href="#psyplot.config.rcsetup.SubDict" title="psyplot.config.rcsetup.SubDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubDict</span></code></a> class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">psyplot</span> <span class="kn">import</span> <span class="n">rcParams</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">rcParams</span><span class="o">.</span><span class="n">find_and_replace</span><span class="p">([</span><span class="s1">&#39;plotter.baseplotter.&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                               <span class="s1">&#39;plotter.vector.&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+<span class="go">None</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;arrowsize&#39;</span><span class="p">])</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_all" title="psyplot.config.rcsetup.RcParams.find_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_all</span></code></a>, <a class="reference internal" href="#psyplot.config.rcsetup.SubDict" title="psyplot.config.rcsetup.SubDict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubDict</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sorted list of keys.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.load_from_file">
+<span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.load_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.load_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update rcParams from user-defined settings</p>
+<p>This function updates the instance with what is found in <cite>fname</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Path to the yaml configuration file. Possible keys of the
+dictionary are defined by <code class="xref py py-data docutils literal notranslate"><span class="pre">config.rcsetup.defaultParams</span></code>.
+If None, the <code class="xref py py-func docutils literal notranslate"><span class="pre">config.rcsetup.psyplot_fname()</span></code> function is used.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump_to_file</span></code>, <a class="reference internal" href="#psyplot.config.rcsetup.psyplot_fname" title="psyplot.config.rcsetup.psyplot_fname"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psyplot_fname</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.load_plugins">
+<span class="sig-name descname"><span class="pre">load_plugins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.load_plugins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.load_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the plotters and defaultParams from the plugins</p>
+<p>This method loads the <cite>plotters</cite> attribute and <cite>defaultParams</cite>
+attribute from the plugins that use the entry point specified by
+<cite>group</cite>. Entry points must be objects (or modules) that have a
+<cite>defaultParams</cite> and a <cite>plotters</cite> attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, an error is raised when multiple plugins define the same
+plotter or rcParams key. Otherwise only a warning is raised</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.msg_depr">
+<span class="sig-name descname"><span class="pre">msg_depr</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'%s</span> <span class="pre">is</span> <span class="pre">deprecated</span> <span class="pre">and</span> <span class="pre">replaced</span> <span class="pre">with</span> <span class="pre">%s;</span> <span class="pre">please</span> <span class="pre">use</span> <span class="pre">the</span> <span class="pre">latter.'</span></em><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.msg_depr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.msg_depr_ignore">
+<span class="sig-name descname"><span class="pre">msg_depr_ignore</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'%s</span> <span class="pre">is</span> <span class="pre">deprecated</span> <span class="pre">and</span> <span class="pre">ignored.</span> <span class="pre">Use</span> <span class="pre">%s'</span></em><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.msg_depr_ignore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">E</span></em>, <span class="optional">]</span><em class="sig-param"><span class="pre">**F</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">dict/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span></span></span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.update_from_defaultParams">
+<span class="sig-name descname"><span class="pre">update_from_defaultParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">defaultParams</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.update_from_defaultParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.update_from_defaultParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update from the a dictionary like the <a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">defaultParams</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>defaultParams</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – The <a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">defaultParams</span></code></a> like dictionary. If None, the
+<a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">defaultParams</span></code></a> attribute will be updated</p></li>
+<li><p><strong>plotters</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, <code class="docutils literal notranslate"><span class="pre">'project.plotters'</span></code> will be updated too</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.validate">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">validate</span></span><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary with validation methods as values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.RcParams.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#RcParams.values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.RcParams.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return values in order of sorted keys.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">SubDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#SubDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.SubDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.8/library/collections.html#collections.UserDict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserDict</span></code></a>, <a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<p>Class that keeps week reference to the base dictionary</p>
+<p>This class is used by the <a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RcParams.find_and_replace()</span></code></a> method
+to provide an easy handable instance that keeps reference to the
+base rcParams dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – base dictionary</p></li>
+<li><p><strong>base_str</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>list of str</em>) – Strings that are used as to look for keys to get and set keys in
+the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a> dictionary. If a string does not contain
+<code class="docutils literal notranslate"><span class="pre">'%(key)s'</span></code>, it will be appended at the end. <code class="docutils literal notranslate"><span class="pre">'%(key)s'</span></code> will
+be replaced by the specific key for getting and setting an item.</p></li>
+<li><p><strong>pattern</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Default: <code class="docutils literal notranslate"><span class="pre">'.+'</span></code>. This is the pattern that is inserted for
+<code class="docutils literal notranslate"><span class="pre">%(key)s</span></code> in a base string to look for matches (using the
+<a class="reference external" href="https://docs.python.org/3.8/library/re.html#module-re" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code></a> module) in the <cite>base</cite> dictionary. The default <cite>pattern</cite>
+matches everything without white spaces.</p></li>
+<li><p><strong>pattern_base</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – If None, the whatever is given in the <cite>base_str</cite> is used.
+Those strings will be used for generating the final search
+patterns. You can specify this parameter by yourself to avoid the
+misinterpretation of patterns. For example for a <cite>base_str</cite> like
+<code class="docutils literal notranslate"><span class="pre">'my.str'</span></code> it is recommended to additionally provide the
+<cite>pattern_base</cite> keyword with <code class="docutils literal notranslate"><span class="pre">'my\.str'</span></code>.
+Like for <cite>base_str</cite>, the <code class="docutils literal notranslate"><span class="pre">%(key)s</span></code> is appended if not already in
+the string.</p></li>
+<li><p><strong>trace</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Default: False. If True, changes in the SubDict are traced back to
+the <cite>base</cite> dictionary. You can change this behaviour also
+afterwards by changing the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.trace" title="psyplot.config.rcsetup.SubDict.trace"><code class="xref py py-attr docutils literal notranslate"><span class="pre">trace</span></code></a> attribute</p></li>
+<li><p><strong>replace</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Default: True. If True, everything but the ‘%(key)s’ part in a
+base string is replaced (see examples below)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If a key of matches multiple strings in <cite>base_str</cite>, the first
+matching one is used.</p></li>
+<li><p>the SubDict class is (of course) not that efficient as the
+<a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a> dictionary, since we loop multiple times through it’s
+keys</p></li>
+</ul>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Initialization example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">psyplot</span> <span class="kn">import</span> <span class="n">rcParams</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">rcParams</span><span class="o">.</span><span class="n">find_and_replace</span><span class="p">([</span><span class="s1">&#39;plotter.baseplotter.&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                               <span class="s1">&#39;plotter.vector.&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;arrowsize&#39;</span><span class="p">]</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<p>To convert it to a usual dictionary, simply use the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.data" title="psyplot.config.rcsetup.SubDict.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>
+attribute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">data</span>
+<span class="go">{&#39;title&#39;: None, &#39;arrowsize&#39;: 1.0, ...}</span>
+</pre></div>
+</div>
+<p>Note that changing one keyword of your <a class="reference internal" href="#psyplot.config.rcsetup.SubDict" title="psyplot.config.rcsetup.SubDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubDict</span></code></a> will not change
+the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a> dictionary, unless you set the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.trace" title="psyplot.config.rcsetup.SubDict.trace"><code class="xref py py-attr docutils literal notranslate"><span class="pre">trace</span></code></a> attribute
+to <code class="docutils literal notranslate"><span class="pre">True</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;my title&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+<span class="go">my title</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;plotter.baseplotter.title&#39;</span><span class="p">])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;my second title&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+<span class="go">my second title</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;plotter.baseplotter.title&#39;</span><span class="p">])</span>
+<span class="go">my second title</span>
+</pre></div>
+</div>
+<p>Furthermore, changing the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.replace" title="psyplot.config.rcsetup.SubDict.replace"><code class="xref py py-attr docutils literal notranslate"><span class="pre">replace</span></code></a> attribute will change how you
+can access the keys:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">replace</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="go"># now setting d[&#39;title&#39;] = &#39;anything&#39; would raise an error (since</span>
+<span class="go"># d.trace is set to True and &#39;title&#39; is not a key in the rcParams</span>
+<span class="go"># dictionary. Instead we need</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;plotter.baseplotter.title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;anything&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RcParams.find_and_replace</span></code></a></p>
+</div>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.add_base_str" title="psyplot.config.rcsetup.SubDict.add_base_str"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_base_str</span></code></a>(base_str[, pattern, ...])</p></td>
+<td><p>Add further base string to this instance</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.iteritems" title="psyplot.config.rcsetup.SubDict.iteritems"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iteritems</span></code></a>()</p></td>
+<td><p>Unsorted iterator over items</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.iterkeys" title="psyplot.config.rcsetup.SubDict.iterkeys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterkeys</span></code></a>()</p></td>
+<td><p>Unsorted iterator over keys</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.itervalues" title="psyplot.config.rcsetup.SubDict.itervalues"><code class="xref py py-obj docutils literal notranslate"><span class="pre">itervalues</span></code></a>()</p></td>
+<td><p>Unsorted iterator over values</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.update" title="psyplot.config.rcsetup.SubDict.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Update the dictionary</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-obj docutils literal notranslate"><span class="pre">base</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base_str" title="psyplot.config.rcsetup.SubDict.base_str"><code class="xref py py-obj docutils literal notranslate"><span class="pre">base_str</span></code></a></p></td>
+<td><p>list of strings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.data" title="psyplot.config.rcsetup.SubDict.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p>Dictionary representing this <a class="reference internal" href="#psyplot.config.rcsetup.SubDict" title="psyplot.config.rcsetup.SubDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubDict</span></code></a> instance</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.patterns" title="psyplot.config.rcsetup.SubDict.patterns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">patterns</span></code></a></p></td>
+<td><p>list of compiled patterns from the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base_str" title="psyplot.config.rcsetup.SubDict.base_str"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_str</span></code></a> attribute, that are used to look for the matching keys in <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.replace" title="psyplot.config.rcsetup.SubDict.replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.trace" title="psyplot.config.rcsetup.SubDict.trace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trace</span></code></a></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.add_base_str">
+<span class="sig-name descname"><span class="pre">add_base_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#SubDict.add_base_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.add_base_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add further base string to this instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_str</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>list of str</em>) – Strings that are used as to look for keys to get and set keys in
+the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a> dictionary. If a string does not contain
+<code class="docutils literal notranslate"><span class="pre">'%(key)s'</span></code>, it will be appended at the end. <code class="docutils literal notranslate"><span class="pre">'%(key)s'</span></code> will
+be replaced by the specific key for getting and setting an item.</p></li>
+<li><p><strong>pattern</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Default: <code class="docutils literal notranslate"><span class="pre">'.+'</span></code>. This is the pattern that is inserted for
+<code class="docutils literal notranslate"><span class="pre">%(key)s</span></code> in a base string to look for matches (using the
+<a class="reference external" href="https://docs.python.org/3.8/library/re.html#module-re" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code></a> module) in the <cite>base</cite> dictionary. The default <cite>pattern</cite>
+matches everything without white spaces.</p></li>
+<li><p><strong>pattern_base</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – If None, the whatever is given in the <cite>base_str</cite> is used.
+Those strings will be used for generating the final search
+patterns. You can specify this parameter by yourself to avoid the
+misinterpretation of patterns. For example for a <cite>base_str</cite> like
+<code class="docutils literal notranslate"><span class="pre">'my.str'</span></code> it is recommended to additionally provide the
+<cite>pattern_base</cite> keyword with <code class="docutils literal notranslate"><span class="pre">'my\.str'</span></code>.
+Like for <cite>base_str</cite>, the <code class="docutils literal notranslate"><span class="pre">%(key)s</span></code> is appended if not already in
+the string.</p></li>
+<li><p><strong>append</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the given <cite>base_str</cite> are appended (i.e. it is first
+looked for them in the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a> dictionary), otherwise they are
+put at the beginning</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.base">
+<span class="sig-name descname"><span class="pre">base</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{}</span></em><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.base" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>. Reference dictionary</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.base_str">
+<span class="sig-name descname"><span class="pre">base_str</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.base_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of strings. The strings that are used to set and get a specific key
+from the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a> dictionary</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.data">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary representing this <a class="reference internal" href="#psyplot.config.rcsetup.SubDict" title="psyplot.config.rcsetup.SubDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubDict</span></code></a> instance</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#psyplot.config.rcsetup.SubDict.iteritems" title="psyplot.config.rcsetup.SubDict.iteritems"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iteritems</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.iteritems">
+<span class="sig-name descname"><span class="pre">iteritems</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#SubDict.iteritems"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unsorted iterator over items</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.iterkeys">
+<span class="sig-name descname"><span class="pre">iterkeys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#SubDict.iterkeys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unsorted iterator over keys</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.itervalues">
+<span class="sig-name descname"><span class="pre">itervalues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#SubDict.itervalues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unsorted iterator over values</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.patterns">
+<span class="sig-name descname"><span class="pre">patterns</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.patterns" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of compiled patterns from the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base_str" title="psyplot.config.rcsetup.SubDict.base_str"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_str</span></code></a> attribute, that
+are used to look for the matching keys in <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.replace">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">replace</span></span><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>. If True, matching strings in the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base_str" title="psyplot.config.rcsetup.SubDict.base_str"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_str</span></code></a>
+attribute are replaced with an empty string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.trace">
+<span class="sig-name descname"><span class="pre">trace</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.trace" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>. If True, changes are traced back to the <a class="reference internal" href="#psyplot.config.rcsetup.SubDict.base" title="psyplot.config.rcsetup.SubDict.base"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code></a> dict</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#SubDict.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.SubDict.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.defaultParams">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">defaultParams</span></span><a class="headerlink" href="#psyplot.config.rcsetup.defaultParams" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> with default values and validation functions</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.get_configdir">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">get_configdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'psyplot'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PSYPLOTCONFIGDIR'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#get_configdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.get_configdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the string representing the configuration directory.</p>
+<p>The directory is chosen as follows:</p>
+<ol class="arabic simple">
+<li><p>If the <cite>env_key</cite> environment variable is supplied, choose that.</p></li>
+</ol>
+<p>2a. On Linux and osx, choose <code class="docutils literal notranslate"><span class="pre">'$HOME/.config/'</span> <span class="pre">+</span> <span class="pre">name</span></code>.</p>
+<p>2b. On other platforms, choose <code class="docutils literal notranslate"><span class="pre">'$HOME/.'</span> <span class="pre">+</span> <span class="pre">name</span></code>.</p>
+<ol class="arabic simple" start="3">
+<li><p>If the chosen directory exists, use that as the
+configuration directory.</p></li>
+<li><p>A directory: return None.</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the program</p></li>
+<li><p><strong>env_key</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The environment variable that can be used for the configuration
+directory</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function is motivated by the <a class="reference external" href="https://matplotlib.org/api/matplotlib_configuration_api.html#matplotlib.matplotlib_fname" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.matplotlib_fname()</span></code></a>
+function</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.psyplot_fname">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">psyplot_fname</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PSYPLOTRC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'psyplotrc.yml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#psyplot_fname"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.psyplot_fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the location of the config file.</p>
+<p>The file location is determined in the following order</p>
+<ul>
+<li><p><cite>$PWD/psyplotrc.yml</cite></p></li>
+<li><p>environment variable <cite>PSYPLOTRC</cite> (pointing to the file location or a
+directory containing the file <cite>psyplotrc.yml</cite>)</p></li>
+<li><p><cite>$PSYPLOTCONFIGDIR/psyplot</cite></p></li>
+<li><p>On Linux and osx,</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>$HOME/.config/psyplot/psyplotrc.yml</cite></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>On other platforms,</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>$HOME/.psyplot/psyplotrc.yml</cite> if <cite>$HOME</cite> is defined.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Lastly, it looks in <cite>$PSYPLOTDATA/psyplotrc.yml</cite> for a
+system-defined copy.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env_key</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The environment variable that can be used for the configuration
+directory</p></li>
+<li><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the configuration file</p></li>
+<li><p><strong>if_exists</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the path is only returned if the file exists</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None, if no file could be found and <cite>if_exists</cite> is True, else the path
+to the psyplot configuration file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)">None</a> or <a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function is motivated by the <a class="reference external" href="https://matplotlib.org/api/matplotlib_configuration_api.html#matplotlib.matplotlib_fname" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.matplotlib_fname()</span></code></a>
+function</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.rcParams">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">rcParams</span></span><a class="headerlink" href="#psyplot.config.rcsetup.rcParams" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams" title="psyplot.config.rcsetup.RcParams"><code class="xref py py-class docutils literal notranslate"><span class="pre">RcParams</span></code></a> instance that stores default
+formatoptions and configuration settings.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.safe_list">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">safe_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#safe_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.safe_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to create a list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>l</strong> (<em>iterable</em><em> or </em><em>anything else</em>) – <p>Parameter that shall be converted to a list.</p>
+<ul class="simple">
+<li><p>If string or any non-iterable, it will be put into a list</p></li>
+<li><p>if iterable, it will be converted to a list</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>l</cite> put (or converted) into a list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.validate_bool">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">validate_bool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#validate_bool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.validate_bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert b to a boolean or raise</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.validate_bool_maybe_none">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">validate_bool_maybe_none</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#validate_bool_maybe_none"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.validate_bool_maybe_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert b to a boolean or raise</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.validate_dict">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">validate_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#validate_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.validate_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate a dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – If str, it must be a path to a yaml file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.validate_files_exist">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">validate_files_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#validate_files_exist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.validate_files_exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate if all pathnames in a given list exists</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.validate_path_exists">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">validate_path_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#validate_path_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.validate_path_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>If s is a path, return s, else False</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.validate_str">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">validate_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#validate_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.validate_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate a string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.validate_stringlist">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">validate_stringlist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#validate_stringlist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.validate_stringlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate a list of strings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> (<em>iterable of strings</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of str</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)">list</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.config.rcsetup.validate_stringset">
+<span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">validate_stringset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#validate_stringset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.validate_stringset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate a set of strings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> (<em>iterable of strings</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>set of str</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#set" title="(in Python v3.8)">set</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psyplot.config.logsetup.html" class="btn btn-neutral float-left" title="psyplot.config.logsetup module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psyplot.sphinxext.html" class="btn btn-neutral float-right" title="psyplot.sphinxext package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

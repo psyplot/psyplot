@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.config.rcsetup &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> psyplot
+            <img src="../../../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+          <li><a href="../../psyplot.html">psyplot</a> &raquo;</li>
+      <li>psyplot.config.rcsetup</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for psyplot.config.rcsetup</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Default management of the psyplot package</span>
+
+<span class="sd">This module defines the necessary classes, data and functions for the default</span>
+<span class="sd">configuration of the module.</span>
+<span class="sd">The structure is motivated and to larger parts taken from the matplotlib_</span>
+<span class="sd">package.</span>
+
+<span class="sd">.. _matplotlib: http://matplotlib.org/api/&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">psyplot.warning</span> <span class="kn">import</span> <span class="n">warn</span>
+<span class="kn">from</span> <span class="nn">psyplot.compat.pycompat</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">UserDict</span><span class="p">,</span> <span class="n">DictMethods</span><span class="p">,</span> <span class="n">getcwd</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="n">isstring</span><span class="p">,</span> <span class="nb">map</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">psyplot.docstring</span> <span class="kn">import</span> <span class="n">docstrings</span><span class="p">,</span> <span class="n">dedent</span><span class="p">,</span> <span class="n">safe_modulo</span>
+<span class="kn">from</span> <span class="nn">psyplot.config.logsetup</span> <span class="kn">import</span> <span class="n">_get_home</span>
+
+
+<div class="viewcode-block" id="safe_list"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.safe_list">[docs]</a><span class="nd">@docstrings</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s1">&#39;safe_list&#39;</span><span class="p">)</span>
+<span class="nd">@dedent</span>
+<span class="k">def</span> <span class="nf">safe_list</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to create a list</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    l: iterable or anything else</span>
+<span class="sd">        Parameter that shall be converted to a list.</span>
+
+<span class="sd">        - If string or any non-iterable, it will be put into a list</span>
+<span class="sd">        - if iterable, it will be converted to a list</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        `l` put (or converted) into a list&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">isstring</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">l</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">l</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="SubDict"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.SubDict">[docs]</a><span class="k">class</span> <span class="nc">SubDict</span><span class="p">(</span><span class="n">UserDict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class that keeps week reference to the base dictionary</span>
+
+<span class="sd">This class is used by the :meth:`RcParams.find_and_replace` method</span>
+<span class="sd">to provide an easy handable instance that keeps reference to the</span>
+<span class="sd">base rcParams dictionary.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dictionary representing this :class:`SubDict` instance</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        iteritems</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iteritems</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:class:`bool`. If True, matching strings in the :attr:`base_str`</span>
+<span class="sd">        attribute are replaced with an empty string.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_replace</span>
+
+    <span class="nd">@replace</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">replace_base</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># if match is None</span>
+                    <span class="k">pass</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="s2">&quot;Could not find any matching key for </span><span class="si">%s</span><span class="s2"> in the base &quot;</span>
+                <span class="s2">&quot;dictionary!&quot;</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_replace&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_replace</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_replace&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_replace</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">return</span>
+        <span class="c1"># if the value has changed, we change the key in the SubDict instance</span>
+        <span class="c1"># to match the ones in the base dictionary (if they exist)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">DictMethods</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="n">new_key</span> <span class="o">=</span> <span class="n">replace_base</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_val_and_base</span><span class="p">(</span><span class="n">key</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_key</span><span class="p">,</span> <span class="nb">dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1">#: :class:`dict`. Reference dictionary</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1">#: list of strings. The strings that are used to set and get a specific key</span>
+    <span class="c1">#: from the :attr:`base` dictionary</span>
+    <span class="n">base_str</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1">#: list of compiled patterns from the :attr:`base_str` attribute, that</span>
+    <span class="c1">#: are used to look for the matching keys in :attr:`base`</span>
+    <span class="n">patterns</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1">#: :class:`bool`. If True, changes are traced back to the :attr:`base` dict</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="SubDict.add_base_str"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.SubDict.add_base_str">[docs]</a>    <span class="nd">@docstrings</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s1">&#39;SubDict.add_base_str&#39;</span><span class="p">)</span>
+    <span class="nd">@dedent</span>
+    <span class="k">def</span> <span class="nf">add_base_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_str</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;.+&#39;</span><span class="p">,</span> <span class="n">pattern_base</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add further base string to this instance</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_str: str or list of str</span>
+<span class="sd">            Strings that are used as to look for keys to get and set keys in</span>
+<span class="sd">            the :attr:`base` dictionary. If a string does not contain</span>
+<span class="sd">            ``&#39;%(key)s&#39;``, it will be appended at the end. ``&#39;%(key)s&#39;`` will</span>
+<span class="sd">            be replaced by the specific key for getting and setting an item.</span>
+<span class="sd">        pattern: str</span>
+<span class="sd">            Default: ``&#39;.+&#39;``. This is the pattern that is inserted for</span>
+<span class="sd">            ``%(key)s`` in a base string to look for matches (using the</span>
+<span class="sd">            :mod:`re` module) in the `base` dictionary. The default `pattern`</span>
+<span class="sd">            matches everything without white spaces.</span>
+<span class="sd">        pattern_base: str or list or str</span>
+<span class="sd">            If None, the whatever is given in the `base_str` is used.</span>
+<span class="sd">            Those strings will be used for generating the final search</span>
+<span class="sd">            patterns. You can specify this parameter by yourself to avoid the</span>
+<span class="sd">            misinterpretation of patterns. For example for a `base_str` like</span>
+<span class="sd">            ``&#39;my.str&#39;`` it is recommended to additionally provide the</span>
+<span class="sd">            `pattern_base` keyword with ``&#39;my\.str&#39;``.</span>
+<span class="sd">            Like for `base_str`, the ``%(key)s`` is appended if not already in</span>
+<span class="sd">            the string.</span>
+<span class="sd">        append: bool</span>
+<span class="sd">            If True, the given `base_str` are appended (i.e. it is first</span>
+<span class="sd">            looked for them in the :attr:`base` dictionary), otherwise they are</span>
+<span class="sd">            put at the beginning&quot;&quot;&quot;</span>
+        <span class="n">base_str</span> <span class="o">=</span> <span class="n">safe_list</span><span class="p">(</span><span class="n">base_str</span><span class="p">)</span>
+        <span class="n">pattern_base</span> <span class="o">=</span> <span class="n">safe_list</span><span class="p">(</span><span class="n">pattern_base</span> <span class="ow">or</span> <span class="p">[])</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">base_str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s1">&#39;</span><span class="si">%(key)s</span><span class="s1">&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="n">base_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%(key)s</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="n">pattern_base</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pattern_base</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s1">&#39;</span><span class="si">%(key)s</span><span class="s1">&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                    <span class="n">pattern_base</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%(key)s</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pattern_base</span> <span class="o">=</span> <span class="n">base_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_str</span> <span class="o">=</span> <span class="n">base_str</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">%(key)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;(?P&lt;key&gt;</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">pattern</span><span class="p">)),</span> <span class="n">pattern_base</span><span class="p">))</span> <span class="o">+</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span></div>
+
+    <span class="n">docstrings</span><span class="o">.</span><span class="n">delete_params</span><span class="p">(</span><span class="s1">&#39;SubDict.add_base_str.parameters&#39;</span><span class="p">,</span> <span class="s1">&#39;append&#39;</span><span class="p">)</span>
+
+    <span class="nd">@docstrings</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s1">&#39;SubDict&#39;</span><span class="p">)</span>
+    <span class="nd">@docstrings</span><span class="o">.</span><span class="n">dedent</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">base_str</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;.+&#39;</span><span class="p">,</span> <span class="n">pattern_base</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">trace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base: dict</span>
+<span class="sd">            base dictionary</span>
+<span class="sd">        %(SubDict.add_base_str.parameters.no_append)s</span>
+<span class="sd">        trace: bool</span>
+<span class="sd">            Default: False. If True, changes in the SubDict are traced back to</span>
+<span class="sd">            the `base` dictionary. You can change this behaviour also</span>
+<span class="sd">            afterwards by changing the :attr:`trace` attribute</span>
+<span class="sd">        replace: bool</span>
+<span class="sd">            Default: True. If True, everything but the &#39;%%(key)s&#39; part in a</span>
+<span class="sd">            base string is replaced (see examples below)</span>
+
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        - If a key of matches multiple strings in `base_str`, the first</span>
+<span class="sd">          matching one is used.</span>
+<span class="sd">        - the SubDict class is (of course) not that efficient as the</span>
+<span class="sd">          :attr:`base` dictionary, since we loop multiple times through it&#39;s</span>
+<span class="sd">          keys</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Initialization example::</span>
+
+<span class="sd">            &gt;&gt;&gt; from psyplot import rcParams</span>
+<span class="sd">            &gt;&gt;&gt; d = rcParams.find_and_replace([&#39;plotter.baseplotter.&#39;,</span>
+<span class="sd">            ...                                &#39;plotter.vector.&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; print d[&#39;title&#39;]</span>
+
+<span class="sd">            &gt;&gt;&gt; print d[&#39;arrowsize&#39;]</span>
+<span class="sd">            1.0</span>
+
+<span class="sd">        To convert it to a usual dictionary, simply use the :attr:`data`</span>
+<span class="sd">        attribute::</span>
+
+<span class="sd">            &gt;&gt;&gt; d.data</span>
+<span class="sd">            {&#39;title&#39;: None, &#39;arrowsize&#39;: 1.0, ...}</span>
+
+<span class="sd">        Note that changing one keyword of your :class:`SubDict` will not change</span>
+<span class="sd">        the :attr:`base` dictionary, unless you set the :attr:`trace` attribute</span>
+<span class="sd">        to ``True``::</span>
+
+<span class="sd">            &gt;&gt;&gt; d[&#39;title&#39;] = &#39;my title&#39;</span>
+<span class="sd">            &gt;&gt;&gt; print(d[&#39;title&#39;])</span>
+<span class="sd">            my title</span>
+
+<span class="sd">            &gt;&gt;&gt; print(rcParams[&#39;plotter.baseplotter.title&#39;])</span>
+
+<span class="sd">            &gt;&gt;&gt; d.trace = True</span>
+<span class="sd">            &gt;&gt;&gt; d[&#39;title&#39;] = &#39;my second title&#39;</span>
+<span class="sd">            &gt;&gt;&gt; print(d[&#39;title&#39;])</span>
+<span class="sd">            my second title</span>
+<span class="sd">            &gt;&gt;&gt; print(rcParams[&#39;plotter.baseplotter.title&#39;])</span>
+<span class="sd">            my second title</span>
+
+<span class="sd">        Furthermore, changing the :attr:`replace` attribute will change how you</span>
+<span class="sd">        can access the keys::</span>
+
+<span class="sd">            &gt;&gt;&gt; d.replace = False</span>
+
+<span class="sd">            # now setting d[&#39;title&#39;] = &#39;anything&#39; would raise an error (since</span>
+<span class="sd">            # d.trace is set to True and &#39;title&#39; is not a key in the rcParams</span>
+<span class="sd">            # dictionary. Instead we need</span>
+<span class="sd">            &gt;&gt;&gt; d[&#39;plotter.baseplotter.title&#39;] = &#39;anything&#39;</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        RcParams.find_and_replace&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="n">base</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_str</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replace</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">replace</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_base_str</span><span class="p">(</span><span class="n">base_str</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">pattern_base</span><span class="o">=</span><span class="n">pattern_base</span><span class="p">,</span>
+                          <span class="n">append</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">DictMethods</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_val_and_base</span><span class="p">(</span><span class="n">key</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="c1"># set it in the SubDict instance if trace is False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">:</span>
+            <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span>
+        <span class="c1"># set it with the given key, if trace is True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">:</span>
+            <span class="n">base</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="nb">dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="c1"># first look if the key already exists in the base dictionary</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">patt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter_base_and_pattern</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">patt</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">base</span><span class="p">:</span>
+                <span class="n">base</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+                <span class="k">return</span>
+        <span class="c1"># if the key does not exist, we set it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="k">def</span> <span class="nf">_get_val_and_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">patt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter_base_and_pattern</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">patt</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                        <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> does not match the specified pattern!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">s</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> does not match the specified pattern!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">key</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_iter_base_and_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">safe_modulo</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}),</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_str</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SubDict.iterkeys"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.SubDict.iterkeys">[docs]</a>    <span class="k">def</span> <span class="nf">iterkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unsorted iterator over keys&quot;&quot;&quot;</span>
+        <span class="n">patterns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span>
+        <span class="n">replace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+                    <span class="n">ret</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">replace</span> <span class="k">else</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">ret</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                        <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                        <span class="k">yield</span> <span class="n">ret</span>
+                    <span class="k">break</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">DictMethods</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">key</span></div>
+
+<div class="viewcode-block" id="SubDict.iteritems"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.SubDict.iteritems">[docs]</a>    <span class="k">def</span> <span class="nf">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unsorted iterator over items&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SubDict.itervalues"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.SubDict.itervalues">[docs]</a>    <span class="k">def</span> <span class="nf">itervalues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unsorted iterator over values&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iteritems</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SubDict.update"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.SubDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the dictionary&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div></div>
+
+
+<span class="n">docstrings</span><span class="o">.</span><span class="n">delete_params</span><span class="p">(</span><span class="s1">&#39;SubDict.parameters&#39;</span><span class="p">,</span> <span class="s1">&#39;base&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="RcParams"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams">[docs]</a><span class="k">class</span> <span class="nc">RcParams</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A dictionary object including validation</span>
+
+<span class="sd">    validating functions are defined and associated with rc parameters in</span>
+<span class="sd">    :data:`defaultParams`</span>
+
+<span class="sd">    This class is essentially the same as in maplotlibs</span>
+<span class="sd">    :class:`~matplotlib.RcParams` but has the additional</span>
+<span class="sd">    :meth:`find_and_replace` method.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dictionary with validation methods as values&quot;&quot;&quot;</span>
+        <span class="n">depr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_deprecated</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span>
+                    <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaultParams</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">depr</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">descriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The description of each keyword in the rcParams dictionary&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaultParams</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">}</span>
+
+    <span class="n">HEADER</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Configuration parameters of the psyplot module</span>
+
+<span class="s2">You can copy this file (or parts of it) to another path and save it as</span>
+<span class="s2">psyplotrc.yml. The directory should then be stored in the PSYPLOTCONFIGDIR</span>
+<span class="s2">environment variable.&quot;&quot;&quot;</span>
+
+    <span class="n">msg_depr</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is deprecated and replaced with </span><span class="si">%s</span><span class="s2">; please use the latter.&quot;</span>
+    <span class="n">msg_depr_ignore</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is deprecated and ignored. Use </span><span class="si">%s</span><span class="s2">&quot;</span>
+
+    <span class="c1">#: possible connections that shall be called if the rcParams value change</span>
+    <span class="n">_connections</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="c1">#: the names of the entry points that are loaded during the</span>
+    <span class="c1">#: :meth:`load_plugins` method</span>
+    <span class="n">_plugins</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_all_deprecated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_ignore_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_map</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">defaultParams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_defaultParams&#39;</span><span class="p">,</span> <span class="n">defaultParams</span><span class="p">)</span>
+
+    <span class="nd">@defaultParams</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">defaultParams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_defaultParams</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@defaultParams</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">defaultParams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_defaultParams</span>
+
+    <span class="c1"># validate values on the way in</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        defaultParams: dict</span>
+<span class="sd">            The defaultParams to use (see the :attr:`defaultParams` attribute).</span>
+<span class="sd">            By default, the :attr:`psyplot.config.rcsetup.defaultParams`</span>
+<span class="sd">            dictionary is used</span>
+
+<span class="sd">        Other Parameters</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        ``*args, **kwargs``</span>
+<span class="sd">            Any key-value pair for the initialization of the dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">defaultParams</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;defaultParams&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">defaultParams</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">defaultParams</span> <span class="o">=</span> <span class="n">defaultParams</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_ignore_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
+                <span class="c1"># force the issue</span>
+                <span class="n">warn</span><span class="p">(</span><span class="n">_rcparam_warn_str</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                                              <span class="n">func</span><span class="o">=</span><span class="s1">&#39;__init__&#39;</span><span class="p">))</span>
+                <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_depreceated</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">[</span><span class="n">key</span><span class="p">](</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Key </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ve</span><span class="p">)))</span>
+        <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">cval</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">func</span><span class="p">(</span><span class="n">cval</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_depreceated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_map</span><span class="p">:</span>
+            <span class="n">alt_key</span><span class="p">,</span> <span class="n">alt_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">warn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg_depr</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">alt_key</span><span class="p">))</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">alt_key</span>
+            <span class="k">return</span> <span class="n">key</span><span class="p">,</span> <span class="n">alt_val</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_ignore_map</span><span class="p">:</span>
+            <span class="n">alt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_ignore_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">warn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg_depr_ignore</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">alt</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultParams</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not a valid rc parameter. See rcParams.keys() for a &#39;</span>
+                <span class="s1">&#39;list of valid parameters.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,))</span>
+        <span class="k">return</span> <span class="n">key</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_depreceated</span><span class="p">(</span><span class="n">key</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RcParams.connect"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Connect a function to the given formatoption</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key: str</span>
+<span class="sd">            The rcParams key</span>
+<span class="sd">        func: function</span>
+<span class="sd">            The function that shall be called when the rcParams key changes.</span>
+<span class="sd">            It must accept a single value that is the new value of the</span>
+<span class="sd">            key.&quot;&quot;&quot;</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_depreceated</span><span class="p">(</span><span class="n">key</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RcParams.disconnect"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Disconnect the connections to the an rcParams key</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key: str</span>
+<span class="sd">            The rcParams key. If None, all keys are used</span>
+<span class="sd">        func: function</span>
+<span class="sd">            The function that is connected. If None, all functions are</span>
+<span class="sd">            connected</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">connections</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="n">connections</span><span class="p">[:]:</span>
+                    <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">conn</span> <span class="ow">is</span> <span class="n">func</span><span class="p">:</span>
+                        <span class="n">connections</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">connections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="n">connections</span><span class="p">[:]:</span>
+                <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">conn</span> <span class="ow">is</span> <span class="n">func</span><span class="p">:</span>
+                    <span class="n">connections</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RcParams.remove"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_depreceated</span><span class="p">(</span><span class="n">key</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">func</span><span class="p">)</span></div>
+
+    <span class="c1"># the default dict `update` does not use __setitem__</span>
+    <span class="c1"># so rcParams.update(...) (such as in seaborn) side-steps</span>
+    <span class="c1"># all of the validation over-ride update to force</span>
+    <span class="c1"># through __setitem__</span>
+<div class="viewcode-block" id="RcParams.update"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
+                <span class="c1"># force the issue</span>
+                <span class="n">warn</span><span class="p">(</span><span class="n">_rcparam_warn_str</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                                              <span class="n">func</span><span class="o">=</span><span class="s1">&#39;update&#39;</span><span class="p">))</span>
+                <span class="nb">dict</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RcParams.update_from_defaultParams"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.update_from_defaultParams">[docs]</a>    <span class="k">def</span> <span class="nf">update_from_defaultParams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">defaultParams</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                  <span class="n">plotters</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update from the a dictionary like the :attr:`defaultParams`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        defaultParams: dict</span>
+<span class="sd">            The :attr:`defaultParams` like dictionary. If None, the</span>
+<span class="sd">            :attr:`defaultParams` attribute will be updated</span>
+<span class="sd">        plotters: bool</span>
+<span class="sd">            If True, ``&#39;project.plotters&#39;`` will be updated too&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">defaultParams</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">defaultParams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultParams</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">defaultParams</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                     <span class="k">if</span> <span class="n">plotters</span> <span class="ow">or</span> <span class="n">key</span> <span class="o">!=</span> <span class="s1">&#39;project.plotters&#39;</span><span class="p">})</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pprint</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">indent</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">repr_split</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                    <span class="n">width</span><span class="o">=</span><span class="mi">80</span> <span class="o">-</span> <span class="n">indent</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">repr_indented</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">indent</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repr_split</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">(</span><span class="si">{1}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">repr_indented</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+<div class="viewcode-block" id="RcParams.keys"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.keys">[docs]</a>    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return sorted list of keys.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">k</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">k</span></div>
+
+<div class="viewcode-block" id="RcParams.values"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.values">[docs]</a>    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return values in order of sorted keys.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="RcParams.find_all"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.find_all">[docs]</a>    <span class="k">def</span> <span class="nf">find_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the subset of this RcParams dictionary whose keys match,</span>
+<span class="sd">        using :func:`re.search`, the given ``pattern``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pattern: str</span>
+<span class="sd">            pattern as suitable for re.compile</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        RcParams</span>
+<span class="sd">            RcParams instance with entries that match the given `pattern`</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Changes to the returned dictionary are (different from</span>
+<span class="sd">        :meth:`find_and_replace` are *not* propagated to the parent RcParams</span>
+<span class="sd">        dictionary.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        find_and_replace&quot;&quot;&quot;</span>
+        <span class="n">pattern_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">RcParams</span><span class="p">()</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">defaultParams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultParams</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                   <span class="k">if</span> <span class="n">pattern_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="RcParams.find_and_replace"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.find_and_replace">[docs]</a>    <span class="nd">@docstrings</span><span class="o">.</span><span class="n">dedent</span>
+    <span class="k">def</span> <span class="nf">find_and_replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Like :meth:`find_all` but the given strings are replaced</span>
+
+<span class="sd">        This method returns a dictionary-like object that keeps weak reference</span>
+<span class="sd">        to this rcParams instance. The resulting `SubDict` instance takes the</span>
+<span class="sd">        keys from this rcParams instance but leaves away what is found in</span>
+<span class="sd">        `base_str`.</span>
+
+<span class="sd">        ``*args`` and ``**kwargs`` are determined by the :class:`SubDict`</span>
+<span class="sd">        class, where the `base` dictionary is this one.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        %(SubDict.parameters.no_base)s</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        SubDict</span>
+<span class="sd">            SubDict with this rcParams instance as reference.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        The syntax is the same as for the initialization of the</span>
+<span class="sd">        :class:`SubDict` class::</span>
+
+<span class="sd">            &gt;&gt;&gt; from psyplot import rcParams</span>
+<span class="sd">            &gt;&gt;&gt; d = rcParams.find_and_replace([&#39;plotter.baseplotter.&#39;,</span>
+<span class="sd">            ...                                &#39;plotter.vector.&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; print(d[&#39;title&#39;])</span>
+<span class="sd">            None</span>
+
+<span class="sd">            &gt;&gt;&gt; print(d[&#39;arrowsize&#39;])</span>
+<span class="sd">            1.0</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        find_all</span>
+<span class="sd">        SubDict&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SubDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RcParams.load_from_file"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.load_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">load_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update rcParams from user-defined settings</span>
+
+<span class="sd">        This function updates the instance with what is found in `fname`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fname: str</span>
+<span class="sd">            Path to the yaml configuration file. Possible keys of the</span>
+<span class="sd">            dictionary are defined by :data:`config.rcsetup.defaultParams`.</span>
+<span class="sd">            If None, the :func:`config.rcsetup.psyplot_fname` function is used.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        dump_to_file, psyplot_fname&quot;&quot;&quot;</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span> <span class="ow">or</span> <span class="n">psyplot_fname</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">fname</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;project.plotters.user&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                        <span class="s1">&#39;project.plotters&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;project.plotters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;project.plotters.user&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="RcParams.dump"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">exclude_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;project.plotters&#39;</span><span class="p">],</span> <span class="n">include_descriptions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dump this instance to a yaml file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fname: str or None</span>
+<span class="sd">            file name to write to. If None, the string that would be written</span>
+<span class="sd">            to a file is returned</span>
+<span class="sd">        overwrite: bool</span>
+<span class="sd">            If True and `fname` already exists, it will be overwritten</span>
+<span class="sd">        include_keys: None or list of str</span>
+<span class="sd">            Keys in the dictionary to be included. If None, all keys are</span>
+<span class="sd">            included</span>
+<span class="sd">        exclude_keys: list of str</span>
+<span class="sd">            Keys from the :class:`RcParams` instance to be excluded</span>
+
+<span class="sd">        Other Parameters</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        ``**kwargs``</span>
+<span class="sd">            Any other parameter for the :func:`yaml.dump` function</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str or None</span>
+<span class="sd">            if fname is ``None``, the string is returned. Otherwise, ``None``</span>
+<span class="sd">            is returned</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        IOError</span>
+<span class="sd">            If `fname` already exists and `overwrite` is False</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        load_from_file&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> already exists! Set overwrite=True to overwrite it!&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">fname</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">six</span><span class="o">.</span><span class="n">PY2</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span>
+                <span class="n">include_keys</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">include_keys</span><span class="p">)</span> <span class="ow">and</span>
+             <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude_keys</span><span class="p">}</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;default_flow_style&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">include_descriptions</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEADER</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span>
+                <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Created with python&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span>
+                    <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;# &#39;</span> <span class="o">+</span> <span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">header</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">:]:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;# &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"># &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()))</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">s</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">_load_plugin_entrypoints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load the modules for the psyplot plugins</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        pkg_resources.EntryPoint</span>
+<span class="sd">            The entry point for the psyplot plugin module&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">iter_entry_points</span>
+
+        <span class="k">def</span> <span class="nf">load_plugin</span><span class="p">(</span><span class="n">ep</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">plugins_env</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;no&#39;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">ep</span><span class="o">.</span><span class="n">module_name</span> <span class="ow">in</span> <span class="n">exclude_plugins</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">include_plugins</span> <span class="ow">and</span> <span class="n">ep</span><span class="o">.</span><span class="n">module_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">include_plugins</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span> <span class="ow">or</span> <span class="p">[]</span>
+
+        <span class="n">plugins_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;PSYPLOT_PLUGINS&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)</span>
+        <span class="n">include_plugins</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">plugins_env</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;yes:&#39;</span><span class="p">)]</span>
+        <span class="n">exclude_plugins</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">plugins_env</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;no:&#39;</span><span class="p">)]</span>
+
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">iter_entry_points</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;psyplot&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;plugin&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">load_plugin</span><span class="p">(</span><span class="n">ep</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Skipping entrypoint </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ep</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plugins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ep</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Loading entrypoint </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ep</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">ep</span>
+
+<div class="viewcode-block" id="RcParams.load_plugins"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.load_plugins">[docs]</a>    <span class="k">def</span> <span class="nf">load_plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raise_error</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load the plotters and defaultParams from the plugins</span>
+
+<span class="sd">        This method loads the `plotters` attribute and `defaultParams`</span>
+<span class="sd">        attribute from the plugins that use the entry point specified by</span>
+<span class="sd">        `group`. Entry points must be objects (or modules) that have a</span>
+<span class="sd">        `defaultParams` and a `plotters` attribute.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        raise_error: bool</span>
+<span class="sd">            If True, an error is raised when multiple plugins define the same</span>
+<span class="sd">            plotter or rcParams key. Otherwise only a warning is raised&quot;&quot;&quot;</span>
+
+        <span class="n">pm_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;PSYPLOT_PLOTMETHODS&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)</span>
+        <span class="n">include_pms</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">pm_env</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;yes:&#39;</span><span class="p">)]</span>
+        <span class="n">exclude_pms</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">pm_env</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;no:&#39;</span><span class="p">)]</span>
+
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+        <span class="n">plotters</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;project.plotters&#39;</span><span class="p">]</span>
+        <span class="n">def_plots</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">plotters</span><span class="p">)}</span>
+        <span class="n">defaultParams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultParams</span>
+        <span class="n">def_keys</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="n">defaultParams</span><span class="p">}</span>
+
+        <span class="k">def</span> <span class="nf">register_pm</span><span class="p">(</span><span class="n">ep</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">module_name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">pm_env</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;no&#39;</span><span class="p">]:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">exclude_pms</span> <span class="ow">or</span> <span class="n">full_name</span> <span class="ow">in</span> <span class="n">exclude_pms</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">include_pms</span> <span class="ow">and</span> <span class="p">(</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">include_pms</span> <span class="ow">and</span>
+                                  <span class="n">full_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">include_pms</span><span class="p">):</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Skipping plot method </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">full_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ret</span>
+
+        <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_plugin_entrypoints</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">plugin_mod</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ModuleNotFoundError</span><span class="p">,</span> <span class="ne">ImportError</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed to import </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">ep</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Failed to import </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">ep</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="n">plugin_mod</span><span class="o">.</span><span class="n">rcParams</span>
+
+            <span class="c1"># load the plotters</span>
+            <span class="n">plugin_plotters</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">rc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;project.plotters&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">register_pm</span><span class="p">(</span><span class="n">ep</span><span class="p">,</span> <span class="n">key</span><span class="p">)}</span>
+            <span class="n">already_defined</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">plotters</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">plugin_plotters</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">already_defined</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Error while loading psyplot plugin </span><span class="si">%s</span><span class="s2">! The &quot;</span>
+                       <span class="s2">&quot;following plotters have already been &quot;</span>
+                       <span class="s2">&quot;defined&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="n">ep</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39;and will be overwritten:&#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">raise_error</span> <span class="k">else</span> <span class="s1">&#39;:&#39;</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+                    <span class="p">((</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> by </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">plugin</span><span class="p">)</span>
+                      <span class="k">for</span> <span class="n">plugin</span><span class="p">,</span> <span class="n">keys</span> <span class="ow">in</span> <span class="n">def_plots</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">already_defined</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="n">raise_error</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">plugin_plotters</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">d</span><span class="p">[</span><span class="s1">&#39;plugin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">module_name</span>
+            <span class="n">plotters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">plugin_plotters</span><span class="p">)</span>
+            <span class="n">def_plots</span><span class="p">[</span><span class="n">ep</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">plugin_plotters</span><span class="p">)</span>
+
+            <span class="c1"># load the defaultParams keys</span>
+            <span class="n">plugin_defaultParams</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">defaultParams</span>
+            <span class="n">already_defined</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">defaultParams</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
+                <span class="n">plugin_defaultParams</span><span class="p">)</span> <span class="o">-</span> <span class="p">{</span><span class="s1">&#39;project.plotters&#39;</span><span class="p">}</span>
+            <span class="k">if</span> <span class="n">already_defined</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Error while loading psyplot plugin </span><span class="si">%s</span><span class="s2">! The &quot;</span>
+                       <span class="s2">&quot;following default keys have already been &quot;</span>
+                       <span class="s2">&quot;defined:&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="n">ep</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+                    <span class="p">((</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> by </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">plugin</span><span class="p">)</span>
+                      <span class="k">for</span> <span class="n">plugin</span><span class="p">,</span> <span class="n">keys</span> <span class="ow">in</span> <span class="n">def_keys</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">already_defined</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="n">raise_error</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">update_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">plugin_defaultParams</span><span class="p">)</span> <span class="o">-</span> <span class="p">{</span><span class="s1">&#39;project.plotters&#39;</span><span class="p">}</span>
+            <span class="n">def_keys</span><span class="p">[</span><span class="n">ep</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_keys</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">defaultParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">plugin_defaultParams</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">update_keys</span><span class="p">})</span>
+
+            <span class="c1"># load the rcParams (without validation)</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">RcParams</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">key</span><span class="p">:</span> <span class="n">rc</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">update_keys</span><span class="p">})</span>
+
+            <span class="c1"># add the deprecated keys</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_ignore_map</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">rc</span><span class="o">.</span><span class="n">_deprecated_ignore_map</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deprecated_map</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">rc</span><span class="o">.</span><span class="n">_deprecated_map</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RcParams.copy"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make sure, the right class is retained&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">RcParams</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RcParams.catch"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.catch">[docs]</a>    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Context manager to reset the rcParams afterwards</span>
+
+<span class="sd">        Usage::</span>
+
+<span class="sd">            rcParams[&#39;some_key&#39;] = 0</span>
+<span class="sd">            with rcParams.catch():</span>
+<span class="sd">                rcParams[&#39;some_key&#39;] = 1</span>
+<span class="sd">                assert rcParams[&#39;some_key&#39;] == 1</span>
+<span class="sd">            assert rcParams[&#39;some_key&#39;] == 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">save</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">yield</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>  <span class="c1"># reset settings</span></div></div>
+
+
+<div class="viewcode-block" id="psyplot_fname"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.psyplot_fname">[docs]</a><span class="k">def</span> <span class="nf">psyplot_fname</span><span class="p">(</span><span class="n">env_key</span><span class="o">=</span><span class="s1">&#39;PSYPLOTRC&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="s1">&#39;psyplotrc.yml&#39;</span><span class="p">,</span>
+                  <span class="n">if_exists</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the location of the config file.</span>
+
+<span class="sd">    The file location is determined in the following order</span>
+
+<span class="sd">    - `$PWD/psyplotrc.yml`</span>
+
+<span class="sd">    - environment variable `PSYPLOTRC` (pointing to the file location or a</span>
+<span class="sd">      directory containing the file `psyplotrc.yml`)</span>
+
+<span class="sd">    - `$PSYPLOTCONFIGDIR/psyplot`</span>
+
+<span class="sd">    - On Linux and osx,</span>
+
+<span class="sd">          - `$HOME/.config/psyplot/psyplotrc.yml`</span>
+
+<span class="sd">    - On other platforms,</span>
+
+<span class="sd">         - `$HOME/.psyplot/psyplotrc.yml` if `$HOME` is defined.</span>
+
+<span class="sd">    - Lastly, it looks in `$PSYPLOTDATA/psyplotrc.yml` for a</span>
+<span class="sd">      system-defined copy.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    env_key: str</span>
+<span class="sd">        The environment variable that can be used for the configuration</span>
+<span class="sd">        directory</span>
+<span class="sd">    fname: str</span>
+<span class="sd">        The name of the configuration file</span>
+<span class="sd">    if_exists: bool</span>
+<span class="sd">        If True, the path is only returned if the file exists</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None or str</span>
+<span class="sd">        None, if no file could be found and `if_exists` is True, else the path</span>
+<span class="sd">        to the psyplot configuration file</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function is motivated by the :func:`matplotlib.matplotlib_fname`</span>
+<span class="sd">    function&quot;&quot;&quot;</span>
+    <span class="n">cwd</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">full_fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">full_fname</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">full_fname</span>
+
+    <span class="k">if</span> <span class="n">env_key</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">env_key</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="n">full_fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">full_fname</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">full_fname</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">path</span>
+
+    <span class="n">configdir</span> <span class="o">=</span> <span class="n">get_configdir</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">configdir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">full_fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">configdir</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">full_fname</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">if_exists</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">full_fname</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="get_configdir"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.get_configdir">[docs]</a><span class="k">def</span> <span class="nf">get_configdir</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;psyplot&#39;</span><span class="p">,</span> <span class="n">env_key</span><span class="o">=</span><span class="s1">&#39;PSYPLOTCONFIGDIR&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the string representing the configuration directory.</span>
+
+<span class="sd">    The directory is chosen as follows:</span>
+
+<span class="sd">    1. If the `env_key` environment variable is supplied, choose that.</span>
+
+<span class="sd">    2a. On Linux and osx, choose ``&#39;$HOME/.config/&#39; + name``.</span>
+
+<span class="sd">    2b. On other platforms, choose ``&#39;$HOME/.&#39; + name``.</span>
+
+<span class="sd">    3. If the chosen directory exists, use that as the</span>
+<span class="sd">       configuration directory.</span>
+<span class="sd">    4. A directory: return None.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name: str</span>
+<span class="sd">        The name of the program</span>
+<span class="sd">    env_key: str</span>
+<span class="sd">        The environment variable that can be used for the configuration</span>
+<span class="sd">        directory</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function is motivated by the :func:`matplotlib.matplotlib_fname`</span>
+<span class="sd">    function&quot;&quot;&quot;</span>
+    <span class="n">configdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env_key</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">configdir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">configdir</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">_get_home</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;linux&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;darwin&#39;</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="s1">&#39;.config/&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span></div>
+
+
+<div class="viewcode-block" id="validate_path_exists"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.validate_path_exists">[docs]</a><span class="k">def</span> <span class="nf">validate_path_exists</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;If s is a path, return s, else False&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">s</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; should be a path but it does not exist&#39;</span> <span class="o">%</span> <span class="n">s</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_files_exist"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.validate_files_exist">[docs]</a><span class="k">def</span> <span class="nf">validate_files_exist</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate if all pathnames in a given list exists&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">validate_str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">validate_path_exists</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">l</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="validate_dict"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.validate_dict">[docs]</a><span class="k">def</span> <span class="nf">validate_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate a dictionary</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    d: dict or str</span>
+<span class="sd">        If str, it must be a path to a yaml file</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">validate_path_exists</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not convert </span><span class="si">{}</span><span class="s2"> to dictionary!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="validate_bool_maybe_none"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.validate_bool_maybe_none">[docs]</a><span class="k">def</span> <span class="nf">validate_bool_maybe_none</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+    <span class="s1">&#39;Convert b to a boolean or raise&#39;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">b</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">validate_bool</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_bool"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.validate_bool">[docs]</a><span class="k">def</span> <span class="nf">validate_bool</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert b to a boolean or raise&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">b</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Could not convert &quot;</span><span class="si">%s</span><span class="s1">&quot; to boolean&#39;</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_str"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.validate_str">[docs]</a><span class="k">def</span> <span class="nf">validate_str</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate a string</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    s: str</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Did not found string!&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">six</span><span class="o">.</span><span class="n">text_type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_stringlist"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.validate_stringlist">[docs]</a><span class="k">def</span> <span class="nf">validate_stringlist</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate a list of strings</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    val: iterable of strings</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        list of str</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">six</span><span class="o">.</span><span class="n">text_type</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">validate_str</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_stringset"><a class="viewcode-back" href="../../../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.validate_stringset">[docs]</a><span class="k">def</span> <span class="nf">validate_stringset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate a set of strings</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    val: iterable of strings</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    set</span>
+<span class="sd">        set of str</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">validate_stringlist</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+
+
+<span class="c1">#: :class:`dict` with default values and validation functions</span>
+<span class="n">defaultParams</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># user defined plotter keys</span>
+    <span class="s1">&#39;plotter.user&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{},</span> <span class="n">validate_dict</span><span class="p">,</span>
+        <span class="n">inspect</span><span class="o">.</span><span class="n">cleandoc</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        formatoption keys and values that are defined by the user to be used by</span>
+<span class="s2">        the specified plotters. For example to modify the title of all</span>
+<span class="s2">        :class:`psyplot.plotter.maps.FieldPlotter` instances, set</span>
+<span class="s2">        ``{&#39;plotter.fieldplotter.title&#39;: &#39;my title&#39;}``&quot;&quot;&quot;</span><span class="p">)],</span>
+
+    <span class="s1">&#39;gridweights.use_cdo&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="kc">None</span><span class="p">,</span> <span class="n">validate_bool_maybe_none</span><span class="p">,</span>
+        <span class="s1">&#39;Boolean flag to control whether CDOs (Climate Data Operators) should &#39;</span>
+        <span class="s1">&#39;be used to calculate grid weights. If None, they are tried to be &#39;</span>
+        <span class="s1">&#39;used.&#39;</span><span class="p">],</span>
+
+    <span class="c1"># decoder</span>
+    <span class="s1">&#39;decoder.x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">set</span><span class="p">(),</span> <span class="n">validate_stringset</span><span class="p">,</span>
+                  <span class="s1">&#39;names that shall be interpreted as the longitudinal x dim&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;decoder.y&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">set</span><span class="p">(),</span> <span class="n">validate_stringset</span><span class="p">,</span>
+                  <span class="s1">&#39;names that shall be interpreted as the latitudinal y dim&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;decoder.z&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">set</span><span class="p">(),</span> <span class="n">validate_stringset</span><span class="p">,</span>
+                  <span class="s1">&#39;names that shall be interpreted as the vertical z dim&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;decoder.t&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;time&#39;</span><span class="p">},</span> <span class="n">validate_stringset</span><span class="p">,</span>
+                  <span class="s1">&#39;names that shall be interpreted as the time dimension&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;decoder.interp_kind&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">validate_str</span><span class="p">,</span>
+        <span class="s1">&#39;interpolation method to calculate 2D-bounds (see the `kind` parameter&#39;</span>
+        <span class="s1">&#39;in the :meth:`psyplot.data.CFDecoder.get_plotbounds` method)&#39;</span><span class="p">],</span>
+
+    <span class="c1"># specify automatic drawing and showing of figures</span>
+    <span class="s1">&#39;auto_draw&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="n">validate_bool</span><span class="p">,</span>
+                  <span class="p">(</span><span class="s1">&#39;Automatically draw the figures if the draw keyword in the &#39;</span>
+                   <span class="s1">&#39;update and start_update methods is None&#39;</span><span class="p">)],</span>
+    <span class="s1">&#39;auto_show&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="n">validate_bool</span><span class="p">,</span>
+                  <span class="p">(</span><span class="s1">&#39;Automatically show the figures after the update and&#39;</span>
+                   <span class="s1">&#39;start_update methods&#39;</span><span class="p">)],</span>
+
+    <span class="c1"># data</span>
+    <span class="s1">&#39;datapath&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_path_exists</span><span class="p">,</span> <span class="s1">&#39;path for supplementary data&#39;</span><span class="p">],</span>
+
+    <span class="c1"># list settings</span>
+    <span class="s1">&#39;lists.auto_update&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="n">validate_bool</span><span class="p">,</span>
+                          <span class="s1">&#39;default value (boolean) for the auto_update &#39;</span>
+                          <span class="s1">&#39;parameter in the initialization of Plotter, &#39;</span>
+                          <span class="s1">&#39;Project, etc. instances&#39;</span><span class="p">],</span>
+
+    <span class="c1"># project settings</span>
+    <span class="c1"># auto_import: If True the plotters in project,plotters are automatically</span>
+    <span class="c1"># imported</span>
+    <span class="s1">&#39;project.auto_import&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="n">validate_bool</span><span class="p">,</span>
+                            <span class="s1">&#39;boolean controlling whether all plotters &#39;</span>
+                            <span class="s1">&#39;specified in the project.plotters item will be &#39;</span>
+                            <span class="s1">&#39;automatically imported when importing the &#39;</span>
+                            <span class="s1">&#39;psyplot.project module&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;project.import_seaborn&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="kc">None</span><span class="p">,</span> <span class="n">validate_bool_maybe_none</span><span class="p">,</span>
+        <span class="s1">&#39;boolean controlling whether the seaborn module shall be imported &#39;</span>
+        <span class="s1">&#39;when importing the project module. If None, it is only tried to &#39;</span>
+        <span class="s1">&#39;import the module.&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;project.plotters&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{},</span> <span class="n">validate_dict</span><span class="p">,</span>
+        <span class="s1">&#39;mapping from identifier to plotter definitions for the Project class.&#39;</span>
+        <span class="s1">&#39; See the :func:`psyplot.project.register_plotter` function for &#39;</span>
+        <span class="s1">&#39;possible keywords and values. See &#39;</span>
+        <span class="s1">&#39;:attr:`psyplot.project.registered_plotters` for examples.&#39;</span><span class="p">],</span>
+
+    <span class="s1">&#39;project.plotters.user&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{},</span> <span class="n">validate_dict</span><span class="p">,</span>
+        <span class="s2">&quot;Plot methods that are defined by the user and overwrite those in the&quot;</span>
+        <span class="s2">&quot;``&#39;project.plotters&#39;`` key. Use this if you want to define your own &quot;</span>
+        <span class="s2">&quot;plotters without writing a plugin&quot;</span><span class="p">],</span>
+
+    <span class="c1"># presets</span>
+    <span class="s1">&#39;presets.trusted&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[],</span> <span class="n">validate_files_exist</span><span class="p">,</span>
+        <span class="s2">&quot;A list of filenames with trusted presets&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+
+
+<span class="n">_rcparam_warn_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Trying to set </span><span class="si">{key}</span><span class="s2"> to </span><span class="si">{value}</span><span class="s2"> via the </span><span class="si">{func}</span><span class="s2"> &quot;</span>
+                     <span class="s2">&quot;method of RcParams which does not validate cleanly. &quot;</span><span class="p">)</span>
+
+
+<span class="n">_seq_err_msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;You must supply exactly </span><span class="si">{n:d}</span><span class="s1"> values, you provided &#39;</span>
+                <span class="s1">&#39;</span><span class="si">{num:d}</span><span class="s1"> values: </span><span class="si">{s}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="n">_str_err_msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;You must supply exactly </span><span class="si">{n:d}</span><span class="s1"> comma-separated values, &#39;</span>
+                <span class="s1">&#39;you provided &#39;</span>
+                <span class="s1">&#39;</span><span class="si">{num:d}</span><span class="s1"> comma-separated values: </span><span class="si">{s}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1">#: :class:`~psyplot.config.rcsetup.RcParams` instance that stores default</span>
+<span class="c1">#: formatoptions and configuration settings.</span>
+<span class="n">rcParams</span> <span class="o">=</span> <span class="n">RcParams</span><span class="p">()</span>
+<span class="n">rcParams</span><span class="o">.</span><span class="n">update_from_defaultParams</span><span class="p">()</span>
+
+<span class="n">defaultParams_orig</span> <span class="o">=</span> <span class="n">defaultParams</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

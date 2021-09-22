@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.warning module &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ToDos" href="../todos.html" />
+    <link rel="prev" title="psyplot.version module" href="psyplot.version.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psyplot
+            <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psyplot.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="psyplot.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="psyplot.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psyplot.data.html">psyplot.data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.docstring.html">psyplot.docstring module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.gdal_store.html">psyplot.gdal_store module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.plotter.html">psyplot.plotter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.plugin_template.html">psyplot.plugin_template module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.project.html">psyplot.project module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.utils.html">psyplot.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.version.html">psyplot.version module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">psyplot.warning module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psyplot.html">API Reference</a> &raquo;</li>
+      <li>psyplot.warning module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psyplot.warning.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psyplot.warning">
+<span id="psyplot-warning-module"></span><h1>psyplot.warning module<a class="headerlink" href="#module-psyplot.warning" title="Permalink to this headline">¶</a></h1>
+<p>Warning module of the psyplot python module</p>
+<p>This module controls the warning behaviour of the module via the python
+builtin warnings module and introduces three new warning classes:</p>
+<p>..autosummay:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PsPylotRuntimeWarning</span>
+<span class="n">PsyPlotWarning</span>
+<span class="n">PsyPlotCritical</span>
+</pre></div>
+</div>
+<p><strong>Exceptions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.warning.PsyPlotCritical" title="psyplot.warning.PsyPlotCritical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PsyPlotCritical</span></code></a></p></td>
+<td><p>Critical UserWarning for psyplot module</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.warning.PsyPlotRuntimeWarning" title="psyplot.warning.PsyPlotRuntimeWarning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PsyPlotRuntimeWarning</span></code></a></p></td>
+<td><p>Runtime warning that appears only ones</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.warning.PsyPlotWarning" title="psyplot.warning.PsyPlotWarning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PsyPlotWarning</span></code></a></p></td>
+<td><p>Normal UserWarning for psyplot module</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.warning.critical" title="psyplot.warning.critical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">critical</span></code></a>(message[, category, logger])</p></td>
+<td><p>wrapper around the warnings.warn function for critical warnings.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.warning.customwarn" title="psyplot.warning.customwarn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">customwarn</span></code></a>(message, category, filename, ...)</p></td>
+<td><p>Use the psyplot.warning logger for categories being out of PsyPlotWarning and PsyPlotCritical and the default warnings.showwarning function for all the others.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.warning.disable_warnings" title="psyplot.warning.disable_warnings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_warnings</span></code></a>([critical])</p></td>
+<td><p>Function that disables all warnings and all critical warnings (if critical evaluates to True) related to the psyplot Module.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.warning.warn" title="psyplot.warning.warn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">warn</span></code></a>(message[, category, logger])</p></td>
+<td><p>wrapper around the warnings.warn function for non-critical warnings.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py exception">
+<dt class="sig sig-object py" id="psyplot.warning.PsyPlotCritical">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotCritical</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotCritical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotCritical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#UserWarning" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserWarning</span></code></a></p>
+<p>Critical UserWarning for psyplot module</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="psyplot.warning.PsyPlotRuntimeWarning">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotRuntimeWarning</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotRuntimeWarning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotRuntimeWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#RuntimeWarning" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></a></p>
+<p>Runtime warning that appears only ones</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="psyplot.warning.PsyPlotWarning">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotWarning</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotWarning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#UserWarning" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserWarning</span></code></a></p>
+<p>Normal UserWarning for psyplot module</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.warning.critical">
+<span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">critical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">message</span></em>, <em class="sig-param"><span class="pre">category=&lt;class</span> <span class="pre">'psyplot.warning.PsyPlotCritical'&gt;</span></em>, <em class="sig-param"><span class="pre">logger=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/warning.html#critical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.critical" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper around the warnings.warn function for critical warnings.
+logger may be a logging.Logger instance</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.warning.customwarn">
+<span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">customwarn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineno</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/warning.html#customwarn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.customwarn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the psyplot.warning logger for categories being out of
+PsyPlotWarning and PsyPlotCritical and the default warnings.showwarning
+function for all the others.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.warning.disable_warnings">
+<span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">disable_warnings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">critical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/warning.html#disable_warnings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.disable_warnings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that disables all warnings and all critical warnings (if
+critical evaluates to True) related to the psyplot Module.
+Please note that you can also configure the warnings via the
+psyplot.warning logger (logging.getLogger(psyplot.warning)).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.warning.warn">
+<span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">warn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">message</span></em>, <em class="sig-param"><span class="pre">category=&lt;class</span> <span class="pre">'psyplot.warning.PsyPlotWarning'&gt;</span></em>, <em class="sig-param"><span class="pre">logger=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/warning.html#warn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper around the warnings.warn function for non-critical warnings.
+logger may be a logging.Logger instance</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psyplot.version.html" class="btn btn-neutral float-left" title="psyplot.version module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../todos.html" class="btn btn-neutral float-right" title="ToDos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

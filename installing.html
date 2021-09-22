@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="getting_started.html" />
+    <link rel="prev" title="About psyplot" href="about.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-install">How to install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-using-conda">Installation using conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-using-pip">Installation using pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-from-source">Installation from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-dependencies">Required dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optional-dependencies">Optional dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-docs">Building the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uninstallation-via-conda">Uninstallation via conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uninstallation-via-pip">Uninstallation via pip</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<section id="how-to-install">
+<h2>How to install<a class="headerlink" href="#how-to-install" title="Permalink to this headline">¶</a></h2>
+<p>There basically three different methodologies for the installation. You should
+choose the one, which is the most appropriate solution concerning your skills
+and your usage:</p>
+<dl class="simple">
+<dt>The recommended installation</dt><dd><p>We recommend to use anaconda for installing python and psyplot (see
+<a class="reference internal" href="#install-conda"><span class="std std-ref">Installation using conda</span></a>). If you however already have python installed on
+your system, you can also use pip (see <a class="reference internal" href="#install-pip"><span class="std std-ref">Installation using pip</span></a>).</p>
+</dd>
+<dt>The developer installation</dt><dd><p>Install it from source (see <a class="reference internal" href="#install-source"><span class="std std-ref">Installation from source</span></a>)</p>
+</dd>
+</dl>
+<section id="installation-using-conda">
+<span id="install-conda"></span><h3>Installation using conda<a class="headerlink" href="#installation-using-conda" title="Permalink to this headline">¶</a></h3>
+<p>We highly recommend to use <a class="reference external" href="https://conda.io/docs/">conda</a> for installing psyplot. After having
+downloaded the installer from <a class="reference external" href="https://www.anaconda.com/download/">anaconda</a> or <a class="reference external" href="https://conda.io/miniconda.html">miniconda</a>, you can install psyplot
+and the optional plugins (see  <a class="reference internal" href="#optional-deps"><span class="std std-ref">Optional dependencies</span></a>) via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge psy-view psy-reg
+</pre></div>
+</div>
+<p>If you only want to install the core, i.e. the raw framework, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge psyplot
+</pre></div>
+</div>
+<p>If you want to be able to read GeoTiff Raster files, you will need to have
+<a class="reference external" href="http://www.gdal.org/">gdal</a> installed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install gdal
+</pre></div>
+</div>
+<p>Please also visit the <a class="reference external" href="http://xarray.pydata.org/en/stable/installing.html">xarray installation notes</a>
+for more informations on how to best configure the <a class="reference external" href="http://xarray.pydata.org/">xarray</a>
+package for your needs.</p>
+</section>
+<section id="installation-using-pip">
+<span id="install-pip"></span><h3>Installation using pip<a class="headerlink" href="#installation-using-pip" title="Permalink to this headline">¶</a></h3>
+<p>If you do not want to use conda for managing your python packages, you can also
+use the python package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code> and install via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install psyplot
+</pre></div>
+</div>
+<p>However to be on the safe side, make sure you have the <a class="reference internal" href="#dependencies"><span class="std std-ref">Dependencies</span></a>
+installed.</p>
+</section>
+<section id="installation-from-source">
+<span id="install-source"></span><h3>Installation from source<a class="headerlink" href="#installation-from-source" title="Permalink to this headline">¶</a></h3>
+<p>To install it from source, make sure you have the <a class="reference internal" href="#dependencies"><span class="std std-ref">Dependencies</span></a>
+installed, clone the <a class="reference external" href="https://github.com/psyplot/psyplot">github</a> repository via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/psyplot/psyplot.git
+</pre></div>
+</div>
+<p>and install it via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python setup.py install
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dependencies">
+<span id="id1"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<section id="required-dependencies">
+<h3>Required dependencies<a class="headerlink" href="#required-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Psyplot supports officially python 3.6 and 3.7. Previous versions are also
+available for python 2.7. Furthermore the package is built upon multiple other
+packages, mainly</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://xarray.pydata.org/">xarray</a>&gt;=0.8: Is used for the data management in the psyplot package</p></li>
+<li><p><a class="reference external" href="http://matplotlib.org">matplotlib</a>&gt;=1.4.3&lt;3.1: <strong>The</strong> python visualiation package</p></li>
+<li><p><a class="reference external" href="http://pyyaml.org/">PyYAML</a>: Needed for the configuration of psyplot</p></li>
+<li><p><a class="reference external" href="https://docrep.readthedocs.io">docrep</a>: A package for efficient documentation processing for large APIs</p></li>
+<li><p><a class="reference external" href="https://funcargparse.readthedocs.io">funcargparse</a>: A package to create command line parsers from function
+docstrings</p></li>
+</ul>
+</section>
+<section id="optional-dependencies">
+<span id="optional-deps"></span><h3>Optional dependencies<a class="headerlink" href="#optional-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>We furthermore recommend to use</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/installing.html#install" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a>: A graphical user interface to psyplot</p></li>
+<li><p><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-view/en/latest/installing.html#install" title="(in psy-view v0.1.0)"><span class="xref std std-ref">psy-view</span></a>: An ncview-like interface based on psyplot
+and psy-maps</p></li>
+<li><p><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/installing.html#install" title="(in psy-simple v1.3.1)"><span class="xref std std-ref">psy-simple</span></a>: A psyplot plugin to make simple plots</p></li>
+<li><p><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/installing.html#install" title="(in psy-maps v1.3.1)"><span class="xref std std-ref">psy-maps</span></a>: A psyplot plugin for visualizing data on a
+map</p></li>
+<li><p><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-reg/en/latest/installing.html#install" title="(in psy-reg v1.3.0)"><span class="xref std std-ref">psy-reg</span></a>: A psyplot plugin for visualizing fits to
+your data</p></li>
+<li><p><a class="reference external" href="https://code.zmaw.de/projects/cdo/wiki/Anaconda">cdo</a>: The python bindings for cdos (see also the
+<span class="xref std std-ref">cdo example</span>)</p></li>
+</ul>
+</section>
+</section>
+<section id="running-the-tests">
+<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h2>
+<p>We us <a class="reference external" href="https://pytest.org/latest/contents.html">pytest</a> to run our tests. So you can either run clone out the <a class="reference external" href="https://github.com/psyplot/psyplot">github</a>
+repository and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python setup.py <span class="nb">test</span>
+</pre></div>
+</div>
+<p>or install <a class="reference external" href="https://pytest.org/latest/contents.html">pytest</a> by yourself and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ py.test
+</pre></div>
+</div>
+<p>To also test the plugin functionality, install the <code class="docutils literal notranslate"><span class="pre">psyplot_test</span></code> module in
+<code class="docutils literal notranslate"><span class="pre">tests/test_plugin</span></code> via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> tests/test_plugin <span class="o">&amp;&amp;</span> python setup.py install
+</pre></div>
+</div>
+<p>and run the tests via one of the above mentioned commands.</p>
+</section>
+<section id="building-the-docs">
+<h2>Building the docs<a class="headerlink" href="#building-the-docs" title="Permalink to this headline">¶</a></h2>
+<p>To build the docs, check out the <a class="reference external" href="https://github.com/psyplot/psyplot">github</a> repository and install the
+requirements in <code class="docutils literal notranslate"><span class="pre">'docs/environment.yml'</span></code>. The easiest way to do this is via
+anaconda by typing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda env create -f docs/environment.yml
+$ <span class="nb">source</span> activate psyplot_docs
+</pre></div>
+</div>
+<p>Then build the docs via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
+$ make html
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The building of the docs always preprocesses the examples. You might want to
+disable that by setting <code class="docutils literal notranslate"><span class="pre">process_examples</span> <span class="pre">=</span> <span class="pre">False</span></code>. Otherwise please note
+that the examples are written as python3 notebooks, hence you may have to
+install a python3 kernel through <a class="reference external" href="https://ipykernel.readthedocs.io">ipykernel</a>. Just create a new environment
+<code class="docutils literal notranslate"><span class="pre">'py37'</span></code> and install it via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py37 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
+<span class="nb">source</span> activate py37
+conda install notebook ipykernel
+ipython kernel install --user
+</pre></div>
+</div>
+<p>You then have to install the necessary modules for each of the examples in
+the new <code class="docutils literal notranslate"><span class="pre">'py37'</span></code> environment.</p>
+</div>
+</section>
+<section id="uninstallation">
+<span id="uninstall"></span><h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Permalink to this headline">¶</a></h2>
+<p>The uninstallation depends on the system you used to install psyplot. Either
+you did it via <a class="reference internal" href="#install-conda"><span class="std std-ref">conda</span></a> (see
+<a class="reference internal" href="#uninstall-conda"><span class="std std-ref">Uninstallation via conda</span></a>), via <a class="reference internal" href="#install-pip"><span class="std std-ref">pip</span></a> or from the
+<a class="reference internal" href="#install-source"><span class="std std-ref">source files</span></a> (see <a class="reference internal" href="#uninstall-pip"><span class="std std-ref">Uninstallation via pip</span></a>).</p>
+<p>Anyway, if you may want to remove the psyplot configuration files. If you did
+not specify anything else (see <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.psyplot_fname" title="psyplot.config.rcsetup.psyplot_fname"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.config.rcsetup.psyplot_fname()</span></code></a>),
+the configuration files for psyplot are located in the user home directory.
+Under linux and OSX, this is <code class="docutils literal notranslate"><span class="pre">$HOME/.config/psyplot</span></code>. On other platforms it
+is in the <code class="docutils literal notranslate"><span class="pre">.psyplot</span></code> directory in the user home.</p>
+<section id="uninstallation-via-conda">
+<span id="uninstall-conda"></span><h3>Uninstallation via conda<a class="headerlink" href="#uninstallation-via-conda" title="Permalink to this headline">¶</a></h3>
+<p>If you installed psyplot via <a class="reference internal" href="#install-conda"><span class="std std-ref">conda</span></a>, simply run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda remove psyplot
+</pre></div>
+</div>
+<p>or, if you installed it into an own conda environment, remove the environment
+via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda env remove -n &lt;environment-name&gt;
+</pre></div>
+</div>
+</section>
+<section id="uninstallation-via-pip">
+<span id="uninstall-pip"></span><h3>Uninstallation via pip<a class="headerlink" href="#uninstallation-via-pip" title="Permalink to this headline">¶</a></h3>
+<p>Uninstalling via pip simply goes via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall psyplot
+</pre></div>
+</div>
+<p>Note, however, that you should use <a class="reference internal" href="#uninstall-conda"><span class="std std-ref">conda</span></a> if you also
+installed it via conda.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="about.html" class="btn btn-neutral float-left" title="About psyplot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

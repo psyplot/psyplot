@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command line usage &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developers guide" href="develop/index.html" />
+    <link rel="prev" title="Psyplot plugins" href="plugins.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Positional Arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Named Arguments">Named Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Info options">Info options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Output options">Output options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Command line usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/command_line.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="command-line-usage">
+<span id="command-line"></span><h1>Command line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">psyplot.__main__</span></code> module defines a simple parser to parse commands
+from the command line to make a plot of data in a netCDF file. Note that the
+arguments change slightly if you have the <code class="docutils literal notranslate"><span class="pre">psyplot-gui</span></code> module installed
+(see <a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/command_line.html#command-line" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> documentation).</p>
+<p>It can be run from the command line via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m psyplot <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>arguments<span class="o">]</span>
+</pre></div>
+</div>
+<p>or simply:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psyplot <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>arguments<span class="o">]</span>
+</pre></div>
+</div>
+<p><blockquote>
+<div><p>Load a dataset, make the plot and save the result to a file</p>
+</div></blockquote>
+</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usage: psyplot
+       <span class="o">[</span>-h<span class="o">]</span>
+       <span class="o">[</span>-V<span class="o">]</span>
+       <span class="o">[</span>-aV<span class="o">]</span>
+       <span class="o">[</span>-lp<span class="o">]</span>
+       <span class="o">[</span>-lpm<span class="o">]</span>
+       <span class="o">[</span>-lds<span class="o">]</span>
+       <span class="o">[</span>-lps<span class="o">]</span>
+       <span class="o">[</span>-n <span class="o">[</span>variable_name <span class="o">[</span>variable_name ...<span class="o">]]]</span>
+       <span class="o">[</span>-d dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
+       <span class="o">[</span>dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
+       ...<span class="o">]]</span>
+       <span class="o">[</span>-pm <span class="o">{</span><span class="s1">&#39;combined&#39;</span>, <span class="s1">&#39;plot2d&#39;</span>, <span class="s1">&#39;fldmean&#39;</span>, <span class="s1">&#39;vector&#39;</span>, <span class="s1">&#39;violinplot&#39;</span>, <span class="s1">&#39;mapcombined&#39;</span>, <span class="s1">&#39;density&#39;</span>, <span class="s1">&#39;lineplot&#39;</span>, <span class="s1">&#39;mapvector&#39;</span>, <span class="s1">&#39;barplot&#39;</span>, <span class="s1">&#39;mapplot&#39;</span><span class="o">}]</span>
+       <span class="o">[</span>-o str or list of str<span class="o">]</span>
+       <span class="o">[</span>-p str<span class="o">]</span>
+       <span class="o">[</span>-engine str<span class="o">]</span>
+       <span class="o">[</span>-fmt FILENAME<span class="o">]</span>
+       <span class="o">[</span>-t<span class="o">]</span>
+       <span class="o">[</span>-rc RC_FILE<span class="o">]</span>
+       <span class="o">[</span>-e str<span class="o">]</span>
+       <span class="o">[</span>--enable-post<span class="o">]</span>
+       <span class="o">[</span>-sns str<span class="o">]</span>
+       <span class="o">[</span>-op str<span class="o">]</span>
+       <span class="o">[</span>-cd str<span class="o">]</span>
+       <span class="o">[</span>-chname <span class="o">[</span>project-variable,variable-to-use <span class="o">[</span>project-variable,variable-to-use ...<span class="o">]]]</span>
+       <span class="o">[</span>-preset str<span class="o">]</span>
+       <span class="o">[</span>str <span class="o">[</span>str ...<span class="o">]]</span>
+</pre></div>
+</div>
+<section id="Positional Arguments">
+<h2>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline">¶</a></h2>
+<dl class="option-list">
+<dt><kbd>str</kbd></dt>
+<dd><p>Either the filenames to show, or, if the <cite>project</cite> parameter is set,
+the a list of <cite>,</cite>-separated filenames to make a mapping from the
+original filename to a new one</p>
+<p>Default: []</p>
+</dd>
+</dl>
+</section>
+<section id="Named Arguments">
+<h2>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline">¶</a></h2>
+<dl class="option-list">
+<dt><kbd>-n, --name</kbd></dt>
+<dd><p>The variable names to plot if the <cite>output</cite> parameter is set</p>
+<p>Default: []</p>
+</dd>
+<dt><kbd>-d, --dims</kbd></dt>
+<dd><p>A mapping from coordinate names to integers if the <cite>project</cite> is not
+given</p>
+</dd>
+<dt><kbd>-pm, --plot-method</kbd></dt>
+<dd><p>Possible choices: combined, plot2d, fldmean, vector, violinplot, mapcombined, density, lineplot, mapvector, barplot, mapplot</p>
+<p>The name of the plot_method to use</p>
+</dd>
+<dt><kbd>-p, --project</kbd></dt>
+<dd><p>If set, the project located at the given file name is loaded</p>
+</dd>
+<dt><kbd>-engine</kbd></dt>
+<dd><p>The engine to use for opening the dataset (see
+<a class="reference internal" href="api/psyplot.data.html#psyplot.data.open_dataset" title="psyplot.data.open_dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.data.open_dataset()</span></code></a>)</p>
+</dd>
+<dt><kbd>-fmt, --formatoptions</kbd></dt>
+<dd><blockquote>
+<div><p>The path to a yaml (<code class="docutils literal notranslate"><span class="pre">'.yml'</span></code> or <code class="docutils literal notranslate"><span class="pre">'.yaml'</span></code>) or pickle file
+defining a dictionary of formatoption that is applied to the data
+visualized by the chosen <cite>plot_method</cite></p>
+</div></blockquote>
+</dd>
+<dt><kbd>-rc, --rc-file</kbd></dt>
+<dd><p>The path to a yaml configuration file that can be used to update  the
+<a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rcParams</span></code></a></p>
+</dd>
+<dt><kbd>-e, --encoding</kbd></dt>
+<dd><p>The encoding to use for loading the project. If None, it is
+automatically determined by pickle. Note: Set this to <code class="docutils literal notranslate"><span class="pre">'latin1'</span></code>
+if using a project created with python2 on python3.</p>
+</dd>
+<dt><kbd>--enable-post</kbd></dt>
+<dd><p>Enable the <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.post" title="psyplot.plotter.Plotter.post"><code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code></a> processing
+formatoption. If True/set, post processing scripts are enabled in the
+given <cite>project</cite>. Only set this if you are sure that you can trust the
+given project file because it may be a security vulnerability.</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-sns, --seaborn-style</kbd></dt>
+<dd><p>The name of the style of the seaborn package that can be used for
+the <a class="reference external" href="http://seaborn.pydata.org/generated/seaborn.set_style.html#seaborn.set_style" title="(in seaborn v0.11.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">seaborn.set_style()</span></code></a> function</p>
+</dd>
+<dt><kbd>-cd, --concat-dim</kbd></dt>
+<dd><p>The concatenation dimension if multiple files in <cite>fnames</cite> are
+provided</p>
+</dd>
+<dt><kbd>-chname</kbd></dt>
+<dd><blockquote>
+<div><p>A mapping from variable names in the project to variable names in the
+datasets that should be used instead. Variable names should be
+separated by a comma.</p>
+</div></blockquote>
+<p>Default: {}</p>
+</dd>
+<dt><kbd>-preset</kbd></dt>
+<dd><p>The filename or identifier of a preset. If the given <cite>preset</cite> is
+the path to an existing yaml file, it will be loaded. Otherwise we
+look up the <cite>preset</cite> in the psyplot configuration directory (see
+<a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.get_configdir" title="psyplot.config.rcsetup.get_configdir"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_configdir()</span></code></a>).</p>
+</dd>
+</dl>
+</section>
+<section id="Info options">
+<h2>Info options<a class="headerlink" href="#Info options" title="Permalink to this headline">¶</a></h2>
+<p>Options that print informations and quit afterwards</p>
+<dl class="option-list">
+<dt><kbd>-V, --version</kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+<dt><kbd>-aV, --all-versions</kbd></dt>
+<dd><p>Print the versions of all plugins and requirements and exit</p>
+</dd>
+<dt><kbd>-lp, --list-plugins</kbd></dt>
+<dd><p>Print the names of the plugins and exit</p>
+</dd>
+<dt><kbd>-lpm, --list-plot-methods</kbd></dt>
+<dd><p>List the available plot methods and what they do</p>
+</dd>
+<dt><kbd>-lds, --list-datasets</kbd></dt>
+<dd><p>List the used dataset names in the given <cite>project</cite>.</p>
+</dd>
+<dt><kbd>-lps, --list-presets</kbd></dt>
+<dd><p>Print available presets and exit</p>
+</dd>
+</dl>
+</section>
+<section id="Output options">
+<h2>Output options<a class="headerlink" href="#Output options" title="Permalink to this headline">¶</a></h2>
+<p>Options that only have an effect if the <cite>-o</cite> option is set.</p>
+<dl class="option-list">
+<dt><kbd>-o, --output</kbd></dt>
+<dd><p>If set, the data is loaded and the figures are saved to the specified
+filename and now graphical user interface is shown</p>
+</dd>
+<dt><kbd>-t, --tight</kbd></dt>
+<dd><p>If True/set, it is tried to figure out the tight bbox of the figure and
+adjust the paper size of the <cite>output</cite> to it</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-op, --output-project</kbd></dt>
+<dd><p>The name of a project file to save the project to</p>
+</dd>
+</dl>
+</section>
+<p><p>Here are some examples on how to use psyplot from the command line.</p>
+<p>Plot the variable <code class="docutils literal notranslate"><span class="pre">'t2m'</span></code> in a netCDF file <code class="docutils literal notranslate"><span class="pre">'myfile.nc'</span></code> and save
+the plot to <code class="docutils literal notranslate"><span class="pre">'plot.pdf'</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ psyplot myfile.nc -n t2m -pm mapplot -o test.pdf
+</pre></div>
+</div>
+<p>Create two plots for <code class="docutils literal notranslate"><span class="pre">'t2m'</span></code> with the first and second timestep on
+the second vertical level:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ psyplot myfile.nc -n t2m  -pm mapplot -o test.pdf -d t,0,1 z,1
+</pre></div>
+</div>
+<p>If you have save a project using the
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.save_project" title="psyplot.project.Project.save_project"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.project.Project.save_project()</span></code></a> method into a file named
+<code class="docutils literal notranslate"><span class="pre">'project.pkl'</span></code>, you can replot this via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ psyplot -p project.pkl -o test.pdf
+</pre></div>
+</div>
+<p>If you use a different dataset than the one you used in the project
+(e.g. <code class="docutils literal notranslate"><span class="pre">'other_ds.nc'</span></code>), you can replace it via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ psyplot other_dataset.nc -p project.pkl -o test.pdf
+</pre></div>
+</div>
+<p>or explicitly via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ psyplot old_ds.nc,other_ds.nc -p project.pkl -o test.pdf
+</pre></div>
+</div>
+<p>You can also load formatoptions from a configuration file, e.g.:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s1">&#39;title: my title&#39;</span> &gt; fmt.yaml
+$ psyplot myfile.nc -n t2m  -pm mapplot -fmt fmt.yaml -o test.pdf
+</pre></div>
+</div>
+</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plugins.html" class="btn btn-neutral float-left" title="Psyplot plugins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="develop/index.html" class="btn btn-neutral float-right" title="Developers guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive data visualization with python &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About psyplot" href="about.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Interactive data visualization with python</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="interactive-data-visualization-with-python">
+<span id="psyplot"></span><h1>Interactive data visualization with python<a class="headerlink" href="#interactive-data-visualization-with-python" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/psyplot.png"><img alt="psyplot logo" class="align-center" src="_images/psyplot.png" style="width: 50%;" /></a>
+<p>Welcome! Looking for a fast and flexible visualization software? Here we
+present <strong>psyplot</strong>, an open source python project that mainly combines the
+plotting utilities of <a class="reference external" href="http://matplotlib.org">matplotlib</a> and the data management of the <a class="reference external" href="http://xarray.pydata.org/">xarray</a>
+package and integrates them into a software that can be used via command-line
+and via a GUI!</p>
+<p>The main purpose is to have a framework that allows a  fast, attractive,
+flexible, easily applicable, easily reproducible and especially an interactive
+visualization of your data.</p>
+<p>The ultimate goal is to help scientists in their daily work by providing a
+flexible visualization tool that can be enhanced by their own visualization
+scripts. <code class="docutils literal notranslate"><span class="pre">psyplot</span></code> can be used via command line and with the
+graphical user interface (GUI) from the
+<a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> and
+<a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-view/en/latest/index.html#psy-view" title="(in psy-view v0.1.0)"><span class="xref std std-ref">psy-view</span></a> module.</p>
+<p>If you want more motivation: Have a look into the <a class="reference internal" href="about.html#about"><span class="std std-ref">About psyplot</span></a> section.</p>
+<p>The package is very new and there are many features that will be included in
+the future. So we are very pleased for feedback! Please simply raise an issue
+on <a class="reference external" href="https://github.com/psyplot/psyplot">GitHub</a>.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p>docs</p></th>
+<td><p><a class="reference external" href="http://psyplot.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="http://readthedocs.org/projects/psyplot/badge/?version=latest" /></a> <a class="reference external" href="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60"><img alt="Journal of Open Source Software" src="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg" /></a></p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>tests</p></th>
+<td><p><a class="reference external" href="https://travis-ci.org/psyplot/psyplot"><img alt="Travis" src="https://travis-ci.org/psyplot/psyplot.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/psyplot/psyplot/branch/master"><img alt="AppVeyor" src="https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true" /></a> <a class="reference external" href="https://requires.io/github/psyplot/psyplot/requirements/?branch=master"><img alt="Requirements Status" src="https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master" /></a> <a class="reference external" href="https://codecov.io/gh/psyplot/psyplot"><img alt="Coverage" src="https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg" /></a></p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>package</p></th>
+<td><p><a class="reference external" href="https://pypi.python.org/pypi/psyplot"><img alt="PyPI Package latest release" src="https://img.shields.io/pypi/v/psyplot.svg?style=flat" /></a> <a class="reference external" href="https://anaconda.org/conda-forge/psyplot"><img alt="conda" src="https://anaconda.org/conda-forge/psyplot/badges/version.svg" /></a> <a class="reference external" href="https://github.com/psyplot/psyplot/releases/latest"><img alt="Latest github release" src="https://img.shields.io/github/release/psyplot/psyplot.svg" /></a></p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>implementations</p></th>
+<td><p><a class="reference external" href="https://pypi.python.org/pypi/psyplot"><img alt="Supported versions" src="https://img.shields.io/pypi/pyversions/psyplot.svg?style=flat" /></a> <a class="reference external" href="https://pypi.python.org/pypi/psyplot"><img alt="Supported implementations" src="https://img.shields.io/pypi/implementation/psyplot.svg?style=flat" /></a></p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>get in touch</p></th>
+<td><p><a class="reference external" href="https://gitter.im/psyplot/community"><img alt="Gitter" src="https://img.shields.io/gitter/room/psyplot/community.svg?style=flat" /></a> <a class="reference external" href="https://www.listserv.dfn.de/sympa/subscribe/psyplot"><img alt="DFN mailing list" src="https://img.shields.io/badge/join-mailing%20list-brightgreen.svg?style=flat" /></a> <a class="reference external" href="https://github.com/psyplot/psyplot/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/psyplot/psyplot.svg?style=flat" /></a></p></td>
+</tr>
+</tbody>
+</table>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+</div>
+</section>
+<section id="get-in-touch">
+<h2>Get in touch<a class="headerlink" href="#get-in-touch" title="Permalink to this headline">¶</a></h2>
+<p>Any quesions? Do not hessitate to get in touch with the psyplot developers.</p>
+<ul class="simple">
+<li><p>Create an issue at the <a class="reference external" href="https://github.com/psyplot/psyplot">bug tracker</a></p></li>
+<li><p>Chat with the developers in out <a class="reference external" href="https://gitter.im/psyplot/community">channel on gitter</a></p></li>
+<li><p>Subscribe to the <a class="reference external" href="https://www.listserv.dfn.de/sympa/subscribe/psyplot">mailing list</a> and ask for support</p></li>
+</ul>
+<p>See also the <a class="reference external" href="https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md">code of conduct</a>, and our
+<a href="#id1"><span class="problematic" id="id2">:ref:`contribution guide &lt;how-to-contribute&gt;`_</span></a> for more information and a guide
+about good bug reports.</p>
+</section>
+<section id="how-to-cite-psyplot">
+<span id="citation"></span><h2>How to cite psyplot<a class="headerlink" href="#how-to-cite-psyplot" title="Permalink to this headline">¶</a></h2>
+<p>When using psyplot, you should at least cite the publication in
+<a class="reference external" href="http://joss.theoj.org/">the Journal of Open Source Software</a>:</p>
+<a class="reference external image-reference" href="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60"><img alt="Journal of Open Source Software" src="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg" /></a>
+<p>Sommer, P. S.: The psyplot interactive visualization framework,
+<em>The Journal of Open Source Software</em>, 2, doi:10.21105/joss.00363,
+https://doi.org/10.21105/joss.00363, 2017.</p>
+<p><a class="reference download internal" download="" href="_downloads/c49f28c56b8e334c3726b6c1d4ea5def/psyplot_entry.bib"><code class="xref download docutils literal notranslate"><span class="pre">BibTex</span></code></a> - <a class="reference download internal" download="" href="_downloads/a25ad1d4d2865504becd86cc83d52323/psyplot_entry.enw"><code class="xref download docutils literal notranslate"><span class="pre">EndNote</span></code></a></p>
+<p>Furthermore, each release of psyplot and it’s <a class="reference internal" href="projects.html#projects"><span class="std std-ref">subprojects</span></a> is
+associated with a DOI using <a class="reference external" href="https://zenodo.org/">zenodo.org</a>. If you want to cite a specific
+version or plugin, please refer to the <cite>releases page of psyplot</cite> or the
+releases page of the corresponding subproject.</p>
+</section>
+<section id="acknowledgment">
+<h2>Acknowledgment<a class="headerlink" href="#acknowledgment" title="Permalink to this headline">¶</a></h2>
+<p>This package has been developed by Philipp Sommer.</p>
+<p>I want to thank the <a class="reference external" href="http://matplotlib.org">matplotlib</a>, <a class="reference external" href="http://xarray.pydata.org/">xarray</a> and <a class="reference external" href="http://scitools.org.uk/cartopy">cartopy</a> developers
+for their great packages and of course the python developers for their
+fascinating work on this beautiful language.</p>
+<p>A special thanks to Stefan Hagemann and Tobias Stacke from the
+Max-Planck-Institute of Meteorology in Hamburg, Germany for the motivation on
+this project and to the people of the <a class="reference external" href="https://notyetvisible.de/">Not yet visible</a> agency for their
+advice in designing the logo and webpage.</p>
+<p>Finally the author thanks the Swiss National Science Foundation (SNF) for their
+support. Funding for the author came from the <a class="reference external" href="http://p3.snf.ch/project-146314">ACACIA grant (CR10I2_146314)</a>
+and the <a class="reference external" href="http://p3.snf.ch/project-169598">HORNET grant (200021_169598)</a>.</p>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="about.html" class="btn btn-neutral float-right" title="About psyplot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

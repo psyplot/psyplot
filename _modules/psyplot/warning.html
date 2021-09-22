@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.warning &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> psyplot
+            <img src="../../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+          <li><a href="../psyplot.html">psyplot</a> &raquo;</li>
+      <li>psyplot.warning</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for psyplot.warning</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;Warning module of the psyplot python module</span>
+
+<span class="sd">This module controls the warning behaviour of the module via the python</span>
+<span class="sd">builtin warnings module and introduces three new warning classes:</span>
+
+<span class="sd">..autosummay::</span>
+
+<span class="sd">    PsPylotRuntimeWarning</span>
+<span class="sd">    PsyPlotWarning</span>
+<span class="sd">    PsyPlotCritical&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="c1"># disable a warning about &quot;comparison to &#39;None&#39; in backend_pdf which occurs</span>
+<span class="c1"># in the matplotlib.backends.backend_pdf.PdfPages class</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="s1">&#39;comparison&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="s1">&#39;matplotlib.backends.backend_pdf&#39;</span><span class="p">,</span>
+    <span class="mi">2264</span><span class="p">)</span>
+<span class="c1"># disable a warning about &quot;np.array_split&quot; that occurs for certain numpy</span>
+<span class="c1"># versions</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="s1">&#39;in the future np.array_split will retain&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span>
+    <span class="s1">&#39;numpy.lib.shape_base&#39;</span><span class="p">,</span> <span class="mi">431</span><span class="p">)</span>
+<span class="c1"># disable a warning about &quot;elementwise comparison of a string&quot; in the</span>
+<span class="c1"># matplotlib.collection.Collection.get_edgecolor method that occurs for certain</span>
+<span class="c1"># matplotlib and numpy versions</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="s1">&#39;elementwise comparison failed&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span>
+    <span class="s1">&#39;matplotlib.collections&#39;</span><span class="p">,</span> <span class="mi">590</span><span class="p">)</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PsyPlotRuntimeWarning"><a class="viewcode-back" href="../../api/psyplot.warning.html#psyplot.warning.PsyPlotRuntimeWarning">[docs]</a><span class="k">class</span> <span class="nc">PsyPlotRuntimeWarning</span><span class="p">(</span><span class="ne">RuntimeWarning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Runtime warning that appears only ones&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="PsyPlotWarning"><a class="viewcode-back" href="../../api/psyplot.warning.html#psyplot.warning.PsyPlotWarning">[docs]</a><span class="k">class</span> <span class="nc">PsyPlotWarning</span><span class="p">(</span><span class="ne">UserWarning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Normal UserWarning for psyplot module&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="PsyPlotCritical"><a class="viewcode-back" href="../../api/psyplot.warning.html#psyplot.warning.PsyPlotCritical">[docs]</a><span class="k">class</span> <span class="nc">PsyPlotCritical</span><span class="p">(</span><span class="ne">UserWarning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Critical UserWarning for psyplot module&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;always&#39;</span><span class="p">,</span> <span class="n">PsyPlotWarning</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;always&#39;</span><span class="p">,</span> <span class="n">PsyPlotCritical</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="disable_warnings"><a class="viewcode-back" href="../../api/psyplot.warning.html#psyplot.warning.disable_warnings">[docs]</a><span class="k">def</span> <span class="nf">disable_warnings</span><span class="p">(</span><span class="n">critical</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function that disables all warnings and all critical warnings (if</span>
+<span class="sd">    critical evaluates to True) related to the psyplot Module.</span>
+<span class="sd">    Please note that you can also configure the warnings via the</span>
+<span class="sd">    psyplot.warning logger (logging.getLogger(psyplot.warning)).&quot;&quot;&quot;</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="s1">&#39;\w&#39;</span><span class="p">,</span> <span class="n">PsyPlotWarning</span><span class="p">,</span> <span class="s1">&#39;psyplot&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">critical</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="s1">&#39;\w&#39;</span><span class="p">,</span> <span class="n">PsyPlotCritical</span><span class="p">,</span> <span class="s1">&#39;psyplot&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="warn"><a class="viewcode-back" href="../../api/psyplot.warning.html#psyplot.warning.warn">[docs]</a><span class="k">def</span> <span class="nf">warn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">PsyPlotWarning</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper around the warnings.warn function for non-critical warnings.</span>
+<span class="sd">    logger may be a logging.Logger instance&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;[Warning by </span><span class="si">%s</span><span class="s2">]</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">logger</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="critical"><a class="viewcode-back" href="../../api/psyplot.warning.html#psyplot.warning.critical">[docs]</a><span class="k">def</span> <span class="nf">critical</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">PsyPlotCritical</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper around the warnings.warn function for critical warnings.</span>
+<span class="sd">    logger may be a logging.Logger instance&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;[Critical warning by </span><span class="si">%s</span><span class="s2">]</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">logger</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<span class="n">old_showwarning</span> <span class="o">=</span> <span class="n">warnings</span><span class="o">.</span><span class="n">showwarning</span>
+
+
+<div class="viewcode-block" id="customwarn"><a class="viewcode-back" href="../../api/psyplot.warning.html#psyplot.warning.customwarn">[docs]</a><span class="k">def</span> <span class="nf">customwarn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Use the psyplot.warning logger for categories being out of</span>
+<span class="sd">    PsyPlotWarning and PsyPlotCritical and the default warnings.showwarning</span>
+<span class="sd">    function for all the others.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="n">PsyPlotWarning</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">category</span> <span class="ow">is</span> <span class="n">PsyPlotCritical</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">),</span>
+            <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_showwarning</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">showwarning</span> <span class="o">=</span> <span class="n">customwarn</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

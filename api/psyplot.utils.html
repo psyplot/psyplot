@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.utils module &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psyplot.version module" href="psyplot.version.html" />
+    <link rel="prev" title="psyplot.project module" href="psyplot.project.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psyplot
+            <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psyplot.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="psyplot.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="psyplot.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psyplot.data.html">psyplot.data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.docstring.html">psyplot.docstring module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.gdal_store.html">psyplot.gdal_store module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.plotter.html">psyplot.plotter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.plugin_template.html">psyplot.plugin_template module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.project.html">psyplot.project module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">psyplot.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.version.html">psyplot.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.warning.html">psyplot.warning module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psyplot.html">API Reference</a> &raquo;</li>
+      <li>psyplot.utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psyplot.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psyplot.utils">
+<span id="psyplot-utils-module"></span><h1>psyplot.utils module<a class="headerlink" href="#module-psyplot.utils" title="Permalink to this headline">¶</a></h1>
+<p>Miscallaneous utility functions for the psyplot package</p>
+<p><strong>Classes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.utils.DefaultOrderedDict" title="psyplot.utils.DefaultOrderedDict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DefaultOrderedDict</span></code></a>([default_factory])</p></td>
+<td><p>An ordered <a class="reference external" href="https://docs.python.org/3.8/library/collections.html#collections.defaultdict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.utils.check_key" title="psyplot.utils.check_key"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_key</span></code></a>(key, possible_keys[, raise_error, ...])</p></td>
+<td><p>Checks whether the key is in a list of possible keys</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.utils.hashable" title="psyplot.utils.hashable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hashable</span></code></a>(val)</p></td>
+<td><p>Test if <cite>val</cite> is hashable and if not, get it's string representation</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.utils.is_iterable" title="psyplot.utils.is_iterable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_iterable</span></code></a>(iterable)</p></td>
+<td><p>Test if an object is iterable</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.utils.is_remote_url" title="psyplot.utils.is_remote_url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_remote_url</span></code></a>(path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.utils.join_dicts" title="psyplot.utils.join_dicts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">join_dicts</span></code></a>(dicts[, delimiter, keep_all])</p></td>
+<td><p>Join multiple dictionaries into one</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.utils.sort_kwargs" title="psyplot.utils.sort_kwargs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_kwargs</span></code></a>(kwargs, *param_lists)</p></td>
+<td><p>Function to sort keyword arguments and sort them into dictionaries</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.utils.unique_everseen" title="psyplot.utils.unique_everseen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unique_everseen</span></code></a>(iterable[, key])</p></td>
+<td><p>List unique elements, preserving order.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="psyplot.utils.DefaultOrderedDict">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">DefaultOrderedDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#DefaultOrderedDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.DefaultOrderedDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.8/library/collections.html#collections.OrderedDict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
+<p>An ordered <a class="reference external" href="https://docs.python.org/3.8/library/collections.html#collections.defaultdict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></a></p>
+<p>Taken from <a class="reference external" href="http://stackoverflow.com/a/6190500/562769">http://stackoverflow.com/a/6190500/562769</a></p>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.utils.DefaultOrderedDict.copy" title="psyplot.utils.DefaultOrderedDict.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<td><p>Return a shallow copy of the dictionary</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.utils.DefaultOrderedDict.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#DefaultOrderedDict.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.DefaultOrderedDict.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a shallow copy of the dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.utils.check_key">
+<span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">check_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">possible_keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'formatoption</span> <span class="pre">keyword'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'See</span> <span class="pre">show_fmtkeys</span> <span class="pre">function</span> <span class="pre">for</span> <span class="pre">possible</span> <span class="pre">formatopion</span> <span class="pre">keywords'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#check_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.check_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the key is in a list of possible keys</p>
+<p>This function checks whether the given <cite>key</cite> is in <cite>possible_keys</cite> and if
+not looks for similar sounding keys</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Key to check</p></li>
+<li><p><strong>possible_keys</strong> (<em>list of strings</em>) – a list of possible keys to use</p></li>
+<li><p><strong>raise_error</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If not True, a list of similar keys is returned</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the key that shall be used in the error message</p></li>
+<li><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The additional message that shall be used if no close match to
+key is found</p></li>
+<li><p><strong>``*args</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3.8/library/difflib.html#difflib.get_close_matches" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
+(i.e. <cite>n</cite> to increase the number of returned similar keys and
+<cite>cutoff</cite> to change the sensibility)</p>
+</p></li>
+<li><p><strong>**kwargs``</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3.8/library/difflib.html#difflib.get_close_matches" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
+(i.e. <cite>n</cite> to increase the number of returned similar keys and
+<cite>cutoff</cite> to change the sensibility)</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>str</em> – The <cite>key</cite> if it is a valid string, else an empty string</p></li>
+<li><p><em>list</em> – A list of similar formatoption strings (if found)</p></li>
+<li><p><em>str</em> – An error message which includes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#KeyError" title="(in Python v3.8)"><strong>KeyError</strong></a> – If the key is not a valid formatoption and <cite>raise_error</cite> is True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.utils.hashable">
+<span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">hashable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#hashable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.hashable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if <cite>val</cite> is hashable and if not, get it’s string representation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#object" title="(in Python v3.8)"><em>object</em></a>) – Any (possibly not hashable) python object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The given <cite>val</cite> if it is hashable or it’s string representation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>val or string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.utils.is_iterable">
+<span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">is_iterable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#is_iterable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.is_iterable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if an object is iterable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#object" title="(in Python v3.8)"><em>object</em></a>) – The object to test</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True, if the object is an iterable object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.utils.is_remote_url">
+<span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">is_remote_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#is_remote_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.is_remote_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.utils.join_dicts">
+<span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">join_dicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dicts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#join_dicts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.join_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join multiple dictionaries into one</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dicts</strong> (<em>list of dict</em>) – A list of dictionaries</p></li>
+<li><p><strong>delimiter</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The string that shall be used as the delimiter in case that there
+are multiple values for one attribute in the arrays. If None, they
+will be returned as sets</p></li>
+<li><p><strong>keep_all</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, all formatoptions are kept. Otherwise only the intersection</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The combined dictionary</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.utils.sort_kwargs">
+<span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">sort_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">param_lists</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#sort_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.sort_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to sort keyword arguments and sort them into dictionaries</p>
+<p>This function returns dictionaries that contain the keyword arguments
+from <cite>kwargs</cite> corresponding given iterables in <code class="docutils literal notranslate"><span class="pre">*params</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Original dictionary</p></li>
+<li><p><strong>*param_lists</strong> – iterables of strings, each standing for a possible key in kwargs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>len(params) + 1 dictionaries. Each dictionary contains the items of
+<cite>kwargs</cite> corresponding to the specified list in <code class="docutils literal notranslate"><span class="pre">*param_lists</span></code>. The
+last dictionary contains the remaining items</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.utils.unique_everseen">
+<span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">unique_everseen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#unique_everseen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.unique_everseen" title="Permalink to this definition">¶</a></dt>
+<dd><p>List unique elements, preserving order. Remember all elements ever seen.</p>
+<p>Function taken from <a class="reference external" href="https://docs.python.org/2/library/itertools.html">https://docs.python.org/2/library/itertools.html</a></p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psyplot.project.html" class="btn btn-neutral float-left" title="psyplot.project module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psyplot.version.html" class="btn btn-neutral float-right" title="psyplot.version module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

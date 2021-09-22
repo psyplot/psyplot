@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="ToDos" href="todos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v1-3-2">v1.3.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fixed">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-3-1">v1.3.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-3-0">v1.3.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changed">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-2-1">v1.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-2-0">v1.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removed">Removed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-1-0">v1.1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Added</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-0-0">v1.0.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Changed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Changelog</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/changelog.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelog">
+<span id="id1"></span><h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<section id="v1-3-2">
+<h2>v1.3.2<a class="headerlink" href="#v1-3-2" title="Permalink to this headline">¶</a></h2>
+<section id="fixed">
+<h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">get_xname</span></code>-like methods of the decoder have been fixed if they get a
+variable without any dimensions. See <a class="reference external" href="https://github.com/psyplot/psyplot/pull/30">#30</a></p></li>
+</ul>
+</section>
+</section>
+<section id="v1-3-1">
+<h2>v1.3.1<a class="headerlink" href="#v1-3-1" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h3>Fixed<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>3D bounds of coordinate are not interpreted as unstructured anymore (see
+<a class="reference external" href="https://github.com/psyplot/psyplot/commit/660c70303ae3181c03d78a6f984d07fe6e886c07">660c703</a></p></li>
+</ul>
+</section>
+</section>
+<section id="v1-3-0">
+<h2>v1.3.0<a class="headerlink" href="#v1-3-0" title="Permalink to this headline">¶</a></h2>
+<p>New repository, presets and compatibility fixes</p>
+<section id="added">
+<h3>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>You can now save and load presets for the formatoptions of a project which
+applies the formatoptions that you stored in a file to a specific plot method,
+see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/24">#24</a></p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">rcParams</span></code> do now have a <code class="docutils literal notranslate"><span class="pre">catch</span></code> method that allows a temporary change
+of formatoptions.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;some_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">with</span> <span class="n">rcParams</span><span class="o">.</span><span class="n">catch</span><span class="p">():</span>
+    <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;some_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;some_key&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="k">assert</span> <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;some_key&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ArrayList.from_dataset</span></code> (and consecutively all plotmethods) now support
+different input types for the decoder. You can pass an instance of the
+<code class="docutils literal notranslate"><span class="pre">CFDecoder</span></code> class, a sub class of <code class="docutils literal notranslate"><span class="pre">CFDecoder</span></code>, or keyword arguments
+that are used to initialize the decoder,
+see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/20">#20</a>. Furthermore, the
+<cite>check_data</cite> method of the various plotmethods now also accept a <cite>decoder</cite>
+parameter, see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/22">#22</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">psyplot.data.open_dataset</span></code> now decodes grid_mappings attributes,
+see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/17">#17</a></p></li>
+<li><p>psyplot projects now support the with syntax, e.g. something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;file.nc&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">sp</span><span class="p">:</span>
+    <span class="n">sp</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;output.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>sp will be closed automatically (see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/18">#18</a>)</p>
+</li>
+<li><p>the update to variables with other dimensions works now as well
+(see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/22">#22</a>)</p></li>
+<li><p>a <code class="docutils literal notranslate"><span class="pre">psyplot.project.Project</span></code> now has a new <code class="docutils literal notranslate"><span class="pre">format_string</span></code> method to
+format a string with the meta attributes of the data in the projects</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ArrayList</span></code> class now supports filtering by formatoption keys. You can
+filter for plotters that have a <code class="docutils literal notranslate"><span class="pre">cmap</span></code> formatoption via:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sp1</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+<span class="n">sp2</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+<span class="n">full_sp</span> <span class="o">=</span> <span class="n">sp1</span> <span class="o">+</span> <span class="n">sp2</span>
+<span class="n">full_sp</span><span class="p">(</span><span class="n">fmts</span><span class="o">=</span><span class="s1">&#39;cmap&#39;</span><span class="p">)</span>  <span class="c1"># gives equivalent results as addressing sp1 directly</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>psyplot has been moved from <a class="reference external" href="https://github.com/Chilipp/psyplot">https://github.com/Chilipp/psyplot</a> to <a class="reference external" href="https://github.com/psyplot/psyplot">https://github.com/psyplot/psyplot</a>,
+see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/16">#16</a></p></li>
+<li><p>Specifying names in <cite>x</cite>, <cite>y</cite>, <cite>t</cite> and <cite>z</cite> attributes of the <cite>CFDecoder</cite> class
+now means that any other attribute (such as the <cite>coordinates</cite> or <cite>axis</cite> attribute)
+are ignored</p></li>
+<li><p>If a given variable cannot be found in the provided coords to <code class="docutils literal notranslate"><span class="pre">CFDecoder.get_variable_by_axis</span></code>,
+we fall back to the <code class="docutils literal notranslate"><span class="pre">CFDecoder.ds.coords</span></code> attribute, see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/19">#19</a></p></li>
+<li><p>A bug has been fixed for initializing a <code class="docutils literal notranslate"><span class="pre">CFDecoder</span></code> with <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z</span></code> and
+<code class="docutils literal notranslate"><span class="pre">t</span></code> parameters (see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/20">#20</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="v1-2-1">
+<h2>v1.2.1<a class="headerlink" href="#v1-2-1" title="Permalink to this headline">¶</a></h2>
+<p>This patch fixes compatibility issues with xarray 0.12 and cdo 1.5. Additionally we now officially drop support for python 2.7.</p>
+</section>
+<section id="v1-2-0">
+<h2>v1.2.0<a class="headerlink" href="#v1-2-0" title="Permalink to this headline">¶</a></h2>
+<section id="id3">
+<h3>Added<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.initialize_plot</span></code> method now takes a
+<em>priority</em> keyword to only initialize only formatoptions of a certain
+priority</p></li>
+</ul>
+</section>
+<section id="removed">
+<h3>Removed<a class="headerlink" href="#removed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The installers from the <a class="reference external" href="https://github.com/Chilipp/psyplot-conda">psyplot-conda</a>
+repositories have been depreceated. Instead, now download the latest
+<a class="reference external" href="https://conda.io/miniconda.html">miniconda</a> and install psyplot and the
+plugins via <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">psy-maps</span> <span class="pre">psyplot-gui</span> <span class="pre">psy-reg</span></code></p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Changed<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>We generalized the handling of unstructured data as lined out in
+<a class="reference external" href="https://github.com/psyplot/psyplot/issues/6">issue#6</a>. The new method
+<code class="docutils literal notranslate"><span class="pre">psyplot.data.CFDecoder.get_cell_node_coord</span></code> returns the coordinates of the
+nodes for a given grid cell. These informations are used by the
+psy-simple and psy-maps plugins for displaying any unstructured data. See
+also the example on the
+<a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/master/examples/example_ugrid.html#gallery-examples-example-ugrid-ipynb">visualization of unstructured grids</a></p></li>
+<li><p>We removed the inplace parameter for the CFDecoder methods since it is
+deprecated with xarray 0.12 (see
+<a class="reference external" href="https://github.com/psyplot/psyplot/issues/8">issue #8</a>). The
+<code class="docutils literal notranslate"><span class="pre">CFDecoder.decode_ds</span></code> method now always decodes inplace</p></li>
+</ul>
+</section>
+</section>
+<section id="v1-1-0">
+<h2>v1.1.0<a class="headerlink" href="#v1-1-0" title="Permalink to this headline">¶</a></h2>
+<p>This new release mainly adds new xarray accossors (<code class="docutils literal notranslate"><span class="pre">psy</span></code>) for DataArrays
+and Datasets. Additionally we provide methods to calculate the spatially
+weighted mean, such as fldmean, fldstd and fldpctl.</p>
+<section id="id5">
+<h3>Added<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The yaxis_inverted and xaxis_inverted is now considered when loading and
+saving a matplotlib axes</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">seaborn-style</span></code> command line argument</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">concat_dim</span></code> command line argument</p></li>
+<li><p>Added the plot attribute to the DataArray and Dataset accessors. It is now
+possible to plot directly from the dataset and the data array</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">requires_replot</span></code> attribute for the <code class="docutils literal notranslate"><span class="pre">Formatoption</span></code> class. If this
+attribute is True and the formatoption is contained in an update, it is the
+same as calling <code class="docutils literal notranslate"><span class="pre">Plotter.update(replot=True))</span></code>.</p></li>
+<li><p>We added support for multifile datasets when saving a project.
+Multifile datasets are datasets that have been opened with, e.g.
+<code class="docutils literal notranslate"><span class="pre">psyplot.data.open_mfdataset</span></code> or
+<code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.&lt;plotmethod&gt;(...,</span> <span class="pre">mfmode=True)</span></code>. This however does
+not always work with datasets opened with <code class="docutils literal notranslate"><span class="pre">xarray.open_mfdataset</span></code>. In these
+cases, you have to set the <code class="docutils literal notranslate"><span class="pre">Dataset.psy._concat_dim</span></code> attribute manually</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">chname</span></code> parameter when loading a project. This parameter can
+be used to display another variable from the dataset than the one stored
+in the psyplot project file</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">gridweights</span></code>, <code class="docutils literal notranslate"><span class="pre">fldmean</span></code>, <code class="docutils literal notranslate"><span class="pre">fldstd</span></code> and <code class="docutils literal notranslate"><span class="pre">fldpctl</span></code> methods
+to the <code class="docutils literal notranslate"><span class="pre">psy</span></code> DataArray accessor to calculate weighted means, standard
+deviations and percentiles over the spatial dimensions (x- and y).</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">additional_children</span></code> and <code class="docutils literal notranslate"><span class="pre">additional_dependencies</span></code> parameters
+to the Formatoption intialization. These parameters can be used to provide
+additional children for a formatoption for one plotter class</p></li>
+<li><p>We added the <code class="docutils literal notranslate"><span class="pre">psyplot.plotter.Formatoption.get_fmt_widget</span></code> method which can
+be implemented to insert widgets in the formatoptions widget of the
+graphical user interface</p></li>
+</ul>
+</section>
+</section>
+<section id="v1-0-0">
+<h2>v1.0.0<a class="headerlink" href="#v1-0-0" title="Permalink to this headline">¶</a></h2>
+<a class="reference external image-reference" href="https://zenodo.org/badge/latestdoi/87944102"><img alt="https://zenodo.org/badge/87944102.svg" src="https://zenodo.org/badge/87944102.svg" /></a>
+<section id="id6">
+<h3>Added<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Changelog</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Changed<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>When creating new plots using the <code class="docutils literal notranslate"><span class="pre">psyplot.project.Project.plot</span></code> attribute,
+<code class="docutils literal notranslate"><span class="pre">scp</span></code> for the newly created subproject is only called when the
+corresponding <code class="docutils literal notranslate"><span class="pre">Project</span></code> is the current main project (<code class="docutils literal notranslate"><span class="pre">gcp(True)</span></code>)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">alternate_paths</span></code> keyword in the <code class="docutils literal notranslate"><span class="pre">psyplot.project.Project.save_project</span></code>
+and <code class="docutils literal notranslate"><span class="pre">psyplot.data.ArrayList.array_info</span></code> methods has been changed to
+<code class="docutils literal notranslate"><span class="pre">alternative_paths</span></code></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">psyplot.project.Cdo</span></code> class does not accept any of the keywords
+<code class="docutils literal notranslate"><span class="pre">returnDA,</span> <span class="pre">returnMaps</span></code> or <code class="docutils literal notranslate"><span class="pre">returnLine</span></code> anymore. Instead it takes
+the <code class="docutils literal notranslate"><span class="pre">plot_method</span></code> keyword and several others.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">psyplot.project.close</span></code> method by default now removes the data from
+the current project and closes attached datasets</p></li>
+<li><p>The modules in the psyplot.plotter modules have been moved to separate
+packages to make the debugging and testing easier</p>
+<ul>
+<li><p>The psyplot.plotter.simple, baseplotter and colors modules have been moved
+to the <a class="reference external" href="https://github.com/psyplot/psy-simple">psy-simple</a> package</p></li>
+<li><p>The psyplot.plotter.maps and boxes modules have been moved to the <a class="reference external" href="https://github.com/psyplot/psy-maps">psy-maps</a>
+package</p></li>
+<li><p>The psyplot.plotter.linreg module has been moved to the <a class="reference external" href="https://github.com/psyplot/psy-reg">psy-reg</a> package</p></li>
+</ul>
+</li>
+<li><p>The endings of the yaml configuration files are now all <em>.yml</em>. Hence,</p>
+<ul>
+<li><p>the configuration file name is now <em>psyplotrc.yml</em> instead of
+<em>psyplotrc.yaml</em></p></li>
+<li><p>the default logging configuration file name is now <em>logging.yml</em> instead
+of <em>logging.yaml</em></p></li>
+</ul>
+</li>
+<li><p>Under osx, the configuration directory is now also expected to be in
+<code class="docutils literal notranslate"><span class="pre">$HOME/.config/psyplot</span></code> (as it is for linux)</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="todos.html" class="btn btn-neutral float-left" title="ToDos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About psyplot &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installing.html" />
+    <link rel="prev" title="Interactive data visualization with python" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">About psyplot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-psyplot">Why psyplot?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-it-is-and-what-it-is-not">What it is, and what it is not</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-it-is">What it is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-it-is-not">What it is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#about-the-author">About the author</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>About psyplot</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/about.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="about-psyplot">
+<span id="about"></span><h1>About psyplot<a class="headerlink" href="#about-psyplot" title="Permalink to this headline">¶</a></h1>
+<section id="why-psyplot">
+<h2>Why psyplot?<a class="headerlink" href="#why-psyplot" title="Permalink to this headline">¶</a></h2>
+<p>When visualizing data, one always has to choose:</p>
+<ul class="simple">
+<li><p>Either create the plot with an intuitive graphical user interface (GUI)
+(e.g. panoply) but less options for customization and difficult to script</p></li>
+<li><p>or create the plot from the command line, e.g. via NCL, R or python with more
+possibilities for customization and scripting but also less intuitive</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">psyplot</span></code> wants to combine these two worlds: create a well-documented and
+easy accessible framework to visualize data from a GUI and the command line
+(and of course through a script).</p>
+<p>There exists nothing like that. Of course you can also work with software like
+<a class="reference external" href="https://www.paraview.org">Paraview</a> via the built-in python shell. But, if you really want to explore your
+data it is totally not straightforward to access and explore it from within
+such a software using numeric functions from numpy, scipy, etc.</p>
+<p>Therefore I developed this modular framework that can create and customize plots
+efficiently with short and comprehensive commands, that can be accessed
+through a GUI (see <a class="reference internal" href="projects.html#projects"><span class="std std-ref">Subprojects</span></a>) and where you have always a comprehensive
+API to access your data.</p>
+<p>Different from the usual use with matplotlib, which in the end results most of
+the time in copy-pasting parts of your code, this software is build on the
+<em>don’t repeat yourself</em> principle. Each of the small parts that make up a
+visualization, whether it is part of the data evaluation or of the appearance
+of the plot, psyplot puts it into a formatoption can be reused when it is
+needed.</p>
+<p>Nevertheless, it’s again a new piece of software. Therefore, if you want to use
+it, for sure you need a bit of time to get comfortable with the framework. I
+promise to you, it’s worth it. So <a class="reference internal" href="getting_started.html#getting-started"><span class="std std-ref">get started</span></a> and
+please let me know if you have a different opinion.</p>
+</section>
+<section id="what-it-is-and-what-it-is-not">
+<span id="id1"></span><h2>What it is, and what it is not<a class="headerlink" href="#what-it-is-and-what-it-is-not" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>First of all, it’s open source! So please, if you don’t agree with the
+points below, <a class="reference external" href="https://github.com/psyplot/psyplot/edit/master/docs/about.rst">edit this document</a> and click on <em>Propose File Change</em> and
+<em>Create pull request</em>. We can then discuss your changes.</p>
+</div>
+<p>There are tons of software tools around for visualization, so what is special
+about psyplot? The following list should hopefully provide you some guidance.</p>
+<section id="what-it-is">
+<h3>What it is<a class="headerlink" href="#what-it-is" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>It is fast. Not necessarily when it comes down to being the fastest
+interactive visualization software, but for sure when it comes down to
+development time, as it is very user-friendly from the command line. There are
+no other software packages that provide a simple and intuitive visualization
+such as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;my-netcdf-file.nc&#39;</span><span class="p">,</span> <span class="n">lonlatbox</span><span class="o">=</span><span class="s1">&#39;Germany&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>while still providing a very high range of flexible options to adjust the
+visualization. No GUI, independent of it’s intuitiveness, can ever beat the
+speed of a scientist that knows a bit of coding and how to use the different
+formatoptions in psyplot.</p>
+</li>
+<li><p>it visualizes <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/examples/example_ugrid.html#gallery-examples-example-ugrid-ipynb" title="(in psy-maps v1.3.1)"><span class="xref std std-ref">unstructured grids</span></a>,
+such as ICON or UGRID model data</p></li>
+<li><p>it automatically decodes CF-conventions</p></li>
+<li><p>it intuitively integrates the structure of netCDF files. So if you often
+work with netCDF files, psyplot might be a good option</p></li>
+<li><p>it is pythonic. If you are using python anyway, psyplot is worth a try and we
+are always keen to help new users getting started.</p></li>
+<li><p>it is very flexible (I think we made this point already), from command-line
+and GUI.</p>
+<ul class="simple">
+<li><p>We can implement tons of new visualization and data analysis techniques and
+<a class="reference internal" href="develop/plugins_guide.html#plugins-guide"><span class="std std-ref">you can implement your own</span></a>.</p></li>
+<li><p>they are automatically implemented in the GUI</p></li>
+<li><p>the user can do his statistical and numerical computations with software
+like xarray, numpy, scipy, etc. and then use the psyplot visualization
+methods in the same script</p></li>
+<li><p>its modular framework allows to tackle new scientific questions and handle
+them in separate psyplot plugins with it’s own formatoptions and
+plotting methods</p></li>
+</ul>
+</li>
+<li><p>it will always be free and open-source under the GPL License.</p></li>
+</ul>
+</section>
+<section id="what-it-is-not">
+<h3>What it is not<a class="headerlink" href="#what-it-is-not" title="Permalink to this headline">¶</a></h3>
+<p>No software can do everything, neither can psyplot. Our main focus on
+flexibility, easy command-line usage and the GUI integration inevitably comes
+with a few downsides.</p>
+<ul class="simple">
+<li><p>it is not the fastest, because we use matplotlib to be flexible in our
+visualization, and this runs on the CPU, rather than the GPU. But if
+matplotlib or the standard visualization utilities from R, NCL, etc. are
+sufficient for you, you can go with psyplot.</p></li>
+<li><p>it is not the best for interactive web-applications. Although it would be
+pretty simple to set up a backend server with psyplot and <a class="reference external" href="https://www.tornadoweb.org">tornado</a> or <a class="reference external" href="https://flask.palletsprojects.com">Flask</a>,
+for instance, it’s limited to sending rastered image data around, due to the
+<a class="reference external" href="https://matplotlib.org/3.1.1/faq/howto_faq.html#how-to-use-matplotlib-in-a-web-application-server">options provided by matplotlib</a>.</p></li>
+<li><p>it is not as fast as <a class="reference external" href="http://meteora.ucsd.edu/~pierce/ncview_home_page.html">ncview</a>. psyplot (and <a class="reference external" href="https://github.com/psyplot/psy-view">psy-view</a> in particular) are
+written in the dynamically interpreted python language (which allows the
+combination of GUI and command-line, and the high flexibility). But we will
+never beat the speed of the (compiled but less flexible) ncview software.</p></li>
+<li><p>our GUI is not the most interactive one. psyplot is a <cite>command-line-first</cite>
+software, i.e. we put the most effort in making the usage from command-line
+and scripts as easy as possible. The GUI is something on top and is limited by
+the speed and functionalities of matplotlib (which is, nevertheless, pretty
+rich). But we are constantly improving the GUI, see <a class="reference external" href="https://github.com/psyplot/psy-view">psy-view</a> for instance.</p></li>
+<li><p>it is not made for statistical visualizations. We will never beat the
+possibilities by packages like <a class="reference external" href="https://seaborn.pydata.org">seaborn</a> or <a class="reference external" href="https://www.r-project.org/">R</a>. The only advantage of <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-reg">psy-reg</a>
+over these other software tools, is the possibility to adapt everything using
+the full power of matplotlib artists within and outside of the psyplot
+framework</p></li>
+<li><p>it is not the best software for manipulating shapefiles, although some support
+of this might come in the future.</p></li>
+</ul>
+</section>
+</section>
+<section id="about-the-author">
+<h2>About the author<a class="headerlink" href="#about-the-author" title="Permalink to this headline">¶</a></h2>
+<p>I, (<a class="reference external" href="http://www.philipp-s-sommer.de">Philipp Sommer</a>), work as a Data Scientist at the
+<cite>Helmholtz-Zentrum Geesthacht, Centre for Materials and Coastal Research (HZG)</cite>
+(Germany) in the <cite>Helmholtz Coastal Data Center (HCDC)</cite>. Checkout my homepage
+if you want to know more at <a class="reference external" href="http://www.philipp-s-sommer.de">philipp-s-sommer.de</a></p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>psyplot is published under the
+<a class="reference external" href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html">GNU General Public License v2.0</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Interactive data visualization with python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installing.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

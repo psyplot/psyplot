@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  job1:
+    machine: true
+    steps:
+      - run:
+          command: echo Bye
+workflows:
+  version: 2.1
+  dummy:
+    jobs:
+      - job1:
+          filters:
+            branches:
+              ignore: gh-pages

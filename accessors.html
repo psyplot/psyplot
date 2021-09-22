@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>xarray Accessors &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Psyplot plugins" href="plugins.html" />
+    <link rel="prev" title="Subprojects" href="projects.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">xarray Accessors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-datasetaccessor-dataset-accessor">The <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code> dataset accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-interactivearray-dataarray-accessor">The <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code> dataarray accessor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-plots-with-the-dataarray-accessor">Creating plots with the dataarray accessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-plots-and-arrays-with-the-dataarray-accessor">Updating plots and arrays with the dataarray accessor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>xarray Accessors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/accessors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="xarray-accessors">
+<span id="accessors"></span><h1>xarray Accessors<a class="headerlink" href="#xarray-accessors" title="Permalink to this headline">¶</a></h1>
+<p>psyplot defines a <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> and a <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a>
+accessor. You can use these accessors (see <a class="reference external" href="http://xarray.pydata.org/en/stable/internals/index.html#internals" title="(in xarray v0.19.1.dev6)"><span>xarray Internals</span></a>) to
+visualize your data and to update your plots. The following sections will show
+you how to make and update plots with these accessors. The plotmethods of the
+accessors are the same as for the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.plot" title="psyplot.project.plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.plot</span></code></a> object.</p>
+<section id="the-datasetaccessor-dataset-accessor">
+<span id="dataset-accessor"></span><h2>The <a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor" title="psyplot.data.DatasetAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code></a> dataset accessor<a class="headerlink" href="#the-datasetaccessor-dataset-accessor" title="Permalink to this headline">¶</a></h2>
+<p>Importing the psyplot package registers a new dataset accessor (see
+<a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.register_dataset_accessor.html#xarray.register_dataset_accessor" title="(in xarray v0.19.1.dev6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.register_dataset_accessor()</span></code></a>), the
+<a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor" title="psyplot.data.DatasetAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code></a>. You can access it via the <code class="docutils literal notranslate"><span class="pre">psy</span></code>
+attribute of the <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> class, i.e.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.Dataset.psy</span></code></p></td>
+<td><p>alias of <a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor" title="psyplot.data.DatasetAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.DatasetAccessor</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>It can be used to visualize the variables in the dataset directly from the
+dataset itself, e.g.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">psyplot</span>
+
+<span class="gp">In [2]: </span><span class="n">ds</span> <span class="o">=</span> <span class="n">psyplot</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">)</span>
+
+<span class="gp">In [3]: </span><span class="n">sp</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_dataset_accessor.png"><img alt="_images/docs_dataset_accessor.png" src="_images/docs_dataset_accessor.png" style="width: 4in;" /></a>
+<p>The variable <code class="docutils literal notranslate"><span class="pre">sp</span></code> is a psyplot subproject of the current main project.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [4]: </span><span class="nb">print</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>
+<span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+</pre></div>
+</div>
+<p>Hence, it would be completely equivalent if you type</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [5]: </span><span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psyplot</span>
+
+<span class="gp">In [6]: </span><span class="n">sp</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor.plot" title="psyplot.data.DatasetAccessor.plot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DatasetAccessor.plot</span></code></a> attribute has the
+same plotmethods as the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.plot" title="psyplot.project.plot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.project.plot</span></code></a> instance.</p>
+</section>
+<section id="the-interactivearray-dataarray-accessor">
+<span id="dataarray-accessor"></span><h2>The <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a> dataarray accessor<a class="headerlink" href="#the-interactivearray-dataarray-accessor" title="Permalink to this headline">¶</a></h2>
+<p>More advanced then the <a class="reference internal" href="#dataset-accessor"><span class="std std-ref">dataset accessor</span></a> is the
+registered DataArray accessor, the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a>.</p>
+<p>As well as the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor" title="psyplot.data.DatasetAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code></a>, it is registered as the <code class="docutils literal notranslate"><span class="pre">'psy'</span></code>
+attribute of any <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, i.e.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.DataArray.psy</span></code></p></td>
+<td><p>alias of <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.InteractiveArray</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>You can use it for two things:</p>
+<ol class="arabic simple">
+<li><p>create plots of the array</p></li>
+<li><p>update the plots and the array</p></li>
+</ol>
+<section id="creating-plots-with-the-dataarray-accessor">
+<span id="dataarray-accessor-plot"></span><h3>Creating plots with the dataarray accessor<a class="headerlink" href="#creating-plots-with-the-dataarray-accessor" title="Permalink to this headline">¶</a></h3>
+<p>Just use the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveBase.plot" title="psyplot.data.InteractiveBase.plot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> attribute the accessor.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="kn">import</span> <span class="nn">psyplot</span>
+
+<span class="gp">In [8]: </span><span class="n">ds</span> <span class="o">=</span> <span class="n">psyplot</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">)</span>
+
+<span class="gp">In [9]: </span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">t2m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="go"># this is a two dimensional array</span>
+<span class="gp">In [10]: </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+<span class="go">&lt;xarray.DataArray &#39;t2m&#39; (lat: 96, lon: 192)&gt;</span>
+<span class="go">array([[251.41689, 251.454  , 251.48915, ..., 251.29774, 251.33876, 251.37978],</span>
+<span class="go">       [254.16493, 254.33095, 254.50087, ..., 253.54774, 253.76845, 253.96376],</span>
+<span class="go">       [255.86024, 256.3114 , 256.72742, ..., 254.40712, 254.90517, 255.42665],</span>
+<span class="go">       ...,</span>
+<span class="go">       [263.70984, 263.6454 , 263.58875, ..., 263.96375, 263.86804, 263.78406],</span>
+<span class="go">       [262.4989 , 262.48718, 262.47742, ..., 262.5536 , 262.5321 , 262.51453],</span>
+<span class="go">       [260.8485 , 260.8661 , 260.88367, ..., 260.79578, 260.81335, 260.83093]],</span>
+<span class="go">      dtype=float32)</span>
+<span class="go">Coordinates:</span>
+<span class="go">  * lon      (lon) float64 0.0 1.875 3.75 5.625 7.5 ... 352.5 354.4 356.2 358.1</span>
+<span class="go">  * lat      (lat) float64 88.57 86.72 84.86 83.0 ... -83.0 -84.86 -86.72 -88.57</span>
+<span class="go">    lev      float64 1e+05</span>
+<span class="go">    time     datetime64[ns] 1979-01-31T18:00:00</span>
+<span class="go">Attributes:</span>
+<span class="go">    long_name:  Temperature</span>
+<span class="go">    units:      K</span>
+<span class="go">    code:       130</span>
+<span class="go">    table:      128</span>
+<span class="go">    grid_type:  gaussian</span>
+
+<span class="go"># and we can plot it using the mapplot plot method</span>
+<span class="gp">In [11]: </span><span class="n">plotter</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_dataarray_accessor_1.png"><img alt="_images/docs_dataarray_accessor_1.png" src="_images/docs_dataarray_accessor_1.png" style="width: 4in;" /></a>
+<p>The resulting plotter, an instance of the <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter</span></code></a>
+class, is the object that visualizes the data array. It can also
+be accessed via the <code class="docutils literal notranslate"><span class="pre">da.psy.plotter</span></code> attribute. Note that the creation of
+such a plotter overwrites any previous plotter in the <code class="docutils literal notranslate"><span class="pre">da.psy.plotter</span></code>
+attribute.</p>
+<p>This methodology does not only work for <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArrays</span></code></a>,
+but also for multiple DataArrays in a <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveList</span></code></a>. This data
+structure is, for example, used by the
+<a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/generated/psyplot.project.plot.lineplot.html#psyplot.project.plot.lineplot" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.lineplot</span></code></a> plot method to visualize
+multiple lines. Consider the following example:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [12]: </span><span class="n">ds0</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">lev</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># select a subset of the dataset</span>
+
+<span class="go"># create a list of arrays at different longitudes</span>
+<span class="gp">In [13]: </span><span class="n">l</span> <span class="o">=</span> <span class="n">psyplot</span><span class="o">.</span><span class="n">InteractiveList</span><span class="p">([</span>
+<span class="gp">   ....: </span>    <span class="n">ds0</span><span class="o">.</span><span class="n">t2m</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lon</span><span class="o">=</span><span class="mf">2.35</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="mf">48.86</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">),</span>  <span class="c1"># Paris</span>
+<span class="gp">   ....: </span>    <span class="n">ds0</span><span class="o">.</span><span class="n">t2m</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lon</span><span class="o">=</span><span class="mf">13.39</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="mf">52.52</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">),</span>  <span class="c1"># Berlin</span>
+<span class="gp">   ....: </span>    <span class="n">ds0</span><span class="o">.</span><span class="n">t2m</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">lon</span><span class="o">=-</span><span class="mf">74.01</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="mf">40.71</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">),</span>  <span class="c1"># NYC</span>
+<span class="gp">   ....: </span>    <span class="p">])</span>
+<span class="gp">   ....: </span>
+
+<span class="gp">In [14]: </span><span class="n">l</span><span class="o">.</span><span class="n">arr_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Paris&#39;</span><span class="p">,</span> <span class="s1">&#39;Berlin&#39;</span><span class="p">,</span> <span class="s1">&#39;NYC&#39;</span><span class="p">]</span>
+
+<span class="go"># plot the list</span>
+<span class="gp">In [15]: </span><span class="n">plotter</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="s1">&#39;%B&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_dataarray_accessor_2.png"><img alt="_images/docs_dataarray_accessor_2.png" src="_images/docs_dataarray_accessor_2.png" style="width: 4in;" /></a>
+<p>Note that for the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveList</span></code></a>, the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveList.psy" title="psyplot.data.InteractiveList.psy"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psy</span></code></a>
+attribute is just the list it self. So it would have been equivalent to call</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [16]: </span><span class="n">l</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">lineplot</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="updating-plots-and-arrays-with-the-dataarray-accessor">
+<span id="dataarray-accessor-update"></span><h3>Updating plots and arrays with the dataarray accessor<a class="headerlink" href="#updating-plots-and-arrays-with-the-dataarray-accessor" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a> accessor is designed for interactive usage of,
+not only the matplotlib figures, but also of the data. If you selected a
+subset of a dataset, e.g. via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [17]: </span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">t2m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">   ....: </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="p">)</span> <span class="c1"># January 1979</span>
+<span class="gp">   ....: </span>
+<span class="go">&lt;xarray.DataArray &#39;time&#39; ()&gt;</span>
+<span class="go">array(&#39;1979-01-31T18:00:00.000000000&#39;, dtype=&#39;datetime64[ns]&#39;)</span>
+<span class="go">Coordinates:</span>
+<span class="go">    lev      float64 1e+05</span>
+<span class="go">    time     datetime64[ns] 1979-01-31T18:00:00</span>
+<span class="go">Attributes:</span>
+<span class="go">    standard_name:  time</span>
+</pre></div>
+</div>
+<p>You can change to a different slice using the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveArray.update" title="psyplot.data.InteractiveArray.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">InteractiveArray.update()</span></code></a>
+method.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [18]: </span><span class="n">da</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="n">ds</span>   <span class="c1"># tell psyplot the source of the dataarray</span>
+
+<span class="gp">In [19]: </span><span class="n">da</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">   ....: </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>  <span class="c1"># changed to March 1979</span>
+<span class="gp">   ....: </span>
+<span class="go">&lt;xarray.DataArray &#39;time&#39; ()&gt;</span>
+<span class="go">array(&#39;1979-03-31T18:00:00.000000000&#39;, dtype=&#39;datetime64[ns]&#39;)</span>
+<span class="go">Coordinates:</span>
+<span class="go">    lev      float64 1e+05</span>
+<span class="go">    time     datetime64[ns] 1979-03-31T18:00:00</span>
+<span class="go">Attributes:</span>
+<span class="go">    standard_name:  time</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">da.psy.base</span> <span class="pre">=</span> <span class="pre">ds</span></code> command hereby tells the dataarray, where it is
+coming from, since this information is not known in the standard
+xarray framework.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>You can avoid this, using the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor.create_list" title="psyplot.data.DatasetAccessor.create_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DatasetAccessor.create_list()</span></code></a> method
+of the dataset accessor</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [20]: </span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">create_list</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lev</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">   ....: </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">base</span> <span class="ow">is</span> <span class="n">ds</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<p>If you plotted the data, you can also change the formatoptions using the
+<a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveArray.update" title="psyplot.data.InteractiveArray.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method, e.g.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="go"># create plot</span>
+<span class="gp">In [21]: </span><span class="n">da</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">();</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_dataarray_accessor_3.png"><img alt="_images/docs_dataarray_accessor_3.png" src="_images/docs_dataarray_accessor_3.png" style="width: 4in;" /></a>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [22]: </span><span class="n">da</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_dataarray_accessor_4.png"><img alt="_images/docs_dataarray_accessor_4.png" src="_images/docs_dataarray_accessor_4.png" style="width: 4in;" /></a>
+<p>The same holds for the Interactive list</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [23]: </span><span class="n">l</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>  <span class="c1"># change the data by selecting a subset of the timeslice</span>
+<span class="gp">   ....: </span>         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Subset&#39;</span><span class="p">,</span>    <span class="c1"># change a formatoption, the title of the plot</span>
+<span class="gp">   ....: </span>         <span class="p">)</span>
+<span class="gp">   ....: </span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_dataarray_accessor_5.png"><img alt="_images/docs_dataarray_accessor_5.png" src="_images/docs_dataarray_accessor_5.png" style="width: 4in;" /></a>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="projects.html" class="btn btn-neutral float-left" title="Subprojects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plugins.html" class="btn btn-neutral float-right" title="Psyplot plugins" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

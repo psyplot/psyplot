@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.gdal_store module &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psyplot.plotter module" href="psyplot.plotter.html" />
+    <link rel="prev" title="psyplot.docstring module" href="psyplot.docstring.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psyplot
+            <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psyplot.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="psyplot.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="psyplot.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psyplot.data.html">psyplot.data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.docstring.html">psyplot.docstring module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">psyplot.gdal_store module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.plotter.html">psyplot.plotter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.plugin_template.html">psyplot.plugin_template module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.project.html">psyplot.project module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.utils.html">psyplot.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.version.html">psyplot.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.warning.html">psyplot.warning module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psyplot.html">API Reference</a> &raquo;</li>
+      <li>psyplot.gdal_store module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psyplot.gdal_store.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psyplot.gdal_store">
+<span id="psyplot-gdal-store-module"></span><h1>psyplot.gdal_store module<a class="headerlink" href="#module-psyplot.gdal_store" title="Permalink to this headline">¶</a></h1>
+<p>Gdal Store for reading GeoTIFF files into an <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a></p>
+<p>This module contains the definition of the <a class="reference internal" href="#psyplot.gdal_store.GdalStore" title="psyplot.gdal_store.GdalStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">GdalStore</span></code></a> class that can
+be used to read in a GeoTIFF file into an <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a>.
+It requires that you have the python gdal module installed.</p>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>to open a GeoTIFF file named <code class="docutils literal notranslate"><span class="pre">'my_tiff.tiff'</span></code> you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">psyplot.gdal_store</span> <span class="kn">import</span> <span class="n">GdalStore</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xarray</span> <span class="kn">import</span> <span class="n">open_dataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span> <span class="o">=</span> <span class="n">open_dataset</span><span class="p">(</span><span class="n">GdalStore</span><span class="p">(</span><span class="s1">&#39;my_tiff&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Or you use the <cite>engine</cite> of the <code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.open_dataset()</span></code> function:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span> <span class="o">=</span> <span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;my_tiff.tiff&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;gdal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Classes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.gdal_store.GdalStore" title="psyplot.gdal_store.GdalStore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GdalStore</span></code></a>(filename_or_obj)</p></td>
+<td><p>Datastore to read raster files suitable for the gdal package</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="psyplot.gdal_store.GdalStore">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.gdal_store.</span></span><span class="sig-name descname"><span class="pre">GdalStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename_or_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/gdal_store.html#GdalStore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.gdal_store.GdalStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.backends.common.AbstractDataStore</span></code></p>
+<p>Datastore to read raster files suitable for the gdal package</p>
+<p>We recommend to use the <code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.open_dataset()</span></code> function to open
+a geotiff file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span> <span class="o">=</span> <span class="n">psyplot</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;my_geotiff.tiff&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;gdal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>The <a class="reference internal" href="#psyplot.gdal_store.GdalStore" title="psyplot.gdal_store.GdalStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">GdalStore</span></code></a> object is not as elaborate as, for example, the
+<cite>gdal_translate</cite> command. Many attributes, e.g. variable names or netCDF
+dimensions will not be interpreted. We only support two
+dimensional arrays and each band is saved into one variable named like
+<code class="docutils literal notranslate"><span class="pre">'Band1',</span> <span class="pre">'Band2',</span> <span class="pre">...</span></code>. If you want a more elaborate translation of your
+GDAL Raster, convert the file to a netCDF file using <code class="docutils literal notranslate"><span class="pre">gdal_translate</span></code> or
+the <code class="docutils literal notranslate"><span class="pre">gdal.GetDriverByName('netCDF').CreateCopy</span></code> method. However this
+class does not create an extra file on your hard disk as it is done by
+GDAL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename_or_obj</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The path to the GeoTIFF file or a gdal dataset</p>
+</dd>
+</dl>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.gdal_store.GdalStore.get_attrs" title="psyplot.gdal_store.GdalStore.get_attrs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_attrs</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.gdal_store.GdalStore.get_variables" title="psyplot.gdal_store.GdalStore.get_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variables</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.gdal_store.GdalStore.get_attrs">
+<span class="sig-name descname"><span class="pre">get_attrs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/gdal_store.html#GdalStore.get_attrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.gdal_store.GdalStore.get_attrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psyplot.gdal_store.GdalStore.get_variables">
+<span class="sig-name descname"><span class="pre">get_variables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/gdal_store.html#GdalStore.get_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.gdal_store.GdalStore.get_variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psyplot.docstring.html" class="btn btn-neutral float-left" title="psyplot.docstring module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psyplot.plotter.html" class="btn btn-neutral float-right" title="psyplot.plotter module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

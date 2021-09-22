@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.docstring &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> psyplot
+            <img src="../../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+          <li><a href="../psyplot.html">psyplot</a> &raquo;</li>
+      <li>psyplot.docstring</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for psyplot.docstring</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Docstring module of the psyplot package</span>
+
+<span class="sd">We use the docrep_ package for managing our docstrings</span>
+
+<span class="sd">.. _docrep: http://docrep.readthedocs.io/en/latest/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">docrep</span> <span class="kn">import</span> <span class="n">DocstringProcessor</span><span class="p">,</span> <span class="n">safe_modulo</span>
+
+
+<div class="viewcode-block" id="dedent"><a class="viewcode-back" href="../../api/psyplot.docstring.html#psyplot.docstring.dedent">[docs]</a><span class="k">def</span> <span class="nf">dedent</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dedent the docstring of a function and substitute with :attr:`params`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    func: function</span>
+<span class="sd">        function with the documentation to dedent&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">six</span><span class="o">.</span><span class="n">PY3</span><span class="p">:</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">im_func</span>
+    <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">and</span> <span class="n">inspect</span><span class="o">.</span><span class="n">cleandoc</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">func</span></div>
+
+
+<div class="viewcode-block" id="indent"><a class="viewcode-back" href="../../api/psyplot.docstring.html#psyplot.docstring.indent">[docs]</a><span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Indet the given string&quot;&quot;&quot;</span>
+    <span class="n">str_indent</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">num</span>
+    <span class="k">return</span> <span class="n">str_indent</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">str_indent</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="append_original_doc"><a class="viewcode-back" href="../../api/psyplot.docstring.html#psyplot.docstring.append_original_doc">[docs]</a><span class="k">def</span> <span class="nf">append_original_doc</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return an iterator that append the docstring of the given `parent`</span>
+<span class="sd">    function to the applied function&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">and</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+</span> <span class="n">indent</span><span class="p">(</span>
+            <span class="n">parent</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">func</span>
+    <span class="k">return</span> <span class="n">func</span></div>
+
+
+<span class="n">_docstrings</span> <span class="o">=</span> <span class="n">DocstringProcessor</span><span class="p">()</span>
+
+<span class="n">_docstrings</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s1">&#39;DocstringProcessor.get_sections&#39;</span><span class="p">)(</span>
+        <span class="n">dedent</span><span class="p">(</span><span class="n">DocstringProcessor</span><span class="o">.</span><span class="n">get_sections</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="PsyplotDocstringProcessor"><a class="viewcode-back" href="../../api/psyplot.docstring.html#psyplot.docstring.PsyplotDocstringProcessor">[docs]</a><span class="k">class</span> <span class="nc">PsyplotDocstringProcessor</span><span class="p">(</span><span class="n">DocstringProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A :class:`docrep.DocstringProcessor` subclass with possible types section</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">param_like_sections</span> <span class="o">=</span> <span class="n">DocstringProcessor</span><span class="o">.</span><span class="n">param_like_sections</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s1">&#39;Possible types&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="PsyplotDocstringProcessor.get_sections"><a class="viewcode-back" href="../../api/psyplot.docstring.html#psyplot.docstring.PsyplotDocstringProcessor.get_sections">[docs]</a>    <span class="nd">@_docstrings</span><span class="o">.</span><span class="n">dedent</span>
+    <span class="k">def</span> <span class="nf">get_sections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="p">[</span>
+            <span class="s1">&#39;Parameters&#39;</span><span class="p">,</span> <span class="s1">&#39;Other Parameters&#39;</span><span class="p">,</span> <span class="s1">&#39;Possible types&#39;</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract the specified sections out of the given string</span>
+
+<span class="sd">        The same as the :meth:`docrep.DocstringProcessor.get_sections` method</span>
+<span class="sd">        but uses the ``&#39;Possible types&#39;`` section by default, too</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        %(DocstringProcessor.get_sections.parameters)s</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The replaced string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">PsyplotDocstringProcessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span>
+                                                                   <span class="n">sections</span><span class="p">)</span></div></div>
+
+<span class="k">del</span> <span class="n">_docstrings</span>
+
+<span class="c1">#: :class:`docrep.PsyplotDocstringProcessor` instance that simplifies the reuse</span>
+<span class="c1">#: of docstrings from between different python objects.</span>
+<span class="n">docstrings</span> <span class="o">=</span> <span class="n">PsyplotDocstringProcessor</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

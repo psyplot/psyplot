@@ -1,0 +1,7 @@
+psyplot.version module
+======================
+
+.. automodule:: psyplot.version
+   :members:
+   :undoc-members:
+   :show-inheritance:

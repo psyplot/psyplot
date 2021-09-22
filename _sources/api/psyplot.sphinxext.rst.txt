@@ -1,0 +1,15 @@
+psyplot.sphinxext package
+=========================
+
+.. automodule:: psyplot.sphinxext
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   psyplot.sphinxext.extended_napoleon

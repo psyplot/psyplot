@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Subprojects" href="projects.html" />
+    <link rel="prev" title="Getting started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-rcparams">The <code class="docutils literal notranslate"><span class="pre">rcParams</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-formatoptions">Default formatoptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration">
+<span id="id1"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<section id="the-rcparams">
+<h2>The <code class="docutils literal notranslate"><span class="pre">rcParams</span></code><a class="headerlink" href="#the-rcparams" title="Permalink to this headline">¶</a></h2>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If you are using the <a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> module,
+you can also use the preferences widget to modify the configuration. See
+<a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/configuration.html#configuration" title="(in psyplot-gui v1.3.0)"><span>Configuration of the GUI</span></a>.</p>
+</div>
+<p>Psyplot, and especially it’s plugins have a lot of configuration values.
+Our rcParams handling is motivated by
+<a class="reference external" href="https://matplotlib.org/tutorials/introductory/customizing.html#matplotlibrc-sample" title="(in Matplotlib v3.4.3)"><span class="xref std std-ref">matplotlib</span></a> although we extended the
+possibilities of it’s <a class="reference external" href="https://matplotlib.org/api/matplotlib_configuration_api.html#matplotlib.RcParams" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.RcParams</span></code></a> class. Our rcParams
+are stored in the <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a>
+object. Without any plugins, this looks like</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">psyplot</span> <span class="kn">import</span> <span class="n">rcParams</span>
+
+<span class="gp">In [2]: </span><span class="nb">print</span><span class="p">(</span><span class="n">rcParams</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">exclude_keys</span><span class="o">=</span><span class="p">[]))</span>
+<span class="go"># Configuration parameters of the psyplot module</span>
+<span class="go"># </span>
+<span class="go"># You can copy this file (or parts of it) to another path and save it as</span>
+<span class="go"># psyplotrc.yml. The directory should then be stored in the PSYPLOTCONFIGDIR</span>
+<span class="go"># environment variable.</span>
+<span class="go"># </span>
+<span class="go"># Created with python</span>
+<span class="go"># </span>
+<span class="go"># 3.8.12 | packaged by conda-forge | (default, Sep 16 2021, 02:08:29) </span>
+<span class="go"># [GCC 9.4.0]</span>
+<span class="go"># </span>
+<span class="go"># </span>
+<span class="go"># Automatically draw the figures if the draw keyword in the update and start_update methods is None</span>
+<span class="go">auto_draw: true</span>
+<span class="go"># Automatically show the figures after the update andstart_update methods</span>
+<span class="go">auto_show: false</span>
+<span class="go"># path for supplementary data</span>
+<span class="go">datapath: null</span>
+<span class="go"># interpolation method to calculate 2D-bounds (see the `kind` parameterin the :meth:`psyplot.data.CFDecoder.get_plotbounds` method)</span>
+<span class="go">decoder.interp_kind: linear</span>
+<span class="go"># names that shall be interpreted as the time dimension</span>
+<span class="go">decoder.t: !!set</span>
+<span class="go">  time: null</span>
+<span class="go"># names that shall be interpreted as the longitudinal x dim</span>
+<span class="go">decoder.x: !!set {}</span>
+<span class="go"># names that shall be interpreted as the latitudinal y dim</span>
+<span class="go">decoder.y: !!set {}</span>
+<span class="go"># names that shall be interpreted as the vertical z dim</span>
+<span class="go">decoder.z: !!set {}</span>
+<span class="go"># Boolean flag to control whether CDOs (Climate Data Operators) should be used to calculate grid weights. If None, they are tried to be used.</span>
+<span class="go">gridweights.use_cdo: null</span>
+<span class="go"># default value (boolean) for the auto_update parameter in the initialization of Plotter, Project, etc. instances</span>
+<span class="go">lists.auto_update: true</span>
+<span class="go"># formatoption keys and values that are defined by the user to be used by</span>
+<span class="go"># the specified plotters. For example to modify the title of all</span>
+<span class="go"># :class:`psyplot.plotter.maps.FieldPlotter` instances, set</span>
+<span class="go"># ``{&#39;plotter.fieldplotter.title&#39;: &#39;my title&#39;}``</span>
+<span class="go">plotter.user: {}</span>
+<span class="go"># A list of filenames with trusted presets</span>
+<span class="go">presets.trusted: []</span>
+<span class="go"># boolean controlling whether all plotters specified in the project.plotters item will be automatically imported when importing the psyplot.project module</span>
+<span class="go">project.auto_import: false</span>
+<span class="go"># boolean controlling whether the seaborn module shall be imported when importing the project module. If None, it is only tried to import the module.</span>
+<span class="go">project.import_seaborn: null</span>
+<span class="go"># mapping from identifier to plotter definitions for the Project class. See the :func:`psyplot.project.register_plotter` function for possible keywords and values. See :attr:`psyplot.project.registered_plotters` for examples.</span>
+<span class="go">project.plotters: {}</span>
+<span class="go"># Plot methods that are defined by the user and overwrite those in the``&#39;project.plotters&#39;`` key. Use this if you want to define your own plotters without writing a plugin</span>
+<span class="go">project.plotters.user: {}</span>
+</pre></div>
+</div>
+<p>You can use this object like a dictionary and modify the default values. For
+example, if you do not want, that the <a class="reference external" href="http://seaborn.pydata.org/">seaborn</a> package is imported when the
+<a class="reference internal" href="api/psyplot.project.html#module-psyplot.project" title="psyplot.project"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psyplot.project</span></code></a> module is imported, you can simply do this via:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [3]: </span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;project.import_seaborn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Additionally, you can make these changes permanent. At every first import of
+the <code class="docutils literal notranslate"><span class="pre">psyplot</span></code> module, the rcParams are updated from a yaml configuration
+file. On Linux and OS X, this is stored under
+<code class="docutils literal notranslate"><span class="pre">$HOME/.config/psyplot/psyplotrc.yml</span></code>, under Windows it is stored at
+<code class="docutils literal notranslate"><span class="pre">$HOME/.psyplot/psyplotrc.yml</span></code>. But use the
+<a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.psyplot_fname" title="psyplot.config.rcsetup.psyplot_fname"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.config.rcsetup.psyplot_fname()</span></code></a> function, to get the correct
+location.</p>
+<p>To make our changes from above permanent, we could just do:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [4]: </span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="gp">   ...: </span><span class="kn">from</span> <span class="nn">psyplot.config.rcsetup</span> <span class="kn">import</span> <span class="n">psyplot_fname</span>
+<span class="gp">   ...: </span>
+
+<span class="gp">In [5]: </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">psyplot_fname</span><span class="p">(</span><span class="n">if_exists</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">   ...: </span>    <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s1">&#39;project.import_seaborn&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span> <span class="n">f</span><span class="p">)</span>
+<span class="gp">   ...: </span>
+
+<span class="go"># or we use the dump method</span>
+<span class="gp">In [6]: </span><span class="n">rcParams</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">psyplot_fname</span><span class="p">(</span><span class="n">if_exists</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+<span class="gp">   ...: </span>              <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># update the existing file</span>
+<span class="gp">   ...: </span>              <span class="n">include_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;project.import_seaborn&#39;</span><span class="p">])</span>
+<span class="gp">   ...: </span>
+</pre></div>
+</div>
+</section>
+<section id="default-formatoptions">
+<h2>Default formatoptions<a class="headerlink" href="#default-formatoptions" title="Permalink to this headline">¶</a></h2>
+<p>The psyplot plugins, (<a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_simple.plugin</span></code></a>, <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/api/psy_maps.plugin.html#module-psy_maps.plugin" title="(in psy-maps v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_maps.plugin</span></code></a>, etc.)
+define their own <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/api/psy_simple.plugin.html#psy_simple.plugin.rcParams" title="(in psy-simple v1.3.1)"><code class="xref py py-data docutils literal notranslate"><span class="pre">rcParams</span></code></a> instance. When the plugins
+are loaded at the first import of <code class="docutils literal notranslate"><span class="pre">psyplot</span></code>, these instances update
+<a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a>.</p>
+<p>The update mainly defines the default values for the plotters defined by that
+plugin. However, it is not always obvious, which key in the
+<a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a> belongs to which
+formatoption. For this purpose, however, you can use the
+<a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Formatoption.default_key" title="psyplot.plotter.Formatoption.default_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default_key</span></code></a> attribute. For example,
+the <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/api/psy_simple.plotters.html#psy_simple.plotters.LinePlotter.title" title="(in psy-simple v1.3.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title</span></code></a> formatoption has the
+default_key</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psy</span>
+
+<span class="gp">In [8]: </span><span class="n">plotter</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">lineplot</span><span class="o">.</span><span class="n">plotter_cls</span><span class="p">()</span>
+<span class="gp">   ...: </span><span class="n">plotter</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">default_key</span>
+<span class="gp">   ...: </span>
+<span class="gh">Out[8]: </span><span class="go">&#39;plotter.baseplotter.title&#39;</span>
+</pre></div>
+</div>
+<p>As our plotters are based on inheritance, the default values use it, too.
+Therefore, the <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter" title="(in psy-maps v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldPlotter</span></code></a>, the underlying plotter
+for the <code class="xref py py-attr docutils literal notranslate"><span class="pre">mapplot</span></code> plot method, uses the
+same configuration value in the
+<a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a>:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [9]: </span><span class="n">plotter</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="o">.</span><span class="n">plotter_cls</span><span class="p">()</span>
+<span class="gp">   ...: </span><span class="n">plotter</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">default_key</span>
+<span class="gp">   ...: </span>
+<span class="gh">Out[9]: </span><span class="go">&#39;plotter.baseplotter.title&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="projects.html" class="btn btn-neutral float-right" title="Subprojects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

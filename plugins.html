@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psyplot plugins &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Command line usage" href="command_line.html" />
+    <link rel="prev" title="xarray Accessors" href="accessors.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Psyplot plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#existing-plugins">Existing plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-exclude-plugins">How to exclude plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-psyplot-plugins-environment-variable">The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLUGINS</span></code> environment variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-psyplot-plotmethods-environment-variable">The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLOTMETHODS</span></code> environment variable</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Psyplot plugins</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/plugins.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="psyplot-plugins">
+<span id="plugins"></span><h1>Psyplot plugins<a class="headerlink" href="#psyplot-plugins" title="Permalink to this headline">¶</a></h1>
+<p>psyplot only provides the abstract framework on how to make the interactive
+visualization and data analysis. The real work is implemented in
+<a class="reference internal" href="develop/plugins_guide.html#plugins-guide"><span class="std std-ref">plugins to this framework</span></a>. Each
+plugin is a separate package that has to be installed independent of psyplot and
+each plugin registers new plot methods for <a class="reference internal" href="api/psyplot.project.html#psyplot.project.plot" title="psyplot.project.plot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.project.plot</span></code></a>.</p>
+<section id="existing-plugins">
+<span id="id1"></span><h2>Existing plugins<a class="headerlink" href="#existing-plugins" title="Permalink to this headline">¶</a></h2>
+<dl>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_simple.plugin</span></code></a></dt><dd><p>A psyplot plugin for simple visualization tasks. This plugin provides a
+bases for all the other plugins</p>
+<ul>
+<li><p><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/examples/index.html#gallery-examples" title="(in psy-simple v1.3.1)"><span class="xref std std-ref">Examples Gallery</span></a></p></li>
+<li><p>plot methods</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/generated/psyplot.project.plot.density.html#psyplot.project.plot.density" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.density</span></code></a></dt><dd><p>Make a density plot of point data</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/generated/psyplot.project.plot.plot2d.html#psyplot.project.plot.plot2d" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.plot2d</span></code></a></dt><dd><p>Make a simple plot of a 2D scalar field</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/generated/psyplot.project.plot.combined.html#psyplot.project.plot.combined" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.combined</span></code></a></dt><dd><p>Plot a 2D scalar field with an overlying vector field</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/generated/psyplot.project.plot.violinplot.html#psyplot.project.plot.violinplot" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.violinplot</span></code></a></dt><dd><p>Make a violin plot of your data</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/generated/psyplot.project.plot.lineplot.html#psyplot.project.plot.lineplot" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.lineplot</span></code></a></dt><dd><p>Make a line plot of one-dimensional data</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/generated/psyplot.project.plot.vector.html#psyplot.project.plot.vector" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.vector</span></code></a></dt><dd><p>Make a simple plot of a 2D vector field</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/generated/psyplot.project.plot.barplot.html#psyplot.project.plot.barplot" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.barplot</span></code></a></dt><dd><p>Make a bar plot of one-dimensional data</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/api/psy_maps.plugin.html#module-psy_maps.plugin" title="(in psy-maps v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_maps.plugin</span></code></a></dt><dd><p>A psyplot plugin for visualizing data on a map</p>
+<ul>
+<li><p><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/examples/index.html#gallery-examples" title="(in psy-maps v1.3.1)"><span class="xref std std-ref">Examples Gallery</span></a></p></li>
+<li><p>plot methods</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/generated/psyplot.project.plot.mapplot.html#psyplot.project.plot.mapplot" title="(in psy-maps v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapplot</span></code></a></dt><dd><p>Plot a 2D scalar field on a map</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/generated/psyplot.project.plot.mapvector.html#psyplot.project.plot.mapvector" title="(in psy-maps v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapvector</span></code></a></dt><dd><p>Plot a 2D vector field on a map</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/generated/psyplot.project.plot.mapcombined.html#psyplot.project.plot.mapcombined" title="(in psy-maps v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapcombined</span></code></a></dt><dd><p>Plot a 2D scalar field with an overlying vector field on a map</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-reg/en/latest/api/psy_reg.plugin.html#module-psy_reg.plugin" title="(in psy-reg v1.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_reg.plugin</span></code></a></dt><dd><p>A psyplot plugin for visualizing and calculating regression fits</p>
+<ul>
+<li><p><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-reg/en/latest/examples/index.html#gallery-examples" title="(in psy-reg v1.3.0)"><span class="xref std std-ref">Examples Gallery</span></a></p></li>
+<li><p>plot methods</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-reg/en/latest/generated/psyplot.project.plot.densityreg.html#psyplot.project.plot.densityreg" title="(in psy-reg v1.3.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.densityreg</span></code></a></dt><dd><p>Make a density plot and draw a fit from x to y of points</p>
+</dd>
+<dt><a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-reg/en/latest/generated/psyplot.project.plot.linreg.html#psyplot.project.plot.linreg" title="(in psy-reg v1.3.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.linreg</span></code></a></dt><dd><p>Draw a fit from x to y</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>If you have new plugins that you think should be included in this list, please
+do not hesitate to open an issue on the <a class="reference external" href="https://github.com/psyplot/psyplot">github project page of psyplot</a> or
+implement it by yourself in <a class="reference external" href="https://github.com/psyplot/psyplot/blob/master/docs/plugins.rst">this file</a> and make a pull request.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Because psyplot plugins are imported right at the startup time of psyplot
+but nevertheless use the <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams" title="psyplot.config.rcsetup.RcParams"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.config.rcsetup.RcParams</span></code></a> class,
+you always have to import psyplot first if you want to load a psyplot
+plugin. In other words, if you want to import one of the above mentiond
+modules manually, you always have to type</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psyplot</span>
+<span class="kn">import</span> <span class="nn">PLUGIN_NAME.plugin</span>
+</pre></div>
+</div>
+<p>instead of</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">PLUGIN_NAME.plugin</span>
+<span class="kn">import</span> <span class="nn">psyplot</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">PLUGIN_NAME</span></code> is any of <code class="docutils literal notranslate"><span class="pre">psy_simple,</span> <span class="pre">psy_maps</span></code>, etc.</p>
+</div>
+</section>
+<section id="how-to-exclude-plugins">
+<span id="excluding-plugins"></span><h2>How to exclude plugins<a class="headerlink" href="#how-to-exclude-plugins" title="Permalink to this headline">¶</a></h2>
+<p>The psyplot package loads all plugins right when the <cite>psyplot</cite> is imported. In
+other words,  the statement</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psyplot</span>
+</pre></div>
+</div>
+<p>already includes that all the psyplot plugin packages are loaded.</p>
+<p>You can however exclude plugins from the automatic loading via the
+<code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLUGINS</span></code> environment variable and exclude specific plot methods of a
+plugin via the <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLOTMETHODS</span></code> variable.</p>
+<section id="the-psyplot-plugins-environment-variable">
+<span id="plugins-env"></span><h3>The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLUGINS</span></code> environment variable<a class="headerlink" href="#the-psyplot-plugins-environment-variable" title="Permalink to this headline">¶</a></h3>
+<p>This environment variable is a <code class="docutils literal notranslate"><span class="pre">::</span></code> separated string with plugin names. If a
+plugin name is preceded by a <code class="docutils literal notranslate"><span class="pre">no:</span></code>, this plugin is excluded. Otherwise, only
+this plugin is included.</p>
+<p>To show this behaviour, we can use <code class="docutils literal notranslate"><span class="pre">psyplot</span> <span class="pre">--list-plugins</span></code> which shows the
+plugins that are used. By default, all plugins are included</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="o">!</span>psyplot --list-plugins
+<span class="go">- plugin = psy_simple.plugin</span>
+<span class="go">- plugin = psy_maps.plugin</span>
+</pre></div>
+</div>
+<p>Excluding psy-maps works via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [2]: </span><span class="o">!</span><span class="nv">PSYPLOT_PLUGINS</span><span class="o">=</span>no:psy_maps.plugin psyplot --list-plugins
+<span class="go">- plugin = psy_simple.plugin</span>
+</pre></div>
+</div>
+<p>Including only psy-maps works via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [3]: </span><span class="o">!</span><span class="nv">PSYPLOT_PLUGINS</span><span class="o">=</span><span class="s1">&#39;yes:psy_maps.plugin&#39;</span> psyplot --list-plugins
+<span class="go">- plugin = psy_maps.plugin</span>
+</pre></div>
+</div>
+</section>
+<section id="the-psyplot-plotmethods-environment-variable">
+<span id="plot-methods-env"></span><h3>The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLOTMETHODS</span></code> environment variable<a class="headerlink" href="#the-psyplot-plotmethods-environment-variable" title="Permalink to this headline">¶</a></h3>
+<p>The same principle is used when the plot methods are loaded from the plugins.
+If you want to manually exclude a plot method from loading, you include it via
+<code class="docutils literal notranslate"><span class="pre">no:&lt;plugin-module&gt;:&lt;plotmethod&gt;</span></code>. For example, to exclude the
+:attr:<code class="docutils literal notranslate"><span class="pre">mapplot</span> <span class="pre">&lt;psy_maps:psyplot.project.plot.mapplot&gt;</span></code> plot method from the
+psy-maps plugin, you can use</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [4]: </span><span class="o">!</span><span class="nv">PSYPLOT_PLOTMETHODS</span><span class="o">=</span>no:psy_maps.plugin:mapplot psyplot --list-plot-methods
+<span class="go">barplot: Make a bar plot of one-dimensional data</span>
+<span class="go">combined: Plot a 2D scalar field with an overlying vector field</span>
+<span class="go">density: Make a density plot of point data</span>
+<span class="go">fldmean: Calculate and plot the mean over x- and y-dimensions</span>
+<span class="go">lineplot: Make a line plot of one-dimensional data</span>
+<span class="go">mapcombined: Plot a 2D scalar field with an overlying vector field on a map</span>
+<span class="go">mapvector: Plot a 2D vector field on a map</span>
+<span class="go">plot2d: Make a simple plot of a 2D scalar field</span>
+<span class="go">vector: Make a simple plot of a 2D vector field</span>
+<span class="go">violinplot: Make a violin plot of your data</span>
+</pre></div>
+</div>
+<p>and the same if you only want to include the
+:attr:<code class="docutils literal notranslate"><span class="pre">mapplot</span> <span class="pre">&lt;psy_maps:psyplot.project.plot.mapplot&gt;</span></code> and the
+:attr:<code class="docutils literal notranslate"><span class="pre">lineplot</span> <span class="pre">&lt;psy_simple:psyplot.project.plot.lineplot&gt;</span></code> methods</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [5]: </span><span class="o">!</span><span class="nv">PSYPLOT_PLOTMETHODS</span><span class="o">=</span><span class="s1">&#39;yes:psy_maps.plugin:mapplot::yes:psy_simple.plugin:lineplot&#39;</span> psyplot --list-plot-methods
+<span class="go">lineplot: Make a line plot of one-dimensional data</span>
+<span class="go">mapplot: Plot a 2D scalar field on a map</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="accessors.html" class="btn btn-neutral float-left" title="xarray Accessors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="command_line.html" class="btn btn-neutral float-right" title="Command line usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

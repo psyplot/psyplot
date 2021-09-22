@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psyplot.compat package" href="psyplot.compat.html" />
+    <link rel="prev" title="Contributing to psyplot" href="../contribute.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psyplot
+            <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.compat.html">psyplot.compat package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.config.html">psyplot.config package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.sphinxext.html">psyplot.sphinxext package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.data.html">psyplot.data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.docstring.html">psyplot.docstring module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.gdal_store.html">psyplot.gdal_store module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.plotter.html">psyplot.plotter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.plugin_template.html">psyplot.plugin_template module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.project.html">psyplot.project module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.utils.html">psyplot.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.version.html">psyplot.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.warning.html">psyplot.warning module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psyplot.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psyplot">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-psyplot" title="Permalink to this headline">¶</a></h1>
+<p>psyplot visualization framework</p>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.get_versions" title="psyplot.get_versions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_versions</span></code></a>([requirements, key])</p></td>
+<td><p>Get the version information for psyplot, the plugins and its requirements</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.with_gui" title="psyplot.with_gui"><code class="xref py py-obj docutils literal notranslate"><span class="pre">with_gui</span></code></a></p></td>
+<td><p>Boolean that is True, if psyplot runs inside the graphical user interface by the <code class="docutils literal notranslate"><span class="pre">psyplot_gui</span></code> module</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.get_versions">
+<span class="sig-prename descclassname"><span class="pre">psyplot.</span></span><span class="sig-name descname"><span class="pre">get_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot.html#get_versions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.get_versions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the version information for psyplot, the plugins and its requirements</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>requirements</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, the requirements of the plugins and psyplot are investigated</p></li>
+<li><p><strong>key</strong> (<em>func</em>) – A function that determines whether a plugin shall be considererd or
+not. The function must take a single argument, that is the name of the
+plugin as string, and must return True (import the plugin) or False
+(skip the plugin). If None, all plugins are imported</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A mapping from <code class="docutils literal notranslate"><span class="pre">'psyplot'</span></code>/the plugin names to a dictionary with the
+<code class="docutils literal notranslate"><span class="pre">'version'</span></code> key and the corresponding version is returned. If
+<cite>requirements</cite> is True, it also contains a mapping from
+<code class="docutils literal notranslate"><span class="pre">'requirements'</span></code> a dictionary with the versions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>Using the built-in JSON module, we get something like</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">psyplot</span><span class="o">.</span><span class="n">get_versions</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="s2">&quot;psy_simple.plugin&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0.dev0&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;psyplot&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0.dev0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;requirements&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;matplotlib&quot;</span><span class="p">:</span> <span class="s2">&quot;1.5.3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;numpy&quot;</span><span class="p">:</span> <span class="s2">&quot;1.11.3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pandas&quot;</span><span class="p">:</span> <span class="s2">&quot;0.19.2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;xarray&quot;</span><span class="p">:</span> <span class="s2">&quot;0.9.1&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;psy_maps.plugin&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0.dev0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;requirements&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;cartopy&quot;</span><span class="p">:</span> <span class="s2">&quot;0.15.0&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="psyplot.with_gui">
+<span class="sig-prename descclassname"><span class="pre">psyplot.</span></span><span class="sig-name descname"><span class="pre">with_gui</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#psyplot.with_gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean that is True, if psyplot runs inside the graphical user interface
+by the <code class="docutils literal notranslate"><span class="pre">psyplot_gui</span></code> module</p>
+</dd></dl>
+
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rcParams</span></code></a></p></td>
+<td><p><a class="reference internal" href="psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams" title="psyplot.config.rcsetup.RcParams"><code class="xref py py-class docutils literal notranslate"><span class="pre">RcParams</span></code></a> instance that stores default formatoptions and configuration settings.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a>(xarray_obj, *args, **kwargs)</p></td>
+<td><p>Interactive psyplot accessor for the data array</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InteractiveList</span></code></a>(*args, **kwargs)</p></td>
+<td><p>List of <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code> instances that can be plotted itself</p></td>
+</tr>
+</tbody>
+</table>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.compat.html">psyplot.compat package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="psyplot.compat.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.compat.pycompat.html">psyplot.compat.pycompat module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.config.html">psyplot.config package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="psyplot.config.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.config.logsetup.html">psyplot.config.logsetup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.config.rcsetup.html">psyplot.config.rcsetup module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.sphinxext.html">psyplot.sphinxext package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="psyplot.sphinxext.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.sphinxext.extended_napoleon.html">psyplot.sphinxext.extended_napoleon module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.data.html">psyplot.data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.docstring.html">psyplot.docstring module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.gdal_store.html">psyplot.gdal_store module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.plotter.html">psyplot.plotter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.plugin_template.html">psyplot.plugin_template module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.project.html">psyplot.project module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.utils.html">psyplot.utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.version.html">psyplot.version module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psyplot.warning.html">psyplot.warning module</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../contribute.html" class="btn btn-neutral float-left" title="Contributing to psyplot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psyplot.compat.html" class="btn btn-neutral float-right" title="psyplot.compat package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

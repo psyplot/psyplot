@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.sphinxext.extended_napoleon &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> psyplot
+            <img src="../../../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+          <li><a href="../../psyplot.html">psyplot</a> &raquo;</li>
+      <li>psyplot.sphinxext.extended_napoleon</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for psyplot.sphinxext.extended_napoleon</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Sphinx extension module to provide additional sections for numpy docstrings</span>
+
+<span class="sd">This extension extends the :mod:`sphinx.ext.napoleon` package with an</span>
+<span class="sd">additional *Possible types* section in order to document possible types for</span>
+<span class="sd">descriptors.</span>
+
+<span class="sd">Notes</span>
+<span class="sd">-----</span>
+<span class="sd">If you use this module as a sphinx extension, you should not list the</span>
+<span class="sd">:mod:`sphinx.ext.napoleon` module in the extensions variable of your conf.py.</span>
+<span class="sd">This module has been tested for sphinx 1.3.1.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">sphinx.ext.napoleon</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">NumpyDocstring</span><span class="p">,</span> <span class="n">GoogleDocstring</span><span class="p">,</span> <span class="n">setup</span> <span class="k">as</span> <span class="n">napoleon_setup</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="DocstringExtension"><a class="viewcode-back" href="../../../api/psyplot.sphinxext.extended_napoleon.html#psyplot.sphinxext.extended_napoleon.DocstringExtension">[docs]</a><span class="k">class</span> <span class="nc">DocstringExtension</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class that introduces a &quot;Possible Types&quot; section</span>
+
+<span class="sd">    This class serves as a base class for</span>
+<span class="sd">    :class:`sphinx.ext.napoleon.NumpyDocstring` and</span>
+<span class="sd">    :class:`sphinx.ext.napoleon.GoogleDocstring` to introduce</span>
+<span class="sd">    another section names *Possible types*</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    The usage is the same as for the NumpyDocstring class, but it supports</span>
+<span class="sd">    the `Possible types` section::</span>
+
+<span class="sd">        &gt;&gt;&gt; from sphinx.ext.napoleon import Config</span>
+
+<span class="sd">        &gt;&gt;&gt; from psyplot.sphinxext.extended_napoleon import (</span>
+<span class="sd">        ...     ExtendedNumpyDocstring)</span>
+<span class="sd">        &gt;&gt;&gt; config = Config(napoleon_use_param=True,</span>
+<span class="sd">        ...                 napoleon_use_rtype=True)</span>
+<span class="sd">        &gt;&gt;&gt; docstring = &#39;&#39;&#39;</span>
+<span class="sd">        ... Possible types</span>
+<span class="sd">        ... --------------</span>
+<span class="sd">        ... type1</span>
+<span class="sd">        ...     Description of `type1`</span>
+<span class="sd">        ... type2</span>
+<span class="sd">        ...     Description of `type2`&#39;&#39;&#39;</span>
+<span class="sd">        &gt;&gt;&gt; print(ExtendedNumpyDocstring(docstring, config))</span>
+<span class="sd">        .. rubric:: Possible types</span>
+
+<span class="sd">        * *type1* --</span>
+<span class="sd">          Description of `type1`</span>
+<span class="sd">        * *type2* --</span>
+<span class="sd">          Description of `type2`&quot;&quot;&quot;</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+
+    <span class="k">def</span> <span class="nf">_parse_possible_types_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consume_fields</span><span class="p">(</span><span class="n">prefer_type</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.. rubric:: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">section</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+        <span class="n">multi</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">_name</span><span class="p">,</span> <span class="n">_type</span><span class="p">,</span> <span class="n">_desc</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_field</span><span class="p">(</span><span class="n">_name</span><span class="p">,</span> <span class="n">_type</span><span class="p">,</span> <span class="n">_desc</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">multi</span><span class="p">:</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_block</span><span class="p">(</span><span class="s1">&#39;* &#39;</span><span class="p">,</span> <span class="n">field</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">lines</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ExtendedNumpyDocstring"><a class="viewcode-back" href="../../../api/psyplot.sphinxext.extended_napoleon.html#psyplot.sphinxext.extended_napoleon.ExtendedNumpyDocstring">[docs]</a><span class="k">class</span> <span class="nc">ExtendedNumpyDocstring</span><span class="p">(</span><span class="n">NumpyDocstring</span><span class="p">,</span> <span class="n">DocstringExtension</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;:class:`sphinx.ext.napoleon.NumpyDocstring` with more sections&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span><span class="p">[</span><span class="s1">&#39;possible types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_possible_types_section</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ExtendedNumpyDocstring</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExtendedGoogleDocstring"><a class="viewcode-back" href="../../../api/psyplot.sphinxext.extended_napoleon.html#psyplot.sphinxext.extended_napoleon.ExtendedGoogleDocstring">[docs]</a><span class="k">class</span> <span class="nc">ExtendedGoogleDocstring</span><span class="p">(</span><span class="n">GoogleDocstring</span><span class="p">,</span> <span class="n">DocstringExtension</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;:class:`sphinx.ext.napoleon.GoogleDocstring` with more sections&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span><span class="p">[</span><span class="s1">&#39;possible types&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_possible_types_section</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ExtendedGoogleDocstring</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="process_docstring"><a class="viewcode-back" href="../../../api/psyplot.sphinxext.extended_napoleon.html#psyplot.sphinxext.extended_napoleon.process_docstring">[docs]</a><span class="k">def</span> <span class="nf">process_docstring</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">what</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Process the docstring for a given python object.</span>
+
+<span class="sd">    Called when autodoc has read and processed a docstring. `lines` is a list</span>
+<span class="sd">    of docstring lines that `_process_docstring` modifies in place to change</span>
+<span class="sd">    what Sphinx outputs.</span>
+
+<span class="sd">    The following settings in conf.py control what styles of docstrings will</span>
+<span class="sd">    be parsed:</span>
+
+<span class="sd">    * ``napoleon_google_docstring`` -- parse Google style docstrings</span>
+<span class="sd">    * ``napoleon_numpy_docstring`` -- parse NumPy style docstrings</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    app : sphinx.application.Sphinx</span>
+<span class="sd">        Application object representing the Sphinx process.</span>
+<span class="sd">    what : str</span>
+<span class="sd">        A string specifying the type of the object to which the docstring</span>
+<span class="sd">        belongs. Valid values: &quot;module&quot;, &quot;class&quot;, &quot;exception&quot;, &quot;function&quot;,</span>
+<span class="sd">        &quot;method&quot;, &quot;attribute&quot;.</span>
+<span class="sd">    name : str</span>
+<span class="sd">        The fully qualified name of the object.</span>
+<span class="sd">    obj : module, class, exception, function, method, or attribute</span>
+<span class="sd">        The object to which the docstring belongs.</span>
+<span class="sd">    options : sphinx.ext.autodoc.Options</span>
+<span class="sd">        The options given to the directive: an object with attributes</span>
+<span class="sd">        inherited_members, undoc_members, show_inheritance and noindex that</span>
+<span class="sd">        are True if the flag option of same name was given to the auto</span>
+<span class="sd">        directive.</span>
+<span class="sd">    lines : list of str</span>
+<span class="sd">        The lines of the docstring, see above.</span>
+
+<span class="sd">        .. note:: `lines` is modified *in place*</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function is (to most parts) taken from the :mod:`sphinx.ext.napoleon`</span>
+<span class="sd">    module, sphinx version 1.3.1, and adapted to the classes defined here&quot;&quot;&quot;</span>
+    <span class="n">result_lines</span> <span class="o">=</span> <span class="n">lines</span>
+    <span class="k">if</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">napoleon_numpy_docstring</span><span class="p">:</span>
+        <span class="n">docstring</span> <span class="o">=</span> <span class="n">ExtendedNumpyDocstring</span><span class="p">(</span>
+            <span class="n">result_lines</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">what</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+        <span class="n">result_lines</span> <span class="o">=</span> <span class="n">docstring</span><span class="o">.</span><span class="n">lines</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">napoleon_google_docstring</span><span class="p">:</span>
+        <span class="n">docstring</span> <span class="o">=</span> <span class="n">ExtendedGoogleDocstring</span><span class="p">(</span>
+            <span class="n">result_lines</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">what</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+        <span class="n">result_lines</span> <span class="o">=</span> <span class="n">docstring</span><span class="o">.</span><span class="n">lines</span><span class="p">()</span>
+
+    <span class="n">lines</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">result_lines</span><span class="p">[:]</span></div>
+
+
+<div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../../api/psyplot.sphinxext.extended_napoleon.html#psyplot.sphinxext.extended_napoleon.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sphinx extension setup function</span>
+
+<span class="sd">    When the extension is loaded, Sphinx imports this module and executes</span>
+<span class="sd">    the ``setup()`` function, which in turn notifies Sphinx of everything</span>
+<span class="sd">    the extension offers.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    app : sphinx.application.Sphinx</span>
+<span class="sd">        Application object representing the Sphinx process</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function uses the setup function of the :mod:`sphinx.ext.napoleon`</span>
+<span class="sd">    module&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">sphinx.application</span> <span class="kn">import</span> <span class="n">Sphinx</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">Sphinx</span><span class="p">):</span>
+        <span class="k">return</span>  <span class="c1"># probably called by tests</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;autodoc-process-docstring&#39;</span><span class="p">,</span> <span class="n">process_docstring</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">napoleon_setup</span><span class="p">(</span><span class="n">app</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

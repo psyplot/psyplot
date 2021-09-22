@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.gdal_store &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> psyplot
+            <img src="../../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+          <li><a href="../psyplot.html">psyplot</a> &raquo;</li>
+      <li>psyplot.gdal_store</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for psyplot.gdal_store</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Gdal Store for reading GeoTIFF files into an :class:`xarray.Dataset`</span>
+
+<span class="sd">This module contains the definition of the :class:`GdalStore` class that can</span>
+<span class="sd">be used to read in a GeoTIFF file into an :class:`xarray.Dataset`.</span>
+<span class="sd">It requires that you have the python gdal module installed.</span>
+
+<span class="sd">Examples</span>
+<span class="sd">--------</span>
+<span class="sd">to open a GeoTIFF file named ``&#39;my_tiff.tiff&#39;`` you can do::</span>
+
+<span class="sd">    &gt;&gt;&gt; from psyplot.gdal_store import GdalStore</span>
+<span class="sd">    &gt;&gt;&gt; from xarray import open_dataset</span>
+<span class="sd">    &gt;&gt;&gt; ds = open_dataset(GdalStore(&#39;my_tiff&#39;))</span>
+
+<span class="sd">Or you use the `engine` of the :func:`psyplot.open_dataset` function:</span>
+
+<span class="sd">    &gt;&gt;&gt; ds = open_dataset(&#39;my_tiff.tiff&#39;, engine=&#39;gdal&#39;)&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span>
+<span class="kn">from</span> <span class="nn">xarray</span> <span class="kn">import</span> <span class="n">Variable</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">xarray.core.utils</span> <span class="kn">import</span> <span class="n">FrozenOrderedDict</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">FrozenOrderedDict</span> <span class="o">=</span> <span class="nb">dict</span>
+<span class="kn">from</span> <span class="nn">xarray.backends.common</span> <span class="kn">import</span> <span class="n">AbstractDataStore</span>
+<span class="kn">from</span> <span class="nn">psyplot.compat.pycompat</span> <span class="kn">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">psyplot.warning</span> <span class="kn">import</span> <span class="n">warn</span>
+<span class="kn">import</span> <span class="nn">psyplot.data</span> <span class="k">as</span> <span class="nn">psyd</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">gdal</span>
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal_array</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">gdal</span> <span class="o">=</span> <span class="n">psyd</span><span class="o">.</span><span class="n">_MissingModule</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">dask.array</span> <span class="kn">import</span> <span class="n">Array</span>
+    <span class="n">with_dask</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">with_dask</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="GdalStore"><a class="viewcode-back" href="../../api/psyplot.gdal_store.html#psyplot.gdal_store.GdalStore">[docs]</a><span class="k">class</span> <span class="nc">GdalStore</span><span class="p">(</span><span class="n">AbstractDataStore</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Datastore to read raster files suitable for the gdal package</span>
+
+<span class="sd">    We recommend to use the :func:`psyplot.open_dataset` function to open</span>
+<span class="sd">    a geotiff file::</span>
+
+<span class="sd">        &gt;&gt;&gt; ds = psyplot.open_dataset(&#39;my_geotiff.tiff&#39;, engine=&#39;gdal&#39;)</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The :class:`GdalStore` object is not as elaborate as, for example, the</span>
+<span class="sd">    `gdal_translate` command. Many attributes, e.g. variable names or netCDF</span>
+<span class="sd">    dimensions will not be interpreted. We only support two</span>
+<span class="sd">    dimensional arrays and each band is saved into one variable named like</span>
+<span class="sd">    ``&#39;Band1&#39;, &#39;Band2&#39;, ...``. If you want a more elaborate translation of your</span>
+<span class="sd">    GDAL Raster, convert the file to a netCDF file using ``gdal_translate`` or</span>
+<span class="sd">    the ``gdal.GetDriverByName(&#39;netCDF&#39;).CreateCopy`` method. However this</span>
+<span class="sd">    class does not create an extra file on your hard disk as it is done by</span>
+<span class="sd">    GDAL.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename_or_obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename_or_obj: str</span>
+<span class="sd">            The path to the GeoTIFF file or a gdal dataset&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">psyd</span><span class="o">.</span><span class="n">safe_list</span><span class="p">(</span><span class="n">filename_or_obj</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename_or_obj</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">filename_or_obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">filename_or_obj</span>
+            <span class="n">fnames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">GetFileList</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">fnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">fnames</span>
+
+<div class="viewcode-block" id="GdalStore.get_variables"><a class="viewcode-back" href="../../api/psyplot.gdal_store.html#psyplot.gdal_store.GdalStore.get_variables">[docs]</a>    <span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">band</span><span class="p">):</span>
+            <span class="n">band</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="n">band</span><span class="p">)</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+            <span class="n">no_data</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">GetNoDataValue</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">no_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">a</span><span class="p">[</span><span class="n">a</span> <span class="o">==</span> <span class="n">no_data</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">nan</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">return</span> <span class="n">a</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">]</span>
+        <span class="n">chunks</span> <span class="o">=</span> <span class="p">((</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterYSize</span><span class="p">,),</span> <span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,))</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterYSize</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">)</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">iband</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">RasterCount</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">band</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="n">iband</span><span class="p">)</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">gdal_array</span><span class="o">.</span><span class="n">codes</span><span class="p">[</span><span class="n">band</span><span class="o">.</span><span class="n">DataType</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">with_dask</span><span class="p">:</span>
+                <span class="n">dsk</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">(</span><span class="n">load</span><span class="p">,</span> <span class="n">iband</span><span class="p">)}</span>
+                <span class="n">arr</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">dsk</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">chunks</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">arr</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">iband</span><span class="p">)</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">GetMetadata_Dict</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dt</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">nan</span><span class="p">)</span>
+                <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;_FillValue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nan</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">no_data</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">GetNoDataValue</span><span class="p">()</span>
+                <span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;_FillValue&#39;</span><span class="p">:</span> <span class="n">no_data</span><span class="p">}</span> <span class="k">if</span> <span class="n">no_data</span> <span class="k">else</span> <span class="p">{})</span>
+            <span class="n">variables</span><span class="p">[</span><span class="s1">&#39;Band</span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">iband</span><span class="p">]</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+        <span class="n">variables</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">variables</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_GeoTransform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">FrozenOrderedDict</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_load_GeoTransform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate latitude and longitude variable calculated from the</span>
+<span class="sd">        gdal.Open.GetGeoTransform method&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">load_lon</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">arange</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">)</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">load_lat</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">arange</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterYSize</span><span class="p">)</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>  <span class="c1"># bbox, interval</span>
+        <span class="k">if</span> <span class="n">with_dask</span><span class="p">:</span>
+            <span class="n">lat</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span>
+                <span class="p">{(</span><span class="s1">&#39;lat&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">(</span><span class="n">load_lat</span><span class="p">,)},</span> <span class="s1">&#39;lat&#39;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterYSize</span><span class="p">,),</span>
+                <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterYSize</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+            <span class="n">lon</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span>
+                <span class="p">{(</span><span class="s1">&#39;lon&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="p">(</span><span class="n">load_lon</span><span class="p">,)},</span> <span class="s1">&#39;lon&#39;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,),</span>
+                <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lat</span> <span class="o">=</span> <span class="n">load_lat</span><span class="p">()</span>
+            <span class="n">lon</span> <span class="o">=</span> <span class="n">load_lon</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Variable</span><span class="p">((</span><span class="s1">&#39;lat&#39;</span><span class="p">,),</span> <span class="n">lat</span><span class="p">),</span> <span class="n">Variable</span><span class="p">((</span><span class="s1">&#39;lon&#39;</span><span class="p">,),</span> <span class="n">lon</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GdalStore.get_attrs"><a class="viewcode-back" href="../../api/psyplot.gdal_store.html#psyplot.gdal_store.GdalStore.get_attrs">[docs]</a>    <span class="k">def</span> <span class="nf">get_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">osr</span> <span class="kn">import</span> <span class="n">SpatialReference</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">GetMetadata</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sp</span> <span class="o">=</span> <span class="n">SpatialReference</span><span class="p">(</span><span class="n">wkt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">())</span>
+            <span class="n">proj4</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">ExportToProj4</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Could not identify projection&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;proj4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">proj4</span>
+        <span class="k">return</span> <span class="n">FrozenOrderedDict</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

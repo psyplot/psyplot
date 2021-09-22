@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting started &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="prev" title="Installation" href="installing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psyplot
+            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#initialization-and-interactive-usage">Initialization and interactive usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#choosing-the-dimension">Choosing the dimension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-appearance-of-the-plot">Configuring the appearance of the plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#controlling-the-update">Controlling the update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#automatic-update">Automatic update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#direct-control-on-formatoption-update">Direct control on formatoption update</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-and-managing-multiple-plots">Creating and managing multiple plots</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-multiple-plots">Creating multiple plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slicing-and-filtering-the-project">Slicing and filtering the project</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#saving-and-loading-your-project">Saving and loading your project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-presets">Using presets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-your-own-script-the-post-formatoption">Adding your own script: The <code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code> formatoption</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Getting started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<section id="initialization-and-interactive-usage">
+<h2>Initialization and interactive usage<a class="headerlink" href="#initialization-and-interactive-usage" title="Permalink to this headline">¶</a></h2>
+<p>This section shall introduce you how to read data from a netCDF file and
+visualize it via psyplot. For this, you need to have <a class="reference external" href="https://github.com/Unidata/netcdf4-python">netCDF4</a> and the
+<a class="reference external" href="https://psy-maps.readthedocs.io/en/latest">psy-maps</a> psyplot plugin to be installed (see <a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/installing.html#install" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">install</span></a>).</p>
+<p>Furthermore we use the <a class="reference download internal" download="" href="_downloads/6d351965500a2dd3ef53e3daa3ac50d1/demo.nc"><code class="xref download docutils literal notranslate"><span class="pre">demo.nc</span></code></a> netCDF file for our
+demonstrations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We recommend to either run this example using our
+<a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">GUI</span></a>. However, you can also either use
+<a class="reference external" href="http://ipython.readthedocs.io/en/stable/">IPython</a> from the terminal via</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install ipython  <span class="c1"># or pip install ipython</span>
+ipython  <span class="c1"># starts the ipython console</span>
+</pre></div>
+</div>
+<p>and copy-paste the commands in this
+example, or you use a <a class="reference external" href="http://jupyter.org/install.html">jupyter notebook</a> via</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install jupyter  <span class="c1"># or pip install jupyter</span>
+jupyter notebook  <span class="c1"># starts the notebook server</span>
+</pre></div>
+</div>
+<p>Then create a new notebook in the desired location and copy-paste the
+examples below. If you want, we also recommend to include the following
+commands in the notebook</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psy</span>
+<span class="c1"># show the figures inline in the notebook and not in a separate window</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="c1"># don&#39;t close the figures after showing them, because than the update</span>
+<span class="c1"># would not work</span>
+<span class="o">%</span><span class="n">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">close_figures</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="c1"># show the figures after they are drawn or updated. This is useful</span>
+<span class="c1"># for the visualization in the jupyter notebook</span>
+<span class="n">psy</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;auto_show&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<p>After you <a class="reference internal" href="installing.html#install"><span class="std std-ref">installed psyplot</span></a>, you can import the package via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">psyplot</span>
+</pre></div>
+</div>
+<p>Psyplot has several modules and subpackages. The main module for the use of
+psyplot is the <a class="reference internal" href="api/psyplot.project.html#module-psyplot.project" title="psyplot.project"><code class="xref py py-mod docutils literal notranslate"><span class="pre">project</span></code></a> module.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [2]: </span><span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psy</span>
+</pre></div>
+</div>
+<p>Plots can be created using the attributes of the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.plot" title="psyplot.project.plot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> instance of
+the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter" title="psyplot.project.ProjectPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProjectPlotter</span></code></a>.</p>
+<p>Each new plugin defines several plot methods. In case of the <a class="reference external" href="https://psy-maps.readthedocs.io/en/latest">psy-maps</a>
+package, those are</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [3]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">show_plot_methods</span><span class="p">()</span>
+<span class="go">barplot</span>
+<span class="go">    Make a bar plot of one-dimensional data</span>
+<span class="go">combined</span>
+<span class="go">    Plot a 2D scalar field with an overlying vector field</span>
+<span class="go">density</span>
+<span class="go">    Make a density plot of point data</span>
+<span class="go">fldmean</span>
+<span class="go">    Calculate and plot the mean over x- and y-dimensions</span>
+<span class="go">lineplot</span>
+<span class="go">    Make a line plot of one-dimensional data</span>
+<span class="go">mapcombined</span>
+<span class="go">    Plot a 2D scalar field with an overlying vector field on a map</span>
+<span class="go">mapplot</span>
+<span class="go">    Plot a 2D scalar field on a map</span>
+<span class="go">mapvector</span>
+<span class="go">    Plot a 2D vector field on a map</span>
+<span class="go">plot2d</span>
+<span class="go">    Make a simple plot of a 2D scalar field</span>
+<span class="go">vector</span>
+<span class="go">    Make a simple plot of a 2D vector field</span>
+<span class="go">violinplot</span>
+<span class="go">    Make a violin plot of your data</span>
+</pre></div>
+</div>
+<p>So to create a simple 2D plot of the temperature field <code class="docutils literal notranslate"><span class="pre">'t2m'</span></code>, you can
+type</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [4]: </span><span class="n">p</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_getting_started.png"><img alt="_images/docs_getting_started.png" src="_images/docs_getting_started.png" style="width: 4in;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you’re not using the <a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">GUI</span></a>, you have to
+call the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.show" title="psyplot.project.Project.show"><code class="xref py py-meth docutils literal notranslate"><span class="pre">show()</span></code></a> method to display the plot, i.e. just run</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Now you created your first project</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [5]: </span><span class="n">p</span>
+<span class="gh">Out[5]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+</pre></div>
+</div>
+<p>which contains the <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
+corresponding plotter that visualizes it</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gh">Out[6]: </span><span class="go"></span>
+<span class="go">&lt;xarray.DataArray &#39;t2m&#39; (lat: 96, lon: 192)&gt;</span>
+<span class="go">array([[251.41689, 251.454  , 251.48915, ..., 251.29774, 251.33876, 251.37978],</span>
+<span class="go">       [254.16493, 254.33095, 254.50087, ..., 253.54774, 253.76845, 253.96376],</span>
+<span class="go">       [255.86024, 256.3114 , 256.72742, ..., 254.40712, 254.90517, 255.42665],</span>
+<span class="go">       ...,</span>
+<span class="go">       [263.70984, 263.6454 , 263.58875, ..., 263.96375, 263.86804, 263.78406],</span>
+<span class="go">       [262.4989 , 262.48718, 262.47742, ..., 262.5536 , 262.5321 , 262.51453],</span>
+<span class="go">       [260.8485 , 260.8661 , 260.88367, ..., 260.79578, 260.81335, 260.83093]],</span>
+<span class="go">      dtype=float32)</span>
+<span class="go">Coordinates:</span>
+<span class="go">  * lon      (lon) float64 0.0 1.875 3.75 5.625 7.5 ... 352.5 354.4 356.2 358.1</span>
+<span class="go">  * lat      (lat) float64 88.57 86.72 84.86 83.0 ... -83.0 -84.86 -86.72 -88.57</span>
+<span class="go">    lev      float64 1e+05</span>
+<span class="go">    time     datetime64[ns] 1979-01-31T18:00:00</span>
+<span class="go">Attributes:</span>
+<span class="go">    long_name:  Temperature</span>
+<span class="go">    units:      K</span>
+<span class="go">    code:       130</span>
+<span class="go">    table:      128</span>
+<span class="go">    grid_type:  gaussian</span>
+
+<span class="gp">In [7]: </span><span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">plotter</span><span class="p">)</span>
+<span class="gh">Out[7]: </span><span class="go">psy_maps.plotters.FieldPlotter</span>
+</pre></div>
+</div>
+<p>The visualization and data handling within the psyplot framework is designed to
+be as easy, flexible and interactive as possible. The appearance of a plot is
+controlled by the formatoptions of the plotter. In our case, they are the
+following:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [8]: </span><span class="n">p</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| background     | bounds         | cbar           | cbarspacing    |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| clabel         | clabelprops    | clabelsize     | clabelweight   |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| clat           | clip           | clon           | cmap           |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| cticklabels    | ctickprops     | cticks         | cticksize      |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| ctickweight    | datagrid       | extend         | figtitle       |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| figtitleprops  | figtitlesize   | figtitleweight | grid_color     |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| grid_labels    | grid_labelsize | grid_settings  | interp_bounds  |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| levels         | lonlatbox      | lsm            | map_extent     |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| mask           | mask_datagrid  | maskbetween    | maskgeq        |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| maskgreater    | maskleq        | maskless       | miss_color     |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| plot           | post           | post_timing    | projection     |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| stock_img      | text           | tight          | title          |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| titleprops     | titlesize      | titleweight    | transform      |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| transpose      | xgrid          | ygrid          |                |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+</pre></div>
+</div>
+<p>they can be investigated through the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.keys" title="psyplot.project.Project.keys"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Project.keys()</span></code></a>,
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.summaries" title="psyplot.project.Project.summaries"><code class="xref py py-meth docutils literal notranslate"><span class="pre">summaries()</span></code></a> and <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.docs" title="psyplot.project.Project.docs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">docs()</span></code></a>, or the corresponding
+low level methods of the <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> class,
+<a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.show_keys" title="psyplot.plotter.Plotter.show_keys"><code class="xref py py-meth docutils literal notranslate"><span class="pre">show_keys()</span></code></a>,
+<a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.show_summaries" title="psyplot.plotter.Plotter.show_summaries"><code class="xref py py-meth docutils literal notranslate"><span class="pre">show_summaries()</span></code></a> and
+<a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.show_docs" title="psyplot.plotter.Plotter.show_docs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">show_docs()</span></code></a>.</p>
+<p>Updating a formatoption is straight forward. Each formatoption accepts a certain
+type of data. Let’s say, we want to have a different projection. Then we can
+look at the types this formatoption accepts using the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.docs" title="psyplot.project.Project.docs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Project.docs()</span></code></a></p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [9]: </span><span class="n">p</span><span class="o">.</span><span class="n">docs</span><span class="p">(</span><span class="s1">&#39;projection&#39;</span><span class="p">)</span>
+<span class="go">projection</span>
+<span class="go">==========</span>
+<span class="go">Specify the projection for the plot</span>
+
+<span class="go">This formatoption defines the projection of the plot</span>
+
+<span class="go">Possible types</span>
+<span class="gt">--------------</span>
+<span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">CRS</span>
+    <span class="n">A</span> <span class="n">cartopy</span> <span class="n">projection</span> <span class="n">instance</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="err">`</span><span class="p">)</span>
+<span class="nb">str</span>
+    <span class="n">A</span> <span class="n">string</span> <span class="n">specifies</span> <span class="n">the</span> <span class="n">projection</span> <span class="n">instance</span> <span class="n">to</span> <span class="n">use</span><span class="o">.</span> <span class="n">The</span> <span class="n">centered</span>
+    <span class="n">longitude</span> <span class="ow">and</span> <span class="n">latitude</span> <span class="n">are</span> <span class="n">determined</span> <span class="n">by</span> <span class="n">the</span> <span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="err">`</span><span class="n">clon</span><span class="err">`</span> <span class="ow">and</span>
+    <span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="err">`</span><span class="n">clat</span><span class="err">`</span> <span class="n">formatoptions</span><span class="o">.</span>
+    <span class="n">Possible</span> <span class="n">strings</span> <span class="n">are</span> <span class="p">(</span><span class="n">each</span> <span class="n">standing</span> <span class="k">for</span> <span class="n">the</span> <span class="n">specified</span> <span class="n">projection</span><span class="p">)</span>
+
+    <span class="o">===========</span> <span class="o">=======================================</span>
+    <span class="n">cf</span>          <span class="k">try</span> <span class="n">to</span> <span class="n">decode</span> <span class="n">the</span> <span class="n">CF</span><span class="o">-</span><span class="n">conventions</span>
+    <span class="n">cyl</span>         <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="err">`</span>
+    <span class="n">robin</span>       <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">Robinson</span><span class="err">`</span>
+    <span class="n">moll</span>        <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">Mollweide</span><span class="err">`</span>
+    <span class="n">geo</span>         <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">Geostationary</span><span class="err">`</span>
+    <span class="n">northpole</span>   <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">NorthPolarStereo</span><span class="err">`</span>
+    <span class="n">southpole</span>   <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">SouthPolarStereo</span><span class="err">`</span>
+    <span class="n">ortho</span>       <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">Orthographic</span><span class="err">`</span>
+    <span class="n">stereo</span>      <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">Stereographic</span><span class="err">`</span>
+    <span class="n">near</span>        <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">NearsidePerspective</span><span class="err">`</span>
+    <span class="n">rotated</span>     <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">cartopy</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">RotatedPole</span><span class="err">`</span>
+    <span class="o">===========</span> <span class="o">=======================================</span>
+
+    <span class="n">The</span> <span class="n">special</span> <span class="n">case</span> <span class="err">``</span><span class="s1">&#39;cf&#39;</span><span class="err">``</span> <span class="n">tries</span> <span class="n">to</span> <span class="n">decode</span> <span class="n">the</span> <span class="n">CF</span><span class="o">-</span><span class="n">conventions</span> <span class="ow">in</span> <span class="n">the</span>
+    <span class="n">data</span><span class="o">.</span> <span class="n">If</span> <span class="n">this</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">possible</span><span class="p">,</span> <span class="n">we</span> <span class="n">assume</span> <span class="n">a</span> <span class="n">standard</span> <span class="n">lat</span><span class="o">-</span><span class="n">lon</span> <span class="n">projection</span>
+    <span class="p">(</span><span class="err">``</span><span class="s1">&#39;cyl&#39;</span><span class="err">``</span><span class="p">)</span>
+
+<span class="n">See</span> <span class="n">Also</span>
+<span class="gt">--------</span>
+<span class="err">`</span><span class="n">Grid</span><span class="o">-</span><span class="n">mappings</span> <span class="n">of</span> <span class="n">cf</span><span class="o">-</span><span class="n">conventions</span> <span class="o">&lt;</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">cfconventions</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Data</span><span class="o">/</span><span class="n">cf</span><span class="o">-</span><span class="n">conventions</span><span class="o">/</span><span class="n">cf</span><span class="o">-</span><span class="n">conventions</span><span class="o">-</span><span class="mf">1.8</span><span class="o">/</span><span class="n">cf</span><span class="o">-</span><span class="n">conventions</span><span class="o">.</span><span class="n">html</span><span class="c1">#appendix-grid-mappings&gt;`__</span>
+
+<span class="n">Warnings</span>
+<span class="gt">--------</span>
+<span class="n">An</span> <span class="n">update</span> <span class="n">of</span> <span class="n">the</span> <span class="n">projection</span> <span class="n">clears</span> <span class="n">the</span> <span class="n">axes</span><span class="err">!</span>
+</pre></div>
+</div>
+<p>Let’s use an orthogonal projection. The update goes via the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Project.update()</span></code> method which goes all the way down to the
+<a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.update" title="psyplot.plotter.Plotter.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.update()</span></code></a> and the
+<a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/api/psy_maps.plotters.html#psy_maps.plotters.Projection.update" title="(in psy-maps v1.3.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psy_maps.plotters.Projection.update()</span></code></a> method of the formatoption.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [10]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;ortho&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_getting_started_1.png"><img alt="_images/docs_getting_started_1.png" src="_images/docs_getting_started_1.png" style="width: 4in;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Actually, in this case an update of the projection requires that the entire
+axes is cleared and the plot is drawn again. If you want to know more about
+it, check the <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Formatoption.requires_clearing" title="psyplot.plotter.Formatoption.requires_clearing"><code class="xref py py-attr docutils literal notranslate"><span class="pre">requires_clearing</span></code></a>
+attribute of the formatoption.</p>
+</div>
+<p>Our framework also let’s us update the dimensions of the data we show. For
+example, if we want to display the field for february, we can type</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="go"># currently we are displaying january</span>
+<span class="gp">In [11]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span>
+<span class="gh">Out[11]: </span><span class="go">numpy.datetime64(&#39;1979-01-31T18:00:00.000000000&#39;)</span>
+
+<span class="gp">In [12]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;1979-02&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+
+<span class="go"># now its february</span>
+<span class="gp">In [13]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span>
+<span class="gh">Out[13]: </span><span class="go">numpy.datetime64(&#39;1979-02-28T18:00:00.000000000&#39;)</span>
+</pre></div>
+</div>
+<p>which is in our case equivalent for choosing the second index in our time
+coordinate via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [14]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So far for the first quick introduction. If you are interested you are welcomed
+to visit our <a class="reference internal" href="plugins.html#plugins"><span class="std std-ref">example galleries</span></a> or continue with this
+guide.</p>
+<p>In the end, don’t forget to close the project in order to delete the data from
+the memory and close the figures</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [15]: </span><span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="choosing-the-dimension">
+<span id="intro-dims"></span><h2>Choosing the dimension<a class="headerlink" href="#choosing-the-dimension" title="Permalink to this headline">¶</a></h2>
+<p>As you saw already above, the scalar variable <code class="docutils literal notranslate"><span class="pre">'t2m'</span></code> has multiple time
+steps and we can control what is shown via the <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code>
+method. By default, the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter.mapplot" title="psyplot.project.ProjectPlotter.mapplot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mapplot()</span></code></a>
+plot method chooses the first time step and the first vertical level
+(if those dimensions exist).</p>
+<p>However, you can also specify the exact data slice for your visualization based
+upon the dimensions in you dataset. When doing that, you basically do not have
+to care about the exact dimension names in the netCDF files, because those are
+decoded following the <a class="reference external" href="http://cfconventions.org/">CF Conventions</a>. Hence
+each of the above dimensions are assigned to one of the general dimensions
+<code class="docutils literal notranslate"><span class="pre">'t'</span></code> (time), <code class="docutils literal notranslate"><span class="pre">'z'</span></code> (vertical dimension), <code class="docutils literal notranslate"><span class="pre">'y'</span></code> (horizontal North-South
+dimension) and <code class="docutils literal notranslate"><span class="pre">'x'</span></code> (horizontal East-West dimension). In our demo file,
+the dimensions are therefore decoded as <code class="docutils literal notranslate"><span class="pre">'time'</span></code> → <code class="docutils literal notranslate"><span class="pre">'t'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'lev'</span></code> → <code class="docutils literal notranslate"><span class="pre">'z'</span></code>, <code class="docutils literal notranslate"><span class="pre">'lon'</span></code> → <code class="docutils literal notranslate"><span class="pre">'x'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'lat'</span></code> → <code class="docutils literal notranslate"><span class="pre">'y'</span></code>.</p>
+<p>Hence it is equivalent if you type</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [16]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gh">Out[16]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [17]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gh">Out[17]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+</pre></div>
+</div>
+<p>Finally you can also be very specific using the <cite>dims</cite> keyword via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [18]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="gh">Out[18]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+</pre></div>
+</div>
+<p>You can also use the <cite>method</cite> keyword from the plotting function to use the
+advantages of the <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v0.19.1.dev6)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
+corresponding to March 1979 you can use</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [19]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">&#39;1979-03&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>                 <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+<span class="gh">Out[19]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-03-31T18:00:00])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your netCDF file does (for whatever reason) not follow the CF Conventions,
+we interprete the last dimension as the <em>x</em>-dimension, the second
+last dimension (if existent) as the <em>y</em>-dimension, the third last dimension as
+the <em>z</em>-dimension. The time dimension however has to have the name
+<code class="docutils literal notranslate"><span class="pre">'time'</span></code>. If that still does not fit your netCDF files, you can specify
+the correct names in the <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rcParams</span></code></a>, namely</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [20]: </span><span class="n">psy</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;decoder.(x|y|z|t)&#39;</span><span class="p">)</span>
+<span class="gh">Out[20]: </span><span class="go"></span>
+<span class="go">RcParams({&#39;decoder.t&#39;: {&#39;time&#39;},</span>
+<span class="go">          &#39;decoder.x&#39;: set(),</span>
+<span class="go">          &#39;decoder.y&#39;: set(),</span>
+<span class="go">          &#39;decoder.z&#39;: set()})</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="configuring-the-appearance-of-the-plot">
+<span id="intro-fmt"></span><h2>Configuring the appearance of the plot<a class="headerlink" href="#configuring-the-appearance-of-the-plot" title="Permalink to this headline">¶</a></h2>
+<p>psyplot is build upon the great and extensive features of the matplotlib
+package. Hence, our framework can in principle be seen as a high-level
+interface to the matplotlib functionalities. However you can always access
+the basic matplotlib objects like figures and axes if you need.</p>
+<p>In the psyplot framework, the communication to matplotlib is done via
+<em>formatoptions</em> that control the appearence of a plot. Each plot method
+(i.e. each attribute of <a class="reference internal" href="api/psyplot.project.html#psyplot.project.plot" title="psyplot.project.plot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.project.plot</span></code></a>) has several a set of
+them and they set up the corresponding plotter.</p>
+<p>Formatoptions are all designed for an interactive usage and can usually be
+controlled with very simple commands. They range from simple formatoptions
+like <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.title" title="(in psy-simple v1.3.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">title</span></code></a> to
+<a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.lonlatbox" title="(in psy-maps v1.3.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">latitude-longitude</span> <span class="pre">box</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data</span></code></a>.</p>
+<p>The formatoptions depend on the specific plotting method and can be seen via
+the methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code>(*args, **kwargs)</p></td>
+<td><p>Classmethod to return a nice looking table with the given formatoptions</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">summaries</span></code>(*args, **kwargs)</p></td>
+<td><p>Method to print the summaries of the formatoptions</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">docs</span></code>(*args, **kwargs)</p></td>
+<td><p>Method to print the full documentations of the formatoptions</p></td>
+</tr>
+</tbody>
+</table>
+<p>For example to look at the formatoptions of the
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter.mapplot" title="psyplot.project.ProjectPlotter.mapplot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapplot</span></code></a> method in an interactive
+session, type</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [21]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">grouped</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># to see the fmt keys</span>
+<span class="go">******************</span>
+<span class="go">Axes formatoptions</span>
+<span class="go">******************</span>
+<span class="go">+------------+------------+------------+</span>
+<span class="go">| background | tight      | transpose  |</span>
+<span class="go">+------------+------------+------------+</span>
+
+<span class="go">**************************</span>
+<span class="go">Color coding formatoptions</span>
+<span class="go">**************************</span>
+<span class="go">+-------------+-------------+-------------+-------------+</span>
+<span class="go">| bounds      | cbar        | cbarspacing | cmap        |</span>
+<span class="go">+-------------+-------------+-------------+-------------+</span>
+<span class="go">| ctickprops  | cticksize   | ctickweight | extend      |</span>
+<span class="go">+-------------+-------------+-------------+-------------+</span>
+<span class="go">| levels      | miss_color  |             |             |</span>
+<span class="go">+-------------+-------------+-------------+-------------+</span>
+
+<span class="go">*******************</span>
+<span class="go">Label formatoptions</span>
+<span class="go">*******************</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| clabel         | clabelprops    | clabelsize     | clabelweight   |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| figtitle       | figtitleprops  | figtitlesize   | figtitleweight |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| text           | title          | titleprops     | titlesize      |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| titleweight    |                |                |                |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+
+<span class="go">***************************</span>
+<span class="go">Miscallaneous formatoptions</span>
+<span class="go">***************************</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| clat           | clip           | clon           | datagrid       |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| grid_color     | grid_labels    | grid_labelsize | grid_settings  |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| interp_bounds  | lonlatbox      | lsm            | map_extent     |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| mask_datagrid  | projection     | stock_img      | transform      |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+<span class="go">| xgrid          | ygrid          |                |                |</span>
+<span class="go">+----------------+----------------+----------------+----------------+</span>
+
+<span class="go">***********************</span>
+<span class="go">Axis tick formatoptions</span>
+<span class="go">***********************</span>
+<span class="go">+-------------+-------------+</span>
+<span class="go">| cticklabels | cticks      |</span>
+<span class="go">+-------------+-------------+</span>
+
+<span class="go">*********************</span>
+<span class="go">Masking formatoptions</span>
+<span class="go">*********************</span>
+<span class="go">+-------------+-------------+-------------+-------------+</span>
+<span class="go">| mask        | maskbetween | maskgeq     | maskgreater |</span>
+<span class="go">+-------------+-------------+-------------+-------------+</span>
+<span class="go">| maskleq     | maskless    |             |             |</span>
+<span class="go">+-------------+-------------+-------------+-------------+</span>
+
+<span class="go">******************</span>
+<span class="go">Plot formatoptions</span>
+<span class="go">******************</span>
+<span class="go">+------+</span>
+<span class="go">| plot |</span>
+<span class="go">+------+</span>
+
+<span class="go">*****************************</span>
+<span class="go">Post processing formatoptions</span>
+<span class="go">*****************************</span>
+<span class="go">+-------------+-------------+</span>
+<span class="go">| post        | post_timing |</span>
+<span class="go">+-------------+-------------+</span>
+
+<span class="gp">In [22]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="o">.</span><span class="n">summaries</span><span class="p">([</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;cbar&#39;</span><span class="p">])</span>  <span class="c1"># to see the fmt summaries</span>
+<span class="go">title</span>
+<span class="go">    Show the title</span>
+<span class="go">cbar</span>
+<span class="go">    Specify the position of the colorbars</span>
+
+<span class="gp">In [23]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="o">.</span><span class="n">docs</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>  <span class="c1"># to see the full fmt docs</span>
+<span class="go">title</span>
+<span class="go">=====</span>
+<span class="go">Show the title</span>
+
+<span class="go">Set the title of the plot.</span>
+<span class="go">You can insert any meta key from the :attr:`xarray.DataArray.attrs` via a</span>
+<span class="go">string like ``&#39;%(key)s&#39;``. Furthermore there are some special cases:</span>
+
+<span class="go">- Strings like ``&#39;%Y&#39;``, ``&#39;%b&#39;``, etc. will be replaced using the</span>
+<span class="go">  :meth:`datetime.datetime.strftime` method as long as the data has a time</span>
+<span class="go">  coordinate and this can be converted to a :class:`~datetime.datetime`</span>
+<span class="go">  object.</span>
+<span class="go">- ``&#39;%(x)s&#39;``, ``&#39;%(y)s&#39;``, ``&#39;%(z)s&#39;``, ``&#39;%(t)s&#39;`` will be replaced</span>
+<span class="go">  by the value of the x-, y-, z- or time coordinate (as long as this</span>
+<span class="go">  coordinate is one-dimensional in the data)</span>
+<span class="go">- any attribute of one of the above coordinates is inserted via</span>
+<span class="go">  ``axis + key`` (e.g. the name of the x-coordinate can be inserted via</span>
+<span class="go">  ``&#39;%(xname)s&#39;``).</span>
+<span class="go">- Labels defined in the :class:`psyplot.rcParams` ``&#39;texts.labels&#39;`` key</span>
+<span class="go">  are also replaced when enclosed by &#39;{}&#39;. The standard labels are</span>
+
+<span class="go">  - tinfo: ``%H:%M``</span>
+<span class="go">  - dtinfo: ``%B %d, %Y. %H:%M``</span>
+<span class="go">  - dinfo: ``%B %d, %Y``</span>
+<span class="go">  - desc: ``%(long_name)s [%(units)s]``</span>
+<span class="go">  - sdesc: ``%(name)s [%(units)s]``</span>
+
+<span class="go">Possible types</span>
+<span class="gt">--------------</span>
+<span class="nb">str</span>
+    <span class="n">The</span> <span class="n">title</span> <span class="k">for</span> <span class="n">the</span> <span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="err">`</span><span class="o">~</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">title</span><span class="err">`</span> <span class="n">function</span><span class="o">.</span>
+
+<span class="n">Notes</span>
+<span class="gt">-----</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">title</span> <span class="n">of</span> <span class="n">this</span> <span class="n">specific</span> <span class="n">subplot</span><span class="o">!</span> For the title of the whole
+<span class="n">figure</span><span class="p">,</span> <span class="n">see</span> <span class="n">the</span> <span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="err">`</span><span class="n">figtitle</span><span class="err">`</span> <span class="n">formatoption</span><span class="o">.</span>
+
+<span class="n">See</span> <span class="n">Also</span>
+<span class="gt">--------</span>
+<span class="n">figtitle</span><span class="p">,</span> <span class="n">titlesize</span><span class="p">,</span> <span class="n">titleweight</span><span class="p">,</span> <span class="n">titleprops</span>
+</pre></div>
+</div>
+<p>But of course you can also use the
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter" title="psyplot.project.ProjectPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">online</span> <span class="pre">documentation</span></code></a> of the
+method your interested in.</p>
+<p>To include a formatoption from the beginning, you can simply pass in the key
+and the desired value as keyword argument, e.g.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [24]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;my title&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>                 <span class="n">cbar</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+<span class="gh">Out[24]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+</pre></div>
+</div>
+<p>This works generally well as long as there are no dimensions in the desired
+data with the same name as one of the passed in formatoptions. If you want to
+be really sure, use the <cite>fmt</cite> keyword via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [25]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;my title&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>                                             <span class="s1">&#39;cbar&#39;</span><span class="p">:</span> <span class="s1">&#39;r&#39;</span><span class="p">})</span>
+<span class="gp">   ....: </span>
+<span class="gh">Out[25]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+</pre></div>
+</div>
+<p>The same methodology works for the interactive usage, i.e. you can use</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [26]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;my title&#39;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="go"># or</span>
+<span class="gp">In [27]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">fmt</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;my title&#39;</span><span class="p">,</span> <span class="s1">&#39;cbar&#39;</span><span class="p">:</span> <span class="s1">&#39;r&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="controlling-the-update">
+<span id="intro-update"></span><h2>Controlling the update<a class="headerlink" href="#controlling-the-update" title="Permalink to this headline">¶</a></h2>
+<section id="automatic-update">
+<span id="intro-auto-updates"></span><h3>Automatic update<a class="headerlink" href="#automatic-update" title="Permalink to this headline">¶</a></h3>
+<p>By default, a call of the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.ArrayList.update" title="psyplot.data.ArrayList.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method
+forces an automatic update and redrawing of all the plots. There are
+however several ways to modify this behavior:</p>
+<ol class="arabic">
+<li><p>Changing the behavior of one single project</p>
+<ol class="arabic">
+<li><p>in the initialization of a project using the <cite>auto_update</cite> keyword</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [28]: </span><span class="n">p</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">auto_update</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>setting the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.ArrayList.no_auto_update" title="psyplot.data.ArrayList.no_auto_update"><code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code></a> attribute</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [29]: </span><span class="n">p</span><span class="o">.</span><span class="n">no_auto_update</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Changing the default configuration in the <code class="docutils literal notranslate"><span class="pre">'lists.auto_update'</span></code>
+key in the <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rcParams</span></code></a></p>
+<blockquote>
+<div><div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [30]: </span><span class="n">psy</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;lists.auto_update&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Using the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.ArrayList.no_auto_update" title="psyplot.data.ArrayList.no_auto_update"><code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code></a> attribute as a
+context manager</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [31]: </span><span class="k">with</span> <span class="n">p</span><span class="o">.</span><span class="n">no_auto_update</span><span class="p">:</span>
+<span class="gp">   ....: </span>   <span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>If you disabled the automatical update via one of the above methods, you have
+to start the registered updates manually via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [32]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">auto_update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="go"># or</span>
+<span class="gp">In [33]: </span><span class="n">p</span><span class="o">.</span><span class="n">start_update</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="direct-control-on-formatoption-update">
+<h3>Direct control on formatoption update<a class="headerlink" href="#direct-control-on-formatoption-update" title="Permalink to this headline">¶</a></h3>
+<p>By default, when updating a formatoption, it is checked for each plot whether
+the formatoption would change during the update or not. If not, the
+formatoption is not updated. However, sometimes you may want to do that and
+for this, you can use the <em>force</em> keyword in the
+<a class="reference internal" href="api/psyplot.data.html#psyplot.data.ArrayList.update" title="psyplot.data.ArrayList.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method.</p>
+</section>
+</section>
+<section id="creating-and-managing-multiple-plots">
+<span id="intro-multiple"></span><h2>Creating and managing multiple plots<a class="headerlink" href="#creating-and-managing-multiple-plots" title="Permalink to this headline">¶</a></h2>
+<section id="creating-multiple-plots">
+<h3>Creating multiple plots<a class="headerlink" href="#creating-multiple-plots" title="Permalink to this headline">¶</a></h3>
+<p>One major advantage of the psyplot framework is the systematic management of
+multiple plots at the same time. To create multiple plots, simply pass in a
+list of dimension values and/or names. For example</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [34]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gh">Out[34]: </span><span class="go"></span>
+<span class="go">psyplot.project.Project([</span>
+<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+</pre></div>
+</div>
+<p>created two plots: one for the first and one for the second time step.</p>
+<p>Furthermore</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [35]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">],</span> <span class="n">time</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gh">Out[35]: </span><span class="go"></span>
+<span class="go">psyplot.project.Project([</span>
+<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00,</span>
+<span class="go">    arr2: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr3: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+</pre></div>
+</div>
+<p>created four plots. By default, each plot is made in an own figure but you can
+also use the <cite>ax</cite> keyword to setup how the plots will be arranged. The <cite>sort</cite>
+keyword allows you to sort the plots.</p>
+<p>As an example we plot the variables <code class="docutils literal notranslate"><span class="pre">'t2m'</span></code> and <code class="docutils literal notranslate"><span class="pre">'u'</span></code> for the first and
+second time step into one figure and sort by time. This will produce</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [36]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span>
+<span class="gp">   ....: </span>    <span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">],</span> <span class="n">time</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sort</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">],</span>
+<span class="gp">   ....: </span>    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(long_name)s</span><span class="s1">, %b&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+<span class="gh">Out[36]: </span><span class="go"></span>
+<span class="go">psyplot.project.Project([</span>
+<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr2: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00,</span>
+<span class="go">    arr3: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_multiple_plots.png"><img alt="_images/docs_multiple_plots.png" src="_images/docs_multiple_plots.png" style="width: 4in;" /></a>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As the xarray package, the slicing is based upon positional indexing with
+lists (see <a class="reference external" href="http://xarray.pydata.org/en/stable/indexing.html#positional-indexing">the xarray documentation on ositional indexing</a>).
+Hence you might think of choosing your data slice via
+<code class="docutils literal notranslate"><span class="pre">psy.plot.mapplot(...,</span> <span class="pre">x=[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5],</span> <span class="pre">...)</span></code>. However this would result
+in 5 different plots! Instead you have to write
+<code class="docutils literal notranslate"><span class="pre">psy.plot.mapplot(...,</span> <span class="pre">x=[[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5]],</span> <span class="pre">...)</span></code>. The same is true
+for plotting methods like the
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter.mapvector" title="psyplot.project.ProjectPlotter.mapvector"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapvector</span></code></a> method. Since this
+method needs two variables (one for the latitudinal and one for the
+longitudinal direction), typing</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [37]: </span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapvector</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">])</span>
+<span class="go">ValueError: Can only plot 3-dimensional data!</span>
+</pre></div>
+</div>
+<p>results in a <a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#ValueError" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a>. Instead you have to write</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [38]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapvector</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">]])</span>
+<span class="gh">Out[38]: </span><span class="go">psyplot.project.Project([    arr0: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+</pre></div>
+</div>
+<p>Please have a look into the documentations of the
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter.mapvector" title="psyplot.project.ProjectPlotter.mapvector"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapvector</span></code></a> and
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter.mapcombined" title="psyplot.project.ProjectPlotter.mapcombined"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapcombined</span></code></a> for getting examples
+on how to use this methods.</p>
+</div>
+</section>
+<section id="slicing-and-filtering-the-project">
+<h3>Slicing and filtering the project<a class="headerlink" href="#slicing-and-filtering-the-project" title="Permalink to this headline">¶</a></h3>
+<p>Managing a whole lot of plots is basically the same as managing a single plot.
+However, you can always get the single array and handle it separately.</p>
+<p>You can either get it through the usual list slicing (the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> class
+actually is a simple <a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> subclass) or you can use meta attributes,
+dimensions and the specific <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveBase.arr_name" title="psyplot.data.InteractiveBase.arr_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arr_name</span></code></a>
+attribute. For the latter one, just call the project with your filtering
+attributes</p>
+<p>This behavior is especially useful if you want to address only some arrays
+with your update. For example, let’s consider we want to choose a <code class="docutils literal notranslate"><span class="pre">'winter'</span></code>
+colormap for the zonal wind variable and a colormap ranging from blue to red
+for the temperature. Then we could do this via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [39]: </span><span class="n">p</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">)</span>
+
+<span class="gp">In [40]: </span><span class="n">p</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;u&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;winter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When doing so, we recommend to temporarily disable the automatic update
+because then the figure will only be drawn once and the update will be
+done in parallel.</p>
+<p>Hence, it is better to use the context manager
+<a class="reference internal" href="api/psyplot.data.html#psyplot.data.ArrayList.no_auto_update" title="psyplot.data.ArrayList.no_auto_update"><code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code></a> (see <a class="reference internal" href="#intro-auto-updates"><span class="std std-ref">Automatic update</span></a>)</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [41]: </span><span class="k">with</span> <span class="n">p</span><span class="o">.</span><span class="n">no_auto_update</span><span class="p">:</span>
+<span class="gp">   ....: </span>    <span class="n">p</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">p</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;u&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;winter&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">p</span><span class="o">.</span><span class="n">start_update</span><span class="p">()</span>
+<span class="gp">   ....: </span>
+</pre></div>
+</div>
+</div>
+<p>Finally you can access the plots created by a specific plotting method
+through the corresponding attribute in the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>
+class. In this case this is of course useless because all plots in <code class="docutils literal notranslate"><span class="pre">maps</span></code>
+were created by the same plotting method, but it may be helpful when having
+different plotters in one project (see <a class="reference internal" href="develop/framework.html#framework"><span class="std std-ref">The psyplot framework</span></a>). Anyway, the plots
+created by the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter.mapplot" title="psyplot.project.ProjectPlotter.mapplot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapplot</span></code></a> method could be
+accessed via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [42]: </span><span class="n">p</span><span class="o">.</span><span class="n">mapplot</span>
+<span class="gh">Out[42]: </span><span class="go"></span>
+<span class="go">psyplot.project.Project([</span>
+<span class="go">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="saving-and-loading-your-project">
+<span id="save-and-load"></span><h2>Saving and loading your project<a class="headerlink" href="#saving-and-loading-your-project" title="Permalink to this headline">¶</a></h2>
+<p>Within the psyplot framework, you can also save and restore your plots easily
+and flexibel.</p>
+<p>To save your project, use the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.save_project" title="psyplot.project.Project.save_project"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_project()</span></code></a>
+method:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [43]: </span><span class="n">p</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="s1">&#39;my_project.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This saves the plot-settings into the file <code class="docutils literal notranslate"><span class="pre">'my_project.pkl'</span></code>, a simple pickle
+file that you could open by yourself using</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [44]: </span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="gp">In [45]: </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;my_project.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">   ....: </span>    <span class="n">d</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+
+<span class="gp">In [46]: </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">   ....: </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;my_project.pkl&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+</pre></div>
+</div>
+<p>In order to not avoid large project files, we do not store the data but only the
+filenames of the datasets. Hence, if you want to load the project again, make
+sure that the datasets are accessible through the path as they are listed in the
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.dsnames" title="psyplot.project.Project.dsnames"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dsnames</span></code></a> attribute.</p>
+<p>Otherwise you have several options to avoid wrong paths:</p>
+<ol class="arabic">
+<li><p>Use the <cite>alternative_paths</cite> parameter and provide for each filename a
+specific path when you <em>save</em> the project</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [47]: </span><span class="n">p</span><span class="o">.</span><span class="n">dsnames</span>
+<span class="gh">Out[47]: </span><span class="go">{&#39;demo.nc&#39;}</span>
+
+<span class="gp">In [48]: </span><span class="n">p</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span>
+<span class="gp">   ....: </span>    <span class="s1">&#39;test.pkl&#39;</span><span class="p">,</span> <span class="n">alternative_paths</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">:</span> <span class="s1">&#39;other_path.nc&#39;</span><span class="p">})</span>
+<span class="gp">   ....: </span>
+</pre></div>
+</div>
+</li>
+<li><p>pack the whole data to the place where you want to store the project file</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [49]: </span><span class="n">p</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="s1">&#39;target-folder/test.pkl&#39;</span><span class="p">,</span> <span class="n">pack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>specify where the datasets can be found when you <em>load</em> the project:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [50]: </span><span class="n">p</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">Project</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span>
+<span class="gp">   ....: </span>    <span class="s1">&#39;test.pkl&#39;</span><span class="p">,</span> <span class="n">alternative_paths</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">:</span> <span class="s1">&#39;other_path.nc&#39;</span><span class="p">})</span>
+<span class="gp">   ....: </span>
+</pre></div>
+</div>
+</li>
+<li><p>Save the data in the pickle file, too</p>
+<blockquote>
+<div><div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [51]: </span><span class="n">p</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="s1">&#39;test.pkl&#39;</span><span class="p">,</span> <span class="n">ds_description</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;arr&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p>To restore your project, simply use the
+<a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.load_project" title="psyplot.project.Project.load_project"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_project()</span></code></a> method via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [52]: </span><span class="n">maps</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">Project</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s1">&#39;test.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Saving a project stores the figure informations like axes positions,
+background colors, etc. However only the axes informations from from the
+axes within the project are stored. Other axes in the matplotlib figures are
+not considered and will not be restored. You can, however, use the
+<cite>alternative_axes</cite> keyword in the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.load_project" title="psyplot.project.Project.load_project"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Project.load_project()</span></code></a> method if
+you want to restore your settings and/or customize your plot with the
+<a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.post" title="psyplot.plotter.Plotter.post"><code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code></a> formatoption (see
+<a class="reference internal" href="#own-scripts"><span class="std std-ref">Adding your own script: The post formatoption</span></a>)</p>
+</div>
+</section>
+<section id="using-presets">
+<span id="presets"></span><h2>Using presets<a class="headerlink" href="#using-presets" title="Permalink to this headline">¶</a></h2>
+<p>You can save and load presets to reuse the formatoption settings. For instance,
+let’s say temperature should always use a <code class="docutils literal notranslate"><span class="pre">'Reds'</span></code> cmap, the colorbar label
+should show the long name and the title should be <code class="docutils literal notranslate"><span class="pre">'time'</span></code>. This is of course
+possible via</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [53]: </span><span class="n">sp</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span>
+<span class="gp">   ....: </span>    <span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(long_name)s</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="gp">   ....: </span>    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(time)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_presets_1.png"><img alt="_images/docs_presets_1.png" src="_images/docs_presets_1.png" style="width: 4in;" /></a>
+<p>But instead of writing this all the time, you can also save it as a preset</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [54]: </span><span class="n">sp</span><span class="o">.</span><span class="n">save_preset</span><span class="p">(</span><span class="s2">&quot;t2m-preset&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and reload this preset either via the <cite>preset</cite> keyword</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [55]: </span><span class="n">sp</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">preset</span><span class="o">=</span><span class="s1">&#39;t2m-preset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/docs_presets_2.png"><img alt="_images/docs_presets_2.png" src="_images/docs_presets_2.png" style="width: 4in;" /></a>
+<p>or the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.load_preset" title="psyplot.project.Project.load_preset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_preset()</span></code></a> method</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [56]: </span><span class="n">sp</span><span class="o">.</span><span class="n">load_preset</span><span class="p">(</span><span class="s1">&#39;t2m-preset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can list the available presets from the command line</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [57]: </span><span class="o">!</span>psyplot --list-presets
+<span class="go">t2m-preset: /home/circleci/.config/psyplot/presets/t2m-preset.yml</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-your-own-script-the-post-formatoption">
+<span id="own-scripts"></span><h2>Adding your own script: The <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.post" title="psyplot.plotter.Plotter.post"><code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code></a> formatoption<a class="headerlink" href="#adding-your-own-script-the-post-formatoption" title="Permalink to this headline">¶</a></h2>
+<p>Very likely, you will face the problem that not all your needs are satisfied
+by the formatoptions in one plotter. You then have two choices:</p>
+<ol class="arabic">
+<li><p>define your own plotter with new formatoptions (see <a class="reference internal" href="develop/plugins_guide.html#plugins-guide"><span class="std std-ref">How to implement your own plotters and plugins</span></a>)</p>
+<dl class="simple">
+<dt>Pros</dt><dd><ul class="simple">
+<li><p>more structured approach</p></li>
+<li><p>you can enhance the plotter with other formatoptions afterwards and
+reuse it</p></li>
+</ul>
+</dd>
+<dt>Cons</dt><dd><ul class="simple">
+<li><p>more complicated</p></li>
+<li><p>you always have to ship the module where you define your plotter when
+you want to <a class="reference internal" href="#save-and-load"><span class="std std-ref">save and load</span></a> your project</p></li>
+<li><p>can get messy if you define a lot of different plotters</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>use the <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.post" title="psyplot.plotter.Plotter.post"><code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code></a> formatoption</p>
+<dl class="simple">
+<dt>Pros</dt><dd><ul class="simple">
+<li><p>fast and easy</p></li>
+<li><p>easy to <a class="reference internal" href="#save-and-load"><span class="std std-ref">save and load</span></a></p></li>
+</ul>
+</dd>
+<dt>Cons</dt><dd><ul class="simple">
+<li><p>may get complicated for large scripts</p></li>
+<li><p>has to be enabled manually by the user</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<p>For most of the cases, the <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.post" title="psyplot.plotter.Plotter.post"><code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code></a> formatoptions
+is probably what you are looking for (the first option is described in our
+<a class="reference internal" href="develop/index.html#developers-guide"><span class="std std-ref">developers guide</span></a>).</p>
+<p>This formatoption is designed for applying your own postprocessing script to
+your plot. It accepts a string that is executed using the built-in <a class="reference external" href="https://docs.python.org/3.8/library/functions.html#exec" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a>
+function and is executed at the very end of the plotting. In this python
+script, the formatoption itself (and therefore the
+<a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Formatoption.plotter" title="psyplot.plotter.Formatoption.plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plotter</span></code></a> and
+<a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Formatoption.ax" title="psyplot.plotter.Formatoption.ax"><code class="xref py py-attr docutils literal notranslate"><span class="pre">axes</span></code></a> can be accessed inside the
+script through the <code class="docutils literal notranslate"><span class="pre">self</span></code> variable. An example how to handle this
+formatoption can be found in
+<span class="xref std std-ref">our example gallery</span>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installing.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

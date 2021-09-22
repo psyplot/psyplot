@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psyplot.sphinxext.extended_napoleon module &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/psyplot.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psyplot.data module" href="psyplot.data.html" />
+    <link rel="prev" title="psyplot.sphinxext package" href="psyplot.sphinxext.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psyplot
+            <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.3.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../projects.html">Subprojects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accessors.html">xarray Accessors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Psyplot plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../develop/index.html">Developers guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing to psyplot</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psyplot.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="psyplot.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psyplot.compat.html">psyplot.compat package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psyplot.config.html">psyplot.config package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="psyplot.sphinxext.html">psyplot.sphinxext package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="psyplot.sphinxext.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="psyplot.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todos.html">ToDos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psyplot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psyplot.html">API Reference</a> &raquo;</li>
+          <li><a href="psyplot.sphinxext.html">psyplot.sphinxext package</a> &raquo;</li>
+      <li>psyplot.sphinxext.extended_napoleon module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psyplot.sphinxext.extended_napoleon.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psyplot.sphinxext.extended_napoleon">
+<span id="psyplot-sphinxext-extended-napoleon-module"></span><h1>psyplot.sphinxext.extended_napoleon module<a class="headerlink" href="#module-psyplot.sphinxext.extended_napoleon" title="Permalink to this headline">¶</a></h1>
+<p>Sphinx extension module to provide additional sections for numpy docstrings</p>
+<p>This extension extends the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v5.0.0+)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a> package with an
+additional <em>Possible types</em> section in order to document possible types for
+descriptors.</p>
+<p class="rubric">Notes</p>
+<p>If you use this module as a sphinx extension, you should not list the
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v5.0.0+)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a> module in the extensions variable of your conf.py.
+This module has been tested for sphinx 1.3.1.</p>
+<p><strong>Classes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.sphinxext.extended_napoleon.DocstringExtension" title="psyplot.sphinxext.extended_napoleon.DocstringExtension"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocstringExtension</span></code></a>()</p></td>
+<td><p>Class that introduces a &quot;Possible Types&quot; section</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.sphinxext.extended_napoleon.ExtendedGoogleDocstring" title="psyplot.sphinxext.extended_napoleon.ExtendedGoogleDocstring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtendedGoogleDocstring</span></code></a>(docstring[, config, ...])</p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.napoleon.GoogleDocstring</span></code> with more sections</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.sphinxext.extended_napoleon.ExtendedNumpyDocstring" title="psyplot.sphinxext.extended_napoleon.ExtendedNumpyDocstring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtendedNumpyDocstring</span></code></a>(docstring[, config, ...])</p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.napoleon.NumpyDocstring</span></code> with more sections</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.sphinxext.extended_napoleon.process_docstring" title="psyplot.sphinxext.extended_napoleon.process_docstring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_docstring</span></code></a>(app, what, name, obj, ...)</p></td>
+<td><p>Process the docstring for a given python object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psyplot.sphinxext.extended_napoleon.setup" title="psyplot.sphinxext.extended_napoleon.setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup</span></code></a>(app)</p></td>
+<td><p>Sphinx extension setup function</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="psyplot.sphinxext.extended_napoleon.DocstringExtension">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.sphinxext.extended_napoleon.</span></span><span class="sig-name descname"><span class="pre">DocstringExtension</span></span><a class="reference internal" href="../_modules/psyplot/sphinxext/extended_napoleon.html#DocstringExtension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.sphinxext.extended_napoleon.DocstringExtension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.8/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class that introduces a “Possible Types” section</p>
+<p>This class serves as a base class for
+<code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.napoleon.NumpyDocstring</span></code> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.napoleon.GoogleDocstring</span></code> to introduce
+another section names <em>Possible types</em></p>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<p>The usage is the same as for the NumpyDocstring class, but it supports
+the <cite>Possible types</cite> section:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sphinx.ext.napoleon</span> <span class="kn">import</span> <span class="n">Config</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">psyplot.sphinxext.extended_napoleon</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">ExtendedNumpyDocstring</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">napoleon_use_param</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">napoleon_use_rtype</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">docstring</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="gp">... </span><span class="s1">Possible types</span>
+<span class="gp">... </span><span class="s1">--------------</span>
+<span class="gp">... </span><span class="s1">type1</span>
+<span class="gp">... </span><span class="s1">    Description of `type1`</span>
+<span class="gp">... </span><span class="s1">type2</span>
+<span class="gp">... </span><span class="s1">    Description of `type2`&#39;&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ExtendedNumpyDocstring</span><span class="p">(</span><span class="n">docstring</span><span class="p">,</span> <span class="n">config</span><span class="p">))</span>
+<span class="go">.. rubric:: Possible types</span>
+
+<span class="go">* *type1* --</span>
+<span class="go">  Description of `type1`</span>
+<span class="go">* *type2* --</span>
+<span class="go">  Description of `type2`</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psyplot.sphinxext.extended_napoleon.ExtendedGoogleDocstring">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.sphinxext.extended_napoleon.</span></span><span class="sig-name descname"><span class="pre">ExtendedGoogleDocstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">docstring</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.config.Config" title="(in Sphinx v5.0.0+)"><span class="pre">sphinx.config.Config</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx" title="(in Sphinx v5.0.0+)"><span class="pre">sphinx.application.Sphinx</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">what</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/sphinxext/extended_napoleon.html#ExtendedGoogleDocstring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.sphinxext.extended_napoleon.ExtendedGoogleDocstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.napoleon.docstring.GoogleDocstring</span></code>, <a class="reference internal" href="#psyplot.sphinxext.extended_napoleon.DocstringExtension" title="psyplot.sphinxext.extended_napoleon.DocstringExtension"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.sphinxext.extended_napoleon.DocstringExtension</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.napoleon.GoogleDocstring</span></code> with more sections</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psyplot.sphinxext.extended_napoleon.ExtendedNumpyDocstring">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.sphinxext.extended_napoleon.</span></span><span class="sig-name descname"><span class="pre">ExtendedNumpyDocstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">docstring</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.config.Config" title="(in Sphinx v5.0.0+)"><span class="pre">sphinx.config.Config</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx" title="(in Sphinx v5.0.0+)"><span class="pre">sphinx.application.Sphinx</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">what</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/sphinxext/extended_napoleon.html#ExtendedNumpyDocstring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.sphinxext.extended_napoleon.ExtendedNumpyDocstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.napoleon.docstring.NumpyDocstring</span></code>, <a class="reference internal" href="#psyplot.sphinxext.extended_napoleon.DocstringExtension" title="psyplot.sphinxext.extended_napoleon.DocstringExtension"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.sphinxext.extended_napoleon.DocstringExtension</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.napoleon.NumpyDocstring</span></code> with more sections</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.sphinxext.extended_napoleon.process_docstring">
+<span class="sig-prename descclassname"><span class="pre">psyplot.sphinxext.extended_napoleon.</span></span><span class="sig-name descname"><span class="pre">process_docstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">what</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/sphinxext/extended_napoleon.html#process_docstring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.sphinxext.extended_napoleon.process_docstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process the docstring for a given python object.</p>
+<p>Called when autodoc has read and processed a docstring. <cite>lines</cite> is a list
+of docstring lines that <cite>_process_docstring</cite> modifies in place to change
+what Sphinx outputs.</p>
+<p>The following settings in conf.py control what styles of docstrings will
+be parsed:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">napoleon_google_docstring</span></code> – parse Google style docstrings</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">napoleon_numpy_docstring</span></code> – parse NumPy style docstrings</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>app</strong> (<a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx" title="(in Sphinx v5.0.0+)"><em>sphinx.application.Sphinx</em></a>) – Application object representing the Sphinx process.</p></li>
+<li><p><strong>what</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – A string specifying the type of the object to which the docstring
+belongs. Valid values: “module”, “class”, “exception”, “function”,
+“method”, “attribute”.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The fully qualified name of the object.</p></li>
+<li><p><strong>obj</strong> (<em>module</em><em>, </em><em>class</em><em>, </em><em>exception</em><em>, </em><em>function</em><em>, </em><em>method</em><em>, or </em><em>attribute</em>) – The object to which the docstring belongs.</p></li>
+<li><p><strong>options</strong> (<em>sphinx.ext.autodoc.Options</em>) – The options given to the directive: an object with attributes
+inherited_members, undoc_members, show_inheritance and noindex that
+are True if the flag option of same name was given to the auto
+directive.</p></li>
+<li><p><strong>lines</strong> (<em>list of str</em>) – <p>The lines of the docstring, see above.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><cite>lines</cite> is modified <em>in place</em></p>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function is (to most parts) taken from the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v5.0.0+)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a>
+module, sphinx version 1.3.1, and adapted to the classes defined here</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psyplot.sphinxext.extended_napoleon.setup">
+<span class="sig-prename descclassname"><span class="pre">psyplot.sphinxext.extended_napoleon.</span></span><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/sphinxext/extended_napoleon.html#setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.sphinxext.extended_napoleon.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sphinx extension setup function</p>
+<p>When the extension is loaded, Sphinx imports this module and executes
+the <code class="docutils literal notranslate"><span class="pre">setup()</span></code> function, which in turn notifies Sphinx of everything
+the extension offers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app</strong> (<a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx" title="(in Sphinx v5.0.0+)"><em>sphinx.application.Sphinx</em></a>) – Application object representing the Sphinx process</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function uses the setup function of the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v5.0.0+)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a>
+module</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psyplot.sphinxext.html" class="btn btn-neutral float-left" title="psyplot.sphinxext package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psyplot.data.html" class="btn btn-neutral float-right" title="psyplot.data module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
