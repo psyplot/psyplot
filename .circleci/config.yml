@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  psyplot: psyplot/psyplot-ci-orb@1.5.2
+  psyplot: psyplot/psyplot-ci-orb@1.5.3
 
 workflows:
   build-and-test:
