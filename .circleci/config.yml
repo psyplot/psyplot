@@ -6,4 +6,5 @@ orbs:
 workflows:
   build-and-test:
     jobs:
-      - psyplot/install-and-build
+      - psyplot/install-and-build:
+          setup_env: false
