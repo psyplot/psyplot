@@ -124,28 +124,17 @@ Documentation
     about
     installing
     getting_started
+    Example Gallery <https://psyplot.github.io/examples/>
     configuration
     projects
     accessors
     plugins
     command_line
-    examples/index
     develop/index
     contribute
     api/psyplot
     todos
     changelog
-
-
-Examples
---------
-
-.. linkgalleries::
-
-    psyplot
-    psy_simple
-    psy_maps
-    psy_reg
 
 
 Get in touch
