@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  psyplot: psyplot/psyplot-ci-orb@1.5.8
+  psyplot: psyplot/psyplot-ci-orb@1.5.10
   mattermost-plugin-notify: nathanaelhoun/mattermost-plugin-notify@1.2.0
 
 executors:
@@ -20,7 +20,7 @@ parameters:
 
 workflows:
   build-and-test:
-    unless: << parameters.deploy-release >>
+    unless: << pipeline.parameters.deploy-release >>
     jobs:
       - psyplot/install-and-build:
           exec_environment: << pipeline.parameters.unit-test-executor >>
@@ -49,7 +49,7 @@ workflows:
             branches:
               only: main
       - psyplot/trigger-release-workflow:
-          context:
+          context: trigger-release
           filters:
             branches:
               only: main
@@ -57,10 +57,10 @@ workflows:
             - psyplot/deploy-pkg
             - psyplot/deploy-docs
   publish-release:
-    when: << parameters.deploy-release >>
+    when: << pipeline.parameters.deploy-release >>
     jobs:
       - psyplot/create-tag:
-          fingerprint: "fc:e3:0f:d0:c6:5a:6a:a5:0e:7c:d6:47:37:48:dd:67"
+          ssh-fingerprints: "fc:e3:0f:d0:c6:5a:6a:a5:0e:7c:d6:47:37:48:dd:67"
           context: psyplot-admin
           user-name: psyplot-admin
           publish-release: true
