@@ -81,7 +81,7 @@ workflows:
       - psyplot/deploy-pypi:
           context: pypi
           requires:
-            hold-for-pypi
+            - hold-for-pypi
           filters:
             branches:
               only: main
