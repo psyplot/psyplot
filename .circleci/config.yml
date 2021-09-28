@@ -25,7 +25,8 @@ workflows:
       - psyplot/install-and-build:
           exec_environment: << pipeline.parameters.unit-test-executor >>
           setup_env: true
-          build_args: "--build-only"
+          build_args: "--no-test"
+          env_packages: dask netcdf4 scipy
       - psyplot/test-parallel:
           name: test-xarray-latest
           parallelism: 2
