@@ -15,7 +15,7 @@ install:
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
     - conda install conda-build anaconda-client
-    - pip install -i https://pypi.anaconda.org/psyplot/simple psyplot-ci-orb
+    - pip install -i https://pypi.anaconda.org/psyplot/simple --no-deps psyplot-ci-orb
     - conda config --add channels conda-forge
     - conda config --add channels psyplot
     - conda info -a
