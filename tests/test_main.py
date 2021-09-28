@@ -143,6 +143,11 @@ class TestCommandLine(unittest.TestCase):
         d = yaml.load(proc.stdout.read(), yaml.Loader)
         d.pop('psyplot_gui', None)
         ref.pop('psyplot_gui', None)
+        # make sure the version does not end with .dirty
+        d["psyplot"]["version"] = d["psyplot"]["version"].replace(".dirty", "")
+        ref["psyplot"]["version"] = ref["psyplot"]["version"].replace(
+            ".dirty", ""
+        )
         self.assertEqual(d, ref)
 
     def test_list_plugins(self):

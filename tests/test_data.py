@@ -1322,7 +1322,7 @@ class TestArrayList(unittest.TestCase):
             name=[['v1', ['v3', 'v4']], ['v1', 'v2']], prefer_list=True)
         l.extend(ds2.psy.create_list(name=['t2m'], x=0, t=1),
                  new_name=True)
-        if xr_version < (0, 18):
+        if xr_version < (0, 17):
             nc_store = ('xarray.backends.netCDF4_', 'NetCDF4DataStore')
         else:
             nc_store = (None, None)
@@ -1562,17 +1562,17 @@ class FilenamesTest(unittest.TestCase):
         ds.close()
         os.remove(dumped_fname)
 
-    @unittest.skipIf(xr_version >= (0, 18), "Not supported for xarray>=0.18")
+    @unittest.skipIf(xr_version >= (0, 17), "Not supported for xarray>=0.18")
     @unittest.skipIf(not with_nio, 'Nio module not installed')
     def test_nio(self):
         self._test_engine('pynio')
 
-    @unittest.skipIf(xr_version >= (0, 18), "Not supported for xarray>=0.18")
+    @unittest.skipIf(xr_version >= (0, 17), "Not supported for xarray>=0.18")
     @unittest.skipIf(not with_netcdf4, 'netCDF4 module not installed')
     def test_netcdf4(self):
         self._test_engine('netcdf4')
 
-    @unittest.skipIf(xr_version >= (0, 18), "Not supported for xarray>=0.18")
+    @unittest.skipIf(xr_version >= (0, 17), "Not supported for xarray>=0.18")
     @unittest.skipIf(not with_scipy, 'scipy module not installed')
     def test_scipy(self):
         self._test_engine('scipy')
