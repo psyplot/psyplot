@@ -23,6 +23,7 @@ workflows:
     unless: << pipeline.parameters.deploy-release >>
     jobs:
       - psyplot/install-and-build:
+          name: install
           exec_environment: << pipeline.parameters.unit-test-executor >>
           setup_env: true
           build_args: "--no-test"
@@ -30,10 +31,14 @@ workflows:
       - psyplot/test-parallel:
           name: test-xarray-latest
           parallelism: 2
+          requires:
+            - install
       - psyplot/test-parallel:
           name: test-xarray-0.17
           parallelism: 2
           packages: xarray=0.17
+          requires:
+            - install
       - mattermost-plugin-notify/approval-notification:
           name: notify-deploy
           context: mattermost
