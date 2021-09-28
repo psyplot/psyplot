@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  psyplot: psyplot/psyplot-ci-orb@1.5.11
+  psyplot: psyplot/psyplot-ci-orb@1.5.12
   mattermost-plugin-notify: nathanaelhoun/mattermost-plugin-notify@1.2.0
 
 executors:
@@ -24,7 +24,15 @@ workflows:
     jobs:
       - psyplot/install-and-build:
           exec_environment: << pipeline.parameters.unit-test-executor >>
-          setup_env: false
+          setup_env: true
+          build_args: "--build-only"
+      - psyplot/test-parallel:
+          name: test-xarray-latest
+          parallelism: 2
+      - psyplot/test-parallel:
+          name: test-xarray-0.17
+          parallelism: 2
+          packages: xarray=0.17
       - mattermost-plugin-notify/approval-notification:
           name: notify-deploy
           context: mattermost
@@ -32,7 +40,8 @@ workflows:
             Hello @all! A workflow on https://app.circleci.com/pipelines/github/psyplot/psyplot is awaiting your approval.
             Please check the uploaded docs and builds prior to approval.
           requires:
-            - psyplot/install-and-build
+            - test-xarray-latest
+            - test-xarray-0.17
       - hold-for-deploy:
           type: approval
           requires:
