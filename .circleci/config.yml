@@ -27,7 +27,7 @@ workflows:
           setup_env: false
       - mattermost-plugin-notify/approval-notification:
           name: notify-deploy
-          message: >
+          message: >-
             Hello @all! A workflow on https://app.circleci.com/pipelines/github/psyplot/psyplot is awaiting your approval.
             Please check the uploaded docs and builds prior to approval.
           requires:
@@ -69,7 +69,7 @@ workflows:
             - psyplot/check-for-release
       - mattermost-plugin-notify/approval-notification:
           name: notify-release
-          message: >
+          message: >-
             Hello @all! A new release has been created at https://github.com/psyplot/psyplot/releases.
             Please review it carefully, publish it and approve the upload to pypi.
           requires:
