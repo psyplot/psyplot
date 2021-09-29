@@ -10,7 +10,7 @@ install:
     # windows config (for installation)
     - cmd: "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     - cmd: setlocal
-    - cmd: set CONDA_REPO_TOKEN=
+    - cmd: set ANACONDA_API_TOKEN=
     # conda config
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
@@ -30,7 +30,7 @@ build: off
 
 test_script:
     - cmd: setlocal
-    - cmd: set CONDA_REPO_TOKEN=
+    - cmd: set ANACONDA_API_TOKEN=
     - cmd: conda build ci/conda-recipe --python %PYTHON_VERSION%
     - cmd: endlocal
 
