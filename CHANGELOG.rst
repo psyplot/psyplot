@@ -1,5 +1,6 @@
 v1.4.0
 ======
+Compatibility fixes and LGPL license
 
 Fixed
 -----
@@ -7,6 +8,8 @@ Fixed
 
 Changed
 -------
+- psyplot is now officially licensed under LGPL-3.0-only,
+  see `#33 <https://github.com/psyplot/psyplot/pull/33>`__
 - the lower bound for supported xarray versions is now 0.17.
 - project files do not store the Store anymore as this information cannot be
   gathered from xarray 0.18. We now rely on xarray to automatically find the
