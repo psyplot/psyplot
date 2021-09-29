@@ -1,3 +1,11 @@
+v1.4.0
+======
+
+Changed
+-------
+- We use CicleCI now for a standardized CI/CD pipeline, see
+  `#32 <https://github.com/psyplot/psyplot/pull/32>`__
+
 v1.3.2
 ======
 Fixed
