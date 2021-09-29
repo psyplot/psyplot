@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  psyplot: psyplot/psyplot-ci-orb@1.5.15
+  psyplot: psyplot/psyplot-ci-orb@1.5.16
   mattermost-plugin-notify: nathanaelhoun/mattermost-plugin-notify@1.2.0
 
 executors:
@@ -81,8 +81,6 @@ workflows:
           user-name: psyplot-admin
           publish-release: true
           publish-version-tag: true
-          requires:
-            - psyplot/check-for-release
       - mattermost-plugin-notify/approval-notification:
           name: notify-release
           context: mattermost
