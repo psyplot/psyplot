@@ -9,9 +9,9 @@ The psyplot interactive visualization framework
     :widths: 10 90
 
     * - docs
-      - |docs| |joss|
+      - |docs| |joss| |zenodo|
     * - tests
-      - |travis| |appveyor| |requires| |codecov|
+      - |circleci| |appveyor| |requires| |codecov|
     * - package
       - |version| |conda| |github|
     * - implementations
@@ -23,9 +23,9 @@ The psyplot interactive visualization framework
     :alt: Documentation Status
     :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
 
-.. |travis| image:: https://travis-ci.org/psyplot/psyplot.svg?branch=master
-    :alt: Travis
-    :target: https://travis-ci.org/psyplot/psyplot
+.. |circleci| image:: https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg
+    :alt: CircleCI
+    :target: https://circleci.com/gh/psyplot/psyplot/tree/master
 
 .. |appveyor| image:: https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true
     :alt: AppVeyor
@@ -58,6 +58,10 @@ The psyplot interactive visualization framework
 .. |joss| image:: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg
     :alt: Journal of Open Source Software
     :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
+
+.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.593798.svg
+    :alt: Zenodo
+    :target: https://doi.org/10.5281/zenodo.593798
 
 .. |github| image:: https://img.shields.io/github/release/psyplot/psyplot.svg
     :target: https://github.com/psyplot/psyplot/releases/latest

@@ -70,7 +70,6 @@ extensions = [
     'sphinxarg.ext',
     'psyplot.sphinxext.extended_napoleon',
     'autodocsumm',
-    'sphinx_nbexamples',
     'sphinx.ext.imgconverter',
 ]
 
@@ -81,10 +80,6 @@ templates_path = ['_templates']
 # docs.readthedocs.org
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-# process the examples if they don't exist already
-process_examples = (
-    not osp.exists(osp.join(osp.dirname(__file__), 'examples')) or on_rtd)
-
 if on_rtd:
     spr.call([sys.executable] +
              ('-m ipykernel install --user --name python3 '
@@ -93,14 +88,6 @@ if on_rtd:
 # create the api documentation
 if not osp.exists(osp.join(osp.dirname(__file__), 'api')) or on_rtd:
     spr.check_call(['bash', 'apigen.bash'])
-
-# The cdo example would require the installation of climate data operators
-# which is a bit of an overkill
-example_gallery_config = dict(
-    dont_preprocess=['../examples/example_cdo.ipynb'],
-    urls='https://github.com/psyplot/psyplot/blob/master/examples',
-    binder_url='https://mybinder.org/v2/gh/Chilipp/psyplot/master?filepath=examples',
-    )
 
 napoleon_use_admonition_for_examples = True
 
@@ -248,8 +235,6 @@ intersphinx_mapping = {
     'xarray': ('http://xarray.pydata.org/en/stable/', None),
     'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
     'mpl_toolkits': ('https://matplotlib.org/basemap/', None),
-    'sphinx_nbexamples': ('https://sphinx-nbexamples.readthedocs.io/en/latest/',
-                          None),
     'psy_maps': (
         'https://psyplot.readthedocs.io/projects/psy-maps/en/latest/', None),
     'psy_simple': (

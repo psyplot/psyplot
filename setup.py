@@ -80,7 +80,7 @@ setup(name='psyplot',
           'matplotlib',
           'docrep>=0.3',
           'funcargparse',
-          'xarray',
+          'xarray>=0.17',
           'PyYAML>=4.2b4'
       ],
       package_data={'psyplot': [
