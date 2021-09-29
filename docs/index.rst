@@ -46,11 +46,11 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         :widths: 10 90
 
         * - docs
-          - |docs| |joss| |zenodo|
+          - |docs| |joss|
         * - tests
           - |circleci| |appveyor| |requires| |codecov|
         * - package
-          - |version| |conda| |github|
+          - |version| |conda| |github| |zenodo|
         * - implementations
           - |supported-versions| |supported-implementations|
         * - get in touch
@@ -96,9 +96,9 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         :alt: Journal of Open Source Software
         :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
 
-    .. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.593798.svg
+    .. |zenodo| image:: https://zenodo.org/badge/87944102.svg
         :alt: Zenodo
-        :target: https://doi.org/10.5281/zenodo.593798
+        :target: https://zenodo.org/badge/latestdoi/87944102
 
     .. |github| image:: https://img.shields.io/github/release/psyplot/psyplot.svg
         :target: https://github.com/psyplot/psyplot/releases/latest
