@@ -6,6 +6,10 @@ Fixed
 -----
 - psyplot is now compatible with 0.18
 
+Added
+-----
+- psyplot does now have a CITATION.cff file, see https://citation-file-format.github.io
+
 Changed
 -------
 - psyplot is now officially licensed under LGPL-3.0-only,

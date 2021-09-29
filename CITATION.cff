@@ -1,0 +1,51 @@
+# YAML 1.2
+---
+cff-version: "1.2.0"
+message: "If you use this software, please cite both the article from preferred-citation and the software itself."
+title: "psyplot: Interactive data visualization with Python"
+authors:
+  - family-names: Sommer
+    given-names: "Philipp S."
+    affiliation: "Helmholtz-Zentrum Hereon"
+    orcid: "https://orcid.org/0000-0001-6171-7716"
+    website: "https://www.philipp-s-sommer.de"
+    post-code: 21502
+    city: Geesthacht
+    country: DE
+    email: philipp.sommer@hereon.de
+doi: "10.5281/zenodo.593798"
+contact:
+  - email: psyplot@hereon.de
+    name: "Psyplot developers at hereon"
+license: "LGPL-3.0-only"
+repository-code: https://github.com/psyplot/psyplot
+type: software
+keywords:
+  - psyplot
+  - python
+  - visualization
+  - xarray
+  - matplotlib
+  - netcdf4
+  - interactive
+  - climate models
+  - unstructured
+preferred-citation:
+  title: "The psyplot interactive visualization framework"
+  authors:
+    - family-names: Sommer
+      given-names: "Philipp S."
+      affiliation: "Helmholtz-Zentrum Hereon"
+      orcid: "https://orcid.org/0000-0001-6171-7716"
+  year: 2017
+  type: article
+  doi: "10.21105/joss.00363"
+  date-published: 2017-08-22
+  journal: Journal of Open Source Software
+  volume: 2
+  number: 16
+  pages: 363
+  publisher:
+    name: The Open Journal
+  license: CC-BY-4.0
+...
