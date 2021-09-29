@@ -1,10 +1,23 @@
 v1.4.0
 ======
 
+Fixed
+-----
+- psyplot is now compatible with 0.18
+
 Changed
 -------
-- We use CicleCI now for a standardized CI/CD pipeline, see
-  `#32 <https://github.com/psyplot/psyplot/pull/32>`__
+- the lower bound for supported xarray versions is now 0.17.
+- project files do not store the Store anymore as this information cannot be
+  gathered from xarray 0.18. We now rely on xarray to automatically find the
+  engine to open the files.
+- Documentation is now hosted with Github Pages at https://psyplot.github.io/psyplot.
+  Redirects from the old documentation at https://psyplot.readthedocs.io have been
+  configured.
+- Examples have been removed from the psyplot repository as they now live in a
+  central place at https://github.com/psyplot/examples
+- We use CicleCI now for a standardized CI/CD pipeline to build and test
+  the code and docs all at one place, see `#32 <https://github.com/psyplot/psyplot/pull/32>`__
 
 v1.3.2
 ======
