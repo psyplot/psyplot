@@ -91,7 +91,7 @@ What it is
   * its modular framework allows to tackle new scientific questions and handle
     them in separate psyplot plugins with it's own formatoptions and
     plotting methods
-- it will always be free and open-source under the GPL License.
+- it will always be free and open-source under the LGPL License.
 
 What it is not
 **************
@@ -151,5 +151,24 @@ if you want to know more at philipp-s-sommer.de_
 
 License
 -------
-psyplot is published under the
-`GNU General Public License v2.0 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>`__
+Copyright (C) 2021 Helmholtz-Zentrum Hereon
+
+Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+
+Copyright (C) 2016-2021 University of Lausanne
+
+This file is part of psy-simple and is released under the GNU LGPL-3.O license.
+See COPYING and COPYING.LESSER in the root of the repository for full
+licensing details.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License version 3.0 as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU LGPL-3.0 license for more details.
+
+You should have received a copy of the GNU LGPL-3.0 license
+along with this program.  If not, see <https://www.gnu.org/licenses/>.

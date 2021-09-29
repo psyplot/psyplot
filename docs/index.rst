@@ -46,7 +46,7 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         :widths: 10 90
 
         * - docs
-          - |docs| |joss|
+          - |docs| |joss| |zenodo|
         * - tests
           - |circleci| |appveyor| |requires| |codecov|
         * - package

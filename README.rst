@@ -191,14 +191,24 @@ which made the size of the repository too large.
 
 Copyright
 ---------
-Copyright (C) 2016-2018 Philipp S. Sommer
+Copyright (C) 2021 Helmholtz-Zentrum Hereon
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+
+Copyright (C) 2016-2021 University of Lausanne
+
+This file is part of psyplot and is released under the GNU LGPL-3.O license.
+See COPYING and COPYING.LESSER in the root of the repository for full
+licensing details.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License version 3.0 as
+published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU LGPL-3.0 license for more details.
+
+You should have received a copy of the GNU LGPL-3.0 license
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
