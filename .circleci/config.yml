@@ -63,12 +63,12 @@ workflows:
             - hold-for-deploy
           filters:
             branches:
-              only: main
+              only: master
       - psyplot/trigger-release-workflow:
           context: trigger-release
           filters:
             branches:
-              only: main
+              only: master
           requires:
             - psyplot/deploy-pkg
             - psyplot/deploy-docs
@@ -99,4 +99,4 @@ workflows:
             - hold-for-pypi
           filters:
             branches:
-              only: main
+              only: master
