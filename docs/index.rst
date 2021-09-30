@@ -149,8 +149,8 @@ Any quesions? Do not hessitate to get in touch with the psyplot developers.
 - Chat with the developers in out `channel on gitter`_
 - Subscribe to the `mailing list`_ and ask for support
 
-See also the `code of conduct`_, and our
-:ref:`contribution guide <how-to-contribute>`_ for more information and a guide
+See also the `code of conduct`, and our
+:ref:`contribution guide <how-to-contribute>` for more information and a guide
 about good bug reports.
 
 .. _bug tracker: https://github.com/psyplot/psyplot

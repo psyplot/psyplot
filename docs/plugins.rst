@@ -35,10 +35,6 @@ Existing plugins
       :attr:`psy_simple:psyplot.project.plot.barplot`
           Make a bar plot of one-dimensional data
 
-    .. linkgalleries::
-
-        psy_simple
-
 :mod:`psy_maps.plugin`
     A psyplot plugin for visualizing data on a map
 
@@ -52,10 +48,6 @@ Existing plugins
       :attr:`psy_maps:psyplot.project.plot.mapcombined`
           Plot a 2D scalar field with an overlying vector field on a map
 
-    .. linkgalleries::
-
-        psy_maps
-
 :mod:`psy_reg.plugin`
     A psyplot plugin for visualizing and calculating regression fits
 
@@ -67,9 +59,6 @@ Existing plugins
       :attr:`psy_reg:psyplot.project.plot.linreg`
           Draw a fit from x to y
 
-    .. linkgalleries::
-
-        psy_reg
 
 If you have new plugins that you think should be included in this list, please
 do not hesitate to open an issue on the `github project page of psyplot`_ or

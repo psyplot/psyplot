@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  psyplot: psyplot/psyplot-ci-orb@1.5.17
+  psyplot: psyplot/psyplot-ci-orb@1.5.19
   mattermost-plugin-notify: nathanaelhoun/mattermost-plugin-notify@1.2.0
 
 executors:
@@ -17,6 +17,10 @@ parameters:
     description: Deploy the comment as a new release to github and pypi
     type: boolean
     default: false
+  run-tests:
+    description: Run the test suite
+    type: boolean
+    default: true
 
 workflows:
   build-and-test:
@@ -31,11 +35,13 @@ workflows:
       - psyplot/test-parallel:
           name: test-xarray-latest
           parallelism: 2
+          run-job: << pipeline.parameters.run-tests >>
           requires:
             - install
       - psyplot/test-parallel:
           name: test-xarray-0.17
           parallelism: 2
+          run-job: << pipeline.parameters.run-tests >>
           packages: xarray=0.17
           requires:
             - install
@@ -63,12 +69,12 @@ workflows:
             - hold-for-deploy
           filters:
             branches:
-              only: main
+              only: master
       - psyplot/trigger-release-workflow:
           context: trigger-release
           filters:
             branches:
-              only: main
+              only: master
           requires:
             - psyplot/deploy-pkg
             - psyplot/deploy-docs
@@ -99,4 +105,4 @@ workflows:
             - hold-for-pypi
           filters:
             branches:
-              only: main
+              only: master

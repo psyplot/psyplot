@@ -127,7 +127,9 @@ ipython_savefig_dir = os.path.join(os.path.dirname(__file__), '_static')
 
 # General information about the project.
 project = 'psyplot'
-copyright = psyplot.__copyright__
+copyright = ", ".join(
+    psyplot.__copyright__.strip().replace("Copyright (C) ", "").splitlines()
+)
 author = psyplot.__author__
 
 # The version info for the project you're documenting, acts as replacement for
@@ -260,6 +262,9 @@ intersphinx_mapping = {
         'https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/', None),
     'psy_view': (
         'https://psyplot.readthedocs.io/projects/psy-view/en/latest/', None),
+    "psyplot_examples": (
+        'https://psyplot.github.io/examples/', None
+    )
 }
 if six.PY3:
     intersphinx_mapping['python'] = ('https://docs.python.org/3.8/', None)
