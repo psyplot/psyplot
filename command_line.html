@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Command line usage &mdash; psyplot 1.3.1+14.g60b0554 documentation</title>
+  <title>Command line usage &mdash; psyplot 1.3.1+11.gada771c documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/psyplot.ico"/>
@@ -120,7 +120,7 @@ arguments change slightly if you have the <code class="docutils literal notransl
        <span class="o">[</span>-d dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
        <span class="o">[</span>dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
        ...<span class="o">]]</span>
-       <span class="o">[</span>-pm <span class="o">{</span><span class="s1">&#39;combined&#39;</span>, <span class="s1">&#39;plot2d&#39;</span>, <span class="s1">&#39;fldmean&#39;</span>, <span class="s1">&#39;vector&#39;</span>, <span class="s1">&#39;violinplot&#39;</span>, <span class="s1">&#39;mapcombined&#39;</span>, <span class="s1">&#39;density&#39;</span>, <span class="s1">&#39;lineplot&#39;</span>, <span class="s1">&#39;mapvector&#39;</span>, <span class="s1">&#39;barplot&#39;</span>, <span class="s1">&#39;mapplot&#39;</span><span class="o">}]</span>
+       <span class="o">[</span>-pm <span class="o">{</span><span class="s1">&#39;fldmean&#39;</span>, <span class="s1">&#39;vector&#39;</span>, <span class="s1">&#39;mapcombined&#39;</span>, <span class="s1">&#39;mapvector&#39;</span>, <span class="s1">&#39;mapplot&#39;</span>, <span class="s1">&#39;violinplot&#39;</span>, <span class="s1">&#39;density&#39;</span>, <span class="s1">&#39;lineplot&#39;</span>, <span class="s1">&#39;barplot&#39;</span>, <span class="s1">&#39;plot2d&#39;</span>, <span class="s1">&#39;combined&#39;</span><span class="o">}]</span>
        <span class="o">[</span>-o str or list of str<span class="o">]</span>
        <span class="o">[</span>-p str<span class="o">]</span>
        <span class="o">[</span>-engine str<span class="o">]</span>
@@ -160,7 +160,7 @@ original filename to a new one</p>
 given</p>
 </dd>
 <dt><kbd>-pm, --plot-method</kbd></dt>
-<dd><p>Possible choices: combined, plot2d, fldmean, vector, violinplot, mapcombined, density, lineplot, mapvector, barplot, mapplot</p>
+<dd><p>Possible choices: fldmean, vector, mapcombined, mapvector, mapplot, violinplot, density, lineplot, barplot, plot2d, combined</p>
 <p>The name of the plot_method to use</p>
 </dd>
 <dt><kbd>-p, --project</kbd></dt>
@@ -304,7 +304,7 @@ $ psyplot myfile.nc -n t2m  -pm mapplot -fmt fmt.yaml -o test.pdf
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Copyright 2015 - 2020, Philipp S. Sommer.</p>
+    <p>&#169; Copyright 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum Geesthacht, 2016-2021 University of Lausanne.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

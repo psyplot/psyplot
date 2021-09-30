@@ -46,11 +46,11 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         :widths: 10 90
 
         * - docs
-          - |docs| |joss|
+          - |docs| |joss| |zenodo|
         * - tests
-          - |travis| |appveyor| |requires| |codecov|
+          - |circleci| |appveyor| |requires| |codecov|
         * - package
-          - |version| |conda| |github|
+          - |version| |conda| |github| |zenodo|
         * - implementations
           - |supported-versions| |supported-implementations|
         * - get in touch
@@ -60,9 +60,9 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         :alt: Documentation Status
         :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
 
-    .. |travis| image:: https://travis-ci.org/psyplot/psyplot.svg?branch=master
-        :alt: Travis
-        :target: https://travis-ci.org/psyplot/psyplot
+    .. |circleci| image:: https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg
+        :alt: CircleCI
+        :target: https://circleci.com/gh/psyplot/psyplot/tree/master
 
     .. |appveyor| image:: https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true
         :alt: AppVeyor
@@ -95,6 +95,10 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
     .. |joss| image:: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg
         :alt: Journal of Open Source Software
         :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
+
+    .. |zenodo| image:: https://zenodo.org/badge/87944102.svg
+        :alt: Zenodo
+        :target: https://zenodo.org/badge/latestdoi/87944102
 
     .. |github| image:: https://img.shields.io/github/release/psyplot/psyplot.svg
         :target: https://github.com/psyplot/psyplot/releases/latest
@@ -145,8 +149,8 @@ Any quesions? Do not hessitate to get in touch with the psyplot developers.
 - Chat with the developers in out `channel on gitter`_
 - Subscribe to the `mailing list`_ and ask for support
 
-See also the `code of conduct`_, and our
-:ref:`contribution guide <how-to-contribute>`_ for more information and a guide
+See also the `code of conduct`, and our
+:ref:`contribution guide <how-to-contribute>` for more information and a guide
 about good bug reports.
 
 .. _bug tracker: https://github.com/psyplot/psyplot

@@ -35,5 +35,4 @@ Submodules
    psyplot.plugin_template
    psyplot.project
    psyplot.utils
-   psyplot.version
    psyplot.warning

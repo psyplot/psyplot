@@ -743,4 +743,4 @@ script, the formatoption itself (and therefore the
 :attr:`axes <psyplot.plotter.Formatoption.ax>` can be accessed inside the
 script through the ``self`` variable. An example how to handle this
 formatoption can be found in
-:ref:`our example gallery <gallery_examples_example_post.ipynb>`.
+:ref:`our example gallery <psyplot_examples:/general/example_post.ipynb>`.
