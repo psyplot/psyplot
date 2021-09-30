@@ -128,7 +128,7 @@ ipython_savefig_dir = os.path.join(os.path.dirname(__file__), '_static')
 # General information about the project.
 project = 'psyplot'
 copyright = ", ".join(
-    psyplot.__copyright__.replace("Copyright (C) ", "").splitlines()
+    psyplot.__copyright__.strip().replace("Copyright (C) ", "").splitlines()
 )
 author = psyplot.__author__
 
