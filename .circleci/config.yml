@@ -31,7 +31,8 @@ workflows:
           exec_environment: << pipeline.parameters.unit-test-executor >>
           setup_env: true
           build_args: "--no-test"
-          env_packages: dask netcdf4 scipy
+          # HACK: force netcdf4 and hdf5 version to resolve dependency issue
+          env_packages: dask netcdf4 scipy netcdf4=1.5.7 h5py=3.4.0 hdf5=1.12.1
       - psyplot/test-parallel:
           name: test-xarray-latest
           parallelism: 2
