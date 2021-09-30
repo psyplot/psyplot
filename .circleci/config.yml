@@ -17,6 +17,10 @@ parameters:
     description: Deploy the comment as a new release to github and pypi
     type: boolean
     default: false
+  run-tests:
+    description: Run the test suite
+    type: boolean
+    default: true
 
 workflows:
   build-and-test:
@@ -31,11 +35,13 @@ workflows:
       - psyplot/test-parallel:
           name: test-xarray-latest
           parallelism: 2
+          run-job: << pipeline.parameters.run-tests >>
           requires:
             - install
       - psyplot/test-parallel:
           name: test-xarray-0.17
           parallelism: 2
+          run-job: << pipeline.parameters.run-tests >>
           packages: xarray=0.17
           requires:
             - install
