@@ -102,17 +102,13 @@ reproduce the problem:
 -  **Provide specific examples to demonstrate the steps**. Include links
    to files or GitHub projects, or copy/pasteable snippets, which you
    use in those examples. If you’re providing snippets in the issue, use
-   `Markdown code
-   blocks <https://help.github.com/articles/markdown-basics/#multiple-lines>`__.
+   `Markdown code blocks
+   <https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code>`__.
 -  **Describe the behavior you observed after following the steps** and
    point out what exactly is the problem with that behavior.
 -  **Explain which behavior you expected to see instead and why.**
 -  **Include screenshots and animated GIFs** which show you following
-   the described steps and clearly demonstrate the problem. You can use
-   `this tool <https://www.cockos.com/licecap/>`__ to record GIFs on
-   macOS and Windows, and `this
-   tool <https://github.com/colinkeenan/silentcast>`__ or `this
-   tool <https://github.com/GNOME/byzanz>`__ on Linux.
+   the described steps and clearly demonstrate the problem.
 -  **If the problem is related to your data structure**, include a small
    example how a similar data structure can be generated
 
@@ -149,18 +145,14 @@ and provide the following information:
 -  **Provide a step-by-step description of the suggested enhancement**
    in as many details as possible.
 -  **Provide specific examples to demonstrate the steps**. Include
-   copy/pasteable snippets which you use in those examples, as `Markdown
-   code
-   blocks <https://help.github.com/articles/markdown-basics/#multiple-lines>`__.
+   copy/pasteable snippets which you use in those examples, as
+   `Markdown code blocks
+   <https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code>`__.
 -  **Describe the current behavior** and **explain which behavior you
    expected to see instead** and why.
 -  **Include screenshots and animated GIFs** which help you demonstrate
    the steps or point out the part of psyplot which the suggestion is
-   related to. You can use `this
-   tool <https://www.cockos.com/licecap/>`__ to record GIFs on macOS and
-   Windows, and `this
-   tool <https://github.com/colinkeenan/silentcast>`__ or `this
-   tool <https://github.com/GNOME/byzanz>`__ on Linux.
+   related to.
 -  **Explain why this enhancement would be useful** to most psyplot
    users.
 -  **List some other analysis software or applications where this
@@ -173,7 +165,7 @@ and provide the following information:
 Pull Requests
 ~~~~~~~~~~~~~
 
--  Fill in `the required template <https://github.com/psyplot/psyplot/blob/master/.github/PULL_REQUEST_TEMPLATE.md>`__
+-  Fill in `the required template <https://github.com/psyplot/psyplot/blob/master/.github/pull_request_template.md>`__
 -  Do not include issue numbers in the PR title
 -  Include screenshots and animated GIFs in your pull request whenever
    possible.
@@ -188,7 +180,7 @@ Adding new examples
 
 You have new examples? Great! If you want to add them to the
 documentation, please just fork the correct github repository and add a
-jupyter notebook in the `examples <examples>`__ directory, together with
+jupyter notebook in the `examples repository on GitHub`_, together with
 all the necessary data files.
 
 To build our docs, we use the
@@ -199,6 +191,8 @@ in the meta data of the notebook.
 
 We are, however, also willing to help you finalizing incomplete pull
 requests.
+
+.. _examples repository on GitHub: https://github.com/psyplot/examples
 
 Styleguides
 -----------
@@ -217,7 +211,7 @@ Documentation Styleguide
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  Follow the `numpy documentation
-   guidelines <https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt>`__.
+   guidelines <https://github.com/numpy/numpy/blob/main/doc/HOWTO_DOCUMENT.rst.txt>`__.
 -  Use
    `reStructuredText <http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`__.
 -  Try to not repeat yourself and make use of the
@@ -262,4 +256,4 @@ Example
 
 .. note::
 
-    This document has been inspired by `the contribution guidelines of Atom <https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-messages>`__
+    This document has been inspired by `the contribution guidelines of Atom <https://github.com/atom/atom/blob/master/CONTRIBUTING.md>`__

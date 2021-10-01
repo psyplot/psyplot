@@ -206,12 +206,12 @@ Finally the author thanks the Swiss National Science Foundation (SNF) for their
 support. Funding for the author came from the `ACACIA grant (CR10I2_146314)`_
 and the `HORNET grant (200021_169598)`_.
 
-.. _matplotlib: http://matplotlib.org
-.. _xarray: http://xarray.pydata.org/
-.. _cartopy: http://scitools.org.uk/cartopy
+.. _matplotlib: https://matplotlib.org
+.. _xarray: https://xarray.pydata.org/
+.. _cartopy: https://scitools.org.uk/cartopy
 .. _Not yet visible: https://notyetvisible.de/
-.. _ACACIA grant (CR10I2_146314): http://p3.snf.ch/project-146314
-.. _HORNET grant (200021_169598): http://p3.snf.ch/project-169598
+.. _ACACIA grant (CR10I2_146314): https://p3.snf.ch/project-146314
+.. _HORNET grant (200021_169598): https://p3.snf.ch/project-169598
 
 
 

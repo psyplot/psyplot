@@ -91,6 +91,8 @@ extensions = [
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
+linkcheck_anchors_ignore = ["^install$"]
+
 # on_rtd is whether we are on readthedocs.org, this line of code grabbed from
 # docs.readthedocs.org
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
@@ -246,31 +248,25 @@ epub_exclude_files = ['search.html']
 intersphinx_mapping = {
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
     'numpy': ('https://numpy.org/doc/stable/', None),
-    'matplotlib': ('https://matplotlib.org/', None),
-    'seaborn': ('http://seaborn.pydata.org/', None),
+    'matplotlib': ('https://matplotlib.org/stable/', None),
+    'seaborn': ('https://seaborn.pydata.org/', None),
     'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
-    'xarray': ('http://xarray.pydata.org/en/stable/', None),
+    'xarray': ('https://xarray.pydata.org/en/stable/', None),
     'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
     'mpl_toolkits': ('https://matplotlib.org/basemap/', None),
     'psy_maps': (
         'https://psyplot.readthedocs.io/projects/psy-maps/en/latest/', None),
     'psy_simple': (
-        'https://psyplot.readthedocs.io/projects/psy-simple/en/latest/', None),
+        'https://psyplot.github.io/psy-simple/', None),
     'psy_reg': ('https://psyplot.readthedocs.io/projects/psy-reg/en/latest/',
                 None),
     'psyplot_gui': (
         'https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/', None),
     'psy_view': (
         'https://psyplot.readthedocs.io/projects/psy-view/en/latest/', None),
-    "psyplot_examples": (
-        'https://psyplot.github.io/examples/', None
-    )
+    "psyplot_examples": ('https://psyplot.github.io/examples/', None),
+    'python': ('https://docs.python.org/3/', None),
 }
-if six.PY3:
-    intersphinx_mapping['python'] = ('https://docs.python.org/3.8/', None)
-else:
-    intersphinx_mapping['python'] = ('https://docs.python.org/2.7/', None)
-
 
 replacements = {
     '`psyplot.rcParams`': '`~psyplot.config.rcsetup.rcParams`',

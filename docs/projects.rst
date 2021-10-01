@@ -24,7 +24,7 @@ See :ref:`plugins` for more informations on the plugins.
     :target: https://github.com/psyplot/psyplot-gui
     :alt: github
 
-.. |psyplot-gui-release| image:: https://img.shields.io/github/release/psyplot/psyplot-gui.svg?style=flat-square
+.. |psyplot-gui-release| image:: https://img.shields.io/github/v/release/psyplot/psyplot-gui.svg?style=flat-square
     :target: https://github.com/psyplot/psyplot-gui/releases/latest
     :alt: Latest release
 
@@ -32,7 +32,7 @@ See :ref:`plugins` for more informations on the plugins.
     :target: https://github.com/psyplot/psy-view
     :alt: github
 
-.. |psy-view-release| image:: https://img.shields.io/github/release/psyplot/psy-view.svg?style=flat-square
+.. |psy-view-release| image:: https://img.shields.io/github/v/release/psyplot/psy-view.svg?style=flat-square
     :target: https://github.com/psyplot/psy-view/releases/latest
     :alt: Latest release
 
@@ -40,7 +40,7 @@ See :ref:`plugins` for more informations on the plugins.
     :target: https://github.com/psyplot/psy-simple
     :alt: github
 
-.. |psy-simple-release| image:: https://img.shields.io/github/release/psyplot/psy-simple.svg?style=flat-square
+.. |psy-simple-release| image:: https://img.shields.io/github/v/release/psyplot/psy-simple.svg?style=flat-square
     :target: https://github.com/psyplot/psy-simple/releases/latest
     :alt: Latest release
 
@@ -48,7 +48,7 @@ See :ref:`plugins` for more informations on the plugins.
     :target: https://github.com/psyplot/psy-maps
     :alt: github
 
-.. |psy-maps-release| image:: https://img.shields.io/github/release/psyplot/psy-maps.svg?style=flat-square
+.. |psy-maps-release| image:: https://img.shields.io/github/v/release/psyplot/psy-maps.svg?style=flat-square
     :target: https://github.com/psyplot/psy-maps/releases/latest
     :alt: Latest release
 
@@ -56,6 +56,6 @@ See :ref:`plugins` for more informations on the plugins.
     :target: https://github.com/psyplot/psy-reg
     :alt: github
 
-.. |psy-reg-release| image:: https://img.shields.io/github/release/Chilipp/psy-reg.svg?style=flat-square
+.. |psy-reg-release| image:: https://img.shields.io/github/v/release/psyplot/psy-reg.svg?style=flat-square
     :target: https://github.com/psyplot/psy-reg/releases/latest
     :alt: Latest release
