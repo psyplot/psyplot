@@ -2,7 +2,7 @@ name: psyplot_docs
 channels:
     - local
     - psyplot/label/master
-    - chilipp/label/conda-forge
+    - conda-forge
 dependencies:
     - python>3.6
     - dask
