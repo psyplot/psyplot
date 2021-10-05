@@ -23,21 +23,10 @@
 # You should have received a copy of the GNU LGPL-3.0 license
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
 import os.path as osp
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
-
-
-if os.getenv("READTHEDOCS") == "True":
-    # to make versioneer working, we need to unshallow this repo
-    # because RTD does a checkout with --depth 50
-    import subprocess as spr
-    rootdir = osp.dirname(__file__)
-    spr.call(["git", "-C", rootdir, "fetch", "--unshallow", "origin"])
-
-
 import versioneer
 
 

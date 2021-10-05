@@ -5,7 +5,7 @@ Subprojects
 
 ``psyplot`` is only the over-arching framework. It's capabilities are
 splitted into several subprojects. Each of them is accessible via
-``https://psyplot.readthedocs.io/projects/<project-name>``
+``https://psyplot.github.io/<project-name>``
 
 - the :ref:`psyplot_gui <psyplot_gui:psyplot-gui>` package: The GUI to psyplot
   |psyplot-gui-github| |psyplot-gui-release|

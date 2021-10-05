@@ -107,9 +107,7 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 ### Adding new examples
 You have new examples? Great! If you want to add them to the documentation, please just fork the correct github repository and add a jupyter notebook in the [examples](examples) directory, together with all the necessary data files.
 
-To build our docs, we use the [sphinx-nbexamples](http://sphinx-nbexamples.readthedocs.io/en/latest/) package to convert the examples to reStructuredText. Therefore please make sure that your supplementary data files are correctly implemented in the meta data of the notebook.
-
-We are, however, also willing to help you finalizing incomplete pull requests.
+And we are always happy to help you finalizing incomplete pull requests.
 
 ## Styleguides
 

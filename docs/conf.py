@@ -36,9 +36,6 @@ import six
 import subprocess as spr
 from itertools import product
 import warnings
-import sphinx_rtd_theme
-import json
-import logging
 
 if six.PY2:
     from urllib import urlopen
@@ -93,17 +90,8 @@ templates_path = ['_templates']
 
 linkcheck_anchors_ignore = ["^install$"]
 
-# on_rtd is whether we are on readthedocs.org, this line of code grabbed from
-# docs.readthedocs.org
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-if on_rtd:
-    spr.call([sys.executable] +
-             ('-m ipykernel install --user --name python3 '
-              '--display-name python3').split())
-
 # create the api documentation
-if not osp.exists(osp.join(osp.dirname(__file__), 'api')) or on_rtd:
+if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
     spr.check_call(['bash', 'apigen.bash'])
 
 napoleon_use_admonition_for_examples = True
@@ -166,15 +154,12 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 html_theme = 'sphinx_rtd_theme'
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Add any paths that contain custom static files (such as style sheets)
 # here, relative to this directory. They are copied after the builtin
 # static files, so a file named "default.css" will overwrite the builtin
 # "default.css".
 html_static_path = ['_static']
-
-# otherwise, readthedocs.org uses their theme by default, so no need to specify
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'psyplotdoc'

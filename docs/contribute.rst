@@ -183,14 +183,7 @@ documentation, please just fork the correct github repository and add a
 jupyter notebook in the `examples repository on GitHub`_, together with
 all the necessary data files.
 
-To build our docs, we use the
-`sphinx-nbexamples <http://sphinx-nbexamples.readthedocs.io/en/latest/>`__
-package to convert the examples to reStructuredText. Therefore please
-make sure that your supplementary data files are correctly implemented
-in the meta data of the notebook.
-
-We are, however, also willing to help you finalizing incomplete pull
-requests.
+And we are always happy to help you finalizing incomplete pull requests.
 
 .. _examples repository on GitHub: https://github.com/psyplot/examples
 

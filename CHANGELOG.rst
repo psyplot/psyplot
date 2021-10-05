@@ -19,8 +19,8 @@ Changed
   gathered from xarray 0.18. We now rely on xarray to automatically find the
   engine to open the files.
 - Documentation is now hosted with Github Pages at https://psyplot.github.io/psyplot.
-  Redirects from the old documentation at https://psyplot.readthedocs.io have been
-  configured.
+  Redirects from the old documentation at `https://psyplot.readthedocs.io` have
+  been configured.
 - Examples have been removed from the psyplot repository as they now live in a
   central place at https://github.com/psyplot/examples
 - We use CicleCI now for a standardized CI/CD pipeline to build and test

@@ -94,11 +94,11 @@ the future. So we are very pleased for feedback! Please simply raise an issue
 on `GitHub <https://github.com/psyplot/psyplot>`__ (see also
 `How to contribute`_ in the docs).
 
-.. _psyplot-gui: http://psyplot.readthedocs.io/projects/psyplot-gui/en/latest
-.. _How to contribute: http://psyplot.readthedocs.io/en/latest/contribute.html
+.. _psyplot-gui: http://psyplot.github.io/psyplot-gui/
+.. _How to contribute: http://psyplot.github.io/psyplot/contribute.html
 
 You can see the full documentation on
-`readthedocs.org <http://psyplot.readthedocs.io/en/latest/>`__.
+`psyplot.github.io/psyplot <http://psyplot.github.io/psyplot/>`__.
 
 
 Get in touch
@@ -141,7 +141,7 @@ releases page of the corresponding subproject.
 
 
 .. _the Journal of Open Source Software: http://joss.theoj.org/
-.. _subprojects: https://psyplot.readthedocs.io/en/latest/projects.html
+.. _subprojects: https://psyplot.github.io/
 .. _zenodo.org: https://zenodo.org/
 .. _releases page of psyplot: https://github.com/psyplot/psyplot/releases/
 

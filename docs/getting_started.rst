@@ -19,7 +19,7 @@ Furthermore we use the :download:`demo.nc` netCDF file for our
 demonstrations.
 
 .. _netCDF4: https://github.com/Unidata/netcdf4-python
-.. _psy-maps: https://psy-maps.readthedocs.io/en/latest
+.. _psy-maps: https://psyplot.github.io/psy-maps/
 
 .. note::
 
