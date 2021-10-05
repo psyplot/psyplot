@@ -33,7 +33,7 @@ workflows:
       - psyplot/install-and-build:
           name: install
           exec_environment: << pipeline.parameters.unit-test-executor >>
-          setup_env: true
+          setup_env: << pipeline.parameters.run-tests >>
           build_args: "--no-test"
           build_docs: << pipeline.parameters.build_docs >>
           # HACK: force netcdf4 and hdf5 version to resolve dependency issue

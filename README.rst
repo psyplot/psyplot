@@ -11,7 +11,7 @@ The psyplot interactive visualization framework
     * - docs
       - |docs| |joss| |zenodo|
     * - tests
-      - |circleci| |appveyor| |requires| |codecov|
+      - |circleci| |appveyor| |codecov|
     * - package
       - |version| |conda| |github|
     * - implementations
@@ -34,10 +34,6 @@ The psyplot interactive visualization framework
 .. |codecov| image:: https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg
     :alt: Coverage
     :target: https://codecov.io/gh/psyplot/psyplot
-
-.. |requires| image:: https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master
-    :alt: Requirements Status
-    :target: https://requires.io/github/psyplot/psyplot/requirements/?branch=master
 
 .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
     :alt: PyPI Package latest release
@@ -189,15 +185,13 @@ which made the size of the repository too large.
 
 .. _psyplot_old: https://github.com/Chilipp/psyplot_old
 
+
 Copyright
 ---------
-Copyright (C) 2021 Helmholtz-Zentrum Hereon
+Copyright © 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum
+Geesthacht, 2016-2021 University of Lausanne
 
-Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-
-Copyright (C) 2016-2021 University of Lausanne
-
-This file is part of psyplot and is released under the GNU LGPL-3.O license.
+psyplot and is released under the GNU LGPL-3.O license.
 See COPYING and COPYING.LESSER in the root of the repository for full
 licensing details.
 
@@ -211,4 +205,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU LGPL-3.0 license for more details.
 
 You should have received a copy of the GNU LGPL-3.0 license
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+along with this program.  If not, see https://www.gnu.org/licenses/.

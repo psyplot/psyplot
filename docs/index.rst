@@ -48,7 +48,7 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         * - docs
           - |docs| |joss| |zenodo|
         * - tests
-          - |circleci| |appveyor| |requires| |codecov|
+          - |circleci| |appveyor| |codecov|
         * - package
           - |version| |conda| |github| |zenodo|
         * - implementations
@@ -71,10 +71,6 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
     .. |codecov| image:: https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg
         :alt: Coverage
         :target: https://codecov.io/gh/psyplot/psyplot
-
-    .. |requires| image:: https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master
-        :alt: Requirements Status
-        :target: https://requires.io/github/psyplot/psyplot/requirements/?branch=master
 
     .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
         :alt: PyPI Package latest release
