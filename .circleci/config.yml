@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  psyplot: psyplot/psyplot-ci-orb@1.5.22
+  psyplot: psyplot/psyplot-ci-orb@1.5.23
   mattermost-plugin-notify: nathanaelhoun/mattermost-plugin-notify@1.2.0
 
 executors:
@@ -42,12 +42,14 @@ workflows:
           name: test-xarray-latest
           parallelism: 2
           run-job: << pipeline.parameters.run-tests >>
+          pytest_args: --cov=psyplot
           requires:
             - install
       - psyplot/test-parallel:
           name: test-xarray-0.17
           parallelism: 2
           run-job: << pipeline.parameters.run-tests >>
+          pytest_args: --cov=psyplot
           packages: xarray=0.17
           requires:
             - install
