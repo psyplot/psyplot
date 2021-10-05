@@ -19,9 +19,9 @@ The psyplot interactive visualization framework
     * - get in touch
       - |gitter| |mailing-list| |issues|
 
-.. |docs| image:: http://readthedocs.org/projects/psyplot/badge/?version=latest
-    :alt: Documentation Status
-    :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
+.. |docs| image:: https://img.shields.io/github/deployments/psyplot/psyplot/github-pages
+    :alt: Documentation
+    :target: http://psyplot.github.io/psyplot/
 
 .. |circleci| image:: https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg
     :alt: CircleCI
