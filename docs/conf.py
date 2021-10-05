@@ -254,10 +254,8 @@ intersphinx_mapping = {
     'xarray': ('https://xarray.pydata.org/en/stable/', None),
     'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
     'mpl_toolkits': ('https://matplotlib.org/basemap/', None),
-    'psy_maps': (
-        'https://psyplot.readthedocs.io/projects/psy-maps/en/latest/', None),
-    'psy_simple': (
-        'https://psyplot.github.io/psy-simple/', None),
+    'psy_maps': ('https://psyplot.github.io/psy-maps/', None),
+    'psy_simple': ('https://psyplot.github.io/psy-simple/', None),
     'psy_reg': ('https://psyplot.readthedocs.io/projects/psy-reg/en/latest/',
                 None),
     'psyplot_gui': (
