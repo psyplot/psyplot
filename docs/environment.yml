@@ -4,7 +4,7 @@ channels:
     - psyplot/label/master
     - conda-forge
 dependencies:
-    - python>3.6
+    - python=3.8
     - dask
     - netCDF4
     - seaborn
