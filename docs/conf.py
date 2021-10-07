@@ -244,8 +244,7 @@ intersphinx_mapping = {
     'psy_reg': ('https://psyplot.readthedocs.io/projects/psy-reg/en/latest/',
                 None),
     'psyplot_gui': ('https://psyplot.github.io/psyplot-gui/', None),
-    'psy_view': (
-        'https://psyplot.readthedocs.io/projects/psy-view/en/latest/', None),
+    'psy_view': ('https://psyplot.github.io/psy-view/', None),
     "psyplot_examples": ('https://psyplot.github.io/examples/', None),
     'python': ('https://docs.python.org/3/', None),
 }
