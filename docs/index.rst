@@ -187,7 +187,8 @@ releases page of the corresponding subproject.
 
 Acknowledgment
 --------------
-This package has been developed by Philipp Sommer.
+This package is being developed by Philipp S. Sommer at the
+`Helmholtz Coastal Data Center (HCDC)`_ of the `Helmholtz-Zentrum Hereon`_.
 
 I want to thank the matplotlib_, xarray_ and cartopy_ developers
 for their great packages and of course the python developers for their
@@ -202,6 +203,8 @@ Finally the author thanks the Swiss National Science Foundation (SNF) for their
 support. Funding for the author came from the `ACACIA grant (CR10I2_146314)`_
 and the `HORNET grant (200021_169598)`_.
 
+.. _Helmholtz Coastal Data Center (HCDC): https://hcdc.hereon.de
+.. _Helmholtz-Zentrum Hereon: https://www.hereon.de
 .. _matplotlib: https://matplotlib.org
 .. _xarray: https://xarray.pydata.org/
 .. _cartopy: https://scitools.org.uk/cartopy
