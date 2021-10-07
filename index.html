@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interactive data visualization with python &mdash; psyplot 1.3.1+11.gada771c documentation</title>
+  <title>Interactive data visualization with python &mdash; psyplot 1.3.1+12.gea8d519 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
     <link rel="shortcut icon" href="_static/psyplot.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -84,11 +85,11 @@
            <div itemprop="articleBody">
              
   <section id="interactive-data-visualization-with-python">
-<span id="psyplot"></span><h1>Interactive data visualization with python<a class="headerlink" href="#interactive-data-visualization-with-python" title="Permalink to this headline">¶</a></h1>
+<span id="psyplot"></span><h1>Interactive data visualization with python<a class="headerlink" href="#interactive-data-visualization-with-python" title="Permalink to this headline"></a></h1>
 <a class="reference internal image-reference" href="_images/psyplot.png"><img alt="psyplot logo" class="align-center" src="_images/psyplot.png" style="width: 50%;" /></a>
 <p>Welcome! Looking for a fast and flexible visualization software? Here we
 present <strong>psyplot</strong>, an open source python project that mainly combines the
-plotting utilities of <a class="reference external" href="http://matplotlib.org">matplotlib</a> and the data management of the <a class="reference external" href="http://xarray.pydata.org/">xarray</a>
+plotting utilities of <a class="reference external" href="https://matplotlib.org">matplotlib</a> and the data management of the <a class="reference external" href="https://xarray.pydata.org/">xarray</a>
 package and integrates them into a software that can be used via command-line
 and via a GUI!</p>
 <p>The main purpose is to have a framework that allows a  fast, attractive,
@@ -98,8 +99,8 @@ visualization of your data.</p>
 flexible visualization tool that can be enhanced by their own visualization
 scripts. <code class="docutils literal notranslate"><span class="pre">psyplot</span></code> can be used via command line and with the
 graphical user interface (GUI) from the
-<a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> and
-<a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-view/en/latest/index.html#psy-view" title="(in psy-view v0.1.0)"><span class="xref std std-ref">psy-view</span></a> module.</p>
+<a class="reference external" href="https://psyplot.github.io/psyplot-gui/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> and
+<a class="reference external" href="https://psyplot.github.io/psy-view/index.html#psy-view" title="(in psy-view v0.1.0)"><span class="xref std std-ref">psy-view</span></a> module.</p>
 <p>If you want more motivation: Have a look into the <a class="reference internal" href="about.html#about"><span class="std std-ref">About psyplot</span></a> section.</p>
 <p>The package is very new and there are many features that will be included in
 the future. So we are very pleased for feedback! Please simply raise an issue
@@ -111,10 +112,10 @@ on <a class="reference external" href="https://github.com/psyplot/psyplot">GitHu
 </colgroup>
 <tbody>
 <tr class="row-odd"><th class="stub"><p>docs</p></th>
-<td><p><a class="reference external" href="http://psyplot.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="http://readthedocs.org/projects/psyplot/badge/?version=latest" /></a> <a class="reference external" href="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60"><img alt="Journal of Open Source Software" src="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg" /></a> <a class="reference external" href="https://zenodo.org/badge/latestdoi/87944102"><img alt="Zenodo" src="https://zenodo.org/badge/87944102.svg" /></a></p></td>
+<td><p><a class="reference external" href="http://psyplot.github.io/psyplot/"><img alt="Documentation" src="https://img.shields.io/github/deployments/psyplot/psyplot/github-pages" /></a> <a class="reference external" href="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60"><img alt="Journal of Open Source Software" src="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg" /></a> <a class="reference external" href="https://zenodo.org/badge/latestdoi/87944102"><img alt="Zenodo" src="https://zenodo.org/badge/87944102.svg" /></a></p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>tests</p></th>
-<td><p><a class="reference external" href="https://circleci.com/gh/psyplot/psyplot/tree/master"><img alt="CircleCI" src="https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg" /></a> <a class="reference external" href="https://ci.appveyor.com/project/psyplot/psyplot/branch/master"><img alt="AppVeyor" src="https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true" /></a> <a class="reference external" href="https://requires.io/github/psyplot/psyplot/requirements/?branch=master"><img alt="Requirements Status" src="https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master" /></a> <a class="reference external" href="https://codecov.io/gh/psyplot/psyplot"><img alt="Coverage" src="https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg" /></a></p></td>
+<td><p><a class="reference external" href="https://circleci.com/gh/psyplot/psyplot/tree/master"><img alt="CircleCI" src="https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg" /></a> <a class="reference external" href="https://ci.appveyor.com/project/psyplot/psyplot/branch/master"><img alt="AppVeyor" src="https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true" /></a> <a class="reference external" href="https://codecov.io/gh/psyplot/psyplot"><img alt="Coverage" src="https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg" /></a></p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>package</p></th>
 <td><p><a class="reference external" href="https://pypi.python.org/pypi/psyplot"><img alt="PyPI Package latest release" src="https://img.shields.io/pypi/v/psyplot.svg?style=flat" /></a> <a class="reference external" href="https://anaconda.org/conda-forge/psyplot"><img alt="conda" src="https://anaconda.org/conda-forge/psyplot/badges/version.svg" /></a> <a class="reference external" href="https://github.com/psyplot/psyplot/releases/latest"><img alt="Latest github release" src="https://img.shields.io/github/release/psyplot/psyplot.svg" /></a> <a class="reference external" href="https://zenodo.org/badge/latestdoi/87944102"><img alt="Zenodo" src="https://zenodo.org/badge/87944102.svg" /></a></p></td>
@@ -128,7 +129,7 @@ on <a class="reference external" href="https://github.com/psyplot/psyplot">GitHu
 </tbody>
 </table>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
@@ -149,7 +150,7 @@ on <a class="reference external" href="https://github.com/psyplot/psyplot">GitHu
 </div>
 </section>
 <section id="get-in-touch">
-<h2>Get in touch<a class="headerlink" href="#get-in-touch" title="Permalink to this headline">¶</a></h2>
+<h2>Get in touch<a class="headerlink" href="#get-in-touch" title="Permalink to this headline"></a></h2>
 <p>Any quesions? Do not hessitate to get in touch with the psyplot developers.</p>
 <ul class="simple">
 <li><p>Create an issue at the <a class="reference external" href="https://github.com/psyplot/psyplot">bug tracker</a></p></li>
@@ -161,7 +162,7 @@ on <a class="reference external" href="https://github.com/psyplot/psyplot">GitHu
 about good bug reports.</p>
 </section>
 <section id="how-to-cite-psyplot">
-<span id="citation"></span><h2>How to cite psyplot<a class="headerlink" href="#how-to-cite-psyplot" title="Permalink to this headline">¶</a></h2>
+<span id="citation"></span><h2>How to cite psyplot<a class="headerlink" href="#how-to-cite-psyplot" title="Permalink to this headline"></a></h2>
 <p>When using psyplot, you should at least cite the publication in
 <a class="reference external" href="http://joss.theoj.org/">the Journal of Open Source Software</a>:</p>
 <a class="reference external image-reference" href="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60"><img alt="Journal of Open Source Software" src="http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg" /></a>
@@ -175,9 +176,9 @@ version or plugin, please refer to the <cite>releases page of psyplot</cite> or 
 releases page of the corresponding subproject.</p>
 </section>
 <section id="acknowledgment">
-<h2>Acknowledgment<a class="headerlink" href="#acknowledgment" title="Permalink to this headline">¶</a></h2>
+<h2>Acknowledgment<a class="headerlink" href="#acknowledgment" title="Permalink to this headline"></a></h2>
 <p>This package has been developed by Philipp Sommer.</p>
-<p>I want to thank the <a class="reference external" href="http://matplotlib.org">matplotlib</a>, <a class="reference external" href="http://xarray.pydata.org/">xarray</a> and <a class="reference external" href="http://scitools.org.uk/cartopy">cartopy</a> developers
+<p>I want to thank the <a class="reference external" href="https://matplotlib.org">matplotlib</a>, <a class="reference external" href="https://xarray.pydata.org/">xarray</a> and <a class="reference external" href="https://scitools.org.uk/cartopy">cartopy</a> developers
 for their great packages and of course the python developers for their
 fascinating work on this beautiful language.</p>
 <p>A special thanks to Stefan Hagemann and Tobias Stacke from the
@@ -185,12 +186,12 @@ Max-Planck-Institute of Meteorology in Hamburg, Germany for the motivation on
 this project and to the people of the <a class="reference external" href="https://notyetvisible.de/">Not yet visible</a> agency for their
 advice in designing the logo and webpage.</p>
 <p>Finally the author thanks the Swiss National Science Foundation (SNF) for their
-support. Funding for the author came from the <a class="reference external" href="http://p3.snf.ch/project-146314">ACACIA grant (CR10I2_146314)</a>
-and the <a class="reference external" href="http://p3.snf.ch/project-169598">HORNET grant (200021_169598)</a>.</p>
+support. Funding for the author came from the <a class="reference external" href="https://p3.snf.ch/project-146314">ACACIA grant (CR10I2_146314)</a>
+and the <a class="reference external" href="https://p3.snf.ch/project-169598">HORNET grant (200021_169598)</a>.</p>
 </section>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>

@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to implement your own plotters and plugins &mdash; psyplot 1.3.1+11.gada771c documentation</title>
+  <title>How to implement your own plotters and plugins &mdash; psyplot 1.3.1+12.gea8d519 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/psyplot.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -100,12 +101,12 @@
            <div itemprop="articleBody">
              
   <section id="how-to-implement-your-own-plotters-and-plugins">
-<span id="plugins-guide"></span><h1>How to implement your own plotters and plugins<a class="headerlink" href="#how-to-implement-your-own-plotters-and-plugins" title="Permalink to this headline">¶</a></h1>
+<span id="plugins-guide"></span><h1>How to implement your own plotters and plugins<a class="headerlink" href="#how-to-implement-your-own-plotters-and-plugins" title="Permalink to this headline"></a></h1>
 <p>New plotters and plugins to the psyplot framework are highly welcomed. In this
 guide, we present <a class="reference internal" href="#new-plotters"><span class="std std-ref">how to create new plotters</span></a> and explain
 to you how you can <a class="reference internal" href="#new-plugins"><span class="std std-ref">include them as a plugin in psyplot</span></a>.</p>
 <section id="creating-plotters">
-<span id="new-plotters"></span><h2>Creating plotters<a class="headerlink" href="#creating-plotters" title="Permalink to this headline">¶</a></h2>
+<span id="new-plotters"></span><h2>Creating plotters<a class="headerlink" href="#creating-plotters" title="Permalink to this headline"></a></h2>
 <p>Implementing new plotters can be very easy or quite an effort depending on how
 sophisticated you want to do it. In principle, you only have to implement the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.update" title="psyplot.plotter.Formatoption.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Formatoption.update()</span></code></a> method and a default value. I.e., one simple
@@ -143,7 +144,7 @@ confusing. But in principle, we can group them into 4 categories, the interface
 to the data, to the plotter and to other formatoptions. Plus an additional
 category for some Formatoption internals you definitely have to care about.</p>
 <section id="interface-for-the-plotter">
-<h3>Interface for the plotter<a class="headerlink" href="#interface-for-the-plotter" title="Permalink to this headline">¶</a></h3>
+<h3>Interface for the plotter<a class="headerlink" href="#interface-for-the-plotter" title="Permalink to this headline"></a></h3>
 <p>The first interface is the one, that interfaces to the plotter. The most
 important attributes in this group are the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.key" title="psyplot.plotter.Formatoption.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">key</span></code></a>,
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.priority" title="psyplot.plotter.Formatoption.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a>, <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.plot_fmt" title="psyplot.plotter.Formatoption.plot_fmt"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_fmt</span></code></a>,
@@ -187,7 +188,7 @@ formatoption and thereby make use of the interface to the
 <a class="reference internal" href="#fmt-fmt-interface"><span class="std std-ref">formatoptions</span></a>.</p>
 </section>
 <section id="interface-to-the-data">
-<span id="fmt-data-interface"></span><h3>Interface to the data<a class="headerlink" href="#interface-to-the-data" title="Permalink to this headline">¶</a></h3>
+<span id="fmt-data-interface"></span><h3>Interface to the data<a class="headerlink" href="#interface-to-the-data" title="Permalink to this headline"></a></h3>
 <p>The next set of attributes help you to interface to the data. There are two
 important parts in this section the interface to the data and the
 interpretation of the data.</p>
@@ -203,7 +204,7 @@ makes sense to access this data for formatoption with <a class="reference intern
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.priority" title="psyplot.plotter.Formatoption.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a>.</p>
 <p>The result of these two attributes depend on the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.index_in_list" title="psyplot.plotter.Formatoption.index_in_list"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.index_in_list</span></code></a> attribute. The data objects in the psyplot
-framework are either a <a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> or a list of those in a
+framework are either a <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> or a list of those in a
 <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.InteractiveList</span></code></a>. If the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.index_in_list" title="psyplot.plotter.Formatoption.index_in_list"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_in_list</span></code></a> attribute is not None, and the data object
 is an <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveList</span></code></a>, then only the array at the
@@ -216,7 +217,7 @@ subclass of the <a class="reference internal" href="../api/psyplot.data.html#psy
 x- and y-variables in the data.</p>
 </section>
 <section id="interfacing-to-other-formatoptions">
-<span id="fmt-fmt-interface"></span><h3>Interfacing to other formatoptions<a class="headerlink" href="#interfacing-to-other-formatoptions" title="Permalink to this headline">¶</a></h3>
+<span id="fmt-fmt-interface"></span><h3>Interfacing to other formatoptions<a class="headerlink" href="#interfacing-to-other-formatoptions" title="Permalink to this headline"></a></h3>
 <p>A formatoption is the lowest level in the psyplot framework. It is represented
 at multiple levels:</p>
 <ol class="arabic simple">
@@ -246,7 +247,7 @@ here we also have the <a class="reference internal" href="../api/psyplot.plotter
 <li><p>Interface to other formatoptions</p></li>
 </ol>
 <section id="first-solution-use-a-dict">
-<h4>First solution: Use a <a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><a class="headerlink" href="#first-solution-use-a-dict" title="Permalink to this headline">¶</a></h4>
+<h4>First solution: Use a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><a class="headerlink" href="#first-solution-use-a-dict" title="Permalink to this headline"></a></h4>
 <p>That said, to implement a formatoption that inserts a custom text and let the
 user define the size of the text, you either create a formatoption that accepts
 a text via</p>
@@ -288,13 +289,13 @@ a text via</p>
 <li><p>It is easy to allow more keywords for this formatoption</p></li>
 </ul>
 <p>Indeed, the <code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotter.Legend</span></code> formatoption uses this framework
-since the <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html#matplotlib.pyplot.legend" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.legend()</span></code></a> function accepts that many keywords
+since the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html#matplotlib.pyplot.legend" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.legend()</span></code></a> function accepts that many keywords
 that it would be not informative to create a formatoption for each of them.</p>
 <p>Otherwise you could of course avoid the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.DictFormatoption" title="psyplot.plotter.DictFormatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictFormatoption</span></code></a> and just
 force the user to always provide a new dictionary.</p>
 </section>
 <section id="second-solution-interact-with-other-formatoptions">
-<h4>Second solution: Interact with other formatoptions<a class="headerlink" href="#second-solution-interact-with-other-formatoptions" title="Permalink to this headline">¶</a></h4>
+<h4>Second solution: Interact with other formatoptions<a class="headerlink" href="#second-solution-interact-with-other-formatoptions" title="Permalink to this headline"></a></h4>
 <p>Another possibility is to implement a second formatoption for the size of the
 text. And here, the psyplot framework helps you with several attributes of the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> class:</p>
@@ -312,7 +313,7 @@ of the named formatoptions are updated</p>
 </dl>
 <p>Each of those attributes accept a list of strings that represent the
 formatoption keys of other formatoptions. Those formatoptions are then
-accessible within the formatoption via the usual <a class="reference external" href="https://docs.python.org/3.8/library/functions.html#getattr" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">getattr()</span></code></a>. I.e. if you
+accessible within the formatoption via the usual <a class="reference external" href="https://docs.python.org/3/library/functions.html#getattr" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">getattr()</span></code></a>. I.e. if you
 list a formatoption in the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.children" title="psyplot.plotter.Formatoption.children"><code class="xref py py-attr docutils literal notranslate"><span class="pre">children</span></code></a> attribute, you can
 access it inside the formatoption (<code class="docutils literal notranslate"><span class="pre">self</span></code>) via <code class="docutils literal notranslate"><span class="pre">self.other_formatoption</span></code>.</p>
 <p>In our example of the <code class="docutils literal notranslate"><span class="pre">CustomText</span></code>, this could be implemented via</p>
@@ -391,7 +392,7 @@ attributes.</p>
 </section>
 </section>
 <section id="creating-new-plugins">
-<span id="new-plugins"></span><h2>Creating new plugins<a class="headerlink" href="#creating-new-plugins" title="Permalink to this headline">¶</a></h2>
+<span id="new-plugins"></span><h2>Creating new plugins<a class="headerlink" href="#creating-new-plugins" title="Permalink to this headline"></a></h2>
 <p>Now that you have created your plotter, you may want to include it in the
 plot methods of the <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> class such that you can
 do something like</p>
@@ -408,7 +409,7 @@ do something like</p>
 <a class="reference internal" href="../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rcParams</span></code></a></p></li>
 <li><p>The steady and shareable solution: Create a new plugin</p></li>
 </ol>
-<p>The third solution has been used for the <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/">psy-maps</a> and <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/">psy-simple</a> plugins. To
+<p>The third solution has been used for the <a class="reference external" href="https://psyplot.github.io/psy-maps/">psy-maps</a> and <a class="reference external" href="https://psyplot.github.io/psy-simple/">psy-simple</a> plugins. To
 create a skeleton for your plugin, you can use the <code class="docutils literal notranslate"><span class="pre">psyplot-plugin</span></code> command
 that is installed when you install psyplot.</p>
 <p>For our demonstration, let’s create a plugin named my-plugin. This is simply
@@ -451,7 +452,7 @@ plotters and formatoptions.</p>
 <p>If you want to see more, look into the comments in the created files.</p>
 </section>
 <section id="rcparams-handling-in-plugins">
-<span id="plugins-rcparams"></span><h2><code class="docutils literal notranslate"><span class="pre">rcParams</span></code> handling in plugins<a class="headerlink" href="#rcparams-handling-in-plugins" title="Permalink to this headline">¶</a></h2>
+<span id="plugins-rcparams"></span><h2><code class="docutils literal notranslate"><span class="pre">rcParams</span></code> handling in plugins<a class="headerlink" href="#rcparams-handling-in-plugins" title="Permalink to this headline"></a></h2>
 <p>Every formatoption does have default values. In
 <a class="reference internal" href="#new-plotters"><span class="std std-ref">our example above</span></a>, we simply set it via the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.default" title="psyplot.plotter.Formatoption.default"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default</span></code></a> attribute. This is a hard-coded,

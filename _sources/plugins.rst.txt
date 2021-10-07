@@ -16,8 +16,6 @@ Existing plugins
 :mod:`psy_simple.plugin`
     A psyplot plugin for simple visualization tasks. This plugin provides a
     bases for all the other plugins
-
-    - :ref:`Examples Gallery <psy_simple:gallery_examples>`
     - plot methods
 
       :attr:`psy_simple:psyplot.project.plot.density`
@@ -38,7 +36,6 @@ Existing plugins
 :mod:`psy_maps.plugin`
     A psyplot plugin for visualizing data on a map
 
-    - :ref:`Examples Gallery <psy_maps:gallery_examples>`
     - plot methods
 
       :attr:`psy_maps:psyplot.project.plot.mapplot`
@@ -51,7 +48,6 @@ Existing plugins
 :mod:`psy_reg.plugin`
     A psyplot plugin for visualizing and calculating regression fits
 
-    - :ref:`Examples Gallery <psy_reg:gallery_examples>`
     - plot methods
 
       :attr:`psy_reg:psyplot.project.plot.densityreg`

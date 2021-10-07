@@ -19,7 +19,7 @@ Furthermore we use the :download:`demo.nc` netCDF file for our
 demonstrations.
 
 .. _netCDF4: https://github.com/Unidata/netcdf4-python
-.. _psy-maps: https://psy-maps.readthedocs.io/en/latest
+.. _psy-maps: https://psyplot.github.io/psy-maps/
 
 .. note::
 
@@ -56,8 +56,8 @@ demonstrations.
         # for the visualization in the jupyter notebook
         psy.rcParams['auto_show'] = True
 
-    .. _IPython: http://ipython.readthedocs.io/en/stable/
-    .. _jupyter notebook: http://jupyter.org/install.html
+    .. _IPython: https://ipython.readthedocs.io/en/stable/
+    .. _jupyter notebook: https://jupyter.org/install.html
 
 After you :ref:`installed psyplot <install>`, you can import the package via
 
@@ -459,8 +459,8 @@ second time step into one figure and sort by time. This will produce
 .. warning::
 
     As the xarray package, the slicing is based upon positional indexing with
-    lists (see `the xarray documentation on ositional indexing
-    <http://xarray.pydata.org/en/stable/indexing.html#positional-indexing>`__).
+    lists (see `the xarray documentation on positional indexing
+    <http://xarray.pydata.org/en/stable/user-guide/indexing.html#positional-indexing>`__).
     Hence you might think of choosing your data slice via
     ``psy.plot.mapplot(..., x=[1, 2, 3, 4, 5], ...)``. However this would result
     in 5 different plots! Instead you have to write

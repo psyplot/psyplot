@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About psyplot &mdash; psyplot 1.3.1+11.gada771c documentation</title>
+  <title>About psyplot &mdash; psyplot 1.3.1+12.gea8d519 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
     <link rel="shortcut icon" href="_static/psyplot.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -95,9 +96,9 @@
            <div itemprop="articleBody">
              
   <section id="about-psyplot">
-<span id="about"></span><h1>About psyplot<a class="headerlink" href="#about-psyplot" title="Permalink to this headline">¶</a></h1>
+<span id="about"></span><h1>About psyplot<a class="headerlink" href="#about-psyplot" title="Permalink to this headline"></a></h1>
 <section id="why-psyplot">
-<h2>Why psyplot?<a class="headerlink" href="#why-psyplot" title="Permalink to this headline">¶</a></h2>
+<h2>Why psyplot?<a class="headerlink" href="#why-psyplot" title="Permalink to this headline"></a></h2>
 <p>When visualizing data, one always has to choose:</p>
 <ul class="simple">
 <li><p>Either create the plot with an intuitive graphical user interface (GUI)
@@ -128,7 +129,7 @@ promise to you, it’s worth it. So <a class="reference internal" href="getting_
 please let me know if you have a different opinion.</p>
 </section>
 <section id="what-it-is-and-what-it-is-not">
-<span id="id1"></span><h2>What it is, and what it is not<a class="headerlink" href="#what-it-is-and-what-it-is-not" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>What it is, and what it is not<a class="headerlink" href="#what-it-is-and-what-it-is-not" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>First of all, it’s open source! So please, if you don’t agree with the
@@ -138,7 +139,7 @@ points below, <a class="reference external" href="https://github.com/psyplot/psy
 <p>There are tons of software tools around for visualization, so what is special
 about psyplot? The following list should hopefully provide you some guidance.</p>
 <section id="what-it-is">
-<h3>What it is<a class="headerlink" href="#what-it-is" title="Permalink to this headline">¶</a></h3>
+<h3>What it is<a class="headerlink" href="#what-it-is" title="Permalink to this headline"></a></h3>
 <ul>
 <li><p>It is fast. Not necessarily when it comes down to being the fastest
 interactive visualization software, but for sure when it comes down to
@@ -153,7 +154,7 @@ visualization. No GUI, independent of it’s intuitiveness, can ever beat the
 speed of a scientist that knows a bit of coding and how to use the different
 formatoptions in psyplot.</p>
 </li>
-<li><p>it visualizes <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/examples/example_ugrid.html#gallery-examples-example-ugrid-ipynb" title="(in psy-maps v1.3.1)"><span class="xref std std-ref">unstructured grids</span></a>,
+<li><p>it visualizes <span class="xref std std-ref">unstructured grids</span>,
 such as ICON or UGRID model data</p></li>
 <li><p>it automatically decodes CF-conventions</p></li>
 <li><p>it intuitively integrates the structure of netCDF files. So if you often
@@ -178,7 +179,7 @@ plotting methods</p></li>
 </ul>
 </section>
 <section id="what-it-is-not">
-<h3>What it is not<a class="headerlink" href="#what-it-is-not" title="Permalink to this headline">¶</a></h3>
+<h3>What it is not<a class="headerlink" href="#what-it-is-not" title="Permalink to this headline"></a></h3>
 <p>No software can do everything, neither can psyplot. Our main focus on
 flexibility, easy command-line usage and the GUI integration inevitably comes
 with a few downsides.</p>
@@ -201,7 +202,7 @@ and scripts as easy as possible. The GUI is something on top and is limited by
 the speed and functionalities of matplotlib (which is, nevertheless, pretty
 rich). But we are constantly improving the GUI, see <a class="reference external" href="https://github.com/psyplot/psy-view">psy-view</a> for instance.</p></li>
 <li><p>it is not made for statistical visualizations. We will never beat the
-possibilities by packages like <a class="reference external" href="https://seaborn.pydata.org">seaborn</a> or <a class="reference external" href="https://www.r-project.org/">R</a>. The only advantage of <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-reg">psy-reg</a>
+possibilities by packages like <a class="reference external" href="https://seaborn.pydata.org">seaborn</a> or <a class="reference external" href="https://www.r-project.org/">R</a>. The only advantage of <a class="reference external" href="https://psyplot.github.io/psy-reg">psy-reg</a>
 over these other software tools, is the possibility to adapt everything using
 the full power of matplotlib artists within and outside of the psyplot
 framework</p></li>
@@ -211,18 +212,17 @@ of this might come in the future.</p></li>
 </section>
 </section>
 <section id="about-the-author">
-<h2>About the author<a class="headerlink" href="#about-the-author" title="Permalink to this headline">¶</a></h2>
+<h2>About the author<a class="headerlink" href="#about-the-author" title="Permalink to this headline"></a></h2>
 <p>I, (<a class="reference external" href="http://www.philipp-s-sommer.de">Philipp Sommer</a>), work as a Data Scientist at the
 <cite>Helmholtz-Zentrum Geesthacht, Centre for Materials and Coastal Research (HZG)</cite>
 (Germany) in the <cite>Helmholtz Coastal Data Center (HCDC)</cite>. Checkout my homepage
 if you want to know more at <a class="reference external" href="http://www.philipp-s-sommer.de">philipp-s-sommer.de</a></p>
 </section>
 <section id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
-<p>Copyright (C) 2021 Helmholtz-Zentrum Hereon</p>
-<p>Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht</p>
-<p>Copyright (C) 2016-2021 University of Lausanne</p>
-<p>This file is part of psy-simple and is released under the GNU LGPL-3.O license.
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline"></a></h2>
+<p>Copyright © 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum
+Geesthacht, 2016-2021 University of Lausanne</p>
+<p>psyplot is released under the GNU LGPL-3.O license.
 See COPYING and COPYING.LESSER in the root of the repository for full
 licensing details.</p>
 <p>This program is free software: you can redistribute it and/or modify
@@ -233,7 +233,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU LGPL-3.0 license for more details.</p>
 <p>You should have received a copy of the GNU LGPL-3.0 license
-along with this program.  If not, see &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
+along with this program.  If not, see <a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
 </section>
 </section>
 

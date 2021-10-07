@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Command line usage &mdash; psyplot 1.3.1+11.gada771c documentation</title>
+  <title>Command line usage &mdash; psyplot 1.3.1+12.gea8d519 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
     <link rel="shortcut icon" href="_static/psyplot.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -91,11 +92,11 @@
            <div itemprop="articleBody">
              
   <section id="command-line-usage">
-<span id="command-line"></span><h1>Command line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this headline">¶</a></h1>
+<span id="command-line"></span><h1>Command line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this headline"></a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">psyplot.__main__</span></code> module defines a simple parser to parse commands
 from the command line to make a plot of data in a netCDF file. Note that the
 arguments change slightly if you have the <code class="docutils literal notranslate"><span class="pre">psyplot-gui</span></code> module installed
-(see <a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/command_line.html#command-line" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> documentation).</p>
+(see <a class="reference external" href="https://psyplot.github.io/psyplot-gui/command_line.html#command-line" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> documentation).</p>
 <p>It can be run from the command line via:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m psyplot <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>arguments<span class="o">]</span>
 </pre></div>
@@ -120,7 +121,7 @@ arguments change slightly if you have the <code class="docutils literal notransl
        <span class="o">[</span>-d dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
        <span class="o">[</span>dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
        ...<span class="o">]]</span>
-       <span class="o">[</span>-pm <span class="o">{</span><span class="s1">&#39;fldmean&#39;</span>, <span class="s1">&#39;vector&#39;</span>, <span class="s1">&#39;mapcombined&#39;</span>, <span class="s1">&#39;mapvector&#39;</span>, <span class="s1">&#39;mapplot&#39;</span>, <span class="s1">&#39;violinplot&#39;</span>, <span class="s1">&#39;density&#39;</span>, <span class="s1">&#39;lineplot&#39;</span>, <span class="s1">&#39;barplot&#39;</span>, <span class="s1">&#39;plot2d&#39;</span>, <span class="s1">&#39;combined&#39;</span><span class="o">}]</span>
+       <span class="o">[</span>-pm <span class="o">{</span><span class="s1">&#39;vector&#39;</span>, <span class="s1">&#39;mapplot&#39;</span>, <span class="s1">&#39;density&#39;</span>, <span class="s1">&#39;barplot&#39;</span>, <span class="s1">&#39;mapcombined&#39;</span>, <span class="s1">&#39;lineplot&#39;</span>, <span class="s1">&#39;mapvector&#39;</span>, <span class="s1">&#39;plot2d&#39;</span>, <span class="s1">&#39;combined&#39;</span>, <span class="s1">&#39;violinplot&#39;</span>, <span class="s1">&#39;fldmean&#39;</span><span class="o">}]</span>
        <span class="o">[</span>-o str or list of str<span class="o">]</span>
        <span class="o">[</span>-p str<span class="o">]</span>
        <span class="o">[</span>-engine str<span class="o">]</span>
@@ -138,7 +139,7 @@ arguments change slightly if you have the <code class="docutils literal notransl
 </pre></div>
 </div>
 <section id="Positional Arguments">
-<h2>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline">¶</a></h2>
+<h2>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline"></a></h2>
 <dl class="option-list">
 <dt><kbd>str</kbd></dt>
 <dd><p>Either the filenames to show, or, if the <cite>project</cite> parameter is set,
@@ -149,7 +150,7 @@ original filename to a new one</p>
 </dl>
 </section>
 <section id="Named Arguments">
-<h2>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline">¶</a></h2>
+<h2>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline"></a></h2>
 <dl class="option-list">
 <dt><kbd>-n, --name</kbd></dt>
 <dd><p>The variable names to plot if the <cite>output</cite> parameter is set</p>
@@ -160,7 +161,7 @@ original filename to a new one</p>
 given</p>
 </dd>
 <dt><kbd>-pm, --plot-method</kbd></dt>
-<dd><p>Possible choices: fldmean, vector, mapcombined, mapvector, mapplot, violinplot, density, lineplot, barplot, plot2d, combined</p>
+<dd><p>Possible choices: vector, mapplot, density, barplot, mapcombined, lineplot, mapvector, plot2d, combined, violinplot, fldmean</p>
 <p>The name of the plot_method to use</p>
 </dd>
 <dt><kbd>-p, --project</kbd></dt>
@@ -195,7 +196,7 @@ given project file because it may be a security vulnerability.</p>
 </dd>
 <dt><kbd>-sns, --seaborn-style</kbd></dt>
 <dd><p>The name of the style of the seaborn package that can be used for
-the <a class="reference external" href="http://seaborn.pydata.org/generated/seaborn.set_style.html#seaborn.set_style" title="(in seaborn v0.11.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">seaborn.set_style()</span></code></a> function</p>
+the <a class="reference external" href="https://seaborn.pydata.org/generated/seaborn.set_style.html#seaborn.set_style" title="(in seaborn v0.11.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">seaborn.set_style()</span></code></a> function</p>
 </dd>
 <dt><kbd>-cd, --concat-dim</kbd></dt>
 <dd><p>The concatenation dimension if multiple files in <cite>fnames</cite> are
@@ -218,7 +219,7 @@ look up the <cite>preset</cite> in the psyplot configuration directory (see
 </dl>
 </section>
 <section id="Info options">
-<h2>Info options<a class="headerlink" href="#Info options" title="Permalink to this headline">¶</a></h2>
+<h2>Info options<a class="headerlink" href="#Info options" title="Permalink to this headline"></a></h2>
 <p>Options that print informations and quit afterwards</p>
 <dl class="option-list">
 <dt><kbd>-V, --version</kbd></dt>
@@ -242,7 +243,7 @@ look up the <cite>preset</cite> in the psyplot configuration directory (see
 </dl>
 </section>
 <section id="Output options">
-<h2>Output options<a class="headerlink" href="#Output options" title="Permalink to this headline">¶</a></h2>
+<h2>Output options<a class="headerlink" href="#Output options" title="Permalink to this headline"></a></h2>
 <p>Options that only have an effect if the <cite>-o</cite> option is set.</p>
 <dl class="option-list">
 <dt><kbd>-o, --output</kbd></dt>
@@ -259,7 +260,8 @@ adjust the paper size of the <cite>output</cite> to it</p>
 </dd>
 </dl>
 </section>
-<p><p>Here are some examples on how to use psyplot from the command line.</p>
+<p><p class="rubric">Examples</p>
+<p>Here are some examples on how to use psyplot from the command line.</p>
 <p>Plot the variable <code class="docutils literal notranslate"><span class="pre">'t2m'</span></code> in a netCDF file <code class="docutils literal notranslate"><span class="pre">'myfile.nc'</span></code> and save
 the plot to <code class="docutils literal notranslate"><span class="pre">'plot.pdf'</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ psyplot myfile.nc -n t2m -pm mapplot -o test.pdf

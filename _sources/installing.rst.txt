@@ -24,7 +24,7 @@ The developer installation
 Installation using conda
 ^^^^^^^^^^^^^^^^^^^^^^^^
 We highly recommend to use conda_ for installing psyplot. After having
-downloaded the installer from anaconda_ or miniconda_, you can install psyplot
+downloaded the `miniconda installer`_, you can install psyplot
 and the optional plugins (see  :ref:`optional_deps`) via::
 
     $ conda install -c conda-forge psy-view psy-reg
@@ -103,8 +103,7 @@ We furthermore recommend to use
 .. _netCDF4: https://github.com/Unidata/netcdf4-python
 .. _gdal: http://www.gdal.org/
 .. _conda: https://conda.io/docs/
-.. _anaconda: https://www.anaconda.com/download/
-.. _miniconda: https://conda.io/miniconda.html
+.. _miniconda installer: https://conda.io/en/latest/miniconda.html
 .. _matplotlib: http://matplotlib.org
 .. _docrep: https://docrep.readthedocs.io
 .. _funcargparse: https://funcargparse.readthedocs.io

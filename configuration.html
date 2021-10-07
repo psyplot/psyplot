@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration &mdash; psyplot 1.3.1+11.gada771c documentation</title>
+  <title>Configuration &mdash; psyplot 1.3.1+12.gea8d519 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
     <link rel="shortcut icon" href="_static/psyplot.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -89,19 +90,19 @@
            <div itemprop="articleBody">
              
   <section id="configuration">
-<span id="id1"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h1>
 <section id="the-rcparams">
-<h2>The <code class="docutils literal notranslate"><span class="pre">rcParams</span></code><a class="headerlink" href="#the-rcparams" title="Permalink to this headline">¶</a></h2>
+<h2>The <code class="docutils literal notranslate"><span class="pre">rcParams</span></code><a class="headerlink" href="#the-rcparams" title="Permalink to this headline"></a></h2>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>If you are using the <a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> module,
+<p>If you are using the <a class="reference external" href="https://psyplot.github.io/psyplot-gui/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> module,
 you can also use the preferences widget to modify the configuration. See
-<a class="reference external" href="https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/configuration.html#configuration" title="(in psyplot-gui v1.3.0)"><span>Configuration of the GUI</span></a>.</p>
+<a class="reference external" href="https://psyplot.github.io/psyplot-gui/configuration.html#configuration" title="(in psyplot-gui v1.3.0)"><span>Configuration of the GUI</span></a>.</p>
 </div>
 <p>Psyplot, and especially it’s plugins have a lot of configuration values.
 Our rcParams handling is motivated by
-<a class="reference external" href="https://matplotlib.org/tutorials/introductory/customizing.html#matplotlibrc-sample" title="(in Matplotlib v3.4.3)"><span class="xref std std-ref">matplotlib</span></a> although we extended the
-possibilities of it’s <a class="reference external" href="https://matplotlib.org/api/matplotlib_configuration_api.html#matplotlib.RcParams" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.RcParams</span></code></a> class. Our rcParams
+<a class="reference external" href="https://matplotlib.org/stable/tutorials/introductory/customizing.html#matplotlibrc-sample" title="(in Matplotlib v3.4.3)"><span class="xref std std-ref">matplotlib</span></a> although we extended the
+possibilities of it’s <a class="reference external" href="https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.RcParams" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.RcParams</span></code></a> class. Our rcParams
 are stored in the <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a>
 object. Without any plugins, this looks like</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">psyplot</span> <span class="kn">import</span> <span class="n">rcParams</span>
@@ -188,9 +189,9 @@ location.</p>
 </div>
 </section>
 <section id="default-formatoptions">
-<h2>Default formatoptions<a class="headerlink" href="#default-formatoptions" title="Permalink to this headline">¶</a></h2>
-<p>The psyplot plugins, (<a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_simple.plugin</span></code></a>, <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/api/psy_maps.plugin.html#module-psy_maps.plugin" title="(in psy-maps v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_maps.plugin</span></code></a>, etc.)
-define their own <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/api/psy_simple.plugin.html#psy_simple.plugin.rcParams" title="(in psy-simple v1.3.1)"><code class="xref py py-data docutils literal notranslate"><span class="pre">rcParams</span></code></a> instance. When the plugins
+<h2>Default formatoptions<a class="headerlink" href="#default-formatoptions" title="Permalink to this headline"></a></h2>
+<p>The psyplot plugins, (<a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_simple.plugin</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plugin.html#module-psy_maps.plugin" title="(in psy-maps v1.3.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_maps.plugin</span></code></a>, etc.)
+define their own <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plugin.html#psy_simple.plugin.rcParams" title="(in psy-simple v1.3.1)"><code class="xref py py-data docutils literal notranslate"><span class="pre">rcParams</span></code></a> instance. When the plugins
 are loaded at the first import of <code class="docutils literal notranslate"><span class="pre">psyplot</span></code>, these instances update
 <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a>.</p>
 <p>The update mainly defines the default values for the plotters defined by that
@@ -198,7 +199,7 @@ plugin. However, it is not always obvious, which key in the
 <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a> belongs to which
 formatoption. For this purpose, however, you can use the
 <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Formatoption.default_key" title="psyplot.plotter.Formatoption.default_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default_key</span></code></a> attribute. For example,
-the <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-simple/en/latest/api/psy_simple.plotters.html#psy_simple.plotters.LinePlotter.title" title="(in psy-simple v1.3.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title</span></code></a> formatoption has the
+the <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.LinePlotter.title" title="(in psy-simple v1.3.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title</span></code></a> formatoption has the
 default_key</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psy</span>
 
@@ -209,7 +210,7 @@ default_key</p>
 </pre></div>
 </div>
 <p>As our plotters are based on inheritance, the default values use it, too.
-Therefore, the <a class="reference external" href="https://psyplot.readthedocs.io/projects/psy-maps/en/latest/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter" title="(in psy-maps v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldPlotter</span></code></a>, the underlying plotter
+Therefore, the <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter" title="(in psy-maps v1.3.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldPlotter</span></code></a>, the underlying plotter
 for the <code class="xref py py-attr docutils literal notranslate"><span class="pre">mapplot</span></code> plot method, uses the
 same configuration value in the
 <a class="reference internal" href="api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a>:</p>

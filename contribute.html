@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contributing to psyplot &mdash; psyplot 1.3.1+11.gada771c documentation</title>
+  <title>Contributing to psyplot &mdash; psyplot 1.3.1+12.gea8d519 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
     <link rel="shortcut icon" href="_static/psyplot.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -113,7 +114,7 @@
            <div itemprop="articleBody">
              
   <section id="contributing-to-psyplot">
-<span id="how-to-contribute"></span><h1><a class="toc-backref" href="#id1">Contributing to psyplot</a><a class="headerlink" href="#contributing-to-psyplot" title="Permalink to this headline">¶</a></h1>
+<span id="how-to-contribute"></span><h1><a class="toc-backref" href="#id1">Contributing to psyplot</a><a class="headerlink" href="#contributing-to-psyplot" title="Permalink to this headline"></a></h1>
 <p>First off, thanks for taking the time to contribute!</p>
 <p>The following is a set of guidelines for contributing to psyplot and its
 packages, which are hosted on GitHub. These are mostly guidelines, not
@@ -161,15 +162,15 @@ document in a pull request.</p>
 </ul>
 </div>
 <section id="code-of-conduct">
-<h2><a class="toc-backref" href="#id2">Code of Conduct</a><a class="headerlink" href="#code-of-conduct" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id2">Code of Conduct</a><a class="headerlink" href="#code-of-conduct" title="Permalink to this headline"></a></h2>
 <p>This project and everyone participating in it is governed by the
 <a class="reference external" href="https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md">psyplot Code of Conduct</a>.
 By participating, you are expected to uphold this code.</p>
 </section>
 <section id="what-should-i-know-before-i-get-started">
-<h2><a class="toc-backref" href="#id3">What should I know before I get started?</a><a class="headerlink" href="#what-should-i-know-before-i-get-started" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">What should I know before I get started?</a><a class="headerlink" href="#what-should-i-know-before-i-get-started" title="Permalink to this headline"></a></h2>
 <section id="the-psyplot-framework">
-<h3><a class="toc-backref" href="#id4">The psyplot framework</a><a class="headerlink" href="#the-psyplot-framework" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id4">The psyplot framework</a><a class="headerlink" href="#the-psyplot-framework" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">psyplot</span></code> is just the framework that allows interactive data analysis
 and visualization. Much of the functionality however is implemented by
 other packages. What package is the correct one for your bug
@@ -202,9 +203,9 @@ implemented it via</p>
 </section>
 </section>
 <section id="how-can-i-contribute">
-<h2><a class="toc-backref" href="#id5">How Can I Contribute?</a><a class="headerlink" href="#how-can-i-contribute" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">How Can I Contribute?</a><a class="headerlink" href="#how-can-i-contribute" title="Permalink to this headline"></a></h2>
 <section id="reporting-bugs">
-<h3><a class="toc-backref" href="#id6">Reporting Bugs</a><a class="headerlink" href="#reporting-bugs" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6">Reporting Bugs</a><a class="headerlink" href="#reporting-bugs" title="Permalink to this headline"></a></h3>
 <p>This section guides you through submitting a bug report for psyplot.
 Following these guidelines helps maintainers and the community
 understand your report, reproduce the behavior, and find related
@@ -221,7 +222,7 @@ same thing that you’re experiencing, open a new issue and include a
 link to the original issue in the body of your new one.</p>
 </div></blockquote>
 <section id="how-do-i-submit-a-good-bug-report">
-<h4><a class="toc-backref" href="#id7">How Do I Submit A (Good) Bug Report?</a><a class="headerlink" href="#how-do-i-submit-a-good-bug-report" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id7">How Do I Submit A (Good) Bug Report?</a><a class="headerlink" href="#how-do-i-submit-a-good-bug-report" title="Permalink to this headline"></a></h4>
 <p>Bugs are tracked as <a class="reference external" href="https://guides.github.com/features/issues/">GitHub
 issues</a>. After you’ve
 determined <a class="reference external" href="#the-psyplot-framework">which repository</a> your bug is
@@ -241,17 +242,12 @@ update via GUI or console and what?</p></li>
 <li><p><strong>Provide specific examples to demonstrate the steps</strong>. Include links
 to files or GitHub projects, or copy/pasteable snippets, which you
 use in those examples. If you’re providing snippets in the issue, use
-<a class="reference external" href="https://help.github.com/articles/markdown-basics/#multiple-lines">Markdown code
-blocks</a>.</p></li>
+<a class="reference external" href="https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code">Markdown code blocks</a>.</p></li>
 <li><p><strong>Describe the behavior you observed after following the steps</strong> and
 point out what exactly is the problem with that behavior.</p></li>
 <li><p><strong>Explain which behavior you expected to see instead and why.</strong></p></li>
 <li><p><strong>Include screenshots and animated GIFs</strong> which show you following
-the described steps and clearly demonstrate the problem. You can use
-<a class="reference external" href="https://www.cockos.com/licecap/">this tool</a> to record GIFs on
-macOS and Windows, and <a class="reference external" href="https://github.com/colinkeenan/silentcast">this
-tool</a> or <a class="reference external" href="https://github.com/GNOME/byzanz">this
-tool</a> on Linux.</p></li>
+the described steps and clearly demonstrate the problem.</p></li>
 <li><p><strong>If the problem is related to your data structure</strong>, include a small
 example how a similar data structure can be generated</p></li>
 </ul>
@@ -265,7 +261,7 @@ the psyplot-gui and open Help-&gt;Dependencies.</p></li>
 </section>
 </section>
 <section id="suggesting-enhancements">
-<h3><a class="toc-backref" href="#id8">Suggesting Enhancements</a><a class="headerlink" href="#suggesting-enhancements" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">Suggesting Enhancements</a><a class="headerlink" href="#suggesting-enhancements" title="Permalink to this headline"></a></h3>
 <p>This section guides you through submitting an enhancement suggestion for
 psyplot, including completely new features and minor improvements to
 existing functionality.</p>
@@ -274,7 +270,7 @@ template</a>,
 otherwise fill in the <a class="reference external" href="https://github.com/psyplot/psyplot/issues/new?template=new_feature.md&amp;title=NEW+FEATURE:">new feature
 template</a>.</p>
 <section id="how-do-i-submit-a-good-enhancement-suggestion">
-<h4><a class="toc-backref" href="#id9">How Do I Submit A (Good) Enhancement Suggestion?</a><a class="headerlink" href="#how-do-i-submit-a-good-enhancement-suggestion" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id9">How Do I Submit A (Good) Enhancement Suggestion?</a><a class="headerlink" href="#how-do-i-submit-a-good-enhancement-suggestion" title="Permalink to this headline"></a></h4>
 <p>Enhancement suggestions are tracked as <a class="reference external" href="https://guides.github.com/features/issues/">GitHub
 issues</a>. After you’ve
 determined <a class="reference external" href="#the-psyplot-framework">which repository</a> your
@@ -286,18 +282,13 @@ suggestion.</p></li>
 <li><p><strong>Provide a step-by-step description of the suggested enhancement</strong>
 in as many details as possible.</p></li>
 <li><p><strong>Provide specific examples to demonstrate the steps</strong>. Include
-copy/pasteable snippets which you use in those examples, as <a class="reference external" href="https://help.github.com/articles/markdown-basics/#multiple-lines">Markdown
-code
-blocks</a>.</p></li>
+copy/pasteable snippets which you use in those examples, as
+<a class="reference external" href="https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code">Markdown code blocks</a>.</p></li>
 <li><p><strong>Describe the current behavior</strong> and <strong>explain which behavior you
 expected to see instead</strong> and why.</p></li>
 <li><p><strong>Include screenshots and animated GIFs</strong> which help you demonstrate
 the steps or point out the part of psyplot which the suggestion is
-related to. You can use <a class="reference external" href="https://www.cockos.com/licecap/">this
-tool</a> to record GIFs on macOS and
-Windows, and <a class="reference external" href="https://github.com/colinkeenan/silentcast">this
-tool</a> or <a class="reference external" href="https://github.com/GNOME/byzanz">this
-tool</a> on Linux.</p></li>
+related to.</p></li>
 <li><p><strong>Explain why this enhancement would be useful</strong> to most psyplot
 users.</p></li>
 <li><p><strong>List some other analysis software or applications where this
@@ -310,9 +301,9 @@ starting the psyplot-gui and open Help-&gt;Dependencies.</p></li>
 </section>
 </section>
 <section id="pull-requests">
-<h3><a class="toc-backref" href="#id10">Pull Requests</a><a class="headerlink" href="#pull-requests" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">Pull Requests</a><a class="headerlink" href="#pull-requests" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Fill in <a class="reference external" href="https://github.com/psyplot/psyplot/blob/master/.github/PULL_REQUEST_TEMPLATE.md">the required template</a></p></li>
+<li><p>Fill in <a class="reference external" href="https://github.com/psyplot/psyplot/blob/master/.github/pull_request_template.md">the required template</a></p></li>
 <li><p>Do not include issue numbers in the PR title</p></li>
 <li><p>Include screenshots and animated GIFs in your pull request whenever
 possible.</p></li>
@@ -324,24 +315,18 @@ Styleguide</a></p></li>
 </ul>
 </section>
 <section id="adding-new-examples">
-<h3><a class="toc-backref" href="#id11">Adding new examples</a><a class="headerlink" href="#adding-new-examples" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">Adding new examples</a><a class="headerlink" href="#adding-new-examples" title="Permalink to this headline"></a></h3>
 <p>You have new examples? Great! If you want to add them to the
 documentation, please just fork the correct github repository and add a
-jupyter notebook in the <a class="reference external" href="examples">examples</a> directory, together with
+jupyter notebook in the <a class="reference external" href="https://github.com/psyplot/examples">examples repository on GitHub</a>, together with
 all the necessary data files.</p>
-<p>To build our docs, we use the
-<a class="reference external" href="http://sphinx-nbexamples.readthedocs.io/en/latest/">sphinx-nbexamples</a>
-package to convert the examples to reStructuredText. Therefore please
-make sure that your supplementary data files are correctly implemented
-in the meta data of the notebook.</p>
-<p>We are, however, also willing to help you finalizing incomplete pull
-requests.</p>
+<p>And we are always happy to help you finalizing incomplete pull requests.</p>
 </section>
 </section>
 <section id="styleguides">
-<h2><a class="toc-backref" href="#id12">Styleguides</a><a class="headerlink" href="#styleguides" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12">Styleguides</a><a class="headerlink" href="#styleguides" title="Permalink to this headline"></a></h2>
 <section id="git-commit-messages">
-<h3><a class="toc-backref" href="#id13">Git Commit Messages</a><a class="headerlink" href="#git-commit-messages" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13">Git Commit Messages</a><a class="headerlink" href="#git-commit-messages" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Use the present tense (“Add feature” not “Added feature”)</p></li>
 <li><p>Use the imperative mood (“Move cursor to…” not “Moves cursor to…”)</p></li>
@@ -352,9 +337,9 @@ title</p></li>
 </ul>
 </section>
 <section id="documentation-styleguide">
-<h3><a class="toc-backref" href="#id14">Documentation Styleguide</a><a class="headerlink" href="#documentation-styleguide" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">Documentation Styleguide</a><a class="headerlink" href="#documentation-styleguide" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Follow the <a class="reference external" href="https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt">numpy documentation
+<li><p>Follow the <a class="reference external" href="https://github.com/numpy/numpy/blob/main/doc/HOWTO_DOCUMENT.rst.txt">numpy documentation
 guidelines</a>.</p></li>
 <li><p>Use
 <a class="reference external" href="http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">reStructuredText</a>.</p></li>
@@ -362,7 +347,7 @@ guidelines</a>.</p></li>
 <code class="docutils literal notranslate"><span class="pre">psyplot.docstring.docstrings</span></code></p></li>
 </ul>
 <section id="example">
-<h4><a class="toc-backref" href="#id15">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id15">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@docstrings</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s1">&#39;new_function&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">new_function</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Make some cool new feature</span>
@@ -398,7 +383,7 @@ guidelines</a>.</p></li>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This document has been inspired by <a class="reference external" href="https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-messages">the contribution guidelines of Atom</a></p>
+<p>This document has been inspired by <a class="reference external" href="https://github.com/atom/atom/blob/master/CONTRIBUTING.md">the contribution guidelines of Atom</a></p>
 </div>
 </section>
 </section>
