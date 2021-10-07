@@ -36,9 +36,6 @@ import six
 import subprocess as spr
 from itertools import product
 import warnings
-import sphinx_rtd_theme
-import json
-import logging
 
 if six.PY2:
     from urllib import urlopen
@@ -91,17 +88,10 @@ extensions = [
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-# on_rtd is whether we are on readthedocs.org, this line of code grabbed from
-# docs.readthedocs.org
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-if on_rtd:
-    spr.call([sys.executable] +
-             ('-m ipykernel install --user --name python3 '
-              '--display-name python3').split())
+linkcheck_anchors_ignore = ["^install$"]
 
 # create the api documentation
-if not osp.exists(osp.join(osp.dirname(__file__), 'api')) or on_rtd:
+if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
     spr.check_call(['bash', 'apigen.bash'])
 
 napoleon_use_admonition_for_examples = True
@@ -164,15 +154,12 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 html_theme = 'sphinx_rtd_theme'
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Add any paths that contain custom static files (such as style sheets)
 # here, relative to this directory. They are copied after the builtin
 # static files, so a file named "default.css" will overwrite the builtin
 # "default.css".
 html_static_path = ['_static']
-
-# otherwise, readthedocs.org uses their theme by default, so no need to specify
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'psyplotdoc'
@@ -246,31 +233,20 @@ epub_exclude_files = ['search.html']
 intersphinx_mapping = {
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
     'numpy': ('https://numpy.org/doc/stable/', None),
-    'matplotlib': ('https://matplotlib.org/', None),
-    'seaborn': ('http://seaborn.pydata.org/', None),
+    'matplotlib': ('https://matplotlib.org/stable/', None),
+    'seaborn': ('https://seaborn.pydata.org/', None),
     'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
-    'xarray': ('http://xarray.pydata.org/en/stable/', None),
+    'xarray': ('https://xarray.pydata.org/en/stable/', None),
     'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
     'mpl_toolkits': ('https://matplotlib.org/basemap/', None),
-    'psy_maps': (
-        'https://psyplot.readthedocs.io/projects/psy-maps/en/latest/', None),
-    'psy_simple': (
-        'https://psyplot.readthedocs.io/projects/psy-simple/en/latest/', None),
-    'psy_reg': ('https://psyplot.readthedocs.io/projects/psy-reg/en/latest/',
-                None),
-    'psyplot_gui': (
-        'https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/', None),
-    'psy_view': (
-        'https://psyplot.readthedocs.io/projects/psy-view/en/latest/', None),
-    "psyplot_examples": (
-        'https://psyplot.github.io/examples/', None
-    )
+    'psy_maps': ('https://psyplot.github.io/psy-maps/', None),
+    'psy_simple': ('https://psyplot.github.io/psy-simple/', None),
+    'psy_reg': ('https://psyplot.github.io/psy-reg/', None),
+    'psyplot_gui': ('https://psyplot.github.io/psyplot-gui/', None),
+    'psy_view': ('https://psyplot.github.io/psy-view/', None),
+    "psyplot_examples": ('https://psyplot.github.io/examples/', None),
+    'python': ('https://docs.python.org/3/', None),
 }
-if six.PY3:
-    intersphinx_mapping['python'] = ('https://docs.python.org/3.8/', None)
-else:
-    intersphinx_mapping['python'] = ('https://docs.python.org/2.7/', None)
-
 
 replacements = {
     '`psyplot.rcParams`': '`~psyplot.config.rcsetup.rcParams`',

@@ -48,7 +48,7 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         * - docs
           - |docs| |joss| |zenodo|
         * - tests
-          - |circleci| |appveyor| |requires| |codecov|
+          - |circleci| |appveyor| |codecov|
         * - package
           - |version| |conda| |github| |zenodo|
         * - implementations
@@ -56,9 +56,9 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         * - get in touch
           - |gitter| |mailing-list| |issues|
 
-    .. |docs| image:: http://readthedocs.org/projects/psyplot/badge/?version=latest
-        :alt: Documentation Status
-        :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
+    .. |docs| image:: https://img.shields.io/github/deployments/psyplot/psyplot/github-pages
+        :alt: Documentation
+        :target: http://psyplot.github.io/psyplot/
 
     .. |circleci| image:: https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg
         :alt: CircleCI
@@ -71,10 +71,6 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
     .. |codecov| image:: https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg
         :alt: Coverage
         :target: https://codecov.io/gh/psyplot/psyplot
-
-    .. |requires| image:: https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master
-        :alt: Requirements Status
-        :target: https://requires.io/github/psyplot/psyplot/requirements/?branch=master
 
     .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
         :alt: PyPI Package latest release
@@ -206,12 +202,12 @@ Finally the author thanks the Swiss National Science Foundation (SNF) for their
 support. Funding for the author came from the `ACACIA grant (CR10I2_146314)`_
 and the `HORNET grant (200021_169598)`_.
 
-.. _matplotlib: http://matplotlib.org
-.. _xarray: http://xarray.pydata.org/
-.. _cartopy: http://scitools.org.uk/cartopy
+.. _matplotlib: https://matplotlib.org
+.. _xarray: https://xarray.pydata.org/
+.. _cartopy: https://scitools.org.uk/cartopy
 .. _Not yet visible: https://notyetvisible.de/
-.. _ACACIA grant (CR10I2_146314): http://p3.snf.ch/project-146314
-.. _HORNET grant (200021_169598): http://p3.snf.ch/project-169598
+.. _ACACIA grant (CR10I2_146314): https://p3.snf.ch/project-146314
+.. _HORNET grant (200021_169598): https://p3.snf.ch/project-169598
 
 
 

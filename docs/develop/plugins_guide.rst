@@ -378,8 +378,8 @@ If you want to see more, look into the comments in the created files.
     @suppress
     In [4]: !rm -r my-plugin
 
-.. _psy-maps: https://psyplot.readthedocs.io/projects/psy-maps/en/latest/
-.. _psy-simple: https://psyplot.readthedocs.io/projects/psy-simple/en/latest/
+.. _psy-maps: https://psyplot.github.io/psy-maps/
+.. _psy-simple: https://psyplot.github.io/psy-simple/
 
 .. _plugins-rcParams:
 

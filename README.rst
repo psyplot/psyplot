@@ -11,7 +11,7 @@ The psyplot interactive visualization framework
     * - docs
       - |docs| |joss| |zenodo|
     * - tests
-      - |circleci| |appveyor| |requires| |codecov|
+      - |circleci| |appveyor| |codecov|
     * - package
       - |version| |conda| |github|
     * - implementations
@@ -19,9 +19,9 @@ The psyplot interactive visualization framework
     * - get in touch
       - |gitter| |mailing-list| |issues|
 
-.. |docs| image:: http://readthedocs.org/projects/psyplot/badge/?version=latest
-    :alt: Documentation Status
-    :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
+.. |docs| image:: https://img.shields.io/github/deployments/psyplot/psyplot/github-pages
+    :alt: Documentation
+    :target: http://psyplot.github.io/psyplot/
 
 .. |circleci| image:: https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg
     :alt: CircleCI
@@ -34,10 +34,6 @@ The psyplot interactive visualization framework
 .. |codecov| image:: https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg
     :alt: Coverage
     :target: https://codecov.io/gh/psyplot/psyplot
-
-.. |requires| image:: https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master
-    :alt: Requirements Status
-    :target: https://requires.io/github/psyplot/psyplot/requirements/?branch=master
 
 .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
     :alt: PyPI Package latest release
@@ -98,11 +94,11 @@ the future. So we are very pleased for feedback! Please simply raise an issue
 on `GitHub <https://github.com/psyplot/psyplot>`__ (see also
 `How to contribute`_ in the docs).
 
-.. _psyplot-gui: http://psyplot.readthedocs.io/projects/psyplot-gui/en/latest
-.. _How to contribute: http://psyplot.readthedocs.io/en/latest/contribute.html
+.. _psyplot-gui: http://psyplot.github.io/psyplot-gui/
+.. _How to contribute: http://psyplot.github.io/psyplot/contribute.html
 
 You can see the full documentation on
-`readthedocs.org <http://psyplot.readthedocs.io/en/latest/>`__.
+`psyplot.github.io/psyplot <http://psyplot.github.io/psyplot/>`__.
 
 
 Get in touch
@@ -145,7 +141,7 @@ releases page of the corresponding subproject.
 
 
 .. _the Journal of Open Source Software: http://joss.theoj.org/
-.. _subprojects: https://psyplot.readthedocs.io/en/latest/projects.html
+.. _subprojects: https://psyplot.github.io/
 .. _zenodo.org: https://zenodo.org/
 .. _releases page of psyplot: https://github.com/psyplot/psyplot/releases/
 
@@ -189,15 +185,13 @@ which made the size of the repository too large.
 
 .. _psyplot_old: https://github.com/Chilipp/psyplot_old
 
+
 Copyright
 ---------
-Copyright (C) 2021 Helmholtz-Zentrum Hereon
+Copyright © 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum
+Geesthacht, 2016-2021 University of Lausanne
 
-Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-
-Copyright (C) 2016-2021 University of Lausanne
-
-This file is part of psyplot and is released under the GNU LGPL-3.O license.
+psyplot is released under the GNU LGPL-3.O license.
 See COPYING and COPYING.LESSER in the root of the repository for full
 licensing details.
 
@@ -211,4 +205,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU LGPL-3.0 license for more details.
 
 You should have received a copy of the GNU LGPL-3.0 license
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+along with this program.  If not, see https://www.gnu.org/licenses/.

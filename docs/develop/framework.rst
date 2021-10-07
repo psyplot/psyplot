@@ -27,8 +27,8 @@ The last to parts in this framework, the :class:`~psyplot.plotter.Plotter` and
 classes in this package. They are filled with contents in plugins such as the
 psy-simple_ or the psy-maps_ plugin (see :ref:`plugins`).
 
-.. _psy-simple: https://psy-simple.readthedocs.io/en/latest
-.. _psy-maps: https://psy-maps.readthedocs.io/en/latest
+.. _psy-simple: https://psyplot.github.io/psy-simple/
+.. _psy-maps: https://psyplot.github.io/psy-maps/
 
 
 .. _project_framework:

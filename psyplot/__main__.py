@@ -239,8 +239,7 @@ def get_parser(create=True):
             $ psyplot myfile.nc -n t2m  -pm mapplot -fmt fmt.yaml -o test.pdf
         """), 'parser', ['Examples'])
 
-    if _on_rtd:  # make a rubric examples section
-        epilog = '.. rubric:: Examples\n' + '\n'.join(epilog.splitlines()[2:])
+    epilog = '.. rubric:: Examples\n' + '\n'.join(epilog.splitlines()[2:])
 
     parser = FuncArgParser(
         description="""
@@ -348,11 +347,6 @@ def _load_dims(s):
     return {}
 
 
-#: Disable the default for the info actions on RTD, because it looks
-#: better in the docs
-_on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-
 class AllVersionsAction(argparse.Action):
 
     def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
@@ -361,8 +355,7 @@ class AllVersionsAction(argparse.Action):
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print the versions of all plugins and requirements "
                           "and exit")
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super(AllVersionsAction, self).__init__(
             option_strings, nargs=0, dest=dest,
             **kwargs)
@@ -379,8 +372,7 @@ class ListPresetsAction(argparse.Action):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print available presets and exit")
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super().__init__(option_strings, nargs=0, dest=dest, **kwargs)
 
     def __call__(self, parser, namespace, values, option_string=None):
@@ -401,8 +393,7 @@ class ListPluginsAction(argparse.Action):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print the names of the plugins and exit")
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super(ListPluginsAction, self).__init__(
             option_strings, nargs=0, dest=dest, **kwargs)
 
@@ -418,8 +409,7 @@ class ListPlotMethodsAction(argparse.Action):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = "List the available plot methods and what they do"
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super(ListPlotMethodsAction, self).__init__(
             option_strings, nargs=0, dest=dest, **kwargs)
 
@@ -444,8 +434,7 @@ class ListDsNamesAction(argparse.Action):
                  default=argparse.SUPPRESS, **kwargs):
         if nargs is not None:
             raise ValueError("nargs not allowed")
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super(ListDsNamesAction, self).__init__(
             option_strings, nargs=0, dest=dest, **kwargs)
 

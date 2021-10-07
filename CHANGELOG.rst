@@ -19,8 +19,8 @@ Changed
   gathered from xarray 0.18. We now rely on xarray to automatically find the
   engine to open the files.
 - Documentation is now hosted with Github Pages at https://psyplot.github.io/psyplot.
-  Redirects from the old documentation at https://psyplot.readthedocs.io have been
-  configured.
+  Redirects from the old documentation at `https://psyplot.readthedocs.io` have
+  been configured.
 - Examples have been removed from the psyplot repository as they now live in a
   central place at https://github.com/psyplot/examples
 - We use CicleCI now for a standardized CI/CD pipeline to build and test
@@ -129,7 +129,7 @@ Changed
   nodes for a given grid cell. These informations are used by the
   psy-simple and psy-maps plugins for displaying any unstructured data. See
   also the example on the
-  `visualization of unstructured grids <https://psyplot.readthedocs.io/projects/psy-maps/en/master/examples/example_ugrid.html#gallery-examples-example-ugrid-ipynb>`__
+  `visualization of unstructured grids <https://psyplot.github.io/examples/maps/example_ugrid.html>`__
 * We removed the inplace parameter for the CFDecoder methods since it is
   deprecated with xarray 0.12 (see
   `issue #8 <https://github.com/psyplot/psyplot/issues/8>`__). The
