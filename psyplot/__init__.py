@@ -47,7 +47,7 @@ __credits__ = ["Philipp S. Sommer"]
 __license__ = "LGPL-3.0-only"
 
 __maintainer__ = "Philipp S. Sommer"
-__email__ = "philipp.sommer@hereon.de"
+__email__ = "psyplot@hereon.de"
 
 __status__ = "Production"
 
