@@ -191,7 +191,7 @@ Copyright
 Copyright © 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum
 Geesthacht, 2016-2021 University of Lausanne
 
-psyplot and is released under the GNU LGPL-3.O license.
+psyplot is released under the GNU LGPL-3.O license.
 See COPYING and COPYING.LESSER in the root of the repository for full
 licensing details.
 
