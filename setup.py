@@ -83,7 +83,7 @@ setup(name='psyplot',
       },
       url='https://github.com/psyplot/psyplot',
       author='Philipp S. Sommer',
-      author_email='philipp.sommer@hereon.de',
+      author_email='psyplot@hereon.de',
       license="LGPL-3.0-only",
       packages=find_packages(exclude=['docs', 'tests*', 'examples']),
       install_requires=[
