@@ -131,7 +131,7 @@ with a few downsides.
 .. _other visualization backends: https://github.com/psyplot/psy-vtk
 .. _psy-view: https://github.com/psyplot/psy-view
 .. _ncview: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
-.. _psy-reg: https://psyplot.readthedocs.io/projects/psy-reg
+.. _psy-reg: https://psyplot.github.io/psy-reg
 .. _seaborn: https://seaborn.pydata.org
 .. _R: https://www.r-project.org/
 
