@@ -145,7 +145,7 @@ def _fix_times(dims):
     # https://github.com/pydata/xarray/issues/4283
     for key, val in dims.items():
         if np.issubdtype(np.asarray(val).dtype, np.datetime64):
-            dims[key] = to_datetime(val)
+            dims[key] = to_datetime([val])[0]
 
 
 @docstrings.get_sections(base='setup_coords')
@@ -2661,7 +2661,7 @@ class InteractiveArray(InteractiveBase):
         else:
             self._idims = None
             for key, val in six.iteritems(self.arr.coords):
-                if key != 'variable':
+                if key in base_var.dims and key != 'variable':
                     dims.setdefault(key, val)
             kws = dims.copy()
             # the sel method does not work with slice objects
@@ -2724,7 +2724,8 @@ class InteractiveArray(InteractiveBase):
             self._idims = None
             old_dims = self.arr.dims[:]
             for key, val in six.iteritems(self.arr.coords):
-                dims.setdefault(key, val)
+                if key in base_var.dims:
+                    dims.setdefault(key, val)
             kws = dims.copy()
             # the sel method does not work with slice objects
             if not any(isinstance(idx, slice) for idx in dims.values()):
