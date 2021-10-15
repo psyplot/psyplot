@@ -2650,10 +2650,11 @@ class InteractiveArray(InteractiveBase):
             name = dims.pop('name')
         else:
             name = list(self.arr.coords['variable'].values)
+        base_dims = self.base[name].dims
         if method == 'isel':
             self.idims.update(dims)
             dims = self.idims
-            for dim in set(self.base[name].dims) - set(dims):
+            for dim in set(base_dims) - set(dims):
                 dims[dim] = slice(None)
             for dim in set(dims) - set(self.base[name].dims):
                 del dims[dim]
@@ -2661,7 +2662,7 @@ class InteractiveArray(InteractiveBase):
         else:
             self._idims = None
             for key, val in six.iteritems(self.arr.coords):
-                if key in base_var.dims and key != 'variable':
+                if key in base_dims and key != 'variable':
                     dims.setdefault(key, val)
             kws = dims.copy()
             # the sel method does not work with slice objects
