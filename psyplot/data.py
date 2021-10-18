@@ -3809,9 +3809,16 @@ class ArrayList(list):
                     decoder = get_decoder(base[name[0]])
                     dims = decoder.correct_dims(base[name[0]], dims)
                 if default_slice is not None:
-                    dims.update({
-                        dim: default_slice for dim in set(arr.dims).difference(
-                            dims) if dim != 'variable'})
+                    if isinstance(default_slice, slice):
+                        dims.update({
+                            dim: default_slice
+                            for dim in set(arr.dims).difference(dims)
+                            if dim != 'variable'})
+                    else:
+                        dims.update({
+                            dim: arr.coords[dim][default_slice]
+                            for dim in set(arr.dims).difference(dims)
+                            if dim != 'variable'})
                 kws = dims.copy()
                 kws['method'] = method
                 # the sel method does not work with slice objects

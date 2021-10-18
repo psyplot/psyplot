@@ -1335,6 +1335,18 @@ class TestArrayList(unittest.TestCase):
                                          decoder=dict(x={'myx'}))
         self.assertEqual(l[0].psy.decoder.x, {'myx'})
 
+    def test_from_dataset_16_default_slice(self):
+        """Test selection with default_slice=0"""
+        variables, coords = self._from_dataset_test_variables
+        ds = xr.Dataset(variables, coords)
+        l = self.list_class.from_dataset(ds, ydim=2, default_slice=0, method=None,
+                                         name=['v0', 'v2'])
+        self.assertEqual(len(l), 2)
+        self.assertEqual(set(l.names), {'v0', 'v2'})
+        for arr in l:
+            self.assertEqual(arr.ydim, 2,
+                             msg="Wrong ydim slice for " + arr.name)
+
 
     def test_array_info(self):
         variables, coords = self._from_dataset_test_variables
