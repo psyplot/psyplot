@@ -752,6 +752,42 @@ class Formatoption(object):
         are removed by the usual :meth:`matplotlib.axes.Axes.clear` method."""
         pass
 
+    @docstrings.get_extended_summary(base="Formatoption.convert_coordinate")
+    @docstrings.get_sections(
+        base="Formatoption.convert_coordinate",
+        sections=["Parameters", "Returns"]
+    )
+    def convert_coordinate(self, coord, *variables):
+        """Convert a coordinate to units necessary for the plot.
+
+        This method takes a single coordinate variable (e.g. the `bounds` of a
+        coordinate, or the coordinate itself) and transforms the units that the
+        plotter requires.
+
+        One might also provide additional `variables` that are supposed to be
+        on the same unit, in case the given `coord` does not specify a `units`
+        attribute. `coord` might be a CF-conform `bounds` variable, and one of
+        the variables might be the corresponding `coordinate`.
+
+        Parameters
+        ----------
+        coord: xr.Variable
+            The variable to transform
+        ``*variables``
+            The variables that are on the same unit as `coord`
+
+        Returns
+        -------
+        xr.Variable
+            The transformed `coord`
+
+        Notes
+        -----
+        By default, this method uses the :meth:`~Plotter.convert_coordinate`
+        method of the :attr:`plotter`.
+        """
+        return self.plotter.convert_coordinate(coord, *variables)
+
 
 class DictFormatoption(Formatoption):
     """
@@ -2434,3 +2470,24 @@ class Plotter(dict):
         """Returns None. May be subclassed to return a projection that
         can be used when creating a subplot"""
         pass
+
+    @docstrings.dedent
+    def convert_coordinate(self, coord, *variables):
+        """Convert a coordinate to units necessary for the plot.
+
+        %(Formatoption.convert_coordinate.summary_ext)s
+
+        Parameters
+        ----------
+        %(Formatoption.convert_coordinate.parameters)s
+
+        Returns
+        -------
+        %(Formatoption.convert_coordinate.returns)s
+
+        Notes
+        -----
+        This method is supposed to be implemented by subclasses. The default
+        implementation by the :class:`Plotter` class does nothing.
+        """
+        return coord
