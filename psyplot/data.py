@@ -145,7 +145,7 @@ def _fix_times(dims):
     # https://github.com/pydata/xarray/issues/4283
     for key, val in dims.items():
         if np.issubdtype(np.asarray(val).dtype, np.datetime64):
-            dims[key] = to_datetime(val)
+            dims[key] = to_datetime([val])[0]
 
 
 @docstrings.get_sections(base='setup_coords')
@@ -2650,10 +2650,11 @@ class InteractiveArray(InteractiveBase):
             name = dims.pop('name')
         else:
             name = list(self.arr.coords['variable'].values)
+        base_dims = self.base[name].dims
         if method == 'isel':
             self.idims.update(dims)
             dims = self.idims
-            for dim in set(self.base[name].dims) - set(dims):
+            for dim in set(base_dims) - set(dims):
                 dims[dim] = slice(None)
             for dim in set(dims) - set(self.base[name].dims):
                 del dims[dim]
@@ -2661,7 +2662,7 @@ class InteractiveArray(InteractiveBase):
         else:
             self._idims = None
             for key, val in six.iteritems(self.arr.coords):
-                if key != 'variable':
+                if key in base_dims and key != 'variable':
                     dims.setdefault(key, val)
             kws = dims.copy()
             # the sel method does not work with slice objects
@@ -2724,7 +2725,8 @@ class InteractiveArray(InteractiveBase):
             self._idims = None
             old_dims = self.arr.dims[:]
             for key, val in six.iteritems(self.arr.coords):
-                dims.setdefault(key, val)
+                if key in base_var.dims:
+                    dims.setdefault(key, val)
             kws = dims.copy()
             # the sel method does not work with slice objects
             if not any(isinstance(idx, slice) for idx in dims.values()):
@@ -3664,7 +3666,8 @@ class ArrayList(list):
         default_slice: indexer
             Index (e.g. 0 if `method` is 'isel') that shall be used for
             dimensions not covered by `dims` and `furtherdims`. If None, the
-            whole slice will be used.
+            whole slice will be used. Note that the `default_slice` is always
+            based on the `isel` method.
         decoder: CFDecoder or dict
             Arguments for the decoder. This can be one of
 
@@ -3771,19 +3774,22 @@ class ArrayList(list):
                 elif (isinstance(name, six.string_types) or
                       not utils.is_iterable(name)):
                     arr = base[name]
+                    decoder = get_decoder(arr)
+                    dims = decoder.correct_dims(arr, dims)
                 else:
                     arr = base[list(name)]
-                add_missing_dimensions(arr)
-                if not isinstance(arr, xr.DataArray):
-                    arr = ds2arr(arr)
+                    decoder = get_decoder(base[name[0]])
+                    dims = decoder.correct_dims(base[name[0]], dims)
                 def_slice = slice(None) if default_slice is None else \
                     default_slice
-                decoder = get_decoder(arr)
-                dims = decoder.correct_dims(arr, dims)
                 dims.update({
                     dim: def_slice for dim in set(arr.dims).difference(
                         dims) if dim != 'variable'})
-                ret = squeeze_array(arr.isel(**dims))
+                add_missing_dimensions(arr)
+                ret = arr.isel(**dims)
+                if not isinstance(ret, xr.DataArray):
+                    ret = ds2arr(ret)
+                ret = squeeze_array(ret)
                 # delete the variable dimension for the idims
                 dims.pop('variable', None)
                 ret.psy.init_accessor(arr_name=key, base=base, idims=dims,
@@ -3796,28 +3802,40 @@ class ArrayList(list):
                 elif (isinstance(name, six.string_types) or
                       not utils.is_iterable(name)):
                     arr = base[name]
+                    decoder = get_decoder(arr)
+                    dims = decoder.correct_dims(arr, dims)
                 else:
                     arr = base[list(name)]
-                add_missing_dimensions(arr)
-                if not isinstance(arr, xr.DataArray):
-                    arr = ds2arr(arr)
-                # idims will be calculated by the array (maybe not the most
-                # efficient way...)
-                decoder = get_decoder(arr)
-                dims = decoder.correct_dims(arr, dims)
+                    decoder = get_decoder(base[name[0]])
+                    dims = decoder.correct_dims(base[name[0]], dims)
                 if default_slice is not None:
-                    dims.update({
-                        key: default_slice for key in set(arr.dims).difference(
-                            dims) if key != 'variable'})
+                    if isinstance(default_slice, slice):
+                        dims.update({
+                            dim: default_slice
+                            for dim in set(arr.dims).difference(dims)
+                            if dim != 'variable'})
+                    else:
+                        dims.update({
+                            dim: arr.coords[dim][default_slice]
+                            for dim in set(arr.dims).difference(dims)
+                            if dim != 'variable'})
                 kws = dims.copy()
+                kws['method'] = method
                 # the sel method does not work with slice objects
-                if not any(isinstance(idx, slice) for idx in dims.values()):
-                    kws['method'] = method
+                for dim, val in dims.items():
+                    if isinstance(val, slice):
+                        if val == slice(None):
+                            kws.pop(dim)  # the full slice is the default
+                        else:
+                            kws.pop("method", None)
+                add_missing_dimensions(arr)
                 try:
                     ret = arr.sel(**kws)
                 except KeyError:
                     _fix_times(kws)
                     ret = arr.sel(**kws)
+                if not isinstance(ret, xr.DataArray):
+                    ret = ds2arr(ret)
                 ret = squeeze_array(ret)
                 ret.psy.init_accessor(arr_name=key, base=base, decoder=decoder)
                 return maybe_load(ret)
