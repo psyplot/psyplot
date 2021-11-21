@@ -1,3 +1,28 @@
+v1.4.1
+======
+Compatibility fixes and minor improvements
+
+Added
+-----
+- An abstract ``convert_coordinate`` method has been implemented for the
+  ``Plotter`` and ``Formatoption`` class that can be used in subclasses to
+  convert coordinates for the required visualization. The default
+  implementation does nothing (see
+  `#39 <https://github.com/psyplot/psyplot/pull/39>`__)
+
+Fixed
+-----
+- the update method now only takes the coordinates that are dimensions in the
+  dataset see `#39 <https://github.com/psyplot/psyplot/pull/39>`__
+
+Changed
+-------
+- loading more than one variables into a ``DataArray`` now first selects the
+  corresponding dimensions, then puts it into a single ``DataArray``. This
+  avoids loading the entire data (see
+  `#39 <https://github.com/psyplot/psyplot/pull/39>`__)
+
+
 v1.4.0
 ======
 Compatibility fixes and LGPL license
