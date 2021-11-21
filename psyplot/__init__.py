@@ -125,9 +125,21 @@ def get_versions(requirements=True, key=None):
     """
     from importlib.metadata import entry_points
     ret = {'psyplot': _get_versions(requirements)}
-    for ep in entry_points(group='psyplot', name='plugin'):
+
+    try:
+        eps = entry_points(group='psyplot', name='plugin')
+    except TypeError:  # python<3.10
+        eps = [ep for ep in entry_points()['psyplot']
+                if ep.name ==  'plugin']
+    for ep in eps:
         if str(ep) in rcParams._plugins:
             logger.debug('Loading entrypoint %s', ep)
+
+            try:
+                ep.module
+            except AttributeError:  # python<3.10
+                ep.module = ep.pattern.match(ep.value).group("module")
+
             if key is not None and not key(ep.module):
                 continue
             try:

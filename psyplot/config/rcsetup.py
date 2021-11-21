@@ -760,6 +760,12 @@ environment variable."""
         from importlib.metadata import entry_points
 
         def load_plugin(ep):
+
+            try:
+                ep.module
+            except AttributeError:  # python<3.10
+                ep.module = ep.pattern.match(ep.value).group("module")
+
             if plugins_env == ['no']:
                 return False
             elif ep.module in exclude_plugins:
@@ -776,7 +782,12 @@ environment variable."""
 
         logger = logging.getLogger(__name__)
 
-        for ep in entry_points(group='psyplot', name='plugin'):
+        try:
+            eps = entry_points(group='psyplot', name='plugin')
+        except TypeError:  # python<3.10
+            eps = [ep for ep in entry_points()['psyplot']
+                   if ep.name ==  'plugin']
+        for ep in eps:
             if not load_plugin(ep):
                 logger.debug('Skipping entrypoint %s', ep)
                 continue
