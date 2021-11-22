@@ -755,16 +755,22 @@ environment variable."""
 
         Yields
         ------
-        pkg_resources.EntryPoint
+        importlib.metadata.EntryPoint
             The entry point for the psyplot plugin module"""
-        from pkg_resources import iter_entry_points
+        from importlib.metadata import entry_points
 
         def load_plugin(ep):
+
+            try:
+                ep.module
+            except AttributeError:  # python<3.10
+                ep.module = ep.pattern.match(ep.value).group("module")
+
             if plugins_env == ['no']:
                 return False
-            elif ep.module_name in exclude_plugins:
+            elif ep.module in exclude_plugins:
                 return False
-            elif include_plugins and ep.module_name not in include_plugins:
+            elif include_plugins and ep.module not in include_plugins:
                 return False
             return True
 
@@ -776,7 +782,12 @@ environment variable."""
 
         logger = logging.getLogger(__name__)
 
-        for ep in iter_entry_points(group='psyplot', name='plugin'):
+        try:
+            eps = entry_points(group='psyplot', name='plugin')
+        except TypeError:  # python<3.10
+            eps = [ep for ep in entry_points().get('psyplot', [])
+                   if ep.name ==  'plugin']
+        for ep in eps:
             if not load_plugin(ep):
                 logger.debug('Skipping entrypoint %s', ep)
                 continue
@@ -811,7 +822,7 @@ environment variable."""
         def_keys = {'default': defaultParams}
 
         def register_pm(ep, name):
-            full_name = '%s:%s' % (ep.module_name, name)
+            full_name = '%s:%s' % (ep.module, name)
             ret = True
             if pm_env == ['no']:
                 ret = False
@@ -828,8 +839,8 @@ environment variable."""
             try:
                 plugin_mod = ep.load()
             except (ModuleNotFoundError, ImportError):
-                logger.debug("Failed to import %s!" % ep, exc_info=True)
-                logger.warning("Failed to import %s!" % ep)
+                logger.debug("Failed to import %s!" % (ep, ), exc_info=True)
+                logger.warning("Failed to import %s!" % (ep, ))
                 continue
             rc = plugin_mod.rcParams
 
@@ -852,7 +863,7 @@ environment variable."""
                 else:
                     warn(msg)
             for d in plugin_plotters.values():
-                d['plugin'] = ep.module_name
+                d['plugin'] = ep.module
             plotters.update(plugin_plotters)
             def_plots[ep] = list(plugin_plotters)
 

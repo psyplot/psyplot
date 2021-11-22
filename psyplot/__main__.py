@@ -61,7 +61,7 @@ def main(args=None):
         The parser that has been used from the command line"""
     try:
         from psyplot_gui import get_parser as _get_parser
-    except ImportError:
+    except (ImportError, ModuleNotFoundError) as e:
         logger.debug('Failed to import gui', exc_info=True)
         parser = get_parser(create=False)
         parser.update_arg('output', required=True)

@@ -14,6 +14,7 @@ Fixed
 -----
 - the update method now only takes the coordinates that are dimensions in the
   dataset see `#39 <https://github.com/psyplot/psyplot/pull/39>`__
+- psyplot is now compatible with matplotlib 3.5 and python 3.10
 
 Changed
 -------

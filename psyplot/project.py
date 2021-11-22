@@ -1634,6 +1634,7 @@ class _ProjectLoader(object):
         subplotpars = d.pop('subplotpars', None)
         if subplotpars is not None:
             subplotpars.pop('validate', None)
+            subplotpars.pop('_validate', None)
             subplotpars = mfig.SubplotParams(**subplotpars)
         if new_fig:
             nums = plt.get_fignums()
