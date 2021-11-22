@@ -129,7 +129,7 @@ def get_versions(requirements=True, key=None):
     try:
         eps = entry_points(group='psyplot', name='plugin')
     except TypeError:  # python<3.10
-        eps = [ep for ep in entry_points()['psyplot']
+        eps = [ep for ep in entry_points().get('psyplot', [])
                 if ep.name ==  'plugin']
     for ep in eps:
         if str(ep) in rcParams._plugins:
