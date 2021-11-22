@@ -25,6 +25,10 @@ parameters:
     description: Build the documentation
     type: boolean
     default: true
+  python_version:
+    description: The python version to build
+    type: string
+    default: "3.8"
 
 workflows:
   build-and-test:
@@ -36,6 +40,7 @@ workflows:
           setup_env: << pipeline.parameters.run-tests >>
           build_args: "--no-test"
           build_docs: << pipeline.parameters.build_docs >>
+          python_version: << pipeline.parameters.python_version >>
           # HACK: force netcdf4 and hdf5 version to resolve dependency issue
           env_packages: dask netcdf4 scipy netcdf4=1.5.7 h5py=3.4.0 hdf5=1.12.1
       - psyplot/test-parallel:
