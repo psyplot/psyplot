@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  psyplot: psyplot/psyplot-ci-orb@1.5.27
+  psyplot: psyplot/psyplot-ci-orb@1.5.28
   mattermost-plugin-notify: nathanaelhoun/mattermost-plugin-notify@1.2.0
 
 executors:
