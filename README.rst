@@ -17,7 +17,7 @@ The psyplot interactive visualization framework
     * - implementations
       - |supported-versions| |supported-implementations|
     * - get in touch
-      - |gitter| |mailing-list| |issues|
+      - |mattermost| |mailing-list| |issues|
 
 .. |docs| image:: https://img.shields.io/github/deployments/psyplot/psyplot/github-pages
     :alt: Documentation
@@ -63,9 +63,9 @@ The psyplot interactive visualization framework
     :target: https://github.com/psyplot/psyplot/releases/latest
     :alt: Latest github release
 
-.. |gitter| image:: https://img.shields.io/gitter/room/psyplot/community.svg?style=flat
-    :target: https://gitter.im/psyplot/community
-    :alt: Gitter
+.. |mattermost| image:: https://img.shields.io/badge/chat-on%20mattermost-success?logo=mattermost
+    :target: https://mattermost.hzdr.de/psyplot/
+    :alt: Mattermost
 
 .. |mailing-list| image:: https://img.shields.io/badge/join-mailing%20list-brightgreen.svg?style=flat
     :target: https://www.listserv.dfn.de/sympa/subscribe/psyplot
@@ -106,7 +106,7 @@ Get in touch
 Any quesions? Do not hessitate to get in touch with the psyplot developers.
 
 - Create an issue at the `bug tracker`_
-- Chat with the developers in out `channel on gitter`_
+- Chat with the developers in out `team on mattermost`_
 - Subscribe to the `mailing list`_ and ask for support
 - Sent a mail to psyplot@hzg.de
 
@@ -114,7 +114,7 @@ See also the `code of conduct`_, and our `contribution guide`_ for more
 information and a guide about good bug reports.
 
 .. _bug tracker: https://github.com/psyplot/psyplot
-.. _channel on gitter: https://gitter.im/psyplot/community
+.. _team on mattermost: https://mattermost.hzdr.de/psyplot/
 .. _mailing list: https://www.listserv.dfn.de/sympa/subscribe/psyplot
 .. _code of conduct: https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md
 .. _contribution guide: https://github.com/psyplot/psyplot/blob/master/CONTRIBUTING.md
