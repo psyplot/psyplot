@@ -3129,10 +3129,9 @@ class InteractiveArray(InteractiveBase):
             weights = broadcast_to(weights / weights.sum(), arr.shape)
             # set nans to zero weigths. This step takes quite a lot of time for
             # large arrays since it involves a copy of the entire `arr`
-            weights *= notnull(arr)
+            weights = weights * notnull(arr)
             # normalize the weights
-            weights /= weights.sum(axis=tuple(map(dims.index, sdims)),
-                                   keepdims=True)
+            weights /= weights.sum(axis=tuple(map(dims.index, sdims)))
         else:
             dims = arr.dims
             coords = arr.isel(
