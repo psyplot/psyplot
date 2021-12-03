@@ -3131,7 +3131,13 @@ class InteractiveArray(InteractiveBase):
             # large arrays since it involves a copy of the entire `arr`
             weights = weights * notnull(arr)
             # normalize the weights
-            weights = weights / weights.sum(axis=tuple(map(dims.index, sdims)))
+            if with_dask:
+                summed_weights = weights.sum(
+                    axis=tuple(map(dims.index, sdims)), keepdims=True
+                )
+            else:
+                summed_weights = weights.sum(axis=tuple(map(dims.index, sdims)))
+            weights = weights / summed_weights
         else:
             dims = arr.dims
             coords = arr.isel(
