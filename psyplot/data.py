@@ -3136,7 +3136,9 @@ class InteractiveArray(InteractiveBase):
                     axis=tuple(map(dims.index, sdims)), keepdims=True
                 )
             else:
-                summed_weights = weights.sum(axis=tuple(map(dims.index, sdims)))
+                summed_weights = weights.sum(
+                    axis=tuple(map(dims.index, sdims))
+                )
             weights = weights / summed_weights
         else:
             dims = arr.dims
