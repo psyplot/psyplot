@@ -1,6 +1,7 @@
 name: psyplot_docs
 channels:
     - local
+    - psyplot/label/__CURRENTBRANCH__
     - psyplot/label/master
     - conda-forge
 dependencies:
