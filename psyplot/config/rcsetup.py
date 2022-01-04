@@ -430,7 +430,7 @@ environment variable."""
 
         Other Parameters
         ----------------
-        ``*args, **kwargs``
+        *args, **kwargs
             Any key-value pair for the initialization of the dictionary
         """
         defaultParams = kwargs.pop('defaultParams', None)

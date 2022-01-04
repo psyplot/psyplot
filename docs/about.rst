@@ -72,8 +72,8 @@ What it is
   visualization. No GUI, independent of it's intuitiveness, can ever beat the
   speed of a scientist that knows a bit of coding and how to use the different
   formatoptions in psyplot.
-- it visualizes :ref:`unstructured grids <psy_maps:gallery_examples_example_ugrid.ipynb>`,
-  such as ICON or UGRID model data
+- it visualizes :ref:`unstructured grids <psyplot_examples:/maps/example_ugrid.ipynb>`,
+  such as ICON_ or UGRID_ model data
 - it automatically decodes CF-conventions
 - it intuitively integrates the structure of netCDF files. So if you often
   work with netCDF files, psyplot might be a good option
@@ -92,6 +92,10 @@ What it is
     them in separate psyplot plugins with it's own formatoptions and
     plotting methods
 - it will always be free and open-source under the LGPL License.
+
+.. _ICON: http://www.mpimet.mpg.de/en/science/models/icon-esm.html
+.. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
+
 
 What it is not
 **************

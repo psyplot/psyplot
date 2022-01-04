@@ -226,7 +226,7 @@ def check_key(key, possible_keys, raise_error=True,
     msg: str
         The additional message that shall be used if no close match to
         key is found
-    ``*args,**kwargs``
+    *args, **kwargs
         They are passed to the :func:`difflib.get_close_matches` function
         (i.e. `n` to increase the number of returned similar keys and
         `cutoff` to change the sensibility)
