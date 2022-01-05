@@ -93,8 +93,8 @@ What it is
     plotting methods
 - it will always be free and open-source under the LGPL License.
 
-.. _ICON: http://www.mpimet.mpg.de/en/science/models/icon-esm.html
-.. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
+.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _UGRID: https://ugrid-conventions.github.io/ugrid-conventions/
 
 
 What it is not
