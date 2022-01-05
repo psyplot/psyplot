@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  psyplot: psyplot/psyplot-ci-orb@1.5.24
+  psyplot: psyplot/psyplot-ci-orb@1.5.29
   mattermost-plugin-notify: nathanaelhoun/mattermost-plugin-notify@1.2.0
 
 executors:
@@ -25,6 +25,10 @@ parameters:
     description: Build the documentation
     type: boolean
     default: true
+  python_version:
+    description: The python version to build
+    type: string
+    default: "3.8"
 
 workflows:
   build-and-test:
@@ -36,8 +40,8 @@ workflows:
           setup_env: << pipeline.parameters.run-tests >>
           build_args: "--no-test"
           build_docs: << pipeline.parameters.build_docs >>
-          # HACK: force netcdf4 and hdf5 version to resolve dependency issue
-          env_packages: dask netcdf4 scipy netcdf4=1.5.7 h5py=3.4.0 hdf5=1.12.1
+          python_version: << pipeline.parameters.python_version >>
+          env_packages: dask netcdf4 scipy
       - psyplot/test-parallel:
           name: test-xarray-latest
           parallelism: 2

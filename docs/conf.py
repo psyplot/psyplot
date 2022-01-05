@@ -63,6 +63,10 @@ warnings.filterwarnings(
     'ignore', message='Using an implicitly registered datetime converter')
 warnings.filterwarnings(
     'ignore', message=r"\s*The on_mappable_changed function")
+warnings.filterwarnings(
+    'ignore', message=r".+multi-part geometries is deprecated")
+warnings.filterwarnings(
+    'ignore', message=r"\s*The array interface is deprecated")
 
 # -- General configuration ------------------------------------------------
 

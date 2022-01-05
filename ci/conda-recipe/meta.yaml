@@ -38,11 +38,6 @@ test:
     - netcdf4
     - dask
     - scipy
-    # HACK: solve inconsistensies with libwebp
-    # this should be removed when
-    # https://github.com/conda-forge/libwebp-feedstock/issues/26
-    # is solved
-    - libtiff <4.1.0  # [osx]
   source_files:
     - tests
   commands:
@@ -71,5 +66,5 @@ about:
     combines the plotting utilities of matplotlib and the data management of
     the xarray package and integrates them into a software that can be used via
     command-line and via a GUI.
-  doc_url: http://psyplot.github.io
+  doc_url: https://psyplot.github.io
   dev_url: https://github.com/psyplot/psyplot
