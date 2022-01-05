@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.plotter &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>psyplot.plotter &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
@@ -31,7 +31,7 @@
             <img src="../../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -836,7 +836,43 @@
 <span class="sd">        formatoption with :attr:`requires_clearing` set to True. You don&#39;t</span>
 <span class="sd">        necessarily have to implement this formatoption if your plot results</span>
 <span class="sd">        are removed by the usual :meth:`matplotlib.axes.Axes.clear` method.&quot;&quot;&quot;</span>
-        <span class="k">pass</span></div></div>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Formatoption.convert_coordinate"><a class="viewcode-back" href="../../api/psyplot.plotter.html#psyplot.plotter.Formatoption.convert_coordinate">[docs]</a>    <span class="nd">@docstrings</span><span class="o">.</span><span class="n">get_extended_summary</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s2">&quot;Formatoption.convert_coordinate&quot;</span><span class="p">)</span>
+    <span class="nd">@docstrings</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span>
+        <span class="n">base</span><span class="o">=</span><span class="s2">&quot;Formatoption.convert_coordinate&quot;</span><span class="p">,</span>
+        <span class="n">sections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;Returns&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">convert_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="o">*</span><span class="n">variables</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert a coordinate to units necessary for the plot.</span>
+
+<span class="sd">        This method takes a single coordinate variable (e.g. the `bounds` of a</span>
+<span class="sd">        coordinate, or the coordinate itself) and transforms the units that the</span>
+<span class="sd">        plotter requires.</span>
+
+<span class="sd">        One might also provide additional `variables` that are supposed to be</span>
+<span class="sd">        on the same unit, in case the given `coord` does not specify a `units`</span>
+<span class="sd">        attribute. `coord` might be a CF-conform `bounds` variable, and one of</span>
+<span class="sd">        the variables might be the corresponding `coordinate`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coord: xr.Variable</span>
+<span class="sd">            The variable to transform</span>
+<span class="sd">        ``*variables``</span>
+<span class="sd">            The variables that are on the same unit as `coord`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        xr.Variable</span>
+<span class="sd">            The transformed `coord`</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        By default, this method uses the :meth:`~Plotter.convert_coordinate`</span>
+<span class="sd">        method of the :attr:`plotter`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">convert_coordinate</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="o">*</span><span class="n">variables</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="DictFormatoption"><a class="viewcode-back" href="../../api/psyplot.plotter.html#psyplot.plotter.DictFormatoption">[docs]</a><span class="k">class</span> <span class="nc">DictFormatoption</span><span class="p">(</span><span class="n">Formatoption</span><span class="p">):</span>
@@ -2519,7 +2555,28 @@
     <span class="k">def</span> <span class="nf">_get_sample_projection</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns None. May be subclassed to return a projection that</span>
 <span class="sd">        can be used when creating a subplot&quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Plotter.convert_coordinate"><a class="viewcode-back" href="../../api/psyplot.plotter.html#psyplot.plotter.Plotter.convert_coordinate">[docs]</a>    <span class="nd">@docstrings</span><span class="o">.</span><span class="n">dedent</span>
+    <span class="k">def</span> <span class="nf">convert_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord</span><span class="p">,</span> <span class="o">*</span><span class="n">variables</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert a coordinate to units necessary for the plot.</span>
+
+<span class="sd">        %(Formatoption.convert_coordinate.summary_ext)s</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        %(Formatoption.convert_coordinate.parameters)s</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        %(Formatoption.convert_coordinate.returns)s</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method is supposed to be implemented by subclasses. The default</span>
+<span class="sd">        implementation by the :class:`Plotter` class does nothing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">coord</span></div></div>
 </pre></div>
 
            </div>

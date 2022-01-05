@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.utils module &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>psyplot.utils module &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -147,7 +147,7 @@
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.utils.DefaultOrderedDict">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">DefaultOrderedDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#DefaultOrderedDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.DefaultOrderedDict" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.utils.</span></span><span class="sig-name descname"><span class="pre">DefaultOrderedDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/utils.html#DefaultOrderedDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.utils.DefaultOrderedDict" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
 <p>An ordered <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.defaultdict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.defaultdict</span></code></a></p>
 <p>Taken from <a class="reference external" href="http://stackoverflow.com/a/6190500/562769">http://stackoverflow.com/a/6190500/562769</a></p>
@@ -186,14 +186,12 @@ not looks for similar sounding keys</p>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the key that shall be used in the error message</p></li>
 <li><p><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The additional message that shall be used if no close match to
 key is found</p></li>
-<li><p><strong>``*args</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
+<li><p><strong>*args</strong> – They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
 (i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
-<li><p><strong>**kwargs``</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
+<cite>cutoff</cite> to change the sensibility)</p></li>
+<li><p><strong>**kwargs</strong> – They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
 (i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
+<cite>cutoff</cite> to change the sensibility)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting started &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>Getting started &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -196,10 +196,10 @@ call the <a class="reference internal" href="api/psyplot.project.html#psyplot.pr
 </div>
 <p>Now you created your first project</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [5]: </span><span class="n">p</span>
-<span class="gh">Out[5]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="gh">Out[5]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 </pre></div>
 </div>
-<p>which contains the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
+<p>which contains the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
 corresponding plotter that visualizes it</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gh">Out[6]: </span><span class="go"></span>
@@ -378,26 +378,26 @@ the dimensions are therefore decoded as <code class="docutils literal notranslat
 <code class="docutils literal notranslate"><span class="pre">'lat'</span></code> → <code class="docutils literal notranslate"><span class="pre">'y'</span></code>.</p>
 <p>Hence it is equivalent if you type</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [16]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gh">Out[16]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+<span class="gh">Out[16]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00])</span>
 </pre></div>
 </div>
 <p>or</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [17]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gh">Out[17]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+<span class="gh">Out[17]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00])</span>
 </pre></div>
 </div>
 <p>Finally you can also be very specific using the <cite>dims</cite> keyword via</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [18]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-<span class="gh">Out[18]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+<span class="gh">Out[18]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00])</span>
 </pre></div>
 </div>
 <p>You can also use the <cite>method</cite> keyword from the plotting function to use the
-advantages of the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v0.19.1.dev6)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
+advantages of the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
 corresponding to March 1979 you can use</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [19]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">&#39;1979-03&#39;</span><span class="p">,</span>
 <span class="gp">   ....: </span>                 <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
 <span class="gp">   ....: </span>
-<span class="gh">Out[19]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-03-31T18:00:00])</span>
+<span class="gh">Out[19]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-03-31T18:00:00])</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -588,7 +588,7 @@ and the desired value as keyword argument, e.g.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [24]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;my title&#39;</span><span class="p">,</span>
 <span class="gp">   ....: </span>                 <span class="n">cbar</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
 <span class="gp">   ....: </span>
-<span class="gh">Out[24]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="gh">Out[24]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 </pre></div>
 </div>
 <p>This works generally well as long as there are no dimensions in the desired
@@ -597,7 +597,7 @@ be really sure, use the <cite>fmt</cite> keyword via</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [25]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;my title&#39;</span><span class="p">,</span>
 <span class="gp">   ....: </span>                                             <span class="s1">&#39;cbar&#39;</span><span class="p">:</span> <span class="s1">&#39;r&#39;</span><span class="p">})</span>
 <span class="gp">   ....: </span>
-<span class="gh">Out[25]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="gh">Out[25]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 </pre></div>
 </div>
 <p>The same methodology works for the interactive usage, i.e. you can use</p>
@@ -675,8 +675,8 @@ list of dimension values and/or names. For example</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [34]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="gh">Out[34]: </span><span class="go"></span>
 <span class="go">psyplot.project.Project([</span>
-<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00])</span>
 </pre></div>
 </div>
 <p>created two plots: one for the first and one for the second time step.</p>
@@ -684,10 +684,10 @@ list of dimension values and/or names. For example</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [35]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">],</span> <span class="n">time</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="gh">Out[35]: </span><span class="go"></span>
 <span class="go">psyplot.project.Project([</span>
-<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00,</span>
-<span class="go">    arr2: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr3: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00,</span>
+<span class="go">    arr2: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr3: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00])</span>
 </pre></div>
 </div>
 <p>created four plots. By default, each plot is made in an own figure but you can
@@ -701,10 +701,10 @@ second time step into one figure and sort by time. This will produce</p>
 <span class="gp">   ....: </span>
 <span class="gh">Out[36]: </span><span class="go"></span>
 <span class="go">psyplot.project.Project([</span>
-<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr1: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr2: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00,</span>
-<span class="go">    arr3: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-02-28T18:00:00])</span>
+<span class="go">    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr2: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00,</span>
+<span class="go">    arr3: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00])</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/docs_multiple_plots.png"><img alt="_images/docs_multiple_plots.png" src="_images/docs_multiple_plots.png" style="width: 4in;" /></a>
@@ -726,7 +726,7 @@ longitudinal direction), typing</p>
 </div>
 <p>results in a <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a>. Instead you have to write</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [38]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapvector</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">]])</span>
-<span class="gh">Out[38]: </span><span class="go">psyplot.project.Project([    arr0: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="gh">Out[38]: </span><span class="go">psyplot.project.Project([    arr0: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 </pre></div>
 </div>
 <p>Please have a look into the documentations of the

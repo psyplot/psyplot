@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.project module &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>psyplot.project module &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -120,13 +120,13 @@ subproject.</p>
 <td><p>Subclass of the original cdo.Cdo class in the cdo.py module</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataArrayPlotter</span></code>(da, *args, **kwargs)</p></td>
-<td><p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p></td>
+<td><p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataArrayPlotterInterface</span></code>(methodname, ...[, ...])</p></td>
 <td><p>Interface for the <a class="reference internal" href="#psyplot.project.DataArrayPlotter" title="psyplot.project.DataArrayPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArrayPlotter</span></code></a> to a plotter</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetPlotter</span></code>(ds, *args, **kwargs)</p></td>
-<td><p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p></td>
+<td><p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetPlotterInterface</span></code>(methodname, module, ...)</p></td>
 <td><p>Interface for the <a class="reference internal" href="#psyplot.project.DatasetPlotter" title="psyplot.project.DatasetPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetPlotter</span></code></a> to a plotter</p></td>
@@ -192,7 +192,7 @@ subproject.</p>
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.project.Cdo">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">Cdo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Cdo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Cdo" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">Cdo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Cdo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Cdo" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cdo.Cdo</span></code></p>
 <p>Subclass of the original cdo.Cdo class in the cdo.py module</p>
 <p>Requirements are a working cdo binary and the installed cdo.py
@@ -225,22 +225,22 @@ however also specify them as extra keyword arguments)</p></li>
 <li><p><strong>make_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the data is plotted at the end. Otherwise you have to
 call the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.initialize_plot()</span></code></a> method or
 the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.reinit" title="psyplot.plotter.Plotter.reinit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.reinit()</span></code></a> method by yourself</p></li>
-<li><p><strong>ax</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a><em> (</em><em>x</em><em>, </em><em>y</em><em>[</em><em>, </em><em>z</em><em>]</em><em>) or </em><em>(</em><em>list of</em><em>) </em><a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.4.3)"><em>matplotlib.axes.Axes</em></a>) – <p>Specifies the subplots on which to plot the new data objects.</p>
+<li><p><strong>ax</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a><em> (</em><em>x</em><em>, </em><em>y</em><em>[</em><em>, </em><em>z</em><em>]</em><em>) or </em><em>(</em><em>list of</em><em>) </em><a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.1)"><em>matplotlib.axes.Axes</em></a>) – <p>Specifies the subplots on which to plot the new data objects.</p>
 <ul>
 <li><p>If None, a new figure will be created for each created plotter</p></li>
 <li><p>If tuple (x, y[, z]), <cite>x</cite> specifies the number of rows, <cite>y</cite> the
 number of columns and the optional third parameter <cite>z</cite> the
 maximal number of subplots per figure.</p></li>
-<li><p>If <a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code></a> (or list of those, e.g. created
-by the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> function), the data
+<li><p>If <a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code></a> (or list of those, e.g. created
+by the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a> function), the data
 will be plotted on these subplots</p></li>
 </ul>
 </p></li>
 <li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.19.1.dev6)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.19.1.dev6)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 </ul>
 </dd>
 </dl>
@@ -285,9 +285,9 @@ using the psy-maps package</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.project.DataArrayPlotter">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DataArrayPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DataArrayPlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DataArrayPlotter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DataArrayPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DataArrayPlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DataArrayPlotter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#psyplot.project.ProjectPlotter" title="psyplot.project.ProjectPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.ProjectPlotter</span></code></a></p>
-<p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p>
+<p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p>
 <p>This class can be used to make new plots from a given dataset and add them
 to the current <a class="reference internal" href="#module-psyplot.project" title="psyplot.project"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project()</span></code></a></p>
 <p><strong>Attributes:</strong></p>
@@ -1678,7 +1678,7 @@ to the current <a class="reference internal" href="#module-psyplot.project" titl
 
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.project.DataArrayPlotterInterface">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DataArrayPlotterInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DataArrayPlotterInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DataArrayPlotterInterface" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DataArrayPlotterInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DataArrayPlotterInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DataArrayPlotterInterface" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#psyplot.project.PlotterInterface" title="psyplot.project.PlotterInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.PlotterInterface</span></code></a></p>
 <p>Interface for the <a class="reference internal" href="#psyplot.project.DataArrayPlotter" title="psyplot.project.DataArrayPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArrayPlotter</span></code></a> to a plotter</p>
 <p><strong>Methods:</strong></p>
@@ -1703,9 +1703,9 @@ to the current <a class="reference internal" href="#module-psyplot.project" titl
 
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.project.DatasetPlotter">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DatasetPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DatasetPlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DatasetPlotter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DatasetPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DatasetPlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DatasetPlotter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#psyplot.project.ProjectPlotter" title="psyplot.project.ProjectPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.ProjectPlotter</span></code></a></p>
-<p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p>
+<p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p>
 <p>This class can be used to make new plots from a given dataset and add them
 to the current <a class="reference internal" href="#module-psyplot.project" title="psyplot.project"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project()</span></code></a></p>
 <p><strong>Attributes:</strong></p>
@@ -3096,7 +3096,7 @@ to the current <a class="reference internal" href="#module-psyplot.project" titl
 
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.project.DatasetPlotterInterface">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DatasetPlotterInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DatasetPlotterInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DatasetPlotterInterface" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DatasetPlotterInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DatasetPlotterInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DatasetPlotterInterface" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#psyplot.project.PlotterInterface" title="psyplot.project.PlotterInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.PlotterInterface</span></code></a></p>
 <p>Interface for the <a class="reference internal" href="#psyplot.project.DatasetPlotter" title="psyplot.project.DatasetPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetPlotter</span></code></a> to a plotter</p>
 </dd></dl>
@@ -3280,7 +3280,7 @@ to the current <a class="reference internal" href="#module-psyplot.project" titl
 
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.project.PlotterInterface">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">PlotterInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#PlotterInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.PlotterInterface" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">PlotterInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#PlotterInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.PlotterInterface" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Base class for visualizing a data array from an predefined plotter</p>
 <p>See the <code class="xref py py-meth docutils literal notranslate"><span class="pre">__call__()</span></code> method for details on plotting.</p>
@@ -3373,21 +3373,13 @@ help explorer). The given function must take a string as argument</p></li>
 <li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
-<li><p><strong>``*args</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
-<li><p><strong>**kwargs``</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None if <cite>func</cite> is the print function, otherwise anything else</p>
+<dd class="field-even"><p>The enhanced list of the formatoptions</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>results of <cite>func</cite></p>
+<dd class="field-odd"><p>list of str</p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -3398,7 +3390,7 @@ by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.PlotterInterface.is_imported">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_imported</span></span><a class="headerlink" href="#psyplot.project.PlotterInterface.is_imported" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_imported</span></span><a class="headerlink" href="#psyplot.project.PlotterInterface.is_imported" title="Permalink to this definition"></a></dt>
 <dd><p>True if the module for this plot method has been imported already</p>
 </dd></dl>
 
@@ -3421,21 +3413,13 @@ help explorer). The given function must take a string as argument</p></li>
 <li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
-<li><p><strong>``*args</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
-<li><p><strong>**kwargs``</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None if <cite>func</cite> is the print function, otherwise anything else</p>
+<dd class="field-even"><p>The enhanced list of the formatoptions</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>results of <cite>func</cite></p>
+<dd class="field-odd"><p>list of str</p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -3446,13 +3430,13 @@ by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.PlotterInterface.plotter_cls">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">plotter_cls</span></span><a class="headerlink" href="#psyplot.project.PlotterInterface.plotter_cls" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plotter_cls</span></span><a class="headerlink" href="#psyplot.project.PlotterInterface.plotter_cls" title="Permalink to this definition"></a></dt>
 <dd><p>The plotter class</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.PlotterInterface.print_func">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">print_func</span></span><a class="headerlink" href="#psyplot.project.PlotterInterface.print_func" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">print_func</span></span><a class="headerlink" href="#psyplot.project.PlotterInterface.print_func" title="Permalink to this definition"></a></dt>
 <dd><p>The function that is used to return a formatoption</p>
 <p>By default the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function is used (i.e. it is printed to
 the terminal)</p>
@@ -3477,21 +3461,13 @@ help explorer). The given function must take a string as argument</p></li>
 <li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
-<li><p><strong>``*args</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
-<li><p><strong>**kwargs``</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None if <cite>func</cite> is the print function, otherwise anything else</p>
+<dd class="field-even"><p>The enhanced list of the formatoptions</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>results of <cite>func</cite></p>
+<dd class="field-odd"><p>list of str</p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -3504,7 +3480,7 @@ by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.
 
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.project.Project">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">Project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">Project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="psyplot.data.html#psyplot.data.ArrayList" title="psyplot.data.ArrayList"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.ArrayList</span></code></a></p>
 <p>A manager of multiple interactive data projects</p>
 <dl class="field-list simple">
@@ -3733,7 +3709,7 @@ If not True, this will be used for renaming (if the array name of
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.arr_names">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">arr_names</span></span><a class="headerlink" href="#psyplot.project.Project.arr_names" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arr_names</span></span><a class="headerlink" href="#psyplot.project.Project.arr_names" title="Permalink to this definition"></a></dt>
 <dd><p>Names of the arrays (!not of the variables!) in this list</p>
 <p>This attribute can be set with an iterable of unique names to change
 the array names of the data objects in this list.</p>
@@ -3741,13 +3717,13 @@ the array names of the data objects in this list.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.axes">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">axes</span></span><a class="headerlink" href="#psyplot.project.Project.axes" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">axes</span></span><a class="headerlink" href="#psyplot.project.Project.axes" title="Permalink to this definition"></a></dt>
 <dd><p>A mapping from axes to data objects with the plotter in this axes</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.barplot">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">barplot</span></span><a class="headerlink" href="#psyplot.project.Project.barplot" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">barplot</span></span><a class="headerlink" href="#psyplot.project.Project.barplot" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.BarPlotter" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.BarPlotter</span></code></a> plotters</p>
 </dd></dl>
 
@@ -3780,19 +3756,19 @@ plotters are removed</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.combined">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">combined</span></span><a class="headerlink" href="#psyplot.project.Project.combined" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">combined</span></span><a class="headerlink" href="#psyplot.project.Project.combined" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.CombinedSimplePlotter" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.CombinedSimplePlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.datasets">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">datasets</span></span><a class="headerlink" href="#psyplot.project.Project.datasets" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">datasets</span></span><a class="headerlink" href="#psyplot.project.Project.datasets" title="Permalink to this definition"></a></dt>
 <dd><p>A mapping from dataset numbers to datasets in this list</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.density">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">density</span></span><a class="headerlink" href="#psyplot.project.Project.density" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">density</span></span><a class="headerlink" href="#psyplot.project.Project.density" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.DensityPlotter" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.DensityPlotter</span></code></a> plotters</p>
 </dd></dl>
 
@@ -3821,34 +3797,26 @@ help explorer). The given function must take a string as argument</p></li>
 <li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
-<li><p><strong>``*args</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
-<li><p><strong>**kwargs``</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None if <cite>func</cite> is the print function, otherwise anything else</p>
+<dd class="field-even"><p>The enhanced list of the formatoptions</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>results of <cite>func</cite></p>
+<dd class="field-odd"><p>list of str</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.dsnames">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dsnames</span></span><a class="headerlink" href="#psyplot.project.Project.dsnames" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dsnames</span></span><a class="headerlink" href="#psyplot.project.Project.dsnames" title="Permalink to this definition"></a></dt>
 <dd><p>The set of dataset names in this instance</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.dsnames_map">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dsnames_map</span></span><a class="headerlink" href="#psyplot.project.Project.dsnames_map" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dsnames_map</span></span><a class="headerlink" href="#psyplot.project.Project.dsnames_map" title="Permalink to this definition"></a></dt>
 <dd><p>A dictionary from the dataset numbers in this list to their
 filenames</p>
 </dd></dl>
@@ -3865,9 +3833,9 @@ filenames</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable</em><em> or </em><a class="reference external" href="https://matplotlib.org/stable/api/backend_pdf_api.html#matplotlib.backends.backend_pdf.PdfPages" title="(in Matplotlib v3.4.3)"><em>matplotlib.backends.backend_pdf.PdfPages</em></a>) – if string or list of strings, those define the names of the output
+<li><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>iterable</em><em> or </em><a class="reference external" href="https://matplotlib.org/stable/api/backend_pdf_api.html#matplotlib.backends.backend_pdf.PdfPages" title="(in Matplotlib v3.5.1)"><em>matplotlib.backends.backend_pdf.PdfPages</em></a>) – if string or list of strings, those define the names of the output
 files. Otherwise you may provide an instance of
-<a class="reference external" href="https://matplotlib.org/stable/api/backend_pdf_api.html#matplotlib.backends.backend_pdf.PdfPages" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_pdf.PdfPages</span></code></a> to save the
+<a class="reference external" href="https://matplotlib.org/stable/api/backend_pdf_api.html#matplotlib.backends.backend_pdf.PdfPages" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_pdf.PdfPages</span></code></a> to save the
 figures in it.
 If string (or iterable of strings), attribute names in the
 xarray.DataArray.attrs attribute as well as index dimensions
@@ -3888,7 +3856,7 @@ iterable, it is the same as <code class="docutils literal notranslate"><span cla
 <cite>output</cite> (e.g. <code class="docutils literal notranslate"><span class="pre">'%m'</span></code>, <code class="docutils literal notranslate"><span class="pre">'%Y'</span></code>, etc.). If so, other formatting
 strings must be escaped by double <code class="docutils literal notranslate"><span class="pre">'%'</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">'%%i'</span></code>
 instead of (<code class="docutils literal notranslate"><span class="pre">'%i'</span></code>))</p></li>
-<li><p><strong>**kwargs</strong> – Any valid keyword for the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html#matplotlib.pyplot.savefig" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.savefig()</span></code></a>
+<li><p><strong>**kwargs</strong> – Any valid keyword for the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html#matplotlib.pyplot.savefig" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.savefig()</span></code></a>
 function</p></li>
 </ul>
 </dd>
@@ -3897,7 +3865,7 @@ function</p></li>
 otherwise None</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/backend_pdf_api.html#matplotlib.backends.backend_pdf.PdfPages" title="(in Matplotlib v3.4.3)">matplotlib.backends.backend_pdf.PdfPages</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/backend_pdf_api.html#matplotlib.backends.backend_pdf.PdfPages" title="(in Matplotlib v3.5.1)">matplotlib.backends.backend_pdf.PdfPages</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -3962,7 +3930,7 @@ If not True, this will be used for renaming (if the array name of
 
 <dl class="py method">
 <dt class="sig sig-object py" id="psyplot.project.Project.extract_fmts_from_preset">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">extract_fmts_from_preset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotmethod</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.extract_fmts_from_preset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.extract_fmts_from_preset" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract_fmts_from_preset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotmethod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.extract_fmts_from_preset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.extract_fmts_from_preset" title="Permalink to this definition"></a></dt>
 <dd><p>Extract the formatoptions for a plotmethod from a given preset</p>
 <p>This method takes the preset and extracts the formatoptions valid for
 the given plotmethod</p>
@@ -3978,14 +3946,14 @@ the given plotmethod</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.figs">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">figs</span></span><a class="headerlink" href="#psyplot.project.Project.figs" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">figs</span></span><a class="headerlink" href="#psyplot.project.Project.figs" title="Permalink to this definition"></a></dt>
 <dd><p>A mapping from figures to data objects with the plotter in this
 figure</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.fldmean">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fldmean</span></span><a class="headerlink" href="#psyplot.project.Project.fldmean" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fldmean</span></span><a class="headerlink" href="#psyplot.project.Project.fldmean" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.FldmeanPlotter" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.FldmeanPlotter</span></code></a> plotters</p>
 </dd></dl>
 
@@ -4008,7 +3976,7 @@ instead of (<code class="docutils literal notranslate"><span class="pre">'%i'</s
 are multiple values for one attribute in the arrays. If None, they
 will be returned as sets</p></li>
 <li><p><strong>enhanced</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.get_enhanced_attrs" title="psyplot.plotter.Plotter.get_enhanced_attrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.get_enhanced_attrs()</span></code></a>
-method is used, otherwise the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.19.1.dev6)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a>
+method is used, otherwise the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.20.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a>
 attribute is used.</p></li>
 <li><p><strong>plot_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – It True, use the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.plot_data" title="psyplot.plotter.Plotter.plot_data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.plot_data</span></code></a>
 attribute of the plotters rather than the raw data in this project</p></li>
@@ -4026,17 +3994,17 @@ attribute of the plotters rather than the raw data in this project</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="psyplot.project.Project.from_dataset">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.from_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.from_dataset" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.from_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.from_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Construct an ArrayList instance from an existing base dataset</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
+<li><p><strong>base</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
 <li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.19.1.dev6)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.19.1.dev6)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Default: None. A boolean indicating whether this list shall
 automatically update the contained arrays when calling the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code> method or not. See also the <code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code>
@@ -4047,7 +4015,8 @@ key in the <code class="xref py py-attr docutils literal notranslate"><span clas
 put together into one <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code>.</p></li>
 <li><p><strong>default_slice</strong> (<em>indexer</em>) – Index (e.g. 0 if <cite>method</cite> is ‘isel’) that shall be used for
 dimensions not covered by <cite>dims</cite> and <cite>furtherdims</cite>. If None, the
-whole slice will be used.</p></li>
+whole slice will be used. Note that the <cite>default_slice</cite> is always
+based on the <cite>isel</cite> method.</p></li>
 <li><p><strong>decoder</strong> (<a class="reference internal" href="psyplot.data.html#psyplot.data.CFDecoder" title="psyplot.data.CFDecoder"><em>CFDecoder</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – <p>Arguments for the decoder. This can be one of</p>
 <ul>
 <li><p>an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">CFDecoder</span></code></p></li>
@@ -4063,7 +4032,7 @@ with shape (3, 4, 1, 5) will be squeezed to shape (3, 4, 5))</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Meta attributes that shall be assigned to the selected data arrays
 (additional to those stored in the <cite>base</cite> dataset)</p></li>
 <li><p><strong>load</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – If True, load the data from the dataset using the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v0.19.1.dev6)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
 be given to the above mentioned <code class="docutils literal notranslate"><span class="pre">load</span></code> method</p></li>
 <li><p><strong>main</strong> (<a class="reference internal" href="#psyplot.project.Project" title="psyplot.project.Project"><em>Project</em></a>) – The main project that this project corresponds to</p></li>
 <li><p><strong>arr_names</strong> (<em>string</em><em>, </em><em>list of strings</em><em> or </em><em>dictionary</em>) – <p>Set the unique array names of the resulting arrays and (optionally)
@@ -4106,19 +4075,19 @@ second (time == 1) time step.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.is_cmp">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_cmp</span></span><a class="headerlink" href="#psyplot.project.Project.is_cmp" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cmp</span></span><a class="headerlink" href="#psyplot.project.Project.is_cmp" title="Permalink to this definition"></a></dt>
 <dd><p>Boolean that is True if the project is the current main project</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.is_csp">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_csp</span></span><a class="headerlink" href="#psyplot.project.Project.is_csp" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_csp</span></span><a class="headerlink" href="#psyplot.project.Project.is_csp" title="Permalink to this definition"></a></dt>
 <dd><p>Boolean that is True if the project is the current subproject</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.is_main">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_main</span></span><a class="headerlink" href="#psyplot.project.Project.is_main" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_main</span></span><a class="headerlink" href="#psyplot.project.Project.is_main" title="Permalink to this definition"></a></dt>
 <dd><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>. True if this <a class="reference internal" href="#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> is a main project</p>
 </dd></dl>
 
@@ -4133,7 +4102,7 @@ second (time == 1) time step.</p></li>
 are multiple values for one attribute in the arrays. If None, they
 will be returned as sets</p></li>
 <li><p><strong>enhanced</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.get_enhanced_attrs" title="psyplot.plotter.Plotter.get_enhanced_attrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.get_enhanced_attrs()</span></code></a>
-method is used, otherwise the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.19.1.dev6)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a>
+method is used, otherwise the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.20.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a>
 attribute is used.</p></li>
 <li><p><strong>plot_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – It True, use the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.plot_data" title="psyplot.plotter.Plotter.plot_data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.plot_data</span></code></a>
 attribute of the plotters rather than the raw data in this project</p></li>
@@ -4170,34 +4139,26 @@ help explorer). The given function must take a string as argument</p></li>
 <li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
-<li><p><strong>``*args</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
-<li><p><strong>**kwargs``</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None if <cite>func</cite> is the print function, otherwise anything else</p>
+<dd class="field-even"><p>The enhanced list of the formatoptions</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>results of <cite>func</cite></p>
+<dd class="field-odd"><p>list of str</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.lineplot">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">lineplot</span></span><a class="headerlink" href="#psyplot.project.Project.lineplot" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lineplot</span></span><a class="headerlink" href="#psyplot.project.Project.lineplot" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.LinePlotter" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.LinePlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="psyplot.project.Project.load_preset">
-<span class="sig-name descname"><span class="pre">load_preset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.load_preset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.load_preset" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_preset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.load_preset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.load_preset" title="Permalink to this definition"></a></dt>
 <dd><p>Load a preset from disk and apply it to the open project.</p>
 <p>This method loads a preset and updates the corresponding plots</p>
 <dl class="field-list simple">
@@ -4220,7 +4181,7 @@ the available presets, run <code class="docutils literal notranslate"><span clas
 
 <dl class="py method">
 <dt class="sig sig-object py" id="psyplot.project.Project.load_project">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_post</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.load_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.load_project" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_post</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.load_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.load_project" title="Permalink to this definition"></a></dt>
 <dd><p>Load a project from a file or dict</p>
 <p>This classmethod allows to load a project that has been stored using
 the <a class="reference internal" href="#psyplot.project.Project.save_project" title="psyplot.project.Project.save_project"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_project()</span></code></a> method and reads all the data and creates the
@@ -4284,7 +4245,7 @@ If <cite>alternative_paths</cite> is a list (or any other iterable) is
 provided, the file names will be replaced as they appear in <cite>d</cite>
 (note that this is very unsafe if <cite>d</cite> is not and OrderedDict)</p></li>
 <li><p><strong>datasets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – A mapping from original filenames in <cite>d</cite> to the instances of
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
 holds as for the <cite>alternative_paths</cite> parameter</p></li>
 <li><p><strong>ignore_keys</strong> (<em>list of str</em>) – Keys specified in this list are ignored and not seen as array
 information (note that <code class="docutils literal notranslate"><span class="pre">attrs</span></code> are used anyway)</p></li>
@@ -4332,7 +4293,7 @@ If <cite>alternative_paths</cite> is a list (or any other iterable) is
 provided, the file names will be replaced as they appear in <cite>d</cite>
 (note that this is very unsafe if <cite>d</cite> is not and OrderedDict)</p></li>
 <li><p><strong>datasets</strong> – A mapping from original filenames in <cite>d</cite> to the instances of
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
 holds as for the <cite>alternative_paths</cite> parameter</p></li>
 <li><p><strong>pwd</strong> – Path to the working directory from where the data can be imported.
 If None, use the current working directory.</p></li>
@@ -4386,43 +4347,43 @@ that should be used instead</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.logger">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#psyplot.project.Project.logger" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#psyplot.project.Project.logger" title="Permalink to this definition"></a></dt>
 <dd><p><a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Logger" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code></a> of this instance</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.main">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">main</span></span><a class="headerlink" href="#psyplot.project.Project.main" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">main</span></span><a class="headerlink" href="#psyplot.project.Project.main" title="Permalink to this definition"></a></dt>
 <dd><p><a class="reference internal" href="#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>. The main project of this subproject</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.mapcombined">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mapcombined</span></span><a class="headerlink" href="#psyplot.project.Project.mapcombined" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mapcombined</span></span><a class="headerlink" href="#psyplot.project.Project.mapcombined" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.CombinedPlotter" title="(in psy-maps v1.3.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_maps.plotters.CombinedPlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.mapplot">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mapplot</span></span><a class="headerlink" href="#psyplot.project.Project.mapplot" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mapplot</span></span><a class="headerlink" href="#psyplot.project.Project.mapplot" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter" title="(in psy-maps v1.3.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.maps">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">maps</span></span><a class="headerlink" href="#psyplot.project.Project.maps" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maps</span></span><a class="headerlink" href="#psyplot.project.Project.maps" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter" title="(in psy-maps v1.3.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_maps.plotters.MapPlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.mapvector">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mapvector</span></span><a class="headerlink" href="#psyplot.project.Project.mapvector" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mapvector</span></span><a class="headerlink" href="#psyplot.project.Project.mapvector" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.VectorPlotter" title="(in psy-maps v1.3.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_maps.plotters.VectorPlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="psyplot.project.Project.new">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.new"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.new" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.new"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.new" title="Permalink to this definition"></a></dt>
 <dd><p>Create a new main project</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -4473,20 +4434,20 @@ created)</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.plot">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">plot</span></span><a class="headerlink" href="#psyplot.project.Project.plot" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><a class="headerlink" href="#psyplot.project.Project.plot" title="Permalink to this definition"></a></dt>
 <dd><p>Plotting instance of this <a class="reference internal" href="#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>. See the
 <a class="reference internal" href="#psyplot.project.ProjectPlotter" title="psyplot.project.ProjectPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProjectPlotter</span></code></a> class for method documentations</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.plot2d">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">plot2d</span></span><a class="headerlink" href="#psyplot.project.Project.plot2d" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot2d</span></span><a class="headerlink" href="#psyplot.project.Project.plot2d" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.Simple2DPlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.plotters">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">plotters</span></span><a class="headerlink" href="#psyplot.project.Project.plotters" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plotters</span></span><a class="headerlink" href="#psyplot.project.Project.plotters" title="Permalink to this definition"></a></dt>
 <dd><p>A list of all the plotters in this instance</p>
 </dd></dl>
 
@@ -4522,7 +4483,7 @@ If it is None and <cite>paths</cite> is not None, <cite>dump</cite> is set to Tr
 If paths is <code class="docutils literal notranslate"><span class="pre">True</span></code>, an iterator over temporary files will be
 created without raising a warning</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), the <code class="xref py py-attr docutils literal notranslate"><span class="pre">ArrayList.attrs</span></code> and
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.19.1.dev6)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a> attributes are included in the
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.20.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a> attributes are included in the
 returning dictionary</p></li>
 <li><p><strong>standardize_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), the real dimension names in the dataset are
 replaced by x, y, z and t to be more general.</p></li>
@@ -4558,7 +4519,7 @@ included</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="psyplot.project.Project.scp">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">scp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.scp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.scp" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.scp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.scp" title="Permalink to this definition"></a></dt>
 <dd><p>Set the current project</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -4590,7 +4551,7 @@ plotters in this instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>Plotter</em></a><em>, </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><em>xarray.DataArray</em></a><em>, </em><a class="reference internal" href="psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><em>InteractiveList</em></a><em>, or </em><em>list of them</em>) – The source of the plotter that shares its formatoptions with the
+<li><p><strong>base</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>Plotter</em></a><em>, </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.20.2.dev0)"><em>xarray.DataArray</em></a><em>, </em><a class="reference internal" href="psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><em>InteractiveList</em></a><em>, or </em><em>list of them</em>) – The source of the plotter that shares its formatoptions with the
 others. It can be None (then the first instance in this project
 is used), a <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> or any data object
 with a <em>psy</em> attribute. If <cite>by</cite> is not None, then it is expected
@@ -4619,13 +4580,13 @@ is called at the end. This parameter has no effect if the
 
 <dl class="py method">
 <dt class="sig sig-object py" id="psyplot.project.Project.show">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.show" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#Project.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.Project.show" title="Permalink to this definition"></a></dt>
 <dd><p>Shows all open figures</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.simple">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">simple</span></span><a class="headerlink" href="#psyplot.project.Project.simple" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">simple</span></span><a class="headerlink" href="#psyplot.project.Project.simple" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.SimplePlotterBase" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.SimplePlotterBase</span></code></a> plotters</p>
 </dd></dl>
 
@@ -4648,21 +4609,13 @@ help explorer). The given function must take a string as argument</p></li>
 <li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
-<li><p><strong>``*args</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
-<li><p><strong>**kwargs``</strong> – <p>They are passed to the <a class="reference external" href="https://docs.python.org/3/library/difflib.html#difflib.get_close_matches" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">difflib.get_close_matches()</span></code></a> function
-(i.e. <cite>n</cite> to increase the number of returned similar keys and
-<cite>cutoff</cite> to change the sensibility)</p>
-</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None if <cite>func</cite> is the print function, otherwise anything else</p>
+<dd class="field-even"><p>The enhanced list of the formatoptions</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>results of <cite>func</cite></p>
+<dd class="field-odd"><p>list of str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -4697,19 +4650,19 @@ is called at the end. This parameter has no effect if the
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.vector">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">vector</span></span><a class="headerlink" href="#psyplot.project.Project.vector" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vector</span></span><a class="headerlink" href="#psyplot.project.Project.vector" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.SimpleVectorPlotter" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.SimpleVectorPlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.violinplot">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">violinplot</span></span><a class="headerlink" href="#psyplot.project.Project.violinplot" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">violinplot</span></span><a class="headerlink" href="#psyplot.project.Project.violinplot" title="Permalink to this definition"></a></dt>
 <dd><p>List of data arrays that are plotted by <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.ViolinPlotter" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotters.ViolinPlotter</span></code></a> plotters</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.Project.with_plotter">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">with_plotter</span></span><a class="headerlink" href="#psyplot.project.Project.with_plotter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">with_plotter</span></span><a class="headerlink" href="#psyplot.project.Project.with_plotter" title="Permalink to this definition"></a></dt>
 <dd><p>The arrays in this instance that are visualized with a plotter</p>
 </dd></dl>
 
@@ -4717,7 +4670,7 @@ is called at the end. This parameter has no effect if the
 
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.project.ProjectPlotter">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">ProjectPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#ProjectPlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.ProjectPlotter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">ProjectPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#ProjectPlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.ProjectPlotter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Plotting methods of the <a class="reference internal" href="#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.Project</span></code></a> class</p>
 <p><strong>Attributes:</strong></p>
@@ -5910,7 +5863,7 @@ is called at the end. This parameter has no effect if the
 
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.project.ProjectPlotter.project">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">project</span></span><a class="headerlink" href="#psyplot.project.ProjectPlotter.project" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">project</span></span><a class="headerlink" href="#psyplot.project.ProjectPlotter.project" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -6226,7 +6179,7 @@ specified number <cite>n</cite> is reached.</p>
 useful if you want to use the <a class="reference internal" href="#psyplot.project.ProjectPlotter.mapplot" title="psyplot.project.ProjectPlotter.mapplot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapplot</span></code></a>,
 <a class="reference internal" href="#psyplot.project.ProjectPlotter.mapvector" title="psyplot.project.ProjectPlotter.mapvector"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapvector</span></code></a> or
 <a class="reference internal" href="#psyplot.project.ProjectPlotter.mapcombined" title="psyplot.project.ProjectPlotter.mapcombined"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapcombined</span></code></a> plotting methods</p></li>
-<li><p><strong>**kwargs</strong> (<em>*args and</em>) – anything that is passed to the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a>
+<li><p><strong>**kwargs</strong> (<em>*args and</em>) – anything that is passed to the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.subplots()</span></code></a>
 function</p></li>
 </ul>
 </dd>
@@ -6241,7 +6194,7 @@ function</p></li>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="psyplot.project.plot">
-<span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;psyplot.project.ProjectPlotter</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#psyplot.project.plot" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;psyplot.project.ProjectPlotter</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#psyplot.project.plot" title="Permalink to this definition"></a></dt>
 <dd><p><a class="reference internal" href="#psyplot.project.ProjectPlotter" title="psyplot.project.ProjectPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProjectPlotter</span></code></a> of the current project. See the class documentation
 for available plotting methods</p>
 </dd></dl>
@@ -6320,7 +6273,8 @@ method. If True, the plotter is expected to work with instances of
 <code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.InteractiveArray</span></code>.</p></li>
 <li><p><strong>default_slice</strong> (<em>indexer</em>) – Index (e.g. 0 if <cite>method</cite> is ‘isel’) that shall be used for
 dimensions not covered by <cite>dims</cite> and <cite>furtherdims</cite>. If None, the
-whole slice will be used.</p></li>
+whole slice will be used. Note that the <cite>default_slice</cite> is always
+based on the <cite>isel</cite> method.</p></li>
 <li><p><strong>default_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Default dimensions that shall be used for plotting (e.g.
 {‘x’: slice(None), ‘y’: slice(None)} for longitude-latitude plots)</p></li>
 <li><p><strong>show_examples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, examples how to access the plotter documentation are

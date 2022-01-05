@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>psyplot &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -31,7 +31,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -208,24 +208,39 @@
 <span class="sd">            }</span>
 <span class="sd">        }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">iter_entry_points</span>
+    <span class="kn">from</span> <span class="nn">importlib.metadata</span> <span class="kn">import</span> <span class="n">entry_points</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;psyplot&#39;</span><span class="p">:</span> <span class="n">_get_versions</span><span class="p">(</span><span class="n">requirements</span><span class="p">)}</span>
-    <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">iter_entry_points</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;psyplot&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;plugin&#39;</span><span class="p">):</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="n">entry_points</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;psyplot&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;plugin&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>  <span class="c1"># python&lt;3.10</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="p">[</span><span class="n">ep</span> <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">entry_points</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;psyplot&#39;</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="k">if</span> <span class="n">ep</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span>  <span class="s1">&#39;plugin&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">eps</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">ep</span><span class="p">)</span> <span class="ow">in</span> <span class="n">rcParams</span><span class="o">.</span><span class="n">_plugins</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Loading entrypoint </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ep</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">key</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">module_name</span><span class="p">):</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ep</span><span class="o">.</span><span class="n">module</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># python&lt;3.10</span>
+                <span class="n">ep</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;module&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">key</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">module</span><span class="p">):</span>
                 <span class="k">continue</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">mod</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
             <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not import </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ep</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Could not import </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ep</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">ret</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">module_name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">get_versions</span><span class="p">(</span><span class="n">requirements</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="n">ret</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">module_name</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;plugin_version&#39;</span><span class="p">,</span>
-                                       <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;__version__&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))}</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not import </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ep</span><span class="p">,</span> <span class="p">),</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Could not import </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ep</span><span class="p">,</span> <span class="p">),</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ret</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">module</span><span class="p">)]</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">get_versions</span><span class="p">(</span><span class="n">requirements</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="n">ret</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">ep</span><span class="o">.</span><span class="n">module</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span>
+                            <span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;plugin_version&#39;</span><span class="p">,</span>
+                            <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;__version__&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+                        <span class="p">}</span>
     <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">psyplot_gui</span>

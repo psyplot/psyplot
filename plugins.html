@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Psyplot plugins &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>Psyplot plugins &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -193,18 +193,18 @@ this plugin is included.</p>
 <p>To show this behaviour, we can use <code class="docutils literal notranslate"><span class="pre">psyplot</span> <span class="pre">--list-plugins</span></code> which shows the
 plugins that are used. By default, all plugins are included</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="o">!</span>psyplot --list-plugins
-<span class="go">- plugin = psy_simple.plugin</span>
-<span class="go">- plugin = psy_maps.plugin</span>
+<span class="go">- EntryPoint(name=&#39;plugin&#39;, value=&#39;psy_simple.plugin&#39;, group=&#39;psyplot&#39;)</span>
+<span class="go">- EntryPoint(name=&#39;plugin&#39;, value=&#39;psy_maps.plugin&#39;, group=&#39;psyplot&#39;)</span>
 </pre></div>
 </div>
 <p>Excluding psy-maps works via</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [2]: </span><span class="o">!</span><span class="nv">PSYPLOT_PLUGINS</span><span class="o">=</span>no:psy_maps.plugin psyplot --list-plugins
-<span class="go">- plugin = psy_simple.plugin</span>
+<span class="go">- EntryPoint(name=&#39;plugin&#39;, value=&#39;psy_simple.plugin&#39;, group=&#39;psyplot&#39;)</span>
 </pre></div>
 </div>
 <p>Including only psy-maps works via</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [3]: </span><span class="o">!</span><span class="nv">PSYPLOT_PLUGINS</span><span class="o">=</span><span class="s1">&#39;yes:psy_maps.plugin&#39;</span> psyplot --list-plugins
-<span class="go">- plugin = psy_maps.plugin</span>
+<span class="go">- EntryPoint(name=&#39;plugin&#39;, value=&#39;psy_maps.plugin&#39;, group=&#39;psyplot&#39;)</span>
 </pre></div>
 </div>
 </section>

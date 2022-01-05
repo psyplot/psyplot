@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The psyplot framework &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>The psyplot framework &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -119,10 +119,10 @@ classes in this package. They are filled with contents in plugins such as the
 <section id="the-project-function">
 <span id="project-framework"></span><h2>The <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.project" title="psyplot.project.project"><code class="xref py py-func docutils literal notranslate"><span class="pre">project()</span></code></a> function<a class="headerlink" href="#the-project-function" title="Permalink to this headline"></a></h2>
 <p>The <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.Project</span></code></a> class (in analogy to matplotlibs
-<a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a> class) is basically a list that controls
+<a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a> class) is basically a list that controls
 multiple plot objects. It comprises the full functionality of the package and
 packs it into one class, the <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> class.</p>
-<p>In analogy to pyplots <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">figure()</span></code></a> function, a new project
+<p>In analogy to pyplots <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">figure()</span></code></a> function, a new project
 can simply be created via</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psy</span>
 
@@ -175,17 +175,17 @@ simple lines.</p>
 
 <span class="go"># scalar field of the zonal wind velocity in the file demo.nc</span>
 <span class="gp">In [9]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{desc}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="gh">Out[9]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="gh">Out[9]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 
 <span class="go"># a second scalar field of temperature</span>
 <span class="gp">In [10]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{desc}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="gh">Out[10]: </span><span class="go">psyplot.project.Project([    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="gh">Out[10]: </span><span class="go">psyplot.project.Project([    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 
 <span class="go"># a vector plot projected on the earth</span>
 <span class="gp">In [11]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapvector</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">]],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
 <span class="gp">   ....: </span>                   <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Wind speed&#39;</span><span class="p">})</span>
 <span class="gp">   ....: </span>
-<span class="gh">Out[11]: </span><span class="go">psyplot.project.Project([    arr2: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="gh">Out[11]: </span><span class="go">psyplot.project.Project([    arr2: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 
 <span class="gp">In [12]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
 <span class="gp">   ....: </span>                  <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">xticklabels</span><span class="o">=</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{desc}</span><span class="s1">&#39;</span><span class="p">,</span>
@@ -193,10 +193,10 @@ simple lines.</p>
 <span class="gp">   ....: </span>
 <span class="gh">Out[12]: </span><span class="go"></span>
 <span class="go">psyplot.project.Project([arr3: psyplot.data.InteractiveList([</span>
-<span class="go">    arr0: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=100000.0,</span>
-<span class="go">    arr1: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=85000.0,</span>
-<span class="go">    arr2: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=50000.0,</span>
-<span class="go">    arr3: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=20000.0])])</span>
+<span class="go">    arr0: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=1e+05,</span>
+<span class="go">    arr1: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=8.5e+04,</span>
+<span class="go">    arr2: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=5e+04,</span>
+<span class="go">    arr3: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=2e+04])])</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="../_images/docs_framework_project_demo1.png"><img alt="../_images/docs_framework_project_demo1.png" src="../_images/docs_framework_project_demo1.png" style="width: 4in;" /></a>
@@ -208,38 +208,38 @@ project</p>
 <span class="gp">In [14]: </span><span class="n">mp</span>  <span class="c1"># all arrays</span>
 <span class="gh">Out[14]: </span><span class="go"></span>
 <span class="go">2 Main psyplot.project.Project([</span>
-<span class="go">    arr0: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr2: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr0: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr2: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
 <span class="go">    arr3: psyplot.data.InteractiveList([</span>
-<span class="go">        arr0: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=100000.0,</span>
-<span class="go">        arr1: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=85000.0,</span>
-<span class="go">        arr2: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=50000.0,</span>
-<span class="go">        arr3: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=20000.0])])</span>
+<span class="go">        arr0: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=1e+05,</span>
+<span class="go">        arr1: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=8.5e+04,</span>
+<span class="go">        arr2: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=5e+04,</span>
+<span class="go">        arr3: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=2e+04])])</span>
 
 <span class="gp">In [15]: </span><span class="n">mp</span><span class="o">.</span><span class="n">mapplot</span>  <span class="c1"># all scalar fields</span>
 <span class="gh">Out[15]: </span><span class="go"></span>
 <span class="go">psyplot.project.Project([</span>
-<span class="go">    arr0: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="go">    arr0: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 
 <span class="gp">In [16]: </span><span class="n">mp</span><span class="o">.</span><span class="n">mapvector</span>  <span class="c1"># all vector plots</span>
-<span class="gh">Out[16]: </span><span class="go">psyplot.project.Project([    arr2: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="gh">Out[16]: </span><span class="go">psyplot.project.Project([    arr2: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 
 <span class="gp">In [17]: </span><span class="n">mp</span><span class="o">.</span><span class="n">maps</span>  <span class="c1"># all data arrays that are plotted on a map</span>
 <span class="gh">Out[17]: </span><span class="go"></span>
 <span class="go">psyplot.project.Project([</span>
-<span class="go">    arr0: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=100000.0, time=1979-01-31T18:00:00,</span>
-<span class="go">    arr2: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=100000.0, time=1979-01-31T18:00:00])</span>
+<span class="go">    arr0: 2-dim DataArray of u, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr1: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00,</span>
+<span class="go">    arr2: 3-dim DataArray of u, v, with (variable, lat, lon)=(2, 96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 
 <span class="gp">In [18]: </span><span class="n">mp</span><span class="o">.</span><span class="n">lineplot</span> <span class="c1"># the simple plot we created</span>
 <span class="gh">Out[18]: </span><span class="go"></span>
 <span class="go">psyplot.project.Project([arr3: psyplot.data.InteractiveList([</span>
-<span class="go">    arr0: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=100000.0,</span>
-<span class="go">    arr1: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=85000.0,</span>
-<span class="go">    arr2: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=50000.0,</span>
-<span class="go">    arr3: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57216851400727, lev=20000.0])])</span>
+<span class="go">    arr0: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=1e+05,</span>
+<span class="go">    arr1: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=8.5e+04,</span>
+<span class="go">    arr2: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=5e+04,</span>
+<span class="go">    arr3: 1-dim DataArray of t2m, with (time)=(5,), lon=0.0, lat=88.57, lev=2e+04])])</span>
 </pre></div>
 </div>
 <p>The advantage is, since every plotter has different formatoptions, we can
@@ -295,13 +295,13 @@ occupied by an instance of a <a class="reference internal" href="../api/psyplot.
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a> serves as a
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> accessor. After you imported psyplot, you can
-access it via the <code class="docutils literal notranslate"><span class="pre">psy</span></code> attribute of a <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, i.e.
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> accessor. After you imported psyplot, you can
+access it via the <code class="docutils literal notranslate"><span class="pre">psy</span></code> attribute of a <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, i.e.
 via</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [23]: </span><span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 
 <span class="gp">In [24]: </span><span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">([])</span><span class="o">.</span><span class="n">psy</span>
-<span class="gh">Out[24]: </span><span class="go">&lt;psyplot.data.InteractiveArray at 0x7f5b46b67160&gt;</span>
+<span class="gh">Out[24]: </span><span class="go">&lt;psyplot.data.InteractiveArray at 0x7fa19b7b5f10&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -424,7 +424,7 @@ set a formatoption like you set an item for a dictionary via</p>
 <section id="formatoptions">
 <h2>Formatoptions<a class="headerlink" href="#formatoptions" title="Permalink to this headline"></a></h2>
 <p>Formatoptions are the core of the visualization in the psyplot framework. They
-conceptually correspond to the basic <a class="reference external" href="https://matplotlib.org/stable/api/artist_api.html#matplotlib.artist.Artist" title="(in Matplotlib v3.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.artist.Artist</span></code></a> and
+conceptually correspond to the basic <a class="reference external" href="https://matplotlib.org/stable/api/artist_api.html#matplotlib.artist.Artist" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.artist.Artist</span></code></a> and
 inherit from the abstract <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> class. Each
 plotter is set up through it’s formatoptions where each formatoption has a
 unique formatoption key inside the plotter. This formatoption key (e.g. ‘title’

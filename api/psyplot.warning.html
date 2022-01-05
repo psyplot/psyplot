@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.warning module &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>psyplot.warning module &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -152,28 +152,28 @@ builtin warnings module and introduces three new warning classes:</p>
 </table>
 <dl class="py exception">
 <dt class="sig sig-object py" id="psyplot.warning.PsyPlotCritical">
-<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotCritical</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotCritical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotCritical" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotCritical</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotCritical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotCritical" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#UserWarning" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserWarning</span></code></a></p>
 <p>Critical UserWarning for psyplot module</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="psyplot.warning.PsyPlotRuntimeWarning">
-<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotRuntimeWarning</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotRuntimeWarning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotRuntimeWarning" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotRuntimeWarning</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotRuntimeWarning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotRuntimeWarning" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeWarning" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeWarning</span></code></a></p>
 <p>Runtime warning that appears only ones</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="psyplot.warning.PsyPlotWarning">
-<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotWarning</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotWarning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotWarning" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">PsyPlotWarning</span></span><a class="reference internal" href="../_modules/psyplot/warning.html#PsyPlotWarning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.PsyPlotWarning" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#UserWarning" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserWarning</span></code></a></p>
 <p>Normal UserWarning for psyplot module</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="psyplot.warning.critical">
-<span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">critical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">message</span></em>, <em class="sig-param"><span class="pre">category=&lt;class</span> <span class="pre">'psyplot.warning.PsyPlotCritical'&gt;</span></em>, <em class="sig-param"><span class="pre">logger=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/warning.html#critical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.critical" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">critical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category=&lt;class</span> <span class="pre">'psyplot.warning.PsyPlotCritical'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/warning.html#critical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.critical" title="Permalink to this definition"></a></dt>
 <dd><p>wrapper around the warnings.warn function for critical warnings.
 logger may be a logging.Logger instance</p>
 </dd></dl>
@@ -197,7 +197,7 @@ psyplot.warning logger (logging.getLogger(psyplot.warning)).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="psyplot.warning.warn">
-<span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">warn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">message</span></em>, <em class="sig-param"><span class="pre">category=&lt;class</span> <span class="pre">'psyplot.warning.PsyPlotWarning'&gt;</span></em>, <em class="sig-param"><span class="pre">logger=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/warning.html#warn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.warn" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">psyplot.warning.</span></span><span class="sig-name descname"><span class="pre">warn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category=&lt;class</span> <span class="pre">'psyplot.warning.PsyPlotWarning'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/warning.html#warn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.warning.warn" title="Permalink to this definition"></a></dt>
 <dd><p>wrapper around the warnings.warn function for non-critical warnings.
 logger may be a logging.Logger instance</p>
 </dd></dl>

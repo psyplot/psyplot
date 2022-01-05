@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to implement your own plotters and plugins &mdash; psyplot 1.3.1+14.gfcd5883 documentation</title>
+  <title>How to implement your own plotters and plugins &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3.1
+                1.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -204,7 +204,7 @@ makes sense to access this data for formatoption with <a class="reference intern
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.priority" title="psyplot.plotter.Formatoption.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a>.</p>
 <p>The result of these two attributes depend on the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.index_in_list" title="psyplot.plotter.Formatoption.index_in_list"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.index_in_list</span></code></a> attribute. The data objects in the psyplot
-framework are either a <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.19.1.dev6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> or a list of those in a
+framework are either a <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> or a list of those in a
 <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.InteractiveList</span></code></a>. If the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.index_in_list" title="psyplot.plotter.Formatoption.index_in_list"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_in_list</span></code></a> attribute is not None, and the data object
 is an <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveList</span></code></a>, then only the array at the
@@ -289,7 +289,7 @@ a text via</p>
 <li><p>It is easy to allow more keywords for this formatoption</p></li>
 </ul>
 <p>Indeed, the <code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotter.Legend</span></code> formatoption uses this framework
-since the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html#matplotlib.pyplot.legend" title="(in Matplotlib v3.4.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.legend()</span></code></a> function accepts that many keywords
+since the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html#matplotlib.pyplot.legend" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.legend()</span></code></a> function accepts that many keywords
 that it would be not informative to create a formatoption for each of them.</p>
 <p>Otherwise you could of course avoid the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.DictFormatoption" title="psyplot.plotter.DictFormatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictFormatoption</span></code></a> and just
 force the user to always provide a new dictionary.</p>
