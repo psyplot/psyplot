@@ -430,7 +430,7 @@ environment variable."""
 
         Other Parameters
         ----------------
-        ``*args, **kwargs``
+        *args, **kwargs
             Any key-value pair for the initialization of the dictionary
         """
         defaultParams = kwargs.pop('defaultParams', None)
@@ -757,14 +757,17 @@ environment variable."""
         ------
         importlib.metadata.EntryPoint
             The entry point for the psyplot plugin module"""
-        from importlib.metadata import entry_points
+        from psyplot.utils import plugin_entrypoints
 
         def load_plugin(ep):
 
             try:
                 ep.module
             except AttributeError:  # python<3.10
-                ep.module = ep.pattern.match(ep.value).group("module")
+                try:
+                    ep.module = ep.pattern.match(ep.value).group("module")
+                except AttributeError: # python<3.8
+                    ep.module = ep.module_name
 
             if plugins_env == ['no']:
                 return False
@@ -782,11 +785,7 @@ environment variable."""
 
         logger = logging.getLogger(__name__)
 
-        try:
-            eps = entry_points(group='psyplot', name='plugin')
-        except TypeError:  # python<3.10
-            eps = [ep for ep in entry_points().get('psyplot', [])
-                   if ep.name ==  'plugin']
+        eps = plugin_entrypoints("psyplot", "plugin")
         for ep in eps:
             if not load_plugin(ep):
                 logger.debug('Skipping entrypoint %s', ep)

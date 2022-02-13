@@ -23,12 +23,28 @@
 # You should have received a copy of the GNU LGPL-3.0 license
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import sys
 import re
 import six
 from difflib import get_close_matches
 from itertools import chain
 from psyplot.compat.pycompat import OrderedDict, filterfalse
 from psyplot.docstring import dedent, docstrings
+
+
+def plugin_entrypoints(group="psyplot", name="name"):
+    """This utility function gets the entry points of the psyplot plugins"""
+    if sys.version_info[:2] > (3, 7):
+        from importlib.metadata import entry_points
+        try:
+            eps = entry_points(group=group, name=name)
+        except TypeError:  # python<3.10
+            eps = [ep for ep in entry_points().get(group, [])
+                   if ep.name ==  name]
+    else:
+        from pkg_resources import iter_entry_points
+        eps = iter_entry_points(group=group, name=name)
+    return eps
 
 
 class DefaultOrderedDict(OrderedDict):
@@ -226,7 +242,7 @@ def check_key(key, possible_keys, raise_error=True,
     msg: str
         The additional message that shall be used if no close match to
         key is found
-    ``*args,**kwargs``
+    *args, **kwargs
         They are passed to the :func:`difflib.get_close_matches` function
         (i.e. `n` to increase the number of returned similar keys and
         `cutoff` to change the sensibility)

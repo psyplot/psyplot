@@ -63,6 +63,10 @@ warnings.filterwarnings(
     'ignore', message='Using an implicitly registered datetime converter')
 warnings.filterwarnings(
     'ignore', message=r"\s*The on_mappable_changed function")
+warnings.filterwarnings(
+    'ignore', message=r".+multi-part geometries is deprecated")
+warnings.filterwarnings(
+    'ignore', message=r"\s*The array interface is deprecated")
 
 # -- General configuration ------------------------------------------------
 
@@ -89,6 +93,11 @@ extensions = [
 templates_path = ['_templates']
 
 linkcheck_anchors_ignore = ["^install$"]
+
+linkcheck_ignore = [
+    # HACK: SNF seems to have a temporary problem
+    r"https://p3.snf.ch/project-\d+",
+]
 
 # create the api documentation
 if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
