@@ -94,6 +94,11 @@ templates_path = ['_templates']
 
 linkcheck_anchors_ignore = ["^install$"]
 
+linkcheck_ignore = [
+    # HACK: SNF seems to have a temporary problem
+    r"https://p3.snf.ch/project-\d+",
+]
+
 # create the api documentation
 if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
     spr.check_call(['bash', 'apigen.bash'])
