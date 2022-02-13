@@ -1,3 +1,14 @@
+v1.4.2
+======
+Fix for compatibility with python 3.7
+
+Changed
+-------
+- plugin entrypoint compatibility fix for python 3.7 (`#47 <https://github.com/psyplot/psyplot/pull/47>`__)
+- ignore SNF links in linkcheck (`#49 <https://github.com/psyplot/psyplot/pull/49>`__)
+- Replace gitter with mattermost (`#45 <https://github.com/psyplot/psyplot/pull/45>`__)
+
+
 v1.4.1
 ======
 Compatibility fixes and minor improvements
