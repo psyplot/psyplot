@@ -1,3 +1,7 @@
+v1.4.2
+======
+Fix for compatibility with python 3.7
+
 v1.4.1
 ======
 Compatibility fixes and minor improvements
