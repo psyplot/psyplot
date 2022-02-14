@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.plotter module &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
+  <title>psyplot.plotter module &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.0
+                1.4.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -191,7 +191,7 @@ dictionaries.</p>
 <li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – formatoption key in the <cite>plotter</cite></p></li>
 <li><p><strong>plotter</strong> (<a class="reference internal" href="#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>psyplot.plotter.Plotter</em></a>) – Plotter instance that holds this formatoption. If None, it is
 assumed that this instance serves as a descriptor.</p></li>
-<li><p><strong>index_in_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The index that shall be used if the data is a
+<li><p><strong>index_in_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><em>None</em>) – The index that shall be used if the data is a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.InteractiveList</span></code></p></li>
 <li><p><strong>additional_children</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional children to use (see the <code class="xref py py-attr docutils literal notranslate"><span class="pre">children</span></code> attribute)</p></li>
 <li><p><strong>additional_dependencies</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional dependencies to use (see the <code class="xref py py-attr docutils literal notranslate"><span class="pre">dependencies</span></code>
@@ -261,7 +261,7 @@ that can be used by <a class="reference internal" href="#psyplot.plotter.Plotter
 <li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – formatoption key in the <cite>plotter</cite></p></li>
 <li><p><strong>plotter</strong> (<a class="reference internal" href="#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>psyplot.plotter.Plotter</em></a>) – Plotter instance that holds this formatoption. If None, it is
 assumed that this instance serves as a descriptor.</p></li>
-<li><p><strong>index_in_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The index that shall be used if the data is a
+<li><p><strong>index_in_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><em>None</em>) – The index that shall be used if the data is a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.InteractiveList</span></code></p></li>
 <li><p><strong>additional_children</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional children to use (see the <a class="reference internal" href="#psyplot.plotter.Formatoption.children" title="psyplot.plotter.Formatoption.children"><code class="xref py py-attr docutils literal notranslate"><span class="pre">children</span></code></a> attribute)</p></li>
 <li><p><strong>additional_dependencies</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional dependencies to use (see the <a class="reference internal" href="#psyplot.plotter.Formatoption.dependencies" title="psyplot.plotter.Formatoption.dependencies"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dependencies</span></code></a>
@@ -981,7 +981,7 @@ automatically update the contained arrays when calling the
 <a class="reference internal" href="#psyplot.plotter.Plotter.update" title="psyplot.plotter.Plotter.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method or not. See also the <a class="reference internal" href="#psyplot.plotter.Plotter.no_auto_update" title="psyplot.plotter.Plotter.no_auto_update"><code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code></a>
 attribute. If None, the value from the <code class="docutils literal notranslate"><span class="pre">'lists.auto_update'</span></code>
 key in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary is used.</p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>make_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, and <cite>data</cite> is not None, the plot is initialized. Otherwise
@@ -1321,7 +1321,7 @@ the given <cite>value</cite> at the second</p></li>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
+<dd class="field-odd"><p>None or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1355,7 +1355,7 @@ soon as the <a class="reference internal" href="#psyplot.plotter.Plotter.initial
 <li><p><strong>make_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, and <cite>data</cite> is not None, the plot is initialized. Otherwise
 only the framework between plotter and data is set up</p></li>
 <li><p><strong>clear</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the axes is cleared first</p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>remove</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, old effects by the formatoptions in this plotter are
@@ -1541,7 +1541,7 @@ other plotter instances unless you set the
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>clear</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to clear the axes or not</p></li>
@@ -1570,7 +1570,7 @@ those of the others change as well</p>
 share all formatoptions of that group (see the
 <a class="reference internal" href="#psyplot.plotter.Plotter.fmt_groups" title="psyplot.plotter.Plotter.fmt_groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_groups</span></code></a> property). If None, all formatoptions of this
 plotter are unshared.</p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Boolean determining whether or not the <a class="reference internal" href="#psyplot.plotter.Plotter.start_update" title="psyplot.plotter.Plotter.start_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_update()</span></code></a> method
@@ -1598,16 +1598,16 @@ is called at the end. This parameter has no effect if the
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <a class="reference internal" href="#psyplot.plotter.Formatoption.groupname" title="psyplot.plotter.Formatoption.groupname"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code></a> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -1632,16 +1632,16 @@ by the <a class="reference internal" href="#psyplot.plotter.Plotter.include_link
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <a class="reference internal" href="#psyplot.plotter.Formatoption.groupname" title="psyplot.plotter.Formatoption.groupname"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code></a> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -1672,16 +1672,16 @@ by the <a class="reference internal" href="#psyplot.plotter.Plotter.include_link
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <a class="reference internal" href="#psyplot.plotter.Formatoption.groupname" title="psyplot.plotter.Formatoption.groupname"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code></a> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -1710,7 +1710,7 @@ and when the <a class="reference internal" href="#psyplot.plotter.Plotter.no_aut
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>queues</strong> (list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Queue.Queue</span></code> instances) – The queues that are passed to the
@@ -1751,7 +1751,7 @@ from this one.</p>
 unshare all formatoptions of that group (see the
 <a class="reference internal" href="#psyplot.plotter.Plotter.fmt_groups" title="psyplot.plotter.Plotter.fmt_groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_groups</span></code></a> property). If None, all formatoptions of this
 plotter are unshared.</p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Boolean determining whether or not the <a class="reference internal" href="#psyplot.plotter.Plotter.start_update" title="psyplot.plotter.Plotter.start_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_update()</span></code></a> method
@@ -1779,7 +1779,7 @@ method and release this plotter again.</p>
 unshare all formatoptions of that group (see the
 <a class="reference internal" href="#psyplot.plotter.Plotter.fmt_groups" title="psyplot.plotter.Plotter.fmt_groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_groups</span></code></a> property). If None, all formatoptions of this
 plotter are unshared.</p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Boolean determining whether or not the <a class="reference internal" href="#psyplot.plotter.Plotter.start_update" title="psyplot.plotter.Plotter.start_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_update()</span></code></a> method
@@ -1816,7 +1816,7 @@ If True, all the given formatoptions in this call of the are
 <li><p><strong>todefault</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, all changed formatoptions (except the registered ones)
 are updated to their default value as stored in the
 <a class="reference internal" href="#psyplot.plotter.Plotter.rc" title="psyplot.plotter.Plotter.rc"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rc</span></code></a> attribute</p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>queues</strong> (list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Queue.Queue</span></code> instances) – The queues that are passed to the
@@ -1908,7 +1908,7 @@ plotter, you can set</p>
 <li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – formatoption key in the <cite>plotter</cite></p></li>
 <li><p><strong>plotter</strong> (<a class="reference internal" href="#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>psyplot.plotter.Plotter</em></a>) – Plotter instance that holds this formatoption. If None, it is
 assumed that this instance serves as a descriptor.</p></li>
-<li><p><strong>index_in_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The index that shall be used if the data is a
+<li><p><strong>index_in_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><em>None</em>) – The index that shall be used if the data is a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.InteractiveList</span></code></p></li>
 <li><p><strong>additional_children</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional children to use (see the <a class="reference internal" href="#psyplot.plotter.PostProcessing.children" title="psyplot.plotter.PostProcessing.children"><code class="xref py py-attr docutils literal notranslate"><span class="pre">children</span></code></a> attribute)</p></li>
 <li><p><strong>additional_dependencies</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional dependencies to use (see the <a class="reference internal" href="#psyplot.plotter.PostProcessing.dependencies" title="psyplot.plotter.PostProcessing.dependencies"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dependencies</span></code></a>
@@ -2076,7 +2076,7 @@ is necessary</p></li>
 <li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – formatoption key in the <cite>plotter</cite></p></li>
 <li><p><strong>plotter</strong> (<a class="reference internal" href="#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>psyplot.plotter.Plotter</em></a>) – Plotter instance that holds this formatoption. If None, it is
 assumed that this instance serves as a descriptor.</p></li>
-<li><p><strong>index_in_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The index that shall be used if the data is a
+<li><p><strong>index_in_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><em>None</em>) – The index that shall be used if the data is a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.InteractiveList</span></code></p></li>
 <li><p><strong>additional_children</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional children to use (see the <code class="xref py py-attr docutils literal notranslate"><span class="pre">children</span></code> attribute)</p></li>
 <li><p><strong>additional_dependencies</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional dependencies to use (see the <code class="xref py py-attr docutils literal notranslate"><span class="pre">dependencies</span></code>
@@ -2252,7 +2252,7 @@ using the <code class="xref py py-func docutils literal notranslate"><span class
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fmto</strong> (<a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><em>Formatoption</em></a>) – The <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> instance to check</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.20.2.dev0)"><em>xarray.DataArray</em></a>) – The data array to use if the <a class="reference internal" href="#psyplot.plotter.Formatoption.data_dependent" title="psyplot.plotter.Formatoption.data_dependent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_dependent</span></code></a>
+<li><p><strong>data</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The data array to use if the <a class="reference internal" href="#psyplot.plotter.Formatoption.data_dependent" title="psyplot.plotter.Formatoption.data_dependent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_dependent</span></code></a>
 attribute is a callable</p></li>
 </ul>
 </dd>

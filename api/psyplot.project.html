@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.project module &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
+  <title>psyplot.project module &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.0
+                1.4.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -120,13 +120,13 @@ subproject.</p>
 <td><p>Subclass of the original cdo.Cdo class in the cdo.py module</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataArrayPlotter</span></code>(da, *args, **kwargs)</p></td>
-<td><p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p></td>
+<td><p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataArrayPlotterInterface</span></code>(methodname, ...[, ...])</p></td>
 <td><p>Interface for the <a class="reference internal" href="#psyplot.project.DataArrayPlotter" title="psyplot.project.DataArrayPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArrayPlotter</span></code></a> to a plotter</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetPlotter</span></code>(ds, *args, **kwargs)</p></td>
-<td><p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p></td>
+<td><p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetPlotterInterface</span></code>(methodname, module, ...)</p></td>
 <td><p>Interface for the <a class="reference internal" href="#psyplot.project.DatasetPlotter" title="psyplot.project.DatasetPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetPlotter</span></code></a> to a plotter</p></td>
@@ -225,7 +225,7 @@ however also specify them as extra keyword arguments)</p></li>
 <li><p><strong>make_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the data is plotted at the end. Otherwise you have to
 call the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.initialize_plot()</span></code></a> method or
 the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.reinit" title="psyplot.plotter.Plotter.reinit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.reinit()</span></code></a> method by yourself</p></li>
-<li><p><strong>ax</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a><em> (</em><em>x</em><em>, </em><em>y</em><em>[</em><em>, </em><em>z</em><em>]</em><em>) or </em><em>(</em><em>list of</em><em>) </em><a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.1)"><em>matplotlib.axes.Axes</em></a>) – <p>Specifies the subplots on which to plot the new data objects.</p>
+<li><p><strong>ax</strong> (<em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a><em> (</em><em>x</em><em>, </em><em>y</em><em>[</em><em>, </em><em>z</em><em>]</em><em>) or </em><em>(</em><em>list of</em><em>) </em><a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.1)"><em>matplotlib.axes.Axes</em></a>) – <p>Specifies the subplots on which to plot the new data objects.</p>
 <ul>
 <li><p>If None, a new figure will be created for each created plotter</p></li>
 <li><p>If tuple (x, y[, z]), <cite>x</cite> specifies the number of rows, <cite>y</cite> the
@@ -236,11 +236,11 @@ by the <a class="reference external" href="https://matplotlib.org/stable/api/_as
 will be plotted on these subplots</p></li>
 </ul>
 </p></li>
-<li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
+<li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><em>None</em><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 </ul>
 </dd>
 </dl>
@@ -287,7 +287,7 @@ using the psy-maps package</p>
 <dt class="sig sig-object py" id="psyplot.project.DataArrayPlotter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DataArrayPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DataArrayPlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DataArrayPlotter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#psyplot.project.ProjectPlotter" title="psyplot.project.ProjectPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.ProjectPlotter</span></code></a></p>
-<p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p>
+<p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p>
 <p>This class can be used to make new plots from a given dataset and add them
 to the current <a class="reference internal" href="#module-psyplot.project" title="psyplot.project"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project()</span></code></a></p>
 <p><strong>Attributes:</strong></p>
@@ -1705,7 +1705,7 @@ to the current <a class="reference internal" href="#module-psyplot.project" titl
 <dt class="sig sig-object py" id="psyplot.project.DatasetPlotter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.project.</span></span><span class="sig-name descname"><span class="pre">DatasetPlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/project.html#DatasetPlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.project.DatasetPlotter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#psyplot.project.ProjectPlotter" title="psyplot.project.ProjectPlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.ProjectPlotter</span></code></a></p>
-<p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p>
+<p>Interface between the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> and the psyplot project</p>
 <p>This class can be used to make new plots from a given dataset and add them
 to the current <a class="reference internal" href="#module-psyplot.project" title="psyplot.project"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project()</span></code></a></p>
 <p><strong>Attributes:</strong></p>
@@ -3361,16 +3361,16 @@ this list corresponds to one in the given <cite>name</cite></p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -3401,16 +3401,16 @@ by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -3449,16 +3449,16 @@ the terminal)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -3785,16 +3785,16 @@ plotters are removed</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -3846,7 +3846,7 @@ etc.) is replaced by a counter.</p></li>
 (same as bbox_inches=’tight’)</p></li>
 <li><p><strong>concat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – if True and the output format is <cite>pdf</cite>, all figures are
 concatenated into one single pdf</p></li>
-<li><p><strong>close_pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If True and the figures are concatenated into one single pdf,
+<li><p><strong>close_pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – If True and the figures are concatenated into one single pdf,
 the resulting pdf instance is closed. If False it remains open.
 If None and <cite>output</cite> is a string, it is the same as
 <code class="docutils literal notranslate"><span class="pre">close_pdf=True</span></code>, if None and <cite>output</cite> is neither a string nor an
@@ -3865,7 +3865,7 @@ function</p></li>
 otherwise None</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/backend_pdf_api.html#matplotlib.backends.backend_pdf.PdfPages" title="(in Matplotlib v3.5.1)">matplotlib.backends.backend_pdf.PdfPages</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)">None</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/backend_pdf_api.html#matplotlib.backends.backend_pdf.PdfPages" title="(in Matplotlib v3.5.1)">matplotlib.backends.backend_pdf.PdfPages</a> or None</p>
 </dd>
 </dl>
 <div class="admonition-examples admonition">
@@ -3976,7 +3976,7 @@ instead of (<code class="docutils literal notranslate"><span class="pre">'%i'</s
 are multiple values for one attribute in the arrays. If None, they
 will be returned as sets</p></li>
 <li><p><strong>enhanced</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.get_enhanced_attrs" title="psyplot.plotter.Plotter.get_enhanced_attrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.get_enhanced_attrs()</span></code></a>
-method is used, otherwise the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.20.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a>
+method is used, otherwise the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.21.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a>
 attribute is used.</p></li>
 <li><p><strong>plot_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – It True, use the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.plot_data" title="psyplot.plotter.Plotter.plot_data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.plot_data</span></code></a>
 attribute of the plotters rather than the raw data in this project</p></li>
@@ -3999,12 +3999,12 @@ attribute of the plotters rather than the raw data in this project</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
-<li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
+<li><p><strong>base</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
+<li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><em>None</em><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Default: None. A boolean indicating whether this list shall
 automatically update the contained arrays when calling the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code> method or not. See also the <code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code>
@@ -4032,7 +4032,7 @@ with shape (3, 4, 1, 5) will be squeezed to shape (3, 4, 5))</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Meta attributes that shall be assigned to the selected data arrays
 (additional to those stored in the <cite>base</cite> dataset)</p></li>
 <li><p><strong>load</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – If True, load the data from the dataset using the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
 be given to the above mentioned <code class="docutils literal notranslate"><span class="pre">load</span></code> method</p></li>
 <li><p><strong>main</strong> (<a class="reference internal" href="#psyplot.project.Project" title="psyplot.project.Project"><em>Project</em></a>) – The main project that this project corresponds to</p></li>
 <li><p><strong>arr_names</strong> (<em>string</em><em>, </em><em>list of strings</em><em> or </em><em>dictionary</em>) – <p>Set the unique array names of the resulting arrays and (optionally)
@@ -4102,7 +4102,7 @@ second (time == 1) time step.</p></li>
 are multiple values for one attribute in the arrays. If None, they
 will be returned as sets</p></li>
 <li><p><strong>enhanced</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.get_enhanced_attrs" title="psyplot.plotter.Plotter.get_enhanced_attrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.get_enhanced_attrs()</span></code></a>
-method is used, otherwise the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.20.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a>
+method is used, otherwise the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.21.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a>
 attribute is used.</p></li>
 <li><p><strong>plot_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – It True, use the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.plot_data" title="psyplot.plotter.Plotter.plot_data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.plot_data</span></code></a>
 attribute of the plotters rather than the raw data in this project</p></li>
@@ -4127,16 +4127,16 @@ data type of the corresponding value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -4205,10 +4205,10 @@ key in the <code class="xref py py-attr docutils literal notranslate"><span clas
 <li><p><strong>make_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, the data is plotted at the end. Otherwise you have to
 call the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.initialize_plot()</span></code></a> method or
 the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.reinit" title="psyplot.plotter.Plotter.reinit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.reinit()</span></code></a> method by yourself</p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
-<li><p><strong>alternative_axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – <p>alternative axes instances to use</p>
+<li><p><strong>alternative_axes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>None</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – <p>alternative axes instances to use</p>
 <ul>
 <li><p>If it is None, the axes and figures from the saving point will be
 reproduced.</p></li>
@@ -4244,8 +4244,8 @@ working directory.
 If <cite>alternative_paths</cite> is a list (or any other iterable) is
 provided, the file names will be replaced as they appear in <cite>d</cite>
 (note that this is very unsafe if <cite>d</cite> is not and OrderedDict)</p></li>
-<li><p><strong>datasets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – A mapping from original filenames in <cite>d</cite> to the instances of
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
+<li><p><strong>datasets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><em>None</em>) – A mapping from original filenames in <cite>d</cite> to the instances of
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
 holds as for the <cite>alternative_paths</cite> parameter</p></li>
 <li><p><strong>ignore_keys</strong> (<em>list of str</em>) – Keys specified in this list are ignored and not seen as array
 information (note that <code class="docutils literal notranslate"><span class="pre">attrs</span></code> are used anyway)</p></li>
@@ -4293,7 +4293,7 @@ If <cite>alternative_paths</cite> is a list (or any other iterable) is
 provided, the file names will be replaced as they appear in <cite>d</cite>
 (note that this is very unsafe if <cite>d</cite> is not and OrderedDict)</p></li>
 <li><p><strong>datasets</strong> – A mapping from original filenames in <cite>d</cite> to the instances of
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
 holds as for the <cite>alternative_paths</cite> parameter</p></li>
 <li><p><strong>pwd</strong> – Path to the working directory from where the data can be imported.
 If None, use the current working directory.</p></li>
@@ -4466,10 +4466,10 @@ saves it as a preset file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the dictionary will be returned. Otherwise the necessary
+<li><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em>) – If None, the dictionary will be returned. Otherwise the necessary
 information to load this project via the <code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code> method is
 saved to <cite>fname</cite> using the <a class="reference external" href="https://docs.python.org/3/library/pickle.html#module-pickle" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> module</p></li>
-<li><p><strong>pwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Path to the working directory from where the data can be imported.
+<li><p><strong>pwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Path to the working directory from where the data can be imported.
 If None and <cite>fname</cite> is the path to a file, <cite>pwd</cite> is set to the
 directory of this file. Otherwise the current working directory is
 used.</p></li>
@@ -4483,7 +4483,7 @@ If it is None and <cite>paths</cite> is not None, <cite>dump</cite> is set to Tr
 If paths is <code class="docutils literal notranslate"><span class="pre">True</span></code>, an iterator over temporary files will be
 created without raising a warning</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), the <code class="xref py py-attr docutils literal notranslate"><span class="pre">ArrayList.attrs</span></code> and
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.20.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a> attributes are included in the
+<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.21.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a> attributes are included in the
 returning dictionary</p></li>
 <li><p><strong>standardize_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), the real dimension names in the dataset are
 replaced by x, y, z and t to be more general.</p></li>
@@ -4523,7 +4523,7 @@ included</p></li>
 <dd><p>Set the current project</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>project</strong> (<a class="reference internal" href="#psyplot.project.Project" title="psyplot.project.Project"><em>Project</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The project to set. If it is None, the current subproject is set
+<dd class="field-odd"><p><strong>project</strong> (<a class="reference internal" href="#psyplot.project.Project" title="psyplot.project.Project"><em>Project</em></a><em> or </em><em>None</em>) – The project to set. If it is None, the current subproject is set
 to empty. If it is a sub project (see:attr:<cite>Project.is_main</cite>),
 the current subproject is set to this project. Otherwise it
 replaces the current main project</p>
@@ -4551,7 +4551,7 @@ plotters in this instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>Plotter</em></a><em>, </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.20.2.dev0)"><em>xarray.DataArray</em></a><em>, </em><a class="reference internal" href="psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><em>InteractiveList</em></a><em>, or </em><em>list of them</em>) – The source of the plotter that shares its formatoptions with the
+<li><p><strong>base</strong> (<em>None</em><em>, </em><a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>Plotter</em></a><em>, </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a><em>, </em><a class="reference internal" href="psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><em>InteractiveList</em></a><em>, or </em><em>list of them</em>) – The source of the plotter that shares its formatoptions with the
 others. It can be None (then the first instance in this project
 is used), a <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> or any data object
 with a <em>psy</em> attribute. If <cite>by</cite> is not None, then it is expected
@@ -4563,7 +4563,7 @@ plotter are unshared.</p></li>
 <li><p><strong>by</strong> (<em>{'fig'</em><em>, </em><em>'figure'</em><em>, </em><em>'ax'</em><em>, </em><em>'axes'}</em>) – Share the formatoptions only with the others on the same
 <code class="docutils literal notranslate"><span class="pre">'figure'</span></code> or the same <code class="docutils literal notranslate"><span class="pre">'axes'</span></code>. In this case, base must either
 be <code class="docutils literal notranslate"><span class="pre">None</span></code> or a list of the types specified for <cite>base</cite></p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Boolean determining whether or not the <code class="xref py py-meth docutils literal notranslate"><span class="pre">start_update()</span></code> method
@@ -4597,16 +4597,16 @@ is called at the end. This parameter has no effect if the
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – If None, the all formatoptions of the given class are used. Group
+<li><p><strong>keys</strong> (<em>list of str</em><em> or </em><em>None</em>) – If None, the all formatoptions of the given class are used. Group
 names from the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.groups" title="psyplot.plotter.groups"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.groups</span></code></a> mapping are replaced
 by the formatoptions</p></li>
 <li><p><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The indentation of the table</p></li>
 <li><p><strong>grouped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, the formatoptions are grouped corresponding to the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.groupname</span></code> attribute</p></li>
-<li><p><strong>func</strong> (<em>function</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The function the is used for returning (by default it is printed
+<li><p><strong>func</strong> (<em>function</em><em> or </em><em>None</em>) – The function the is used for returning (by default it is printed
 via the <a class="reference external" href="https://docs.python.org/3/library/functions.html#print" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function or (when using the gui) in the
 help explorer). The given function must take a string as argument</p></li>
-<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
+<li><p><strong>include_links</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Default False. If True, links (in restructured formats) are
 included in the description. If None, the behaviour is determined
 by the <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter.include_links" title="psyplot.plotter.Plotter.include_links"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.include_links</span></code></a> attribute.</p></li>
 </ul>
@@ -4633,7 +4633,7 @@ method to release the specified formatoptions in <cite>keys</cite>.</p>
 unshare all formatoptions of that group (see the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_groups</span></code> property). If None, all formatoptions of this
 plotter are unshared.</p></li>
-<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Boolean to control whether the figure of this array shall be drawn
+<li><p><strong>draw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><em>None</em>) – Boolean to control whether the figure of this array shall be drawn
 at the end. If None, it defaults to the <cite>‘auto_draw’`</cite> parameter
 in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Boolean determining whether or not the <code class="xref py py-meth docutils literal notranslate"><span class="pre">start_update()</span></code> method
@@ -6116,7 +6116,7 @@ project specified by <cite>num</cite></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a><em> or </em><em>'all'</em>) – if <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, it specifies the number of the project, if None, the
+<li><p><strong>num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>None</em><em> or </em><em>'all'</em>) – if <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, it specifies the number of the project, if None, the
 current subproject is closed, if <code class="docutils literal notranslate"><span class="pre">'all'</span></code>, all open projects are
 closed</p></li>
 <li><p><strong>figs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Close the figures</p></li>

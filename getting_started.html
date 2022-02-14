@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting started &mdash; psyplot 1.4.0+1.g6204526 documentation</title>
+  <title>Getting started &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.0
+                1.4.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -199,7 +199,7 @@ call the <a class="reference internal" href="api/psyplot.project.html#psyplot.pr
 <span class="gh">Out[5]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 </pre></div>
 </div>
-<p>which contains the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.20.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
+<p>which contains the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
 corresponding plotter that visualizes it</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gh">Out[6]: </span><span class="go"></span>
@@ -342,7 +342,7 @@ example, if we want to display the field for february, we can type</p>
 
 <span class="go"># now its february</span>
 <span class="gp">In [13]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span>
-<span class="gh">Out[13]: </span><span class="go">numpy.datetime64(&#39;1979-02-28T18:00:00.000000000&#39;)</span>
+<span class="gh">Out[13]: </span><span class="go">numpy.datetime64(&#39;1979-01-31T18:00:00.000000000&#39;)</span>
 </pre></div>
 </div>
 <p>which is in our case equivalent for choosing the second index in our time
@@ -392,12 +392,12 @@ the dimensions are therefore decoded as <code class="docutils literal notranslat
 </pre></div>
 </div>
 <p>You can also use the <cite>method</cite> keyword from the plotting function to use the
-advantages of the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v0.20.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
+advantages of the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
 corresponding to March 1979 you can use</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [19]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">&#39;1979-03&#39;</span><span class="p">,</span>
 <span class="gp">   ....: </span>                 <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
 <span class="gp">   ....: </span>
-<span class="gh">Out[19]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-03-31T18:00:00])</span>
+<span class="gh">Out[19]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-02-28T18:00:00])</span>
 </pre></div>
 </div>
 <div class="admonition note">
