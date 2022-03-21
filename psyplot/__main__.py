@@ -1,4 +1,29 @@
 # -*- coding: utf-8 -*-
+"""Main commandline entrypoint for psyplot."""
+
+# Disclaimer
+# ----------
+#
+# Copyright (C) 2021 Helmholtz-Zentrum Hereon
+# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+# Copyright (C) 2016-2021 University of Lausanne
+#
+# This file is part of psyplot and is released under the GNU LGPL-3.O license.
+# See COPYING and COPYING.LESSER in the root of the repository for full
+# licensing details.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU LGPL-3.0 license for more details.
+#
+# You should have received a copy of the GNU LGPL-3.0 license
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import os
 import os.path as osp
 import sys
@@ -36,7 +61,7 @@ def main(args=None):
         The parser that has been used from the command line"""
     try:
         from psyplot_gui import get_parser as _get_parser
-    except ImportError:
+    except (ImportError, ModuleNotFoundError) as e:
         logger.debug('Failed to import gui', exc_info=True)
         parser = get_parser(create=False)
         parser.update_arg('output', required=True)
@@ -214,8 +239,7 @@ def get_parser(create=True):
             $ psyplot myfile.nc -n t2m  -pm mapplot -fmt fmt.yaml -o test.pdf
         """), 'parser', ['Examples'])
 
-    if _on_rtd:  # make a rubric examples section
-        epilog = '.. rubric:: Examples\n' + '\n'.join(epilog.splitlines()[2:])
+    epilog = '.. rubric:: Examples\n' + '\n'.join(epilog.splitlines()[2:])
 
     parser = FuncArgParser(
         description="""
@@ -323,11 +347,6 @@ def _load_dims(s):
     return {}
 
 
-#: Disable the default for the info actions on RTD, because it looks
-#: better in the docs
-_on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
-
 class AllVersionsAction(argparse.Action):
 
     def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
@@ -336,8 +355,7 @@ class AllVersionsAction(argparse.Action):
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print the versions of all plugins and requirements "
                           "and exit")
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super(AllVersionsAction, self).__init__(
             option_strings, nargs=0, dest=dest,
             **kwargs)
@@ -354,8 +372,7 @@ class ListPresetsAction(argparse.Action):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print available presets and exit")
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super().__init__(option_strings, nargs=0, dest=dest, **kwargs)
 
     def __call__(self, parser, namespace, values, option_string=None):
@@ -376,8 +393,7 @@ class ListPluginsAction(argparse.Action):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = ("Print the names of the plugins and exit")
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super(ListPluginsAction, self).__init__(
             option_strings, nargs=0, dest=dest, **kwargs)
 
@@ -393,8 +409,7 @@ class ListPlotMethodsAction(argparse.Action):
         if nargs is not None:
             raise ValueError("nargs not allowed")
         kwargs['help'] = "List the available plot methods and what they do"
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super(ListPlotMethodsAction, self).__init__(
             option_strings, nargs=0, dest=dest, **kwargs)
 
@@ -419,8 +434,7 @@ class ListDsNamesAction(argparse.Action):
                  default=argparse.SUPPRESS, **kwargs):
         if nargs is not None:
             raise ValueError("nargs not allowed")
-        if not _on_rtd:
-            kwargs['default'] = default
+        kwargs['default'] = default
         super(ListDsNamesAction, self).__init__(
             option_strings, nargs=0, dest=dest, **kwargs)
 

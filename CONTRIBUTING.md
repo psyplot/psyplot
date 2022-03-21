@@ -65,10 +65,10 @@ Explain the problem and include additional details to help maintainers reproduce
 
 * **Use a clear and descriptive title** for the issue to identify the problem.
 * **Describe the exact steps which reproduce the problem** in as many details as possible. For example, start by explaining how you started psyplot, e.g. which command exactly you used in the terminal, or how you started psyplot otherwise. When listing steps, **don't just say what you did, but explain how you did it**. For example, did you update via GUI or console and what?
-* **Provide specific examples to demonstrate the steps**. Include links to files or GitHub projects, or copy/pasteable snippets, which you use in those examples. If you're providing snippets in the issue, use [Markdown code blocks](https://help.github.com/articles/markdown-basics/#multiple-lines).
+* **Provide specific examples to demonstrate the steps**. Include links to files or GitHub projects, or copy/pasteable snippets, which you use in those examples. If you're providing snippets in the issue, use [Markdown code blocks](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code).
 * **Describe the behavior you observed after following the steps** and point out what exactly is the problem with that behavior.
 * **Explain which behavior you expected to see instead and why.**
-* **Include screenshots and animated GIFs** which show you following the described steps and clearly demonstrate the problem. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux.
+* **Include screenshots and animated GIFs** which show you following the described steps and clearly demonstrate the problem.
 * **If the problem is related to your data structure**, include a small example how a similar data structure can be generated
 
 Include details about your configuration and environment:
@@ -88,9 +88,9 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 
 * **Use a clear and descriptive title** for the issue to identify the suggestion.
 * **Provide a step-by-step description of the suggested enhancement** in as many details as possible.
-* **Provide specific examples to demonstrate the steps**. Include copy/pasteable snippets which you use in those examples, as [Markdown code blocks](https://help.github.com/articles/markdown-basics/#multiple-lines).
+* **Provide specific examples to demonstrate the steps**. Include copy/pasteable snippets which you use in those examples, as [Markdown code blocks](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code).
 * **Describe the current behavior** and **explain which behavior you expected to see instead** and why.
-* **Include screenshots and animated GIFs** which help you demonstrate the steps or point out the part of psyplot which the suggestion is related to. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux.
+* **Include screenshots and animated GIFs** which help you demonstrate the steps or point out the part of psyplot which the suggestion is related to.
 * **Explain why this enhancement would be useful** to most psyplot users.
 * **List some other analysis software or applications where this enhancement exists.**
 * **Specify which version of psyplot you're using.** You can get the exact version by running `psyplot -aV` in your terminal, or by starting the psyplot-gui and open Help->Dependencies.
@@ -107,9 +107,7 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 ### Adding new examples
 You have new examples? Great! If you want to add them to the documentation, please just fork the correct github repository and add a jupyter notebook in the [examples](examples) directory, together with all the necessary data files.
 
-To build our docs, we use the [sphinx-nbexamples](http://sphinx-nbexamples.readthedocs.io/en/latest/) package to convert the examples to reStructuredText. Therefore please make sure that your supplementary data files are correctly implemented in the meta data of the notebook.
-
-We are, however, also willing to help you finalizing incomplete pull requests.
+And we are always happy to help you finalizing incomplete pull requests.
 
 ## Styleguides
 

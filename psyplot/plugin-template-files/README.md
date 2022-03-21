@@ -8,7 +8,8 @@ package:
 - PLUGIN_PYNAME/plugin.py: The plugin module that is imported at startup of
   psyplot
 - PLUGIN_PYNAME/plotters.py: The module that defines the plotters for the plugin
-- LICENSE: The license file of your package (uses GPLv2 but you can change this)
+- COPYING and COPYING.LESSER: The license file of your package (uses LGPL-3.0
+  but you can change this)
 
 Of course you can change the names of these files to anything you want. Just
 make sure that they are correctly specified in the install script.

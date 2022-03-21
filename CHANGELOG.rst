@@ -1,3 +1,68 @@
+v1.4.2
+======
+Fix for compatibility with python 3.7
+
+Changed
+-------
+- plugin entrypoint compatibility fix for python 3.7 (`#47 <https://github.com/psyplot/psyplot/pull/47>`__)
+- ignore SNF links in linkcheck (`#49 <https://github.com/psyplot/psyplot/pull/49>`__)
+- Replace gitter with mattermost (`#45 <https://github.com/psyplot/psyplot/pull/45>`__)
+
+
+v1.4.1
+======
+Compatibility fixes and minor improvements
+
+Added
+-----
+- An abstract ``convert_coordinate`` method has been implemented for the
+  ``Plotter`` and ``Formatoption`` class that can be used in subclasses to
+  convert coordinates for the required visualization. The default
+  implementation does nothing (see
+  `#39 <https://github.com/psyplot/psyplot/pull/39>`__)
+
+Fixed
+-----
+- the update method now only takes the coordinates that are dimensions in the
+  dataset see `#39 <https://github.com/psyplot/psyplot/pull/39>`__
+- psyplot is now compatible with matplotlib 3.5 and python 3.10
+
+Changed
+-------
+- loading more than one variables into a ``DataArray`` now first selects the
+  corresponding dimensions, then puts it into a single ``DataArray``. This
+  avoids loading the entire data (see
+  `#39 <https://github.com/psyplot/psyplot/pull/39>`__)
+
+
+v1.4.0
+======
+Compatibility fixes and LGPL license
+
+Fixed
+-----
+- psyplot is now compatible with 0.18
+
+Added
+-----
+- psyplot does now have a CITATION.cff file, see https://citation-file-format.github.io
+
+Changed
+-------
+- psyplot is now officially licensed under LGPL-3.0-only,
+  see `#33 <https://github.com/psyplot/psyplot/pull/33>`__
+- the lower bound for supported xarray versions is now 0.17.
+- project files do not store the Store anymore as this information cannot be
+  gathered from xarray 0.18. We now rely on xarray to automatically find the
+  engine to open the files.
+- Documentation is now hosted with Github Pages at https://psyplot.github.io/psyplot.
+  Redirects from the old documentation at `https://psyplot.readthedocs.io` have
+  been configured.
+- Examples have been removed from the psyplot repository as they now live in a
+  central place at https://github.com/psyplot/examples
+- We use CicleCI now for a standardized CI/CD pipeline to build and test
+  the code and docs all at one place, see `#32 <https://github.com/psyplot/psyplot/pull/32>`__
+
 v1.3.2
 ======
 Fixed
@@ -101,7 +166,7 @@ Changed
   nodes for a given grid cell. These informations are used by the
   psy-simple and psy-maps plugins for displaying any unstructured data. See
   also the example on the
-  `visualization of unstructured grids <https://psyplot.readthedocs.io/projects/psy-maps/en/master/examples/example_ugrid.html#gallery-examples-example-ugrid-ipynb>`__
+  `visualization of unstructured grids <https://psyplot.github.io/examples/maps/example_ugrid.html>`__
 * We removed the inplace parameter for the CFDecoder methods since it is
   deprecated with xarray 0.12 (see
   `issue #8 <https://github.com/psyplot/psyplot/issues/8>`__). The

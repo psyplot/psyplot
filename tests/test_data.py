@@ -1,4 +1,28 @@
 """Test module of the :mod:`psyplot.data` module"""
+
+# Disclaimer
+# ----------
+#
+# Copyright (C) 2021 Helmholtz-Zentrum Hereon
+# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+# Copyright (C) 2016-2021 University of Lausanne
+#
+# This file is part of psyplot and is released under the GNU LGPL-3.O license.
+# See COPYING and COPYING.LESSER in the root of the repository for full
+# licensing details.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU LGPL-3.0 license for more details.
+#
+# You should have received a copy of the GNU LGPL-3.0 license
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import os
 import os.path as osp
 import six
@@ -1311,6 +1335,18 @@ class TestArrayList(unittest.TestCase):
                                          decoder=dict(x={'myx'}))
         self.assertEqual(l[0].psy.decoder.x, {'myx'})
 
+    def test_from_dataset_16_default_slice(self):
+        """Test selection with default_slice=0"""
+        variables, coords = self._from_dataset_test_variables
+        ds = xr.Dataset(variables, coords)
+        l = self.list_class.from_dataset(ds, ydim=2, default_slice=0, method=None,
+                                         name=['v0', 'v2'])
+        self.assertEqual(len(l), 2)
+        self.assertEqual(set(l.names), {'v0', 'v2'})
+        for arr in l:
+            self.assertEqual(arr.ydim, 2,
+                             msg="Wrong ydim slice for " + arr.name)
+
 
     def test_array_info(self):
         variables, coords = self._from_dataset_test_variables
@@ -1322,6 +1358,10 @@ class TestArrayList(unittest.TestCase):
             name=[['v1', ['v3', 'v4']], ['v1', 'v2']], prefer_list=True)
         l.extend(ds2.psy.create_list(name=['t2m'], x=0, t=1),
                  new_name=True)
+        if xr_version < (0, 17):
+            nc_store = ('xarray.backends.netCDF4_', 'NetCDF4DataStore')
+        else:
+            nc_store = (None, None)
         self.assertEqual(l.array_info(engine='netCDF4'), OrderedDict([
             # first list contating an array with two variables
             ('arr0', OrderedDict([
@@ -1345,8 +1385,7 @@ class TestArrayList(unittest.TestCase):
             ('arr2', {'dims': {'z': slice(None), 'y': slice(None),
                                't': 1, 'x': 0},
                       'attrs': ds2.t2m.attrs,
-                      'store': ('xarray.backends.netCDF4_',
-                                'NetCDF4DataStore'),
+                      'store': nc_store,
                       'name': 't2m', 'fname': fname}),
             ('attrs', OrderedDict())]))
         return l
@@ -1398,6 +1437,8 @@ class TestArrayList(unittest.TestCase):
         # now open the mfdataset
         ds = psyd.open_mfdataset([fname1, fname2])
         l = self.list_class.from_dataset(ds, name=['v0'], time=[0, 3])
+        if xr_version >= (0, 18):
+            ds.psy.filename = [fname1, fname2]
         self.assertEqual(
             self.list_class.from_dict(l.array_info()).array_info(),
             l.array_info())
@@ -1557,14 +1598,17 @@ class FilenamesTest(unittest.TestCase):
         ds.close()
         os.remove(dumped_fname)
 
+    @unittest.skipIf(xr_version >= (0, 17), "Not supported for xarray>=0.18")
     @unittest.skipIf(not with_nio, 'Nio module not installed')
     def test_nio(self):
         self._test_engine('pynio')
 
+    @unittest.skipIf(xr_version >= (0, 17), "Not supported for xarray>=0.18")
     @unittest.skipIf(not with_netcdf4, 'netCDF4 module not installed')
     def test_netcdf4(self):
         self._test_engine('netcdf4')
 
+    @unittest.skipIf(xr_version >= (0, 17), "Not supported for xarray>=0.18")
     @unittest.skipIf(not with_scipy, 'scipy module not installed')
     def test_scipy(self):
         self._test_engine('scipy')

@@ -1,3 +1,28 @@
+"""Data management core routines of psyplot."""
+
+# Disclaimer
+# ----------
+#
+# Copyright (C) 2021 Helmholtz-Zentrum Hereon
+# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+# Copyright (C) 2016-2021 University of Lausanne
+#
+# This file is part of psyplot and is released under the GNU LGPL-3.O license.
+# See COPYING and COPYING.LESSER in the root of the repository for full
+# licensing details.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU LGPL-3.0 license for more details.
+#
+# You should have received a copy of the GNU LGPL-3.0 license
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 from __future__ import division
 import os
 import os.path as osp
@@ -13,6 +38,7 @@ from itertools import chain, product, repeat, starmap, count, cycle, islice
 import xarray as xr
 from xarray.core.utils import NDArrayMixin
 from xarray.core.formatting import first_n_items, format_item
+
 import xarray.backends.api as xarray_api
 from pandas import to_datetime
 import numpy as np
@@ -32,6 +58,11 @@ try:
     with_dask = True
 except ImportError:
     with_dask = False
+
+try:
+    import xarray.backends.plugins as xr_plugins
+except ImportError:
+    xr_plugins = None  # type: ignore
 
 
 # No data variable. This is used for filtering if an attribute could not have
@@ -114,7 +145,7 @@ def _fix_times(dims):
     # https://github.com/pydata/xarray/issues/4283
     for key, val in dims.items():
         if np.issubdtype(np.asarray(val).dtype, np.datetime64):
-            dims[key] = to_datetime(val)
+            dims[key] = to_datetime([val])[0]
 
 
 @docstrings.get_sections(base='setup_coords')
@@ -487,6 +518,38 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
         while True:
             yield NamedTemporaryFile(suffix='.nc').name
 
+    def _legacy_get_filename_ds(ds):
+        # try to get the filename from the data store of the obj
+        #
+        # Outdated possibility since the backend plugin methodology of
+        # xarray 0.18
+        if store_mod is not None:
+            store = ds._file_obj
+            # try several engines
+            if hasattr(store, 'file_objs'):
+                fname = []
+                store_mod = []
+                store_cls = []
+                for obj in store.file_objs:  # mfdataset
+                    _fname = None
+                    for func in get_fname_funcs:
+                        if _fname is None:
+                            _fname = func(obj)
+                            if _fname is not None:
+                                fname.append(_fname)
+                                store_mod.append(obj.__module__)
+                                store_cls.append(obj.__class__.__name__)
+                fname = tuple(fname)
+                store_mod = tuple(store_mod)
+                store_cls = tuple(store_cls)
+            else:
+                for func in get_fname_funcs:
+                    fname = func(store)
+                    if fname is not None:
+                        break
+
+        return fname, store_mod, store_cls
+
     fname = None
     if paths is True or (dump and paths is None):
         paths = tmp_it()
@@ -495,32 +558,15 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
             paths = iter([paths])
         else:
             paths = iter(paths)
-    # try to get the filename from  the data store of the obj
     store_mod, store_cls = ds.psy.data_store
-    if store_mod is not None:
-        store = ds._file_obj
-        # try several engines
-        if hasattr(store, 'file_objs'):
-            fname = []
-            store_mod = []
-            store_cls = []
-            for obj in store.file_objs:  # mfdataset
-                _fname = None
-                for func in get_fname_funcs:
-                    if _fname is None:
-                        _fname = func(obj)
-                        if _fname is not None:
-                            fname.append(_fname)
-                            store_mod.append(obj.__module__)
-                            store_cls.append(obj.__class__.__name__)
-            fname = tuple(fname)
-            store_mod = tuple(store_mod)
-            store_cls = tuple(store_cls)
-        else:
-            for func in get_fname_funcs:
-                fname = func(store)
-                if fname is not None:
-                    break
+    if xr_plugins is None:
+        fname, store_mod, store_cls = _legacy_get_filename_ds(ds)
+    elif "source" in ds.encoding:
+        fname = ds.encoding["source"]
+        store_mod = None
+        store_cls = None
+
+
     # check if paths is provided and if yes, save the file
     if fname is None and paths is not None:
         fname = next(paths, None)
@@ -2232,6 +2278,8 @@ def open_dataset(filename_or_obj, decode_cf=True, decode_times=True,
     ds = xr.open_dataset(filename_or_obj, decode_cf=decode_cf,
                          decode_coords=False, engine=engine,
                          decode_times=decode_times, **kwargs)
+    if isstring(filename_or_obj):
+        ds.psy.filename = filename_or_obj
     if decode_cf:
         ds = CFDecoder.decode_ds(
             ds, decode_coords=decode_coords, decode_times=decode_times,
@@ -2288,15 +2336,21 @@ def open_mfdataset(paths, decode_cf=True, decode_times=True,
         kwargs['concat_dim'] = 'time'
         if xr_version > (0, 11):
             kwargs['combine'] = 'nested'
+    if all(map(isstring, paths)):
+        filenames = list(paths)
+    else:
+        filenames = None
     if engine == 'gdal':
         from psyplot.gdal_store import GdalStore
         paths = list(map(GdalStore, paths))
         engine = None
-        kwargs['lock'] = False
+        if xr_version < (0, 18):
+            kwargs['lock'] = False
 
     ds = xr.open_mfdataset(
         paths, decode_cf=decode_cf, decode_times=decode_times, engine=engine,
         decode_coords=False, **kwargs)
+    ds.psy.filename = filenames
     if decode_cf:
         ds = CFDecoder.decode_ds(ds, gridfile=gridfile,
                                  decode_coords=decode_coords,
@@ -2824,10 +2878,11 @@ class InteractiveArray(InteractiveBase):
             name = dims.pop('name')
         else:
             name = list(self.arr.coords['variable'].values)
+        base_dims = self.base[name].dims
         if method == 'isel':
             self.idims.update(dims)
             dims = self.idims
-            for dim in set(self.base[name].dims) - set(dims):
+            for dim in set(base_dims) - set(dims):
                 dims[dim] = slice(None)
             for dim in set(dims) - set(self.base[name].dims):
                 del dims[dim]
@@ -2835,7 +2890,7 @@ class InteractiveArray(InteractiveBase):
         else:
             self._idims = None
             for key, val in six.iteritems(self.arr.coords):
-                if key != 'variable':
+                if key in base_dims and key != 'variable':
                     dims.setdefault(key, val)
             kws = dims.copy()
             # the sel method does not work with slice objects
@@ -2898,7 +2953,8 @@ class InteractiveArray(InteractiveBase):
             self._idims = None
             old_dims = self.arr.dims[:]
             for key, val in six.iteritems(self.arr.coords):
-                dims.setdefault(key, val)
+                if key in base_var.dims:
+                    dims.setdefault(key, val)
             kws = dims.copy()
             # the sel method does not work with slice objects
             if not any(isinstance(idx, slice) for idx in dims.values()):
@@ -3302,10 +3358,17 @@ class InteractiveArray(InteractiveBase):
             weights = broadcast_to(weights / weights.sum(), arr.shape)
             # set nans to zero weigths. This step takes quite a lot of time for
             # large arrays since it involves a copy of the entire `arr`
-            weights *= notnull(arr)
+            weights = weights * notnull(arr)
             # normalize the weights
-            weights /= weights.sum(axis=tuple(map(dims.index, sdims)),
-                                   keepdims=True)
+            if with_dask:
+                summed_weights = weights.sum(
+                    axis=tuple(map(dims.index, sdims)), keepdims=True
+                )
+            else:
+                summed_weights = weights.sum(
+                    axis=tuple(map(dims.index, sdims))
+                )
+            weights = weights / summed_weights
         else:
             dims = arr.dims
             coords = arr.isel(
@@ -3839,7 +3902,8 @@ class ArrayList(list):
         default_slice: indexer
             Index (e.g. 0 if `method` is 'isel') that shall be used for
             dimensions not covered by `dims` and `furtherdims`. If None, the
-            whole slice will be used.
+            whole slice will be used. Note that the `default_slice` is always
+            based on the `isel` method.
         decoder: CFDecoder or dict
             Arguments for the decoder. This can be one of
 
@@ -3946,19 +4010,22 @@ class ArrayList(list):
                 elif (isinstance(name, six.string_types) or
                       not utils.is_iterable(name)):
                     arr = base[name]
+                    decoder = get_decoder(arr)
+                    dims = decoder.correct_dims(arr, dims)
                 else:
                     arr = base[list(name)]
-                add_missing_dimensions(arr)
-                if not isinstance(arr, xr.DataArray):
-                    arr = ds2arr(arr)
+                    decoder = get_decoder(base[name[0]])
+                    dims = decoder.correct_dims(base[name[0]], dims)
                 def_slice = slice(None) if default_slice is None else \
                     default_slice
-                decoder = get_decoder(arr)
-                dims = decoder.correct_dims(arr, dims)
                 dims.update({
                     dim: def_slice for dim in set(arr.dims).difference(
                         dims) if dim != 'variable'})
-                ret = squeeze_array(arr.isel(**dims))
+                add_missing_dimensions(arr)
+                ret = arr.isel(**dims)
+                if not isinstance(ret, xr.DataArray):
+                    ret = ds2arr(ret)
+                ret = squeeze_array(ret)
                 # delete the variable dimension for the idims
                 dims.pop('variable', None)
                 ret.psy.init_accessor(arr_name=key, base=base, idims=dims,
@@ -3971,28 +4038,40 @@ class ArrayList(list):
                 elif (isinstance(name, six.string_types) or
                       not utils.is_iterable(name)):
                     arr = base[name]
+                    decoder = get_decoder(arr)
+                    dims = decoder.correct_dims(arr, dims)
                 else:
                     arr = base[list(name)]
-                add_missing_dimensions(arr)
-                if not isinstance(arr, xr.DataArray):
-                    arr = ds2arr(arr)
-                # idims will be calculated by the array (maybe not the most
-                # efficient way...)
-                decoder = get_decoder(arr)
-                dims = decoder.correct_dims(arr, dims)
+                    decoder = get_decoder(base[name[0]])
+                    dims = decoder.correct_dims(base[name[0]], dims)
                 if default_slice is not None:
-                    dims.update({
-                        key: default_slice for key in set(arr.dims).difference(
-                            dims) if key != 'variable'})
+                    if isinstance(default_slice, slice):
+                        dims.update({
+                            dim: default_slice
+                            for dim in set(arr.dims).difference(dims)
+                            if dim != 'variable'})
+                    else:
+                        dims.update({
+                            dim: arr.coords[dim][default_slice]
+                            for dim in set(arr.dims).difference(dims)
+                            if dim != 'variable'})
                 kws = dims.copy()
+                kws['method'] = method
                 # the sel method does not work with slice objects
-                if not any(isinstance(idx, slice) for idx in dims.values()):
-                    kws['method'] = method
+                for dim, val in dims.items():
+                    if isinstance(val, slice):
+                        if val == slice(None):
+                            kws.pop(dim)  # the full slice is the default
+                        else:
+                            kws.pop("method", None)
+                add_missing_dimensions(arr)
                 try:
                     ret = arr.sel(**kws)
                 except KeyError:
                     _fix_times(kws)
                     ret = arr.sel(**kws)
+                if not isinstance(ret, xr.DataArray):
+                    ret = ds2arr(ret)
                 ret = squeeze_array(ret)
                 ret.psy.init_accessor(arr_name=key, base=base, decoder=decoder)
                 return maybe_load(ret)
@@ -5209,6 +5288,9 @@ def _open_ds_from_store(fname, store_mod=None, store_cls=None, **kwargs):
                          for sm, sc, f in zip(store_mod, store_cls, fname)]
                 kwargs['engine'] = None
                 kwargs['lock'] = False
+                return open_mfdataset(fname, **kwargs)
+            else:
+                # try guessing with open_dataset
                 return open_mfdataset(fname, **kwargs)
     if store_mod is not None and store_cls is not None:
         fname = _open_store(store_mod, store_cls, fname)

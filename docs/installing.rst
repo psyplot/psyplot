@@ -24,7 +24,7 @@ The developer installation
 Installation using conda
 ^^^^^^^^^^^^^^^^^^^^^^^^
 We highly recommend to use conda_ for installing psyplot. After having
-downloaded the installer from anaconda_ or miniconda_, you can install psyplot
+downloaded the `miniconda installer`_, you can install psyplot
 and the optional plugins (see  :ref:`optional_deps`) via::
 
     $ conda install -c conda-forge psy-view psy-reg
@@ -99,20 +99,16 @@ We furthermore recommend to use
   map
 - :ref:`psy-reg <psy_reg:install>`: A psyplot plugin for visualizing fits to
   your data
-- cdo_: The python bindings for cdos (see also the
-  :ref:`cdo example <gallery_examples_example_cdo.ipynb>`)
 
 .. _netCDF4: https://github.com/Unidata/netcdf4-python
 .. _gdal: http://www.gdal.org/
 .. _conda: https://conda.io/docs/
-.. _anaconda: https://www.anaconda.com/download/
-.. _miniconda: https://conda.io/miniconda.html
+.. _miniconda installer: https://conda.io/en/latest/miniconda.html
 .. _matplotlib: http://matplotlib.org
 .. _docrep: https://docrep.readthedocs.io
 .. _funcargparse: https://funcargparse.readthedocs.io
 .. _xarray installation notes: http://xarray.pydata.org/en/stable/installing.html
 .. _xarray: http://xarray.pydata.org/
-.. _cdo: https://code.zmaw.de/projects/cdo/wiki/Anaconda
 
 
 Running the tests

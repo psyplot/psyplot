@@ -46,23 +46,23 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         :widths: 10 90
 
         * - docs
-          - |docs| |joss|
+          - |docs| |joss| |zenodo|
         * - tests
-          - |travis| |appveyor| |requires| |codecov|
+          - |circleci| |appveyor| |codecov|
         * - package
-          - |version| |conda| |github|
+          - |version| |conda| |github| |zenodo|
         * - implementations
           - |supported-versions| |supported-implementations|
         * - get in touch
-          - |gitter| |mailing-list| |issues|
+          - |mattermost| |mailing-list| |issues|
 
-    .. |docs| image:: http://readthedocs.org/projects/psyplot/badge/?version=latest
-        :alt: Documentation Status
-        :target: http://psyplot.readthedocs.io/en/latest/?badge=latest
+    .. |docs| image:: https://img.shields.io/github/deployments/psyplot/psyplot/github-pages
+        :alt: Documentation
+        :target: http://psyplot.github.io/psyplot/
 
-    .. |travis| image:: https://travis-ci.org/psyplot/psyplot.svg?branch=master
-        :alt: Travis
-        :target: https://travis-ci.org/psyplot/psyplot
+    .. |circleci| image:: https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg
+        :alt: CircleCI
+        :target: https://circleci.com/gh/psyplot/psyplot/tree/master
 
     .. |appveyor| image:: https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true
         :alt: AppVeyor
@@ -71,10 +71,6 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
     .. |codecov| image:: https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg
         :alt: Coverage
         :target: https://codecov.io/gh/psyplot/psyplot
-
-    .. |requires| image:: https://requires.io/github/psyplot/psyplot/requirements.svg?branch=master
-        :alt: Requirements Status
-        :target: https://requires.io/github/psyplot/psyplot/requirements/?branch=master
 
     .. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
         :alt: PyPI Package latest release
@@ -96,13 +92,17 @@ on `GitHub <https://github.com/psyplot/psyplot>`__.
         :alt: Journal of Open Source Software
         :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
 
+    .. |zenodo| image:: https://zenodo.org/badge/87944102.svg
+        :alt: Zenodo
+        :target: https://zenodo.org/badge/latestdoi/87944102
+
     .. |github| image:: https://img.shields.io/github/release/psyplot/psyplot.svg
         :target: https://github.com/psyplot/psyplot/releases/latest
         :alt: Latest github release
 
-    .. |gitter| image:: https://img.shields.io/gitter/room/psyplot/community.svg?style=flat
-        :target: https://gitter.im/psyplot/community
-        :alt: Gitter
+    .. |mattermost| image:: https://img.shields.io/badge/chat-on%20mattermost-success?logo=mattermost
+        :target: https://mattermost.hzdr.de/psyplot/
+        :alt: Mattermost
 
     .. |mailing-list| image:: https://img.shields.io/badge/join-mailing%20list-brightgreen.svg?style=flat
         :target: https://www.listserv.dfn.de/sympa/subscribe/psyplot
@@ -124,12 +124,12 @@ Documentation
     about
     installing
     getting_started
+    Example Gallery <https://psyplot.github.io/examples/>
     configuration
     projects
     accessors
     plugins
     command_line
-    examples/index
     develop/index
     contribute
     api/psyplot
@@ -137,31 +137,20 @@ Documentation
     changelog
 
 
-Examples
---------
-
-.. linkgalleries::
-
-    psyplot
-    psy_simple
-    psy_maps
-    psy_reg
-
-
 Get in touch
 ------------
 Any quesions? Do not hessitate to get in touch with the psyplot developers.
 
 - Create an issue at the `bug tracker`_
-- Chat with the developers in out `channel on gitter`_
+- Chat with the developers in out `team on mattermost`_
 - Subscribe to the `mailing list`_ and ask for support
 
-See also the `code of conduct`_, and our
-:ref:`contribution guide <how-to-contribute>`_ for more information and a guide
+See also the `code of conduct`, and our
+:ref:`contribution guide <how-to-contribute>` for more information and a guide
 about good bug reports.
 
 .. _bug tracker: https://github.com/psyplot/psyplot
-.. _channel on gitter: https://gitter.im/psyplot/community
+.. _team on mattermost: https://mattermost.hzdr.de/psyplot/
 .. _mailing list: https://www.listserv.dfn.de/sympa/subscribe/psyplot
 .. _code of conduct: https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md
 .. _contribution guide: https://github.com/psyplot/psyplot/blob/master/CONTRIBUTING.md
@@ -198,7 +187,8 @@ releases page of the corresponding subproject.
 
 Acknowledgment
 --------------
-This package has been developed by Philipp Sommer.
+This package is being developed by Philipp S. Sommer at the
+`Helmholtz Coastal Data Center (HCDC)`_ of the `Helmholtz-Zentrum Hereon`_.
 
 I want to thank the matplotlib_, xarray_ and cartopy_ developers
 for their great packages and of course the python developers for their
@@ -213,12 +203,14 @@ Finally the author thanks the Swiss National Science Foundation (SNF) for their
 support. Funding for the author came from the `ACACIA grant (CR10I2_146314)`_
 and the `HORNET grant (200021_169598)`_.
 
-.. _matplotlib: http://matplotlib.org
-.. _xarray: http://xarray.pydata.org/
-.. _cartopy: http://scitools.org.uk/cartopy
+.. _Helmholtz Coastal Data Center (HCDC): https://hcdc.hereon.de
+.. _Helmholtz-Zentrum Hereon: https://www.hereon.de
+.. _matplotlib: https://matplotlib.org
+.. _xarray: https://xarray.pydata.org/
+.. _cartopy: https://scitools.org.uk/cartopy
 .. _Not yet visible: https://notyetvisible.de/
-.. _ACACIA grant (CR10I2_146314): http://p3.snf.ch/project-146314
-.. _HORNET grant (200021_169598): http://p3.snf.ch/project-169598
+.. _ACACIA grant (CR10I2_146314): https://p3.snf.ch/project-146314
+.. _HORNET grant (200021_169598): https://p3.snf.ch/project-169598
 
 
 

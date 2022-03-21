@@ -5,6 +5,29 @@ the core of the visualization in the :mod:`psyplot` package. Each
 :class:`Plotter` combines a set of formatoption keys where each formatoption
 key is represented by a :class:`Formatoption` subclass."""
 
+# Disclaimer
+# ----------
+#
+# Copyright (C) 2021 Helmholtz-Zentrum Hereon
+# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+# Copyright (C) 2016-2021 University of Lausanne
+#
+# This file is part of psyplot and is released under the GNU LGPL-3.O license.
+# See COPYING and COPYING.LESSER in the root of the repository for full
+# licensing details.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU LGPL-3.0 license for more details.
+#
+# You should have received a copy of the GNU LGPL-3.0 license
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import six
 import weakref
 from abc import ABCMeta, abstractmethod
@@ -728,6 +751,42 @@ class Formatoption(object):
         necessarily have to implement this formatoption if your plot results
         are removed by the usual :meth:`matplotlib.axes.Axes.clear` method."""
         pass
+
+    @docstrings.get_extended_summary(base="Formatoption.convert_coordinate")
+    @docstrings.get_sections(
+        base="Formatoption.convert_coordinate",
+        sections=["Parameters", "Returns"]
+    )
+    def convert_coordinate(self, coord, *variables):
+        """Convert a coordinate to units necessary for the plot.
+
+        This method takes a single coordinate variable (e.g. the `bounds` of a
+        coordinate, or the coordinate itself) and transforms the units that the
+        plotter requires.
+
+        One might also provide additional `variables` that are supposed to be
+        on the same unit, in case the given `coord` does not specify a `units`
+        attribute. `coord` might be a CF-conform `bounds` variable, and one of
+        the variables might be the corresponding `coordinate`.
+
+        Parameters
+        ----------
+        coord: xr.Variable
+            The variable to transform
+        ``*variables``
+            The variables that are on the same unit as `coord`
+
+        Returns
+        -------
+        xr.Variable
+            The transformed `coord`
+
+        Notes
+        -----
+        By default, this method uses the :meth:`~Plotter.convert_coordinate`
+        method of the :attr:`plotter`.
+        """
+        return self.plotter.convert_coordinate(coord, *variables)
 
 
 class DictFormatoption(Formatoption):
@@ -2411,3 +2470,24 @@ class Plotter(dict):
         """Returns None. May be subclassed to return a projection that
         can be used when creating a subplot"""
         pass
+
+    @docstrings.dedent
+    def convert_coordinate(self, coord, *variables):
+        """Convert a coordinate to units necessary for the plot.
+
+        %(Formatoption.convert_coordinate.summary_ext)s
+
+        Parameters
+        ----------
+        %(Formatoption.convert_coordinate.parameters)s
+
+        Returns
+        -------
+        %(Formatoption.convert_coordinate.returns)s
+
+        Notes
+        -----
+        This method is supposed to be implemented by subclasses. The default
+        implementation by the :class:`Plotter` class does nothing.
+        """
+        return coord

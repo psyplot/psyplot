@@ -1,0 +1,43 @@
+environment:
+
+  PYTHON_ARCH: "64"
+  PYTHON: "C:\\Miniconda38-x64"
+
+  matrix:
+    - PYTHON_VERSION: "3.8"
+
+install:
+    # windows config (for installation)
+    - cmd: "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - cmd: setlocal
+    - cmd: set ANACONDA_API_TOKEN=
+    # conda config
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    - conda install conda-build anaconda-client
+    - pip install -i https://pypi.anaconda.org/psyplot/simple --no-deps psyplot-ci-orb
+    - conda config --add channels conda-forge
+    - conda config --add channels psyplot
+    - conda info -a
+    - conda list
+    # windows config
+    - cmd: endlocal
+    - cmd: 'SET PYTHONWARNINGS=ignore:mode:DeprecationWarning:docutils.io:245'
+    - cmd: "IF NOT DEFINED APPVEYOR_REPO_TAG_NAME (SET GIT_BRANCH=%APPVEYOR_REPO_BRANCH%)"
+    - cmd: "IF NOT DEFINED APPVEYOR_REPO_TAG_NAME (conda config --add channels psyplot/label/%APPVEYOR_REPO_BRANCH:/=-%)"
+
+build: off
+
+test_script:
+    - cmd: setlocal
+    - cmd: set ANACONDA_API_TOKEN=
+    - cmd: conda build ci/conda-recipe --python %PYTHON_VERSION%
+    - cmd: endlocal
+
+deploy_script:
+    - cmd: "
+        IF NOT DEFINED APPVEYOR_REPO_TAG_NAME (
+            deploy-conda-recipe -l %APPVEYOR_REPO_BRANCH:/=-% -py %PYTHON_VERSION% ci/conda-recipe
+        ) ELSE (
+            deploy-conda-recipe -py %PYTHON_VERSION% ci/conda-recipe
+        )"

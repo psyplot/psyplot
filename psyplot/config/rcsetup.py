@@ -6,6 +6,30 @@ The structure is motivated and to larger parts taken from the matplotlib_
 package.
 
 .. _matplotlib: http://matplotlib.org/api/"""
+
+# Disclaimer
+# ----------
+#
+# Copyright (C) 2021 Helmholtz-Zentrum Hereon
+# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+# Copyright (C) 2016-2021 University of Lausanne
+#
+# This file is part of psyplot and is released under the GNU LGPL-3.O license.
+# See COPYING and COPYING.LESSER in the root of the repository for full
+# licensing details.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU LGPL-3.0 license for more details.
+#
+# You should have received a copy of the GNU LGPL-3.0 license
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import os
 import sys
 import six
@@ -406,7 +430,7 @@ environment variable."""
 
         Other Parameters
         ----------------
-        ``*args, **kwargs``
+        *args, **kwargs
             Any key-value pair for the initialization of the dictionary
         """
         defaultParams = kwargs.pop('defaultParams', None)
@@ -731,16 +755,25 @@ environment variable."""
 
         Yields
         ------
-        pkg_resources.EntryPoint
+        importlib.metadata.EntryPoint
             The entry point for the psyplot plugin module"""
-        from pkg_resources import iter_entry_points
+        from psyplot.utils import plugin_entrypoints
 
         def load_plugin(ep):
+
+            try:
+                ep.module
+            except AttributeError:  # python<3.10
+                try:
+                    ep.module = ep.pattern.match(ep.value).group("module")
+                except AttributeError: # python<3.8
+                    ep.module = ep.module_name
+
             if plugins_env == ['no']:
                 return False
-            elif ep.module_name in exclude_plugins:
+            elif ep.module in exclude_plugins:
                 return False
-            elif include_plugins and ep.module_name not in include_plugins:
+            elif include_plugins and ep.module not in include_plugins:
                 return False
             return True
 
@@ -752,7 +785,8 @@ environment variable."""
 
         logger = logging.getLogger(__name__)
 
-        for ep in iter_entry_points(group='psyplot', name='plugin'):
+        eps = plugin_entrypoints("psyplot", "plugin")
+        for ep in eps:
             if not load_plugin(ep):
                 logger.debug('Skipping entrypoint %s', ep)
                 continue
@@ -787,7 +821,7 @@ environment variable."""
         def_keys = {'default': defaultParams}
 
         def register_pm(ep, name):
-            full_name = '%s:%s' % (ep.module_name, name)
+            full_name = '%s:%s' % (ep.module, name)
             ret = True
             if pm_env == ['no']:
                 ret = False
@@ -804,8 +838,8 @@ environment variable."""
             try:
                 plugin_mod = ep.load()
             except (ModuleNotFoundError, ImportError):
-                logger.debug("Failed to import %s!" % ep, exc_info=True)
-                logger.warning("Failed to import %s!" % ep)
+                logger.debug("Failed to import %s!" % (ep, ), exc_info=True)
+                logger.warning("Failed to import %s!" % (ep, ))
                 continue
             rc = plugin_mod.rcParams
 
@@ -828,7 +862,7 @@ environment variable."""
                 else:
                     warn(msg)
             for d in plugin_plotters.values():
-                d['plugin'] = ep.module_name
+                d['plugin'] = ep.module
             plotters.update(plugin_plotters)
             def_plots[ep] = list(plugin_plotters)
 

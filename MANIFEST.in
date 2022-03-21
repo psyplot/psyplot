@@ -1,5 +1,6 @@
 include README.rst
-include LICENSE
+include COPYING
+include COPYING.LESSER
 include psyplot/plugin-template-files/*
 include psyplot/plugin-template-files/plugin_template/*
 include versioneer.py

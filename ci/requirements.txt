@@ -1,7 +1,0 @@
-# requirements for testing psyplot
-netCDF4
-dask[complete]
-scipy
-pytest
-pytest-cov
-codecov

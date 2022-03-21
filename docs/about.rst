@@ -72,8 +72,8 @@ What it is
   visualization. No GUI, independent of it's intuitiveness, can ever beat the
   speed of a scientist that knows a bit of coding and how to use the different
   formatoptions in psyplot.
-- it visualizes :ref:`unstructured grids <psy_maps:gallery_examples_example_ugrid.ipynb>`,
-  such as ICON or UGRID model data
+- it visualizes :ref:`unstructured grids <psyplot_examples:/maps/example_ugrid.ipynb>`,
+  such as ICON_ or UGRID_ model data
 - it automatically decodes CF-conventions
 - it intuitively integrates the structure of netCDF files. So if you often
   work with netCDF files, psyplot might be a good option
@@ -91,7 +91,11 @@ What it is
   * its modular framework allows to tackle new scientific questions and handle
     them in separate psyplot plugins with it's own formatoptions and
     plotting methods
-- it will always be free and open-source under the GPL License.
+- it will always be free and open-source under the LGPL License.
+
+.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _UGRID: https://ugrid-conventions.github.io/ugrid-conventions/
+
 
 What it is not
 **************
@@ -131,7 +135,7 @@ with a few downsides.
 .. _other visualization backends: https://github.com/psyplot/psy-vtk
 .. _psy-view: https://github.com/psyplot/psy-view
 .. _ncview: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
-.. _psy-reg: https://psyplot.readthedocs.io/projects/psy-reg
+.. _psy-reg: https://psyplot.github.io/psy-reg
 .. _seaborn: https://seaborn.pydata.org
 .. _R: https://www.r-project.org/
 
@@ -139,17 +143,31 @@ with a few downsides.
 About the author
 ----------------
 I, (`Philipp Sommer`_), work as a Data Scientist at the
-`Helmholtz-Zentrum Geesthacht, Centre for Materials and Coastal Research (HZG)`
-(Germany) in the `Helmholtz Coastal Data Center (HCDC)`. Checkout my homepage
-if you want to know more at philipp-s-sommer.de_
+`Helmholtz-Zentrum Hereon`_ (Germany) in the
+`Helmholtz Coastal Data Center (HCDC)`_.
 
-.. _Helmholtz Coastal Data Center (HCDC): https://hcdc.hzg.de
-.. _Helmholtz-Zentrum Geesthacht, Centre for Materials and Coastal Research (HZG): https://hzg.de
-.. _Philipp Sommer: http://www.philipp-s-sommer.de
-.. _philipp-s-sommer.de: http://www.philipp-s-sommer.de
+.. _Helmholtz Coastal Data Center (HCDC): https://hcdc.hereon.de
+.. _Helmholtz-Zentrum Hereon: https://www.hereon.de
+.. _Philipp Sommer: https://www.philipp-s-sommer.de
 
 
 License
 -------
-psyplot is published under the
-`GNU General Public License v2.0 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>`__
+Copyright © 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum
+Geesthacht, 2016-2021 University of Lausanne
+
+psyplot is released under the GNU LGPL-3.O license.
+See COPYING and COPYING.LESSER in the root of the repository for full
+licensing details.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License version 3.0 as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU LGPL-3.0 license for more details.
+
+You should have received a copy of the GNU LGPL-3.0 license
+along with this program.  If not, see https://www.gnu.org/licenses/.
