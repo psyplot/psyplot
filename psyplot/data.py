@@ -1781,9 +1781,9 @@ class UGridDecoder(CFDecoder):
                         d: sl for d, sl in idims.items() if d in ret.dims}
                     )
             if "start_index" in ret.attrs:
-                return ret.values - int(ret.start_index)
+                return ret - int(ret.start_index)
             else:
-                return ret.values
+                return ret
 
         mesh = self.get_mesh(var, coords)
 
@@ -1805,16 +1805,49 @@ class UGridDecoder(CFDecoder):
             x_nodes, y_nodes = self.get_nodes(mesh, coords)
 
             kws = {
-                "node_lon": x_nodes, "node_lat": y_nodes, "mesh_name": mesh.name
+                "node_lon": x_nodes,
+                "node_lat": y_nodes,
+                "mesh_name": mesh.name,
             }
 
-            coords = coords or {}
+            coords = dict(coords or {})
+
+            # check for face_dimension and edge_dimension and make sure they
+            # appear last in the list
+            if "face_dimension" in mesh.attrs:
+                cname = mesh.attrs["face_node_connectivity"]
+                faces = get_coord(cname)
+                coords[cname] = faces.transpose(
+                    mesh.attrs["face_dimension"], ...
+                )
+
+            if (
+                    "edge_dimension" in mesh.attrs
+                    and "edge_node_connectivity" in mesh.attrs
+            ):
+                cname = mesh.attrs["edge_node_connectivity"]
+                edges = get_coord(cname)
+                coords[cname] = edges.transpose(
+                    mesh.attrs["edge_dimension"], ...
+                )
+
+            if (
+                    "edge_dimension" in mesh.attrs
+                    and "edge_face_connectivity" in mesh.attrs
+            ):
+                cname = mesh.attrs["edge_face_connectivity"]
+                ef_conn = get_coord(cname)
+                coords[cname] = ef_conn.transpose(
+                    mesh.attrs["edge_dimension"], ...
+                )
 
             for key, attr in parameters.items():
                 if attr in mesh.attrs:
-                    kws[key] = get_coord(
+                    coord = get_coord(
                         mesh.attrs[attr], key in required_parameters
                     )
+                    if coord is not None:
+                        kws[key] = coord.values
 
             # now we have to turn NaN into masked integer arrays
             connectivity_parameters = [
@@ -2036,6 +2069,8 @@ class UGridDecoder(CFDecoder):
         -------
         %(CFDecoder.decode_coords.returns)s"""
         extra_coords = set(ds.coords)
+        if gridfile is not None and not isinstance(gridfile, xr.Dataset):
+            gridfile = open_dataset(gridfile)
         for var in six.itervalues(ds.variables):
             if 'mesh' in var.attrs:
                 mesh = var.attrs['mesh']
@@ -2044,16 +2079,35 @@ class UGridDecoder(CFDecoder):
                     try:
                         mesh_var = ds.variables[mesh]
                     except KeyError:
-                        warn('Could not find mesh variable %s' % mesh)
-                        continue
+                        if gridfile is not None:
+                            try:
+                                mesh_var = gridfile.variables[mesh]
+                            except KeyError:
+                                warn('Could not find mesh variable %s' % mesh)
+                                continue
+                        else:
+                            warn('Could not find mesh variable %s' % mesh)
+                            continue
+
                     if 'node_coordinates' in mesh_var.attrs:
                         extra_coords.update(
                             mesh_var.attrs['node_coordinates'].split())
-                    if 'face_node_connectivity' in mesh_var.attrs:
-                        extra_coords.add(
-                            mesh_var.attrs['face_node_connectivity'])
-        if gridfile is not None and not isinstance(gridfile, xr.Dataset):
-            gridfile = open_dataset(gridfile)
+
+                    parameters = [
+                        "face_node_connectivity",
+                        "face_face_connectivity",
+                        "edge_node_connectivity",
+                        "edge_face_connectivity",
+                        "boundary_node_connectivity",
+                        "face_coordinates",
+                        "edge_coordinates",
+                        "boundary_coordinates",
+                    ]
+
+                    for param in parameters:
+                        if param in mesh_var.attrs:
+                            extra_coords.add(mesh_var.attrs[param])
+        if gridfile is not None:
             ds.update({k: v for k, v in six.iteritems(gridfile.variables)
                        if k in extra_coords})
         if xr_version < (0, 11):
