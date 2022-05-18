@@ -1797,6 +1797,9 @@ class UGridDecoder(CFDecoder):
                 "face_face_connectivity": "face_face_connectivity",
                 "edges": "edge_node_connectivity",
                 "boundaries": "boundary_node_connectivity",
+            }
+
+            coord_parameters = {
                 "face_coordinates": "face_coordinates",
                 "edge_coordinates": "edge_coordinates",
                 "boundary_coordinates": "boundary_coordinates",
@@ -1849,11 +1852,13 @@ class UGridDecoder(CFDecoder):
                     if coord is not None:
                         kws[key] = coord.values
 
+            for key, attr in coord_parameters.items():
+                if attr in mesh.attrs:
+                    xname, yname = mesh.attrs[attr].split()
+                    kws[key] = np.dstack([get_coord(xname), get_coord(yname)])[0]
+
             # now we have to turn NaN into masked integer arrays
-            connectivity_parameters = [
-                "faces", "face_face_connectivity", "edges", "boundaries"
-            ]
-            for param in connectivity_parameters:
+            for param in parameters:
                 if kws.get(param) is not None:
                     arr = kws[param]
                     mask = np.isnan(arr)
