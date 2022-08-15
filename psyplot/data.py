@@ -2094,11 +2094,8 @@ class UGridDecoder(CFDecoder):
                             warn('Could not find mesh variable %s' % mesh)
                             continue
 
-                    if 'node_coordinates' in mesh_var.attrs:
-                        extra_coords.update(
-                            mesh_var.attrs['node_coordinates'].split())
-
                     parameters = [
+                        "node_coordinates",
                         "face_node_connectivity",
                         "face_face_connectivity",
                         "edge_node_connectivity",
@@ -2111,7 +2108,7 @@ class UGridDecoder(CFDecoder):
 
                     for param in parameters:
                         if param in mesh_var.attrs:
-                            extra_coords.add(mesh_var.attrs[param])
+                            extra_coords.update(mesh_var.attrs[param].split())
         if gridfile is not None:
             ds.update({k: v for k, v in six.iteritems(gridfile.variables)
                        if k in extra_coords})
