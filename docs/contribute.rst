@@ -204,7 +204,7 @@ Documentation Styleguide
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  Follow the `numpy documentation
-   guidelines <https://github.com/numpy/numpy/blob/main/doc/HOWTO_DOCUMENT.rst.txt>`__.
+   guidelines <https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard>`__.
 -  Use
    `reStructuredText <http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`__.
 -  Try to not repeat yourself and make use of the

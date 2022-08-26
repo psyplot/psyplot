@@ -121,7 +121,7 @@ And we are always happy to help you finalizing incomplete pull requests.
 
 ### Documentation Styleguide
 
-* Follow the [numpy documentation guidelines](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
+* Follow the [numpy documentation guidelines](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard).
 * Use [reStructuredText](http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html).
 * Try to not repeat yourself and make use of the `psyplot.docstring.docstrings`
 
