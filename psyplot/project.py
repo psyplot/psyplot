@@ -1163,7 +1163,7 @@ class Project(ArrayList):
         if pack and fname is not None:
             target_dir = os.path.dirname(fname)
             if not os.path.exists(target_dir):
-                os.makedirs(target_dir)
+                os.makedirs(target_dir, exist_ok=True)
 
             def tmp_it():
                 from tempfile import NamedTemporaryFile

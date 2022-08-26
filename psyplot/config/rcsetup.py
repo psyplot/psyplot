@@ -1025,7 +1025,7 @@ def get_configdir(name='psyplot', env_key='PSYPLOTCONFIGDIR'):
         p = os.path.join(h, '.' + name)
 
     if not os.path.exists(p):
-        os.makedirs(p)
+        os.makedirs(p, exist_ok=True)
     return p
 
 
