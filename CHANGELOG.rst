@@ -1,6 +1,6 @@
 v1.4.3
 ======
-Minor fix for grid files (`#47 <https://github.com/psyplot/psyplot/pull/53>__`)
+Minor fix for grid files (`#53 <https://github.com/psyplot/psyplot/pull/53>__`)
 
 v1.4.2
 ======
