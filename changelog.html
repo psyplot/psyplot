@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
+  <title>Changelog &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -33,7 +34,7 @@
             <img src="_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.1
+                1.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -58,6 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v1-4-3">v1.4.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v1-4-2">v1.4.2</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#changed">Changed</a></li>
 </ul>
@@ -132,12 +134,16 @@
            <div itemprop="articleBody">
              
   <section id="changelog">
-<span id="id1"></span><h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading"></a></h1>
+<section id="v1-4-3">
+<h2>v1.4.3<a class="headerlink" href="#v1-4-3" title="Permalink to this heading"></a></h2>
+<p>Minor fix for grid files (<cite>#53 &lt;https://github.com/psyplot/psyplot/pull/53&gt;__</cite>)</p>
+</section>
 <section id="v1-4-2">
-<h2>v1.4.2<a class="headerlink" href="#v1-4-2" title="Permalink to this headline"></a></h2>
+<h2>v1.4.2<a class="headerlink" href="#v1-4-2" title="Permalink to this heading"></a></h2>
 <p>Fix for compatibility with python 3.7</p>
 <section id="changed">
-<h3>Changed<a class="headerlink" href="#changed" title="Permalink to this headline"></a></h3>
+<h3>Changed<a class="headerlink" href="#changed" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>plugin entrypoint compatibility fix for python 3.7 (<a class="reference external" href="https://github.com/psyplot/psyplot/pull/47">#47</a>)</p></li>
 <li><p>ignore SNF links in linkcheck (<a class="reference external" href="https://github.com/psyplot/psyplot/pull/49">#49</a>)</p></li>
@@ -146,10 +152,10 @@
 </section>
 </section>
 <section id="v1-4-1">
-<h2>v1.4.1<a class="headerlink" href="#v1-4-1" title="Permalink to this headline"></a></h2>
+<h2>v1.4.1<a class="headerlink" href="#v1-4-1" title="Permalink to this heading"></a></h2>
 <p>Compatibility fixes and minor improvements</p>
 <section id="added">
-<h3>Added<a class="headerlink" href="#added" title="Permalink to this headline"></a></h3>
+<h3>Added<a class="headerlink" href="#added" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>An abstract <code class="docutils literal notranslate"><span class="pre">convert_coordinate</span></code> method has been implemented for the
 <code class="docutils literal notranslate"><span class="pre">Plotter</span></code> and <code class="docutils literal notranslate"><span class="pre">Formatoption</span></code> class that can be used in subclasses to
@@ -159,7 +165,7 @@ implementation does nothing (see
 </ul>
 </section>
 <section id="fixed">
-<h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this headline"></a></h3>
+<h3>Fixed<a class="headerlink" href="#fixed" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>the update method now only takes the coordinates that are dimensions in the
 dataset see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/39">#39</a></p></li>
@@ -167,7 +173,7 @@ dataset see <a class="reference external" href="https://github.com/psyplot/psypl
 </ul>
 </section>
 <section id="id2">
-<h3>Changed<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<h3>Changed<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>loading more than one variables into a <code class="docutils literal notranslate"><span class="pre">DataArray</span></code> now first selects the
 corresponding dimensions, then puts it into a single <code class="docutils literal notranslate"><span class="pre">DataArray</span></code>. This
@@ -177,22 +183,22 @@ avoids loading the entire data (see
 </section>
 </section>
 <section id="v1-4-0">
-<h2>v1.4.0<a class="headerlink" href="#v1-4-0" title="Permalink to this headline"></a></h2>
+<h2>v1.4.0<a class="headerlink" href="#v1-4-0" title="Permalink to this heading"></a></h2>
 <p>Compatibility fixes and LGPL license</p>
 <section id="id3">
-<h3>Fixed<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<h3>Fixed<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>psyplot is now compatible with 0.18</p></li>
 </ul>
 </section>
 <section id="id4">
-<h3>Added<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
+<h3>Added<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>psyplot does now have a CITATION.cff file, see <a class="reference external" href="https://citation-file-format.github.io">https://citation-file-format.github.io</a></p></li>
 </ul>
 </section>
 <section id="id5">
-<h3>Changed<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
+<h3>Changed<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>psyplot is now officially licensed under LGPL-3.0-only,
 see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/33">#33</a></p></li>
@@ -211,9 +217,9 @@ the code and docs all at one place, see <a class="reference external" href="http
 </section>
 </section>
 <section id="v1-3-2">
-<h2>v1.3.2<a class="headerlink" href="#v1-3-2" title="Permalink to this headline"></a></h2>
+<h2>v1.3.2<a class="headerlink" href="#v1-3-2" title="Permalink to this heading"></a></h2>
 <section id="id6">
-<h3>Fixed<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
+<h3>Fixed<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">get_xname</span></code>-like methods of the decoder have been fixed if they get a
 variable without any dimensions. See <a class="reference external" href="https://github.com/psyplot/psyplot/pull/30">#30</a></p></li>
@@ -221,9 +227,9 @@ variable without any dimensions. See <a class="reference external" href="https:/
 </section>
 </section>
 <section id="v1-3-1">
-<h2>v1.3.1<a class="headerlink" href="#v1-3-1" title="Permalink to this headline"></a></h2>
+<h2>v1.3.1<a class="headerlink" href="#v1-3-1" title="Permalink to this heading"></a></h2>
 <section id="id7">
-<h3>Fixed<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h3>
+<h3>Fixed<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>3D bounds of coordinate are not interpreted as unstructured anymore (see
 <a class="reference external" href="https://github.com/psyplot/psyplot/commit/660c70303ae3181c03d78a6f984d07fe6e886c07">660c703</a></p></li>
@@ -231,10 +237,10 @@ variable without any dimensions. See <a class="reference external" href="https:/
 </section>
 </section>
 <section id="v1-3-0">
-<h2>v1.3.0<a class="headerlink" href="#v1-3-0" title="Permalink to this headline"></a></h2>
+<h2>v1.3.0<a class="headerlink" href="#v1-3-0" title="Permalink to this heading"></a></h2>
 <p>New repository, presets and compatibility fixes</p>
 <section id="id8">
-<h3>Added<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h3>
+<h3>Added<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>You can now save and load presets for the formatoptions of a project which
 applies the formatoptions that you stored in a file to a specific plot method,
@@ -282,7 +288,7 @@ filter for plotters that have a <code class="docutils literal notranslate"><span
 </ul>
 </section>
 <section id="id9">
-<h3>Changed<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h3>
+<h3>Changed<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>psyplot has been moved from <a class="reference external" href="https://github.com/Chilipp/psyplot">https://github.com/Chilipp/psyplot</a> to <a class="reference external" href="https://github.com/psyplot/psyplot">https://github.com/psyplot/psyplot</a>,
 see <a class="reference external" href="https://github.com/psyplot/psyplot/pull/16">#16</a></p></li>
@@ -297,13 +303,13 @@ we fall back to the <code class="docutils literal notranslate"><span class="pre"
 </section>
 </section>
 <section id="v1-2-1">
-<h2>v1.2.1<a class="headerlink" href="#v1-2-1" title="Permalink to this headline"></a></h2>
+<h2>v1.2.1<a class="headerlink" href="#v1-2-1" title="Permalink to this heading"></a></h2>
 <p>This patch fixes compatibility issues with xarray 0.12 and cdo 1.5. Additionally we now officially drop support for python 2.7.</p>
 </section>
 <section id="v1-2-0">
-<h2>v1.2.0<a class="headerlink" href="#v1-2-0" title="Permalink to this headline"></a></h2>
+<h2>v1.2.0<a class="headerlink" href="#v1-2-0" title="Permalink to this heading"></a></h2>
 <section id="id10">
-<h3>Added<a class="headerlink" href="#id10" title="Permalink to this headline"></a></h3>
+<h3>Added<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.initialize_plot</span></code> method now takes a
 <em>priority</em> keyword to only initialize only formatoptions of a certain
@@ -311,7 +317,7 @@ priority</p></li>
 </ul>
 </section>
 <section id="removed">
-<h3>Removed<a class="headerlink" href="#removed" title="Permalink to this headline"></a></h3>
+<h3>Removed<a class="headerlink" href="#removed" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The installers from the <a class="reference external" href="https://github.com/Chilipp/psyplot-conda">psyplot-conda</a>
 repositories have been depreceated. Instead, now download the latest
@@ -320,7 +326,7 @@ plugins via <code class="docutils literal notranslate"><span class="pre">conda</
 </ul>
 </section>
 <section id="id11">
-<h3>Changed<a class="headerlink" href="#id11" title="Permalink to this headline"></a></h3>
+<h3>Changed<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>We generalized the handling of unstructured data as lined out in
 <a class="reference external" href="https://github.com/psyplot/psyplot/issues/6">issue#6</a>. The new method
@@ -337,12 +343,12 @@ deprecated with xarray 0.12 (see
 </section>
 </section>
 <section id="v1-1-0">
-<h2>v1.1.0<a class="headerlink" href="#v1-1-0" title="Permalink to this headline"></a></h2>
+<h2>v1.1.0<a class="headerlink" href="#v1-1-0" title="Permalink to this heading"></a></h2>
 <p>This new release mainly adds new xarray accossors (<code class="docutils literal notranslate"><span class="pre">psy</span></code>) for DataArrays
 and Datasets. Additionally we provide methods to calculate the spatially
 weighted mean, such as fldmean, fldstd and fldpctl.</p>
 <section id="id12">
-<h3>Added<a class="headerlink" href="#id12" title="Permalink to this headline"></a></h3>
+<h3>Added<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The yaxis_inverted and xaxis_inverted is now considered when loading and
 saving a matplotlib axes</p></li>
@@ -375,16 +381,16 @@ graphical user interface</p></li>
 </section>
 </section>
 <section id="v1-0-0">
-<h2>v1.0.0<a class="headerlink" href="#v1-0-0" title="Permalink to this headline"></a></h2>
+<h2>v1.0.0<a class="headerlink" href="#v1-0-0" title="Permalink to this heading"></a></h2>
 <a class="reference external image-reference" href="https://zenodo.org/badge/latestdoi/87944102"><img alt="https://zenodo.org/badge/87944102.svg" src="https://zenodo.org/badge/87944102.svg" /></a>
 <section id="id13">
-<h3>Added<a class="headerlink" href="#id13" title="Permalink to this headline"></a></h3>
+<h3>Added<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Changelog</p></li>
 </ul>
 </section>
 <section id="id14">
-<h3>Changed<a class="headerlink" href="#id14" title="Permalink to this headline"></a></h3>
+<h3>Changed<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>When creating new plots using the <code class="docutils literal notranslate"><span class="pre">psyplot.project.Project.plot</span></code> attribute,
 <code class="docutils literal notranslate"><span class="pre">scp</span></code> for the newly created subproject is only called when the

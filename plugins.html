@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Psyplot plugins &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
+  <title>Psyplot plugins &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -34,7 +35,7 @@
             <img src="_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.1
+                1.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -94,46 +95,46 @@
            <div itemprop="articleBody">
              
   <section id="psyplot-plugins">
-<span id="plugins"></span><h1>Psyplot plugins<a class="headerlink" href="#psyplot-plugins" title="Permalink to this headline"></a></h1>
+<span id="plugins"></span><h1>Psyplot plugins<a class="headerlink" href="#psyplot-plugins" title="Permalink to this heading"></a></h1>
 <p>psyplot only provides the abstract framework on how to make the interactive
 visualization and data analysis. The real work is implemented in
 <a class="reference internal" href="develop/plugins_guide.html#plugins-guide"><span class="std std-ref">plugins to this framework</span></a>. Each
 plugin is a separate package that has to be installed independent of psyplot and
 each plugin registers new plot methods for <a class="reference internal" href="api/psyplot.project.html#psyplot.project.plot" title="psyplot.project.plot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.project.plot</span></code></a>.</p>
 <section id="existing-plugins">
-<span id="id1"></span><h2>Existing plugins<a class="headerlink" href="#existing-plugins" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2>Existing plugins<a class="headerlink" href="#existing-plugins" title="Permalink to this heading"></a></h2>
 <dl>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_simple.plugin</span></code></a></dt><dd><p>A psyplot plugin for simple visualization tasks. This plugin provides a
+<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.4.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_simple.plugin</span></code></a></dt><dd><p>A psyplot plugin for simple visualization tasks. This plugin provides a
 bases for all the other plugins
 - plot methods</p>
 <blockquote>
 <div><dl class="simple">
-<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.density.html#psyplot.project.plot.density" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.density</span></code></a></dt><dd><p>Make a density plot of point data</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.density.html#psyplot.project.plot.density" title="(in psy-simple v1.4.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.density</span></code></a></dt><dd><p>Make a density plot of point data</p>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.plot2d.html#psyplot.project.plot.plot2d" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.plot2d</span></code></a></dt><dd><p>Make a simple plot of a 2D scalar field</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.plot2d.html#psyplot.project.plot.plot2d" title="(in psy-simple v1.4.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.plot2d</span></code></a></dt><dd><p>Make a simple plot of a 2D scalar field</p>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.combined.html#psyplot.project.plot.combined" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.combined</span></code></a></dt><dd><p>Plot a 2D scalar field with an overlying vector field</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.combined.html#psyplot.project.plot.combined" title="(in psy-simple v1.4.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.combined</span></code></a></dt><dd><p>Plot a 2D scalar field with an overlying vector field</p>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.violinplot.html#psyplot.project.plot.violinplot" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.violinplot</span></code></a></dt><dd><p>Make a violin plot of your data</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.violinplot.html#psyplot.project.plot.violinplot" title="(in psy-simple v1.4.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.violinplot</span></code></a></dt><dd><p>Make a violin plot of your data</p>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.lineplot.html#psyplot.project.plot.lineplot" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.lineplot</span></code></a></dt><dd><p>Make a line plot of one-dimensional data</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.lineplot.html#psyplot.project.plot.lineplot" title="(in psy-simple v1.4.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.lineplot</span></code></a></dt><dd><p>Make a line plot of one-dimensional data</p>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.vector.html#psyplot.project.plot.vector" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.vector</span></code></a></dt><dd><p>Make a simple plot of a 2D vector field</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.vector.html#psyplot.project.plot.vector" title="(in psy-simple v1.4.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.vector</span></code></a></dt><dd><p>Make a simple plot of a 2D vector field</p>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.barplot.html#psyplot.project.plot.barplot" title="(in psy-simple v1.3.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.barplot</span></code></a></dt><dd><p>Make a bar plot of one-dimensional data</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.barplot.html#psyplot.project.plot.barplot" title="(in psy-simple v1.4.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.barplot</span></code></a></dt><dd><p>Make a bar plot of one-dimensional data</p>
 </dd>
 </dl>
 </div></blockquote>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plugin.html#module-psy_maps.plugin" title="(in psy-maps v1.3.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_maps.plugin</span></code></a></dt><dd><p>A psyplot plugin for visualizing data on a map</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plugin.html#module-psy_maps.plugin" title="(in psy-maps v1.4.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_maps.plugin</span></code></a></dt><dd><p>A psyplot plugin for visualizing data on a map</p>
 <ul>
 <li><p>plot methods</p>
 <dl class="simple">
-<dt><a class="reference external" href="https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapplot.html#psyplot.project.plot.mapplot" title="(in psy-maps v1.3.2)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapplot</span></code></a></dt><dd><p>Plot a 2D scalar field on a map</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapplot.html#psyplot.project.plot.mapplot" title="(in psy-maps v1.4.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapplot</span></code></a></dt><dd><p>Plot a 2D scalar field on a map</p>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapvector.html#psyplot.project.plot.mapvector" title="(in psy-maps v1.3.2)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapvector</span></code></a></dt><dd><p>Plot a 2D vector field on a map</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapvector.html#psyplot.project.plot.mapvector" title="(in psy-maps v1.4.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapvector</span></code></a></dt><dd><p>Plot a 2D vector field on a map</p>
 </dd>
-<dt><a class="reference external" href="https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapcombined.html#psyplot.project.plot.mapcombined" title="(in psy-maps v1.3.2)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapcombined</span></code></a></dt><dd><p>Plot a 2D scalar field with an overlying vector field on a map</p>
+<dt><a class="reference external" href="https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapcombined.html#psyplot.project.plot.mapcombined" title="(in psy-maps v1.4.1)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.mapcombined</span></code></a></dt><dd><p>Plot a 2D scalar field with an overlying vector field on a map</p>
 </dd>
 </dl>
 </li>
@@ -175,7 +176,7 @@ modules manually, you always have to type</p>
 </div>
 </section>
 <section id="how-to-exclude-plugins">
-<span id="excluding-plugins"></span><h2>How to exclude plugins<a class="headerlink" href="#how-to-exclude-plugins" title="Permalink to this headline"></a></h2>
+<span id="excluding-plugins"></span><h2>How to exclude plugins<a class="headerlink" href="#how-to-exclude-plugins" title="Permalink to this heading"></a></h2>
 <p>The psyplot package loads all plugins right when the <cite>psyplot</cite> is imported. In
 other words,  the statement</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psyplot</span>
@@ -186,7 +187,7 @@ other words,  the statement</p>
 <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLUGINS</span></code> environment variable and exclude specific plot methods of a
 plugin via the <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLOTMETHODS</span></code> variable.</p>
 <section id="the-psyplot-plugins-environment-variable">
-<span id="plugins-env"></span><h3>The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLUGINS</span></code> environment variable<a class="headerlink" href="#the-psyplot-plugins-environment-variable" title="Permalink to this headline"></a></h3>
+<span id="plugins-env"></span><h3>The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLUGINS</span></code> environment variable<a class="headerlink" href="#the-psyplot-plugins-environment-variable" title="Permalink to this heading"></a></h3>
 <p>This environment variable is a <code class="docutils literal notranslate"><span class="pre">::</span></code> separated string with plugin names. If a
 plugin name is preceded by a <code class="docutils literal notranslate"><span class="pre">no:</span></code>, this plugin is excluded. Otherwise, only
 this plugin is included.</p>
@@ -209,7 +210,7 @@ plugins that are used. By default, all plugins are included</p>
 </div>
 </section>
 <section id="the-psyplot-plotmethods-environment-variable">
-<span id="plot-methods-env"></span><h3>The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLOTMETHODS</span></code> environment variable<a class="headerlink" href="#the-psyplot-plotmethods-environment-variable" title="Permalink to this headline"></a></h3>
+<span id="plot-methods-env"></span><h3>The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLOTMETHODS</span></code> environment variable<a class="headerlink" href="#the-psyplot-plotmethods-environment-variable" title="Permalink to this heading"></a></h3>
 <p>The same principle is used when the plot methods are loaded from the plugins.
 If you want to manually exclude a plot method from loading, you include it via
 <code class="docutils literal notranslate"><span class="pre">no:&lt;plugin-module&gt;:&lt;plotmethod&gt;</span></code>. For example, to exclude the

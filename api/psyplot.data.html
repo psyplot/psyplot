@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.data module &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
+  <title>psyplot.data module &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -34,7 +35,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.1
+                1.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -101,10 +102,10 @@
            <div itemprop="articleBody">
              
   <section id="module-psyplot.data">
-<span id="psyplot-data-module"></span><h1>psyplot.data module<a class="headerlink" href="#module-psyplot.data" title="Permalink to this headline"></a></h1>
+<span id="psyplot-data-module"></span><h1>psyplot.data module<a class="headerlink" href="#module-psyplot.data" title="Permalink to this heading"></a></h1>
 <p>Data management core routines of psyplot.</p>
 <p><strong>Classes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -143,7 +144,7 @@
 </tbody>
 </table>
 <p><strong>Functions:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -165,7 +166,7 @@
 <td><p>Get the time information from file names</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#psyplot.data.open_dataset" title="psyplot.data.open_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_dataset</span></code></a>(filename_or_obj[, decode_cf, ...])</p></td>
-<td><p>Open an instance of <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a>.</p></td>
+<td><p>Open an instance of <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.data.open_mfdataset" title="psyplot.data.open_mfdataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_mfdataset</span></code></a>(paths[, decode_cf, ...])</p></td>
 <td><p>Open multiple files as a single dataset.</p></td>
@@ -182,7 +183,7 @@
 </tbody>
 </table>
 <p><strong>Data:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -199,9 +200,9 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.data.AbsoluteTimeDecoder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.data.</span></span><span class="sig-name descname"><span class="pre">AbsoluteTimeDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#AbsoluteTimeDecoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.AbsoluteTimeDecoder" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.core.utils.NDArrayMixin</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NDArrayMixin</span></code></p>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -222,9 +223,9 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.data.AbsoluteTimeEncoder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.data.</span></span><span class="sig-name descname"><span class="pre">AbsoluteTimeEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#AbsoluteTimeEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.AbsoluteTimeEncoder" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.core.utils.NDArrayMixin</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NDArrayMixin</span></code></p>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -269,7 +270,7 @@ If not True, this will be used for renaming (if the array name of
 </dd>
 </dl>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -285,7 +286,7 @@ If not True, this will be used for renaming (if the array name of
 <td><p>Names of the arrays (!not of the variables!) in this list</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#psyplot.data.ArrayList.arrays" title="psyplot.data.ArrayList.arrays"><code class="xref py py-obj docutils literal notranslate"><span class="pre">arrays</span></code></a></p></td>
-<td><p>A list of all the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> instances in this list</p></td>
+<td><p>A list of all the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> instances in this list</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.data.ArrayList.coords" title="psyplot.data.ArrayList.coords"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coords</span></code></a></p></td>
 <td><p>Names of the coordinates of the arrays in this list</p></td>
@@ -317,7 +318,7 @@ If not True, this will be used for renaming (if the array name of
 </tbody>
 </table>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -428,7 +429,7 @@ If it is None and <cite>paths</cite> is not None, <cite>dump</cite> is set to Tr
 If paths is <code class="docutils literal notranslate"><span class="pre">True</span></code>, an iterator over temporary files will be
 created without raising a warning</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), the <code class="xref py py-attr docutils literal notranslate"><span class="pre">ArrayList.attrs</span></code> and
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v0.21.2.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a> attributes are included in the
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.attrs.html#xarray.DataArray.attrs" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">xarray.DataArray.attrs</span></code></a> attributes are included in the
 returning dictionary</p></li>
 <li><p><strong>standardize_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), the real dimension names in the dataset are
 replaced by x, y, z and t to be more general.</p></li>
@@ -519,7 +520,7 @@ corresponding to the array</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="psyplot.data.ArrayList.arrays">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arrays</span></span><a class="headerlink" href="#psyplot.data.ArrayList.arrays" title="Permalink to this definition"></a></dt>
-<dd><p>A list of all the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> instances in this list</p>
+<dd><p>A list of all the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> instances in this list</p>
 </dd></dl>
 
 <dl class="py property">
@@ -601,12 +602,12 @@ If not True, this will be used for renaming (if the array name of
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
+<li><p><strong>base</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
 <li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><em>None</em><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Default: None. A boolean indicating whether this list shall
 automatically update the contained arrays when calling the
 <a class="reference internal" href="#psyplot.data.ArrayList.update" title="psyplot.data.ArrayList.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method or not. See also the <a class="reference internal" href="#psyplot.data.ArrayList.no_auto_update" title="psyplot.data.ArrayList.no_auto_update"><code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code></a>
@@ -634,7 +635,7 @@ with shape (3, 4, 1, 5) will be squeezed to shape (3, 4, 5))</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Meta attributes that shall be assigned to the selected data arrays
 (additional to those stored in the <cite>base</cite> dataset)</p></li>
 <li><p><strong>load</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – If True, load the data from the dataset using the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
 be given to the above mentioned <code class="docutils literal notranslate"><span class="pre">load</span></code> method</p></li>
 <li><p><strong>arr_names</strong> (<em>string</em><em>, </em><em>list of strings</em><em> or </em><em>dictionary</em>) – <p>Set the unique array names of the resulting arrays and (optionally)
 dimensions.</p>
@@ -693,7 +694,7 @@ If <cite>alternative_paths</cite> is a list (or any other iterable) is
 provided, the file names will be replaced as they appear in <cite>d</cite>
 (note that this is very unsafe if <cite>d</cite> is not and OrderedDict)</p></li>
 <li><p><strong>datasets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><em>None</em>) – A mapping from original filenames in <cite>d</cite> to the instances of
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> to use. If it is an iterable, the same
 holds as for the <cite>alternative_paths</cite> parameter</p></li>
 <li><p><strong>pwd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Path to the working directory from where the data can be imported.
 If None, use the current working directory.</p></li>
@@ -740,7 +741,7 @@ or an OpenDAP URL and opened with python-netCDF4, unless the filename
 ends with .gz, in which case the file is gunzipped and opened with
 scipy.io.netcdf (only netCDF3 supported). Byte-strings or file-like
 objects are opened by scipy.io.netcdf (netCDF3) or h5py (netCDF4/HDF).</p></li>
-<li><p><strong>chunks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – If chunks is provided, it is used to load the new dataset into dask
+<li><p><strong>chunks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>'auto'</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – If chunks is provided, it is used to load the new dataset into dask
 arrays. <code class="docutils literal notranslate"><span class="pre">chunks=-1</span></code> loads the dataset with dask using a single
 chunk for all arrays. <code class="docutils literal notranslate"><span class="pre">chunks={}</span></code> loads the dataset with dask using
 engine preferred chunks if exposed by the backend, otherwise with
@@ -794,9 +795,14 @@ as coordinate variables.</p></li>
 other attributes as coordinate variables.</p></li>
 </ul>
 </p></li>
-<li><p><strong>drop_variables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>iterable</em><em>, </em><em>optional</em>) – A variable or list of variables to exclude from being parsed from the
+<li><p><strong>drop_variables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>iterable of str</em><em>, </em><em>optional</em>) – A variable or list of variables to exclude from being parsed from the
 dataset. This may be useful to drop variables with problems or
 inconsistent values.</p></li>
+<li><p><strong>inline_array</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default: False</em>) – How to include the array in the dask task graph.
+By default(<code class="docutils literal notranslate"><span class="pre">inline_array=False</span></code>) the array is included in a task by
+itself, and each chunk refers to that task by its key. With
+<code class="docutils literal notranslate"><span class="pre">inline_array=True</span></code>, Dask will instead inline the array directly
+in the values of the task graph. See <code class="xref py py-func docutils literal notranslate"><span class="pre">dask.array.from_array()</span></code>.</p></li>
 <li><p><strong>backend_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Additional keyword arguments passed on to the engine open function,
 equivalent to <cite>**kwargs</cite>.</p></li>
 <li><p><strong>**kwargs</strong> – <p>Additional keyword arguments passed on to the engine open function.
@@ -974,9 +980,9 @@ values and formatoptions.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><em>None</em><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 <li><p><strong>dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Keys must be variable names of dimensions (e.g. time, level, lat or
 lon) or ‘name’ for the variable name you want to choose.
 Values must be values of that dimension or iterables of the values
@@ -1044,7 +1050,7 @@ is then True).</p>
 <p>Class that interpretes the coordinates and attributes accordings to
 cf-conventions</p>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -1122,7 +1128,7 @@ cf-conventions</p>
 </tbody>
 </table>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -1141,8 +1147,8 @@ decoder class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset that contains the given <cite>var</cite></p></li>
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The array to decode</p></li>
+<li><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset that contains the given <cite>var</cite></p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The array to decode</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1165,7 +1171,7 @@ method to be specific on what type of data your decoder can decode</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a>) – The variable to get the data for</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a>) – The variable to get the data for</p></li>
 <li><p><strong>dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – a mapping from dimension to the slices</p></li>
 <li><p><strong>remove</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, dimensions in <cite>dims</cite> that are not in the dimensions of
 <cite>var</cite> are removed</p></li>
@@ -1185,7 +1191,7 @@ necessary for visualizing the data correctly)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset to decode</p></li>
+<li><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset to decode</p></li>
 <li><p><strong>gridfile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The path to a separate grid file or a xarray.Dataset instance which
 may store the coordinates used in <cite>ds</cite></p></li>
 </ul>
@@ -1194,7 +1200,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dd class="field-even"><p><cite>ds</cite> with additional coordinates</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)">xarray.Dataset</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)">xarray.Dataset</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1208,7 +1214,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset to decode</p></li>
+<li><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset to decode</p></li>
 <li><p><strong>gridfile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The path to a separate grid file or a xarray.Dataset instance which
 may store the coordinates used in <cite>ds</cite></p></li>
 <li><p><strong>decode_times</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, decode times encoded in the standard NetCDF datetime
@@ -1222,7 +1228,7 @@ in the resulting dataset.</p></li>
 <dd class="field-even"><p>The decoded dataset</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)">xarray.Dataset</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)">xarray.Dataset</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1234,7 +1240,7 @@ in the resulting dataset.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The variable to check</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The variable to check</p></li>
 <li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Coordinates to use. If None, the coordinates of the dataset in the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">ds</span></code> attribute are used.</p></li>
 <li><p><strong>axis</strong> (<em>{'x'</em><em>, </em><em>'y'}</em>) – The spatial axis to check</p></li>
@@ -1246,7 +1252,7 @@ in the resulting dataset.</p></li>
 <dd class="field-even"><p>the bounds corrdinate (if existent)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)">xarray.DataArray</a> or None</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)">xarray.DataArray</a> or None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1279,8 +1285,8 @@ given dataset and variable</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset that contains the given <cite>var</cite></p></li>
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The array to decode</p></li>
+<li><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset that contains the given <cite>var</cite></p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The array to decode</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1300,11 +1306,11 @@ given dataset and variable</p>
 <p>This method returns a mapping from the coordinate names of the given
 <cite>arr</cite> to an integer, slice or an array of integer that represent the
 coordinates in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">ds</span></code> dataset and can be used to extract the
-given <cite>arr</cite> via the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method.</p>
+given <cite>arr</cite> via the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>arr</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The data array for which to get the dimensions as integers, slices
+<li><p><strong>arr</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The data array for which to get the dimensions as integers, slices
 or list of integers from the dataset in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">base</span></code> attribute</p></li>
 <li><p><strong>coords</strong> (<em>iterable</em>) – The coordinates to use. If not given all coordinates in the
 <code class="docutils literal notranslate"><span class="pre">arr.coords</span></code> attribute are used</p></li>
@@ -1319,7 +1325,7 @@ or list of integers from the dataset in the <code class="xref py py-attr docutil
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.Dataset.isel</span></code></a>, <a class="reference internal" href="#psyplot.data.InteractiveArray.idims" title="psyplot.data.InteractiveArray.idims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InteractiveArray.idims</span></code></a></p>
+<p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.Dataset.isel</span></code></a>, <a class="reference internal" href="#psyplot.data.InteractiveArray.idims" title="psyplot.data.InteractiveArray.idims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InteractiveArray.idims</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -1338,7 +1344,7 @@ that is used in case of a 2-dimensional coordinate</p></li>
 <li><p><strong>ignore_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True and the <cite>coord</cite> has a <code class="docutils literal notranslate"><span class="pre">'bounds'</span></code> attribute, this
 attribute is returned without further check. Otherwise it is tried
 to bring the <code class="docutils literal notranslate"><span class="pre">'bounds'</span></code> into a format suitable for (e.g.) the
-<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pcolormesh.html#matplotlib.pyplot.pcolormesh" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.pcolormesh()</span></code></a> function.</p></li>
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pcolormesh.html#matplotlib.pyplot.pcolormesh" title="(in Matplotlib v3.5.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.pcolormesh()</span></code></a> function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1411,7 +1417,7 @@ they are not used</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The variable to use</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The variable to use</p></li>
 <li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Alternative coordinates to use. If None, the coordinates of the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">ds</span></code> dataset are used</p></li>
 <li><p><strong>convert_radian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True and the coordinate has units in ‘radian’, those are
@@ -1429,7 +1435,7 @@ Must only be provided if the <cite>src_crs</cite> is not None.</p></li>
 <dd class="field-even"><p>The spatial triangles of the variable</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/tri_api.html#matplotlib.tri.Triangulation" title="(in Matplotlib v3.5.1)">matplotlib.tri.Triangulation</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/tri_api.html#matplotlib.tri.Triangulation" title="(in Matplotlib v3.5.3)">matplotlib.tri.Triangulation</a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If <cite>src_crs</cite> is not None and <cite>target_crs</cite> is None</p>
@@ -1647,7 +1653,7 @@ found</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The variable to check</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The variable to check</p></li>
 <li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Coordinates to use. If None, the coordinates of the dataset in the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">ds</span></code> attribute are used.</p></li>
 <li><p><strong>axis</strong> (<em>{'x'</em><em>, </em><em>'y'}</em>) – The spatial axis to check</p></li>
@@ -1659,7 +1665,7 @@ found</p>
 <dd class="field-even"><p>the bounds corrdinate (if existent)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)">xarray.DataArray</a> or None</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)">xarray.DataArray</a> or None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1671,7 +1677,7 @@ found</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The variable to check</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The variable to check</p></li>
 <li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Coordinates to use. If None, the coordinates of the dataset in the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">ds</span></code> attribute are used.</p></li>
 <li><p><strong>axis</strong> (<em>{'x'</em><em>, </em><em>'y'}</em>) – The spatial axis to check</p></li>
@@ -1683,7 +1689,7 @@ found</p>
 <dd class="field-even"><p>the bounds corrdinate (if existent)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)">xarray.DataArray</a> or None</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)">xarray.DataArray</a> or None</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -1720,7 +1726,7 @@ position</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a>) – The variable to use the dimensions of</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a>) – The variable to use the dimensions of</p></li>
 <li><p><strong>dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The dictionary to use for replacing the original dimensions</p></li>
 </ul>
 </dd>
@@ -1741,7 +1747,7 @@ position</p></li>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A dataset accessor to interface with the psyplot package</p>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -1759,7 +1765,7 @@ position</p></li>
 </tbody>
 </table>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -1794,12 +1800,12 @@ attribute. It is more stable because it creates a new <cite>psy</cite> accessor<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
+<li><p><strong>base</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
 <li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><em>None</em><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Default: None. A boolean indicating whether this list shall
 automatically update the contained arrays when calling the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code> method or not. See also the <code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code>
@@ -1827,7 +1833,7 @@ with shape (3, 4, 1, 5) will be squeezed to shape (3, 4, 5))</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Meta attributes that shall be assigned to the selected data arrays
 (additional to those stored in the <cite>base</cite> dataset)</p></li>
 <li><p><strong>load</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – If True, load the data from the dataset using the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
 be given to the above mentioned <code class="docutils literal notranslate"><span class="pre">load</span></code> method</p></li>
 <li><p><strong>arr_names</strong> (<em>string</em><em>, </em><em>list of strings</em><em> or </em><em>dictionary</em>) – <p>Set the unique array names of the resulting arrays and (optionally)
 dimensions.</p>
@@ -1895,7 +1901,7 @@ dataset</p>
 <dt class="sig sig-object py" id="psyplot.data.DatasetAccessor.plot">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><a class="headerlink" href="#psyplot.data.DatasetAccessor.plot" title="Permalink to this definition"></a></dt>
 <dd><p>An object to generate new plots from this dataset</p>
-<p>To make a 2D-plot with the <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy-simple</span></code></a>
+<p>To make a 2D-plot with the <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.4.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy-simple</span></code></a>
 plugin, you can just type</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot2d</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;variable-name&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1920,15 +1926,15 @@ this dataset will remain coordinates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the new dimension.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the new data array.</p></li>
+<li><p><strong>dim</strong> (<em>Hashable</em><em>, </em><em>default: &quot;variable&quot;</em>) – Name of the new dimension.</p></li>
+<li><p><strong>name</strong> (<em>Hashable</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Name of the new data array.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>array</strong></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)">xarray.DataArray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)">xarray.DataArray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1938,20 +1944,20 @@ this dataset will remain coordinates.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.data.InteractiveArray">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.data.</span></span><span class="sig-name descname"><span class="pre">InteractiveArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xarray_obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#InteractiveArray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.InteractiveArray" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#psyplot.data.InteractiveBase" title="psyplot.data.InteractiveBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.InteractiveBase</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#psyplot.data.InteractiveBase" title="psyplot.data.InteractiveBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveBase</span></code></a></p>
 <p>Interactive psyplot accessor for the data array</p>
-<p>This class keeps reference to the base <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> where the
+<p>This class keeps reference to the base <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> where the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">array.DataArray</span></code> originates from and enables to switch between the
 coordinates in the array. Furthermore it has a <code class="xref py py-attr docutils literal notranslate"><span class="pre">plotter</span></code> attribute to
 enable interactive plotting via an <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter</span></code></a>
 instance.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> are essentially the same as for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> method, additional <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> are
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> method, additional <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> are
 described below.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – Default: None. Dataset that serves as the origin of the data
+<li><p><strong>base</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – Default: None. Dataset that serves as the origin of the data
 contained in this DataArray instance. This will be used if you want
 to update the coordinates via the <a class="reference internal" href="#psyplot.data.InteractiveArray.update" title="psyplot.data.InteractiveArray.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method. If None,
 this instance will serve as a base as soon as it is needed.</p></li>
@@ -1971,7 +1977,7 @@ key in the <code class="xref py py-attr docutils literal notranslate"><span clas
 </dd>
 </dl>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2001,7 +2007,7 @@ key in the <code class="xref py py-attr docutils literal notranslate"><span clas
 </tbody>
 </table>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2032,7 +2038,7 @@ key in the <code class="xref py py-attr docutils literal notranslate"><span clas
 <td><p>Initialize the accessor instance</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#psyplot.data.InteractiveArray.isel" title="psyplot.data.InteractiveArray.isel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isel</span></code></a>(*args, **kwargs)</p></td>
-<td><p>Return a new DataArray whose data is given by integer indexing along the specified dimension(s).</p></td>
+<td><p>Return a new DataArray whose data is given by selecting indexes along the specified dimension(s).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#psyplot.data.InteractiveArray.sel" title="psyplot.data.InteractiveArray.sel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sel</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Return a new DataArray whose data is given by selecting index labels along the specified dimension(s).</p></td>
@@ -2234,7 +2240,7 @@ item in the <code class="xref py py-attr docutils literal notranslate"><span cla
 <dd class="field-even"><p>The 2D-DataArray with the grid weights</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)">xarray.DataArray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)">xarray.DataArray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2269,7 +2275,7 @@ calculated when the <a class="reference internal" href="#psyplot.data.Interactiv
 <dl class="py method">
 <dt class="sig sig-object py" id="psyplot.data.InteractiveArray.isel">
 <span class="sig-name descname"><span class="pre">isel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#InteractiveArray.isel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.InteractiveArray.isel" title="Permalink to this definition"></a></dt>
-<dd><p>Return a new DataArray whose data is given by integer indexing
+<dd><p>Return a new DataArray whose data is given by selecting indexes
 along the specified dimension(s).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2278,9 +2284,9 @@ along the specified dimension(s).</p>
 by integers, slice objects or arrays.
 indexer can be a integer, slice, array-like or DataArray.
 If DataArrays are passed as indexers, xarray-style indexing will be
-carried out. See <a class="reference external" href="https://xarray.pydata.org/en/stable/user-guide/indexing.html#indexing" title="(in xarray v0.21.2.dev0)"><span>Indexing and selecting data</span></a> for the details.
+carried out. See <a class="reference external" href="https://docs.xarray.dev/en/stable/user-guide/indexing.html#indexing" title="(in xarray v2022.6.1.dev0)"><span>Indexing and selecting data</span></a> for the details.
 One of indexers or indexers_kwargs must be provided.</p></li>
-<li><p><strong>drop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">drop=True</span></code>, drop coordinates variables indexed by integers
+<li><p><strong>drop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default: False</em>) – If <code class="docutils literal notranslate"><span class="pre">drop=True</span></code>, drop coordinates variables indexed by integers
 instead of making them scalar.</p></li>
 <li><p><strong>missing_dims</strong> (<em>{&quot;raise&quot;</em><em>, </em><em>&quot;warn&quot;</em><em>, </em><em>&quot;ignore&quot;}</em><em>, </em><em>default: &quot;raise&quot;</em>) – What to do if dimensions that should be selected from are not present in the
 DataArray:
@@ -2289,6 +2295,12 @@ DataArray:
 - “ignore”: ignore the missing dimensions</p></li>
 <li><p><strong>**indexers_kwargs</strong> (<em>{dim: indexer</em><em>, </em><em>...</em><em>}</em><em>, </em><em>optional</em>) – The keyword arguments form of <code class="docutils literal notranslate"><span class="pre">indexers</span></code>.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>indexed</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)">xarray.DataArray</a></p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -2373,7 +2385,7 @@ by scalars, slices or arrays of tick labels. For dimensions with
 multi-index, the indexer may also be a dict-like object with keys
 matching index level names.
 If DataArrays are passed as indexers, xarray-style indexing will be
-carried out. See <a class="reference external" href="https://xarray.pydata.org/en/stable/user-guide/indexing.html#indexing" title="(in xarray v0.21.2.dev0)"><span>Indexing and selecting data</span></a> for the details.
+carried out. See <a class="reference external" href="https://docs.xarray.dev/en/stable/user-guide/indexing.html#indexing" title="(in xarray v2022.6.1.dev0)"><span>Indexing and selecting data</span></a> for the details.
 One of indexers or indexers_kwargs must be provided.</p></li>
 <li><p><strong>method</strong> (<em>{None</em><em>, </em><em>&quot;nearest&quot;</em><em>, </em><em>&quot;pad&quot;</em><em>, </em><em>&quot;ffill&quot;</em><em>, </em><em>&quot;backfill&quot;</em><em>, </em><em>&quot;bfill&quot;}</em><em>, </em><em>optional</em>) – <p>Method to use for inexact matches:</p>
 <ul>
@@ -2514,9 +2526,9 @@ values and formatoptions.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><em>None</em><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 <li><p><strong>dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Keys must be variable names of dimensions (e.g. time, level, lat or
 lon) or ‘name’ for the variable name you want to choose.
 Values must be values of that dimension or iterables of the values
@@ -2596,7 +2608,7 @@ key in the <code class="xref py py-attr docutils literal notranslate"><span clas
 </dd>
 </dl>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2629,7 +2641,7 @@ key in the <code class="xref py py-attr docutils literal notranslate"><span clas
 </tbody>
 </table>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2702,7 +2714,7 @@ method is automatically called by the <a class="reference internal" href="#psypl
 <dt class="sig sig-object py" id="psyplot.data.InteractiveBase.plot">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">plot</span></span><a class="headerlink" href="#psyplot.data.InteractiveBase.plot" title="Permalink to this definition"></a></dt>
 <dd><p>An object to visualize this data object</p>
-<p>To make a 2D-plot with the <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy-simple</span></code></a>
+<p>To make a 2D-plot with the <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plugin.html#module-psy_simple.plugin" title="(in psy-simple v1.4.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psy-simple</span></code></a>
 plugin, you can just type</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plotter</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot2d</span><span class="p">()</span>
 </pre></div>
@@ -2813,7 +2825,7 @@ is then True).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.data.InteractiveList">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.data.</span></span><span class="sig-name descname"><span class="pre">InteractiveList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#InteractiveList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.InteractiveList" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#psyplot.data.ArrayList" title="psyplot.data.ArrayList"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.ArrayList</span></code></a>, <a class="reference internal" href="#psyplot.data.InteractiveBase" title="psyplot.data.InteractiveBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.InteractiveBase</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#psyplot.data.ArrayList" title="psyplot.data.ArrayList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayList</span></code></a>, <a class="reference internal" href="#psyplot.data.InteractiveBase" title="psyplot.data.InteractiveBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveBase</span></code></a></p>
 <p>List of <a class="reference internal" href="#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a> instances that can be plotted itself</p>
 <p>This class combines the <a class="reference internal" href="#psyplot.data.ArrayList" title="psyplot.data.ArrayList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayList</span></code></a> and the interactive plotting
 through <a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter</span></code></a> classes. It is mainly used by the
@@ -2842,7 +2854,7 @@ formatoption keywords.</p></li>
 </dd>
 </dl>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2869,7 +2881,7 @@ formatoption keywords.</p></li>
 </tbody>
 </table>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2953,12 +2965,12 @@ If not True, this will be used for renaming (if the array name of
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
+<li><p><strong>base</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – Dataset instance that is used as reference</p></li>
 <li><p><strong>method</strong> (<em>{'isel'</em><em>, </em><em>None</em><em>, </em><em>'nearest'</em><em>, </em><em>...</em><em>}</em>) – Selection method of the xarray.Dataset to be used for setting the
 variables from the informations in <cite>dims</cite>.
-If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
+If <cite>method</cite> is ‘isel’, the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.isel.html#xarray.Dataset.isel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.isel()</span></code></a> method is
 used. Otherwise it sets the <cite>method</cite> parameter for the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.sel.html#xarray.Dataset.sel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.sel()</span></code></a> method.</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Default: None. A boolean indicating whether this list shall
 automatically update the contained arrays when calling the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code> method or not. See also the <a class="reference internal" href="#psyplot.data.InteractiveList.no_auto_update" title="psyplot.data.InteractiveList.no_auto_update"><code class="xref py py-attr docutils literal notranslate"><span class="pre">no_auto_update</span></code></a>
@@ -2986,7 +2998,7 @@ with shape (3, 4, 1, 5) will be squeezed to shape (3, 4, 5))</p></li>
 <li><p><strong>attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Meta attributes that shall be assigned to the selected data arrays
 (additional to those stored in the <cite>base</cite> dataset)</p></li>
 <li><p><strong>load</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – If True, load the data from the dataset using the
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.load.html#xarray.DataArray.load" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.load()</span></code></a> method. If <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>, those will
 be given to the above mentioned <code class="docutils literal notranslate"><span class="pre">load</span></code> method</p></li>
 <li><p><strong>plotter</strong> (<a class="reference internal" href="psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><em>psyplot.plotter.Plotter</em></a>) – The plotter instance that is used to visualize the data in this
 list</p></li>
@@ -3123,7 +3135,7 @@ from a <a class="reference internal" href="psyplot.project.html#psyplot.project.
 <p>This class behaves almost similar to PyQt’s
 <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt4.QtCore.pyqtBoundSignal</span></code></p>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -3141,7 +3153,7 @@ from a <a class="reference internal" href="psyplot.project.html#psyplot.project.
 </tbody>
 </table>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -3187,14 +3199,14 @@ are disconnected</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.data.UGridDecoder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.data.</span></span><span class="sig-name descname"><span class="pre">UGridDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#UGridDecoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.UGridDecoder" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#psyplot.data.CFDecoder" title="psyplot.data.CFDecoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.CFDecoder</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#psyplot.data.CFDecoder" title="psyplot.data.CFDecoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">CFDecoder</span></code></a></p>
 <p>Decoder for UGrid data sets</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Currently only triangles are supported.</p>
 </div>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -3238,8 +3250,8 @@ are disconnected</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset that contains the given <cite>var</cite></p></li>
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The array to decode</p></li>
+<li><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset that contains the given <cite>var</cite></p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The array to decode</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -3259,7 +3271,7 @@ False</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset to decode</p></li>
+<li><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset to decode</p></li>
 <li><p><strong>gridfile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The path to a separate grid file or a xarray.Dataset instance which
 may store the coordinates used in <cite>ds</cite></p></li>
 </ul>
@@ -3268,7 +3280,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dd class="field-even"><p><cite>ds</cite> with additional coordinates</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)">xarray.Dataset</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)">xarray.Dataset</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3280,7 +3292,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The variable to check</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The variable to check</p></li>
 <li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Coordinates to use. If None, the coordinates of the dataset in the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">ds</span></code> attribute are used.</p></li>
 <li><p><strong>axis</strong> (<em>{'x'</em><em>, </em><em>'y'}</em>) – The spatial axis to check</p></li>
@@ -3292,7 +3304,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dd class="field-even"><p>the bounds corrdinate (if existent)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)">xarray.DataArray</a> or None</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)">xarray.DataArray</a> or None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3304,7 +3316,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a>) – The data source whith the <code class="docutils literal notranslate"><span class="pre">'mesh'</span></code> attribute</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a>) – The data source whith the <code class="docutils literal notranslate"><span class="pre">'mesh'</span></code> attribute</p></li>
 <li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The coordinates to use. If None, the coordinates of the dataset of
 this decoder is used</p></li>
 </ul>
@@ -3339,7 +3351,7 @@ this decoder is used</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The variable to use</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The variable to use</p></li>
 <li><p><strong>coords</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Alternative coordinates to use. If None, the coordinates of the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">ds</span></code> dataset are used</p></li>
 <li><p><strong>convert_radian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True and the coordinate has units in ‘radian’, those are
@@ -3357,13 +3369,13 @@ Must only be provided if the <cite>src_crs</cite> is not None.</p></li>
 <dd class="field-even"><p>The spatial triangles of the variable</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/tri_api.html#matplotlib.tri.Triangulation" title="(in Matplotlib v3.5.1)">matplotlib.tri.Triangulation</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/tri_api.html#matplotlib.tri.Triangulation" title="(in Matplotlib v3.5.3)">matplotlib.tri.Triangulation</a></p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
 <p>If the <code class="docutils literal notranslate"><span class="pre">'location'</span></code> attribute is set to <code class="docutils literal notranslate"><span class="pre">'node'</span></code>, a delaunay
 triangulation is performed using the
-<a class="reference external" href="https://matplotlib.org/stable/api/tri_api.html#matplotlib.tri.Triangulation" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.tri.Triangulation</span></code></a> class.</p>
+<a class="reference external" href="https://matplotlib.org/stable/api/tri_api.html#matplotlib.tri.Triangulation" title="(in Matplotlib v3.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.tri.Triangulation</span></code></a> class.</p>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Implement the visualization for UGrid data shown on the edge of the
@@ -3427,7 +3439,7 @@ if there exists no filename</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset you want the path information for</p></li>
+<li><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset you want the path information for</p></li>
 <li><p><strong>dump</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True and the dataset has not been dumped so far, it is dumped to a
 temporary file or the one generated by <cite>paths</cite> is used</p></li>
 <li><p><strong>paths</strong> (<em>iterable</em><em> or </em><em>True</em>) – An iterator over filenames to use if a dataset has no filename.
@@ -3510,8 +3522,8 @@ does not work an integer array with the corresponding indices is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>coord</strong> (<em>xarray.Coordinate</em><em> or </em><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.21.2.dev0)"><em>xarray.Variable</em></a>) – Coordinate to convert</p></li>
-<li><p><strong>base_index</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.1)"><em>pandas.Index</em></a>) – The base index from which the <cite>coord</cite> was extracted</p></li>
+<li><p><strong>coord</strong> (<em>xarray.Coordinate</em><em> or </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2022.6.1.dev0)"><em>xarray.Variable</em></a>) – Coordinate to convert</p></li>
+<li><p><strong>base_index</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.3)"><em>pandas.Index</em></a>) – The base index from which the <cite>coord</cite> was extracted</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -3557,8 +3569,8 @@ strings</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="psyplot.data.open_dataset">
 <span class="sig-prename descclassname"><span class="pre">psyplot.data.</span></span><span class="sig-name descname"><span class="pre">open_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename_or_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode_cf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode_coords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#open_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.open_dataset" title="Permalink to this definition"></a></dt>
-<dd><p>Open an instance of <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a>.</p>
-<p>This method has the same functionality as the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.open_dataset.html#xarray.open_dataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.open_dataset()</span></code></a>
+<dd><p>Open an instance of <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a>.</p>
+<p>This method has the same functionality as the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.open_dataset.html#xarray.open_dataset" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.open_dataset()</span></code></a>
 method except that is supports an additional ‘gdal’ engine to open
 gdal Rasters (e.g. GeoTiffs) and that is supports absolute time units like
 <code class="docutils literal notranslate"><span class="pre">'day</span> <span class="pre">as</span> <span class="pre">%Y%m%d.%f'</span></code> (if <cite>decode_cf</cite> and <cite>decode_times</cite> are True).</p>
@@ -3570,7 +3582,7 @@ or an OpenDAP URL and opened with python-netCDF4, unless the filename
 ends with .gz, in which case the file is gunzipped and opened with
 scipy.io.netcdf (only netCDF3 supported). Byte-strings or file-like
 objects are opened by scipy.io.netcdf (netCDF3) or h5py (netCDF4/HDF).</p></li>
-<li><p><strong>chunks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – If chunks is provided, it is used to load the new dataset into dask
+<li><p><strong>chunks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>'auto'</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – If chunks is provided, it is used to load the new dataset into dask
 arrays. <code class="docutils literal notranslate"><span class="pre">chunks=-1</span></code> loads the dataset with dask using a single
 chunk for all arrays. <code class="docutils literal notranslate"><span class="pre">chunks={}</span></code> loads the dataset with dask using
 engine preferred chunks if exposed by the backend, otherwise with
@@ -3624,9 +3636,14 @@ as coordinate variables.</p></li>
 other attributes as coordinate variables.</p></li>
 </ul>
 </p></li>
-<li><p><strong>drop_variables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>iterable</em><em>, </em><em>optional</em>) – A variable or list of variables to exclude from being parsed from the
+<li><p><strong>drop_variables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>iterable of str</em><em>, </em><em>optional</em>) – A variable or list of variables to exclude from being parsed from the
 dataset. This may be useful to drop variables with problems or
 inconsistent values.</p></li>
+<li><p><strong>inline_array</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>, </em><em>default: False</em>) – How to include the array in the dask task graph.
+By default(<code class="docutils literal notranslate"><span class="pre">inline_array=False</span></code>) the array is included in a task by
+itself, and each chunk refers to that task by its key. With
+<code class="docutils literal notranslate"><span class="pre">inline_array=True</span></code>, Dask will instead inline the array directly
+in the values of the task graph. See <code class="xref py py-func docutils literal notranslate"><span class="pre">dask.array.from_array()</span></code>.</p></li>
 <li><p><strong>backend_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Additional keyword arguments passed on to the engine open function,
 equivalent to <cite>**kwargs</cite>.</p></li>
 <li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – <p>Additional keyword arguments passed on to the engine open function.
@@ -3653,7 +3670,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dd class="field-even"><p>The dataset that contains the variables from <cite>filename_or_obj</cite></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)">xarray.Dataset</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)">xarray.Dataset</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3662,7 +3679,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dt class="sig sig-object py" id="psyplot.data.open_mfdataset">
 <span class="sig-prename descclassname"><span class="pre">psyplot.data.</span></span><span class="sig-name descname"><span class="pre">open_mfdataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode_cf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode_times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode_coords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#open_mfdataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.open_mfdataset" title="Permalink to this definition"></a></dt>
 <dd><p>Open multiple files as a single dataset.</p>
-<p>This function is essentially the same as the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.open_mfdataset.html#xarray.open_mfdataset" title="(in xarray v0.21.2.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.open_mfdataset()</span></code></a>
+<p>This function is essentially the same as the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.open_mfdataset.html#xarray.open_mfdataset" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.open_mfdataset()</span></code></a>
 function but (as the <a class="reference internal" href="#psyplot.data.open_dataset" title="psyplot.data.open_dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">open_dataset()</span></code></a>) supports additional decoding
 and the <code class="docutils literal notranslate"><span class="pre">'gdal'</span></code> engine.
 You can further specify the <cite>t_format</cite> parameter to get the time
@@ -3670,17 +3687,17 @@ information from the files and use the results to concatenate the files</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>paths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>sequence</em>) – Either a string glob in the form <a href="#id4"><span class="problematic" id="id5">``</span></a><code class="docutils literal notranslate"><span class="pre">&quot;path/to/my/files/*.nc&quot;``</span></code> or an explicit list of
+<li><p><strong>paths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><em>nested sequence of paths</em>) – Either a string glob in the form <a href="#id4"><span class="problematic" id="id5">``</span></a><code class="docutils literal notranslate"><span class="pre">&quot;path/to/my/files/*.nc&quot;``</span></code> or an explicit list of
 files to open. Paths can be given as strings or as pathlib Paths. If
 concatenation along more than one dimension is desired, then <code class="docutils literal notranslate"><span class="pre">paths</span></code> must be a
 nested list-of-lists (see <code class="docutils literal notranslate"><span class="pre">combine_nested</span></code> for details). (A string glob will
 be expanded to a 1-dimensional list.)</p></li>
-<li><p><strong>chunks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary with keys given by dimension names and values given by chunk sizes.
+<li><p><strong>chunks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>'auto'</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Dictionary with keys given by dimension names and values given by chunk sizes.
 In general, these should divide the dimensions of each dataset. If int, chunk
 each dimension by <code class="docutils literal notranslate"><span class="pre">chunks</span></code>. By default, chunks will be chosen to load entire
 input files into memory at once. This has a major impact on performance: please
 see the full documentation for more details <a href="#id8"><span class="problematic" id="id6">[2]_</span></a>.</p></li>
-<li><p><strong>concat_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, or </em><em>list of str</em><em>, </em><em>DataArray</em><em>, </em><em>Index</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Dimensions to concatenate files along.  You only need to provide this argument
+<li><p><strong>concat_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>DataArray</em><em>, </em><em>Index</em><em> or </em><em>a Sequence of these</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Dimensions to concatenate files along.  You only need to provide this argument
 if <code class="docutils literal notranslate"><span class="pre">combine='nested'</span></code>, and if any of the dimensions along which you want to
 concatenate is not a dimension in the original datasets, e.g., if you want to
 stack a collection of 2D arrays along a third dimension. Set
@@ -3690,7 +3707,7 @@ equivalent to opening the files separately and then merging them with
 <code class="docutils literal notranslate"><span class="pre">xarray.merge</span></code>.</p></li>
 <li><p><strong>combine</strong> (<em>{&quot;by_coords&quot;</em><em>, </em><em>&quot;nested&quot;}</em><em>, </em><em>optional</em>) – Whether <code class="docutils literal notranslate"><span class="pre">xarray.combine_by_coords</span></code> or <code class="docutils literal notranslate"><span class="pre">xarray.combine_nested</span></code> is used to
 combine all the data. Default is to use <code class="docutils literal notranslate"><span class="pre">xarray.combine_by_coords</span></code>.</p></li>
-<li><p><strong>compat</strong> (<em>{&quot;identical&quot;</em><em>, </em><em>&quot;equals&quot;</em><em>, </em><em>&quot;broadcast_equals&quot;</em><em>,               </em><em>&quot;no_conflicts&quot;</em><em>, </em><em>&quot;override&quot;}</em><em>, </em><em>optional</em>) – <p>String indicating how to compare variables of the same name for
+<li><p><strong>compat</strong> (<em>{&quot;identical&quot;</em><em>, </em><em>&quot;equals&quot;</em><em>, </em><em>&quot;broadcast_equals&quot;</em><em>,               </em><em>&quot;no_conflicts&quot;</em><em>, </em><em>&quot;override&quot;}</em><em>, </em><em>default: &quot;no_conflicts&quot;</em>) – <p>String indicating how to compare variables of the same name for
 potential conflicts when merging:</p>
 <blockquote>
 <div><ul>
@@ -3721,7 +3738,7 @@ may store the coordinates used in <cite>ds</cite></p></li>
 <dd class="field-even"><p>The dataset that contains the variables from <cite>filename_or_obj</cite></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)">xarray.Dataset</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)">xarray.Dataset</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3784,12 +3801,12 @@ load</p>
 <span class="sig-prename descclassname"><span class="pre">psyplot.data.</span></span><span class="sig-name descname"><span class="pre">to_netcdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/data.html#to_netcdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.data.to_netcdf" title="Permalink to this definition"></a></dt>
 <dd><p>Store the given dataset as a netCDF file</p>
 <p>This functions works essentially the same as the usual
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.to_netcdf.html#xarray.Dataset.to_netcdf" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.to_netcdf()</span></code></a> method but can also encode absolute time
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.to_netcdf.html#xarray.Dataset.to_netcdf" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.Dataset.to_netcdf()</span></code></a> method but can also encode absolute time
 units</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.21.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset to store</p></li>
+<li><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2022.6.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset to store</p></li>
 <li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>path-like</em><em> or </em><em>file-like</em><em>, </em><em>optional</em>) – Path to which to save this dataset. File-like objects are only
 supported by the scipy engine. If no path is provided, this
 function returns the resulting netCDF file as bytes; in this case,

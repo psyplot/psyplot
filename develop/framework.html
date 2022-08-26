@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The psyplot framework &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
+  <title>The psyplot framework &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -34,7 +35,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.1
+                1.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -100,7 +101,7 @@
            <div itemprop="articleBody">
              
   <section id="the-psyplot-framework">
-<span id="framework"></span><h1>The psyplot framework<a class="headerlink" href="#the-psyplot-framework" title="Permalink to this headline"></a></h1>
+<span id="framework"></span><h1>The psyplot framework<a class="headerlink" href="#the-psyplot-framework" title="Permalink to this heading"></a></h1>
 <img alt="../_images/psyplot_framework.gif" src="../_images/psyplot_framework.gif" />
 <p>The main module we used so far, was the <a class="reference internal" href="../api/psyplot.project.html#module-psyplot.project" title="psyplot.project"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psyplot.project</span></code></a> module. It is
 the end of a whole framework that is setup by the psyplot package.</p>
@@ -117,12 +118,12 @@ the <a class="reference internal" href="../api/psyplot.project.html#psyplot.proj
 classes in this package. They are filled with contents in plugins such as the
 <a class="reference external" href="https://psyplot.github.io/psy-simple/">psy-simple</a> or the <a class="reference external" href="https://psyplot.github.io/psy-maps/">psy-maps</a> plugin (see <a class="reference internal" href="../plugins.html#plugins"><span class="std std-ref">Psyplot plugins</span></a>).</p>
 <section id="the-project-function">
-<span id="project-framework"></span><h2>The <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.project" title="psyplot.project.project"><code class="xref py py-func docutils literal notranslate"><span class="pre">project()</span></code></a> function<a class="headerlink" href="#the-project-function" title="Permalink to this headline"></a></h2>
+<span id="project-framework"></span><h2>The <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.project" title="psyplot.project.project"><code class="xref py py-func docutils literal notranslate"><span class="pre">project()</span></code></a> function<a class="headerlink" href="#the-project-function" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.Project</span></code></a> class (in analogy to matplotlibs
-<a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a> class) is basically a list that controls
+<a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="(in Matplotlib v3.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a> class) is basically a list that controls
 multiple plot objects. It comprises the full functionality of the package and
 packs it into one class, the <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> class.</p>
-<p>In analogy to pyplots <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">figure()</span></code></a> function, a new project
+<p>In analogy to pyplots <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="(in Matplotlib v3.5.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">figure()</span></code></a> function, a new project
 can simply be created via</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psy</span>
 
@@ -260,15 +261,15 @@ we choose their title corresponding to the variable names</p>
 <a class="reference internal image-reference" href="../_images/docs_framework_project_demo2.png"><img alt="../_images/docs_framework_project_demo2.png" src="../_images/docs_framework_project_demo2.png" style="width: 4in;" /></a>
 </section>
 <section id="the-interactivebase-and-the-plotter-classes">
-<h2>The <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveBase" title="psyplot.data.InteractiveBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveBase</span></code></a> and the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> classes<a class="headerlink" href="#the-interactivebase-and-the-plotter-classes" title="Permalink to this headline"></a></h2>
+<h2>The <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveBase" title="psyplot.data.InteractiveBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveBase</span></code></a> and the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> classes<a class="headerlink" href="#the-interactivebase-and-the-plotter-classes" title="Permalink to this heading"></a></h2>
 <section id="interactive-data-objects">
-<h3>Interactive data objects<a class="headerlink" href="#interactive-data-objects" title="Permalink to this headline"></a></h3>
+<h3>Interactive data objects<a class="headerlink" href="#interactive-data-objects" title="Permalink to this heading"></a></h3>
 <p>The next level are instances of the
 <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveBase" title="psyplot.data.InteractiveBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveBase</span></code></a> class. This abstract base
 class provides an interface between the data and the visualization. Hence a
 plotter (that’s how we call instances of the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> class) will deal
 with the subclasses of the <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveBase" title="psyplot.data.InteractiveBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveBase</span></code></a>:</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -295,19 +296,19 @@ occupied by an instance of a <a class="reference internal" href="../api/psyplot.
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a> serves as a
-<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> accessor. After you imported psyplot, you can
-access it via the <code class="docutils literal notranslate"><span class="pre">psy</span></code> attribute of a <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, i.e.
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> accessor. After you imported psyplot, you can
+access it via the <code class="docutils literal notranslate"><span class="pre">psy</span></code> attribute of a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, i.e.
 via</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [23]: </span><span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 
 <span class="gp">In [24]: </span><span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">([])</span><span class="o">.</span><span class="n">psy</span>
-<span class="gh">Out[24]: </span><span class="go">&lt;psyplot.data.InteractiveArray at 0x7f6bf70d9220&gt;</span>
+<span class="gh">Out[24]: </span><span class="go">&lt;psyplot.data.InteractiveArray at 0x7f0b749af910&gt;</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="visualization-objects">
-<h3>Visualization objects<a class="headerlink" href="#visualization-objects" title="Permalink to this headline"></a></h3>
+<h3>Visualization objects<a class="headerlink" href="#visualization-objects" title="Permalink to this heading"></a></h3>
 <p>Each plotter class is the coordinator of several visualization options.
 Thereby the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> class itself contains only
 the structural functionality for managing the formatoptions that do the
@@ -422,9 +423,9 @@ set a formatoption like you set an item for a dictionary via</p>
 </section>
 </section>
 <section id="formatoptions">
-<h2>Formatoptions<a class="headerlink" href="#formatoptions" title="Permalink to this headline"></a></h2>
+<h2>Formatoptions<a class="headerlink" href="#formatoptions" title="Permalink to this heading"></a></h2>
 <p>Formatoptions are the core of the visualization in the psyplot framework. They
-conceptually correspond to the basic <a class="reference external" href="https://matplotlib.org/stable/api/artist_api.html#matplotlib.artist.Artist" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.artist.Artist</span></code></a> and
+conceptually correspond to the basic <a class="reference external" href="https://matplotlib.org/stable/api/artist_api.html#matplotlib.artist.Artist" title="(in Matplotlib v3.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.artist.Artist</span></code></a> and
 inherit from the abstract <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> class. Each
 plotter is set up through it’s formatoptions where each formatoption has a
 unique formatoption key inside the plotter. This formatoption key (e.g. ‘title’

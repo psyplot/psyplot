@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.config.rcsetup module &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
+  <title>psyplot.config.rcsetup module &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -34,7 +35,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.1
+                1.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -100,14 +101,14 @@
            <div itemprop="articleBody">
              
   <section id="module-psyplot.config.rcsetup">
-<span id="psyplot-config-rcsetup-module"></span><h1>psyplot.config.rcsetup module<a class="headerlink" href="#module-psyplot.config.rcsetup" title="Permalink to this headline"></a></h1>
+<span id="psyplot-config-rcsetup-module"></span><h1>psyplot.config.rcsetup module<a class="headerlink" href="#module-psyplot.config.rcsetup" title="Permalink to this heading"></a></h1>
 <p>Default management of the psyplot package</p>
 <p>This module defines the necessary classes, data and functions for the default
 configuration of the module.
 The structure is motivated and to larger parts taken from the <a class="reference external" href="http://matplotlib.org/api/">matplotlib</a>
 package.</p>
 <p><strong>Classes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -122,7 +123,7 @@ package.</p>
 </tbody>
 </table>
 <p><strong>Data:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -137,7 +138,7 @@ package.</p>
 </tbody>
 </table>
 <p><strong>Functions:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -186,7 +187,7 @@ package.</p>
 <p>validating functions are defined and associated with rc parameters in
 <a class="reference internal" href="#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-data docutils literal notranslate"><span class="pre">defaultParams</span></code></a></p>
 <p>This class is essentially the same as in maplotlibs
-<a class="reference external" href="https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.RcParams" title="(in Matplotlib v3.5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RcParams</span></code></a> but has the additional
+<a class="reference external" href="https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.RcParams" title="(in Matplotlib v3.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RcParams</span></code></a> but has the additional
 <a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_and_replace()</span></code></a> method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -200,7 +201,7 @@ dictionary is used</p></li>
 </dd>
 </dl>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -227,7 +228,7 @@ dictionary is used</p></li>
 </tbody>
 </table>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -562,7 +563,7 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.config.rcsetup.SubDict">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.config.rcsetup.</span></span><span class="sig-name descname"><span class="pre">SubDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/config/rcsetup.html#SubDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.config.rcsetup.SubDict" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.UserDict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserDict</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.UserDict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserDict</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
 <p>Class that keeps week reference to the base dictionary</p>
 <p>This class is used by the <a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RcParams.find_and_replace()</span></code></a> method
 to provide an easy handable instance that keeps reference to the
@@ -654,7 +655,7 @@ can access the keys:</p>
 <p><a class="reference internal" href="#psyplot.config.rcsetup.RcParams.find_and_replace" title="psyplot.config.rcsetup.RcParams.find_and_replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RcParams.find_and_replace</span></code></a></p>
 </div>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -678,7 +679,7 @@ can access the keys:</p>
 </tbody>
 </table>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -835,7 +836,7 @@ directory</p></li>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>This function is motivated by the <a class="reference external" href="https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.matplotlib_fname" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.matplotlib_fname()</span></code></a>
+<p>This function is motivated by the <a class="reference external" href="https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.matplotlib_fname" title="(in Matplotlib v3.5.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.matplotlib_fname()</span></code></a>
 function</p>
 </dd></dl>
 
@@ -884,7 +885,7 @@ to the psyplot configuration file</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>This function is motivated by the <a class="reference external" href="https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.matplotlib_fname" title="(in Matplotlib v3.5.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.matplotlib_fname()</span></code></a>
+<p>This function is motivated by the <a class="reference external" href="https://matplotlib.org/stable/api/matplotlib_configuration_api.html#matplotlib.matplotlib_fname" title="(in Matplotlib v3.5.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.matplotlib_fname()</span></code></a>
 function</p>
 </dd></dl>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psyplot.plotter module &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
+  <title>psyplot.plotter module &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
@@ -34,7 +35,7 @@
             <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.1
+                1.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -101,14 +102,14 @@
            <div itemprop="articleBody">
              
   <section id="module-psyplot.plotter">
-<span id="psyplot-plotter-module"></span><h1>psyplot.plotter module<a class="headerlink" href="#module-psyplot.plotter" title="Permalink to this headline"></a></h1>
+<span id="psyplot-plotter-module"></span><h1>psyplot.plotter module<a class="headerlink" href="#module-psyplot.plotter" title="Permalink to this heading"></a></h1>
 <p>Core package for interactive visualization in the psyplot package</p>
 <p>This package defines the <a class="reference internal" href="#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> and <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> classes,
 the core of the visualization in the <a class="reference internal" href="psyplot.html#module-psyplot" title="psyplot"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psyplot</span></code></a> package. Each
 <a class="reference internal" href="#psyplot.plotter.Plotter" title="psyplot.plotter.Plotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code></a> combines a set of formatoption keys where each formatoption
 key is represented by a <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> subclass.</p>
 <p><strong>Data:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -129,7 +130,7 @@ key is represented by a <a class="reference internal" href="#psyplot.plotter.For
 </tbody>
 </table>
 <p><strong>Classes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -159,7 +160,7 @@ key is represented by a <a class="reference internal" href="#psyplot.plotter.For
 </tbody>
 </table>
 <p><strong>Functions:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -182,7 +183,7 @@ key is represented by a <a class="reference internal" href="#psyplot.plotter.For
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.plotter.DictFormatoption">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.plotter.</span></span><span class="sig-name descname"><span class="pre">DictFormatoption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_in_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/plotter.html#DictFormatoption"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.plotter.DictFormatoption" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.plotter.Formatoption</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a></p>
 <p>Base formatoption class defining an alternative set_value that works for
 dictionaries.</p>
 <dl class="field-list simple">
@@ -206,7 +207,7 @@ this plotter.</p></li>
 </dd>
 </dl>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -276,7 +277,7 @@ this plotter.</p></li>
 </dd>
 </dl>
 <p><strong>Interface to the data:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -321,7 +322,7 @@ this plotter.</p></li>
 </tbody>
 </table>
 <p><strong>Interface for the plotter:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -381,7 +382,7 @@ this plotter.</p></li>
 </tbody>
 </table>
 <p><strong>Interface to other formatoptions:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -408,7 +409,7 @@ this plotter.</p></li>
 </tbody>
 </table>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -426,7 +427,7 @@ this plotter.</p></li>
 </tbody>
 </table>
 <p><strong>Formatoption intrinsic:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -450,7 +451,7 @@ this plotter.</p></li>
 </tbody>
 </table>
 <p><strong>Information attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -471,7 +472,7 @@ this plotter.</p></li>
 </tbody>
 </table>
 <p><strong>Miscellaneous:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -800,7 +801,7 @@ the formatoption is updated.</p>
 <p>This method is called when the axes is cleared due to a
 formatoption with <a class="reference internal" href="#psyplot.plotter.Formatoption.requires_clearing" title="psyplot.plotter.Formatoption.requires_clearing"><code class="xref py py-attr docutils literal notranslate"><span class="pre">requires_clearing</span></code></a> set to True. You don’t
 necessarily have to implement this formatoption if your plot results
-are removed by the usual <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.clear.html#matplotlib.axes.Axes.clear" title="(in Matplotlib v3.5.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.clear()</span></code></a> method.</p>
+are removed by the usual <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.clear.html#matplotlib.axes.Axes.clear" title="(in Matplotlib v3.5.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.clear()</span></code></a> method.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -951,7 +952,7 @@ the shared value</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.plotter.FormatoptionMeta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.plotter.</span></span><span class="sig-name descname"><span class="pre">FormatoptionMeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clsname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/plotter.html#FormatoptionMeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.plotter.FormatoptionMeta" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABCMeta" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABCMeta</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABCMeta" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a></p>
 <p>Meta class for formatoptions</p>
 <p>This class serves as a meta class for formatoptions and allows a more
 efficient docstring generation by using the
@@ -974,7 +975,7 @@ derived from the <a class="reference internal" href="#psyplot.plotter.Formatopti
 <li><p><strong>data</strong> (<a class="reference internal" href="psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><em>InteractiveArray</em></a><em> or </em><a class="reference internal" href="psyplot.data.html#psyplot.data.ArrayList" title="psyplot.data.ArrayList"><em>ArrayList</em></a><em>, </em><em>optional</em>) – Data object that shall be visualized. If given and <cite>plot</cite> is True,
 the <a class="reference internal" href="#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initialize_plot()</span></code></a> method is called at the end. Otherwise
 you can call this method later by yourself</p></li>
-<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.1)"><em>matplotlib.axes.Axes</em></a>) – Matplotlib Axes to plot on. If None, a new one will be created as
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.3)"><em>matplotlib.axes.Axes</em></a>) – Matplotlib Axes to plot on. If None, a new one will be created as
 soon as the <a class="reference internal" href="#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initialize_plot()</span></code></a> method is called</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Default: None. A boolean indicating whether this list shall
 automatically update the contained arrays when calling the
@@ -995,7 +996,7 @@ shall be used</p></li>
 </dd>
 </dl>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -1061,7 +1062,7 @@ shall be used</p></li>
 </tbody>
 </table>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -1350,7 +1351,7 @@ the <a class="reference internal" href="#psyplot.plotter.Plotter.data" title="ps
 <li><p>If both are None, nothing is done.</p></li>
 </ul>
 </p></li>
-<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.1)"><em>matplotlib.axes.Axes</em></a>) – Matplotlib Axes to plot on. If None, a new one will be created as
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v3.5.3)"><em>matplotlib.axes.Axes</em></a>) – Matplotlib Axes to plot on. If None, a new one will be created as
 soon as the <a class="reference internal" href="#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initialize_plot()</span></code></a> method is called</p></li>
 <li><p><strong>make_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If True, and <cite>data</cite> is not None, the plot is initialized. Otherwise
 only the framework between plotter and data is set up</p></li>
@@ -1854,7 +1855,7 @@ is then True).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.plotter.PostProcessing">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.plotter.</span></span><span class="sig-name descname"><span class="pre">PostProcessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_in_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/plotter.html#PostProcessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.plotter.PostProcessing" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.plotter.Formatoption</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a></p>
 <p>Apply your own postprocessing script</p>
 <p>This formatoption let’s you apply your own post processing script. Just
 enter the script as a string and it will be executed. The formatoption
@@ -1923,7 +1924,7 @@ this plotter.</p></li>
 </dd>
 </dl>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -1956,7 +1957,7 @@ this plotter.</p></li>
 </tbody>
 </table>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2052,7 +2053,7 @@ the formatoption is updated.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="psyplot.plotter.PostTiming">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psyplot.plotter.</span></span><span class="sig-name descname"><span class="pre">PostTiming</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_in_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psyplot/plotter.html#PostTiming"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psyplot.plotter.PostTiming" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.plotter.Formatoption</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a></p>
 <p>Determine when to run the <code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code> formatoption</p>
 <p>This formatoption determines, whether the <code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code> formatoption
 should be run never, after replot or after every update.</p>
@@ -2091,7 +2092,7 @@ this plotter.</p></li>
 </dd>
 </dl>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2112,7 +2113,7 @@ this plotter.</p></li>
 </tbody>
 </table>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -2252,7 +2253,7 @@ using the <code class="xref py py-func docutils literal notranslate"><span class
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fmto</strong> (<a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><em>Formatoption</em></a>) – The <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> instance to check</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><em>xarray.DataArray</em></a>) – The data array to use if the <a class="reference internal" href="#psyplot.plotter.Formatoption.data_dependent" title="psyplot.plotter.Formatoption.data_dependent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_dependent</span></code></a>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><em>xarray.DataArray</em></a>) – The data array to use if the <a class="reference internal" href="#psyplot.plotter.Formatoption.data_dependent" title="psyplot.plotter.Formatoption.data_dependent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_dependent</span></code></a>
 attribute is a callable</p></li>
 </ul>
 </dd>

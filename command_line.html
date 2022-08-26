@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Command line usage &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
+  <title>Command line usage &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -34,7 +35,7 @@
             <img src="_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.1
+                1.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -92,7 +93,7 @@
            <div itemprop="articleBody">
              
   <section id="command-line-usage">
-<span id="command-line"></span><h1>Command line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this headline"></a></h1>
+<span id="command-line"></span><h1>Command line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this heading"></a></h1>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">psyplot.__main__</span></code> module defines a simple parser to parse commands
 from the command line to make a plot of data in a netCDF file. Note that the
 arguments change slightly if you have the <code class="docutils literal notranslate"><span class="pre">psyplot-gui</span></code> module installed
@@ -121,7 +122,7 @@ arguments change slightly if you have the <code class="docutils literal notransl
        <span class="o">[</span>-d dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
        <span class="o">[</span>dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
        ...<span class="o">]]</span>
-       <span class="o">[</span>-pm <span class="o">{</span><span class="s1">&#39;violinplot&#39;</span>, <span class="s1">&#39;mapcombined&#39;</span>, <span class="s1">&#39;lineplot&#39;</span>, <span class="s1">&#39;density&#39;</span>, <span class="s1">&#39;mapvector&#39;</span>, <span class="s1">&#39;vector&#39;</span>, <span class="s1">&#39;plot2d&#39;</span>, <span class="s1">&#39;fldmean&#39;</span>, <span class="s1">&#39;combined&#39;</span>, <span class="s1">&#39;barplot&#39;</span>, <span class="s1">&#39;mapplot&#39;</span><span class="o">}]</span>
+       <span class="o">[</span>-pm <span class="o">{</span><span class="s1">&#39;violinplot&#39;</span>, <span class="s1">&#39;combined&#39;</span>, <span class="s1">&#39;plot2d&#39;</span>, <span class="s1">&#39;density&#39;</span>, <span class="s1">&#39;vector&#39;</span>, <span class="s1">&#39;fldmean&#39;</span>, <span class="s1">&#39;mapplot&#39;</span>, <span class="s1">&#39;lineplot&#39;</span>, <span class="s1">&#39;mapvector&#39;</span>, <span class="s1">&#39;barplot&#39;</span>, <span class="s1">&#39;mapcombined&#39;</span><span class="o">}]</span>
        <span class="o">[</span>-o str or list of str<span class="o">]</span>
        <span class="o">[</span>-p str<span class="o">]</span>
        <span class="o">[</span>-engine str<span class="o">]</span>
@@ -139,7 +140,7 @@ arguments change slightly if you have the <code class="docutils literal notransl
 </pre></div>
 </div>
 <section id="Positional Arguments">
-<h2>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline"></a></h2>
+<h2>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>str</kbd></dt>
 <dd><p>Either the filenames to show, or, if the <cite>project</cite> parameter is set,
@@ -150,7 +151,7 @@ original filename to a new one</p>
 </dl>
 </section>
 <section id="Named Arguments">
-<h2>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline"></a></h2>
+<h2>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this heading"></a></h2>
 <dl class="option-list">
 <dt><kbd>-n, --name</kbd></dt>
 <dd><p>The variable names to plot if the <cite>output</cite> parameter is set</p>
@@ -161,7 +162,7 @@ original filename to a new one</p>
 given</p>
 </dd>
 <dt><kbd>-pm, --plot-method</kbd></dt>
-<dd><p>Possible choices: violinplot, mapcombined, lineplot, density, mapvector, vector, plot2d, fldmean, combined, barplot, mapplot</p>
+<dd><p>Possible choices: violinplot, combined, plot2d, density, vector, fldmean, mapplot, lineplot, mapvector, barplot, mapcombined</p>
 <p>The name of the plot_method to use</p>
 </dd>
 <dt><kbd>-p, --project</kbd></dt>
@@ -219,7 +220,7 @@ look up the <cite>preset</cite> in the psyplot configuration directory (see
 </dl>
 </section>
 <section id="Info options">
-<h2>Info options<a class="headerlink" href="#Info options" title="Permalink to this headline"></a></h2>
+<h2>Info options<a class="headerlink" href="#Info options" title="Permalink to this heading"></a></h2>
 <p>Options that print informations and quit afterwards</p>
 <dl class="option-list">
 <dt><kbd>-V, --version</kbd></dt>
@@ -243,7 +244,7 @@ look up the <cite>preset</cite> in the psyplot configuration directory (see
 </dl>
 </section>
 <section id="Output options">
-<h2>Output options<a class="headerlink" href="#Output options" title="Permalink to this headline"></a></h2>
+<h2>Output options<a class="headerlink" href="#Output options" title="Permalink to this heading"></a></h2>
 <p>Options that only have an effect if the <cite>-o</cite> option is set.</p>
 <dl class="option-list">
 <dt><kbd>-o, --output</kbd></dt>

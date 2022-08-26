@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting started &mdash; psyplot 1.4.1+1.g5e62dfc documentation</title>
+  <title>Getting started &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
@@ -16,6 +16,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
@@ -34,7 +35,7 @@
             <img src="_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.4.1
+                1.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -104,9 +105,9 @@
            <div itemprop="articleBody">
              
   <section id="getting-started">
-<span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h1>
 <section id="initialization-and-interactive-usage">
-<h2>Initialization and interactive usage<a class="headerlink" href="#initialization-and-interactive-usage" title="Permalink to this headline"></a></h2>
+<h2>Initialization and interactive usage<a class="headerlink" href="#initialization-and-interactive-usage" title="Permalink to this heading"></a></h2>
 <p>This section shall introduce you how to read data from a netCDF file and
 visualize it via psyplot. For this, you need to have <a class="reference external" href="https://github.com/Unidata/netcdf4-python">netCDF4</a> and the
 <a class="reference external" href="https://psyplot.github.io/psy-maps/">psy-maps</a> psyplot plugin to be installed (see <a class="reference external" href="https://psyplot.github.io/psyplot-gui/installing.html#install" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">install</span></a>).</p>
@@ -199,7 +200,7 @@ call the <a class="reference internal" href="api/psyplot.project.html#psyplot.pr
 <span class="gh">Out[5]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 </pre></div>
 </div>
-<p>which contains the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v0.21.2.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
+<p>which contains the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
 corresponding plotter that visualizes it</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gh">Out[6]: </span><span class="go"></span>
@@ -320,7 +321,7 @@ look at the types this formatoption accepts using the <a class="reference intern
 <p>Let’s use an orthogonal projection. The update goes via the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Project.update()</span></code> method which goes all the way down to the
 <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.update" title="psyplot.plotter.Plotter.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.update()</span></code></a> and the
-<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.Projection.update" title="(in psy-maps v1.3.2)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psy_maps.plotters.Projection.update()</span></code></a> method of the formatoption.</p>
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.Projection.update" title="(in psy-maps v1.4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psy_maps.plotters.Projection.update()</span></code></a> method of the formatoption.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [10]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;ortho&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -360,7 +361,7 @@ the memory and close the figures</p>
 </div>
 </section>
 <section id="choosing-the-dimension">
-<span id="intro-dims"></span><h2>Choosing the dimension<a class="headerlink" href="#choosing-the-dimension" title="Permalink to this headline"></a></h2>
+<span id="intro-dims"></span><h2>Choosing the dimension<a class="headerlink" href="#choosing-the-dimension" title="Permalink to this heading"></a></h2>
 <p>As you saw already above, the scalar variable <code class="docutils literal notranslate"><span class="pre">'t2m'</span></code> has multiple time
 steps and we can control what is shown via the <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code>
 method. By default, the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter.mapplot" title="psyplot.project.ProjectPlotter.mapplot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mapplot()</span></code></a>
@@ -392,7 +393,7 @@ the dimensions are therefore decoded as <code class="docutils literal notranslat
 </pre></div>
 </div>
 <p>You can also use the <cite>method</cite> keyword from the plotting function to use the
-advantages of the <a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v0.21.2.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
+advantages of the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
 corresponding to March 1979 you can use</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [19]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">&#39;1979-03&#39;</span><span class="p">,</span>
 <span class="gp">   ....: </span>                 <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
@@ -419,7 +420,7 @@ the correct names in the <a class="reference internal" href="api/psyplot.config.
 </div>
 </section>
 <section id="configuring-the-appearance-of-the-plot">
-<span id="intro-fmt"></span><h2>Configuring the appearance of the plot<a class="headerlink" href="#configuring-the-appearance-of-the-plot" title="Permalink to this headline"></a></h2>
+<span id="intro-fmt"></span><h2>Configuring the appearance of the plot<a class="headerlink" href="#configuring-the-appearance-of-the-plot" title="Permalink to this heading"></a></h2>
 <p>psyplot is build upon the great and extensive features of the matplotlib
 package. Hence, our framework can in principle be seen as a high-level
 interface to the matplotlib functionalities. However you can always access
@@ -430,11 +431,11 @@ the basic matplotlib objects like figures and axes if you need.</p>
 them and they set up the corresponding plotter.</p>
 <p>Formatoptions are all designed for an interactive usage and can usually be
 controlled with very simple commands. They range from simple formatoptions
-like <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.title" title="(in psy-simple v1.3.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">title</span></code></a> to
-<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.lonlatbox" title="(in psy-maps v1.3.2)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">latitude-longitude</span> <span class="pre">box</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data</span></code></a>.</p>
+like <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.title" title="(in psy-simple v1.4.0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">title</span></code></a> to
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.lonlatbox" title="(in psy-maps v1.4.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">latitude-longitude</span> <span class="pre">box</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data</span></code></a>.</p>
 <p>The formatoptions depend on the specific plotting method and can be seen via
 the methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -609,9 +610,9 @@ be really sure, use the <cite>fmt</cite> keyword via</p>
 </div>
 </section>
 <section id="controlling-the-update">
-<span id="intro-update"></span><h2>Controlling the update<a class="headerlink" href="#controlling-the-update" title="Permalink to this headline"></a></h2>
+<span id="intro-update"></span><h2>Controlling the update<a class="headerlink" href="#controlling-the-update" title="Permalink to this heading"></a></h2>
 <section id="automatic-update">
-<span id="intro-auto-updates"></span><h3>Automatic update<a class="headerlink" href="#automatic-update" title="Permalink to this headline"></a></h3>
+<span id="intro-auto-updates"></span><h3>Automatic update<a class="headerlink" href="#automatic-update" title="Permalink to this heading"></a></h3>
 <p>By default, a call of the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.ArrayList.update" title="psyplot.data.ArrayList.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method
 forces an automatic update and redrawing of all the plots. There are
 however several ways to modify this behavior:</p>
@@ -657,7 +658,7 @@ to start the registered updates manually via</p>
 </div>
 </section>
 <section id="direct-control-on-formatoption-update">
-<h3>Direct control on formatoption update<a class="headerlink" href="#direct-control-on-formatoption-update" title="Permalink to this headline"></a></h3>
+<h3>Direct control on formatoption update<a class="headerlink" href="#direct-control-on-formatoption-update" title="Permalink to this heading"></a></h3>
 <p>By default, when updating a formatoption, it is checked for each plot whether
 the formatoption would change during the update or not. If not, the
 formatoption is not updated. However, sometimes you may want to do that and
@@ -666,9 +667,9 @@ for this, you can use the <em>force</em> keyword in the
 </section>
 </section>
 <section id="creating-and-managing-multiple-plots">
-<span id="intro-multiple"></span><h2>Creating and managing multiple plots<a class="headerlink" href="#creating-and-managing-multiple-plots" title="Permalink to this headline"></a></h2>
+<span id="intro-multiple"></span><h2>Creating and managing multiple plots<a class="headerlink" href="#creating-and-managing-multiple-plots" title="Permalink to this heading"></a></h2>
 <section id="creating-multiple-plots">
-<h3>Creating multiple plots<a class="headerlink" href="#creating-multiple-plots" title="Permalink to this headline"></a></h3>
+<h3>Creating multiple plots<a class="headerlink" href="#creating-multiple-plots" title="Permalink to this heading"></a></h3>
 <p>One major advantage of the psyplot framework is the systematic management of
 multiple plots at the same time. To create multiple plots, simply pass in a
 list of dimension values and/or names. For example</p>
@@ -736,7 +737,7 @@ on how to use this methods.</p>
 </div>
 </section>
 <section id="slicing-and-filtering-the-project">
-<h3>Slicing and filtering the project<a class="headerlink" href="#slicing-and-filtering-the-project" title="Permalink to this headline"></a></h3>
+<h3>Slicing and filtering the project<a class="headerlink" href="#slicing-and-filtering-the-project" title="Permalink to this heading"></a></h3>
 <p>Managing a whole lot of plots is basically the same as managing a single plot.
 However, you can always get the single array and handle it separately.</p>
 <p>You can either get it through the usual list slicing (the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> class
@@ -784,7 +785,7 @@ accessed via</p>
 </section>
 </section>
 <section id="saving-and-loading-your-project">
-<span id="save-and-load"></span><h2>Saving and loading your project<a class="headerlink" href="#saving-and-loading-your-project" title="Permalink to this headline"></a></h2>
+<span id="save-and-load"></span><h2>Saving and loading your project<a class="headerlink" href="#saving-and-loading-your-project" title="Permalink to this heading"></a></h2>
 <p>Within the psyplot framework, you can also save and restore your plots easily
 and flexibel.</p>
 <p>To save your project, use the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.save_project" title="psyplot.project.Project.save_project"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_project()</span></code></a>
@@ -860,7 +861,7 @@ you want to restore your settings and/or customize your plot with the
 </div>
 </section>
 <section id="using-presets">
-<span id="presets"></span><h2>Using presets<a class="headerlink" href="#using-presets" title="Permalink to this headline"></a></h2>
+<span id="presets"></span><h2>Using presets<a class="headerlink" href="#using-presets" title="Permalink to this heading"></a></h2>
 <p>You can save and load presets to reuse the formatoption settings. For instance,
 let’s say temperature should always use a <code class="docutils literal notranslate"><span class="pre">'Reds'</span></code> cmap, the colorbar label
 should show the long name and the title should be <code class="docutils literal notranslate"><span class="pre">'time'</span></code>. This is of course
@@ -892,7 +893,7 @@ possible via</p>
 </div>
 </section>
 <section id="adding-your-own-script-the-post-formatoption">
-<span id="own-scripts"></span><h2>Adding your own script: The <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.post" title="psyplot.plotter.Plotter.post"><code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code></a> formatoption<a class="headerlink" href="#adding-your-own-script-the-post-formatoption" title="Permalink to this headline"></a></h2>
+<span id="own-scripts"></span><h2>Adding your own script: The <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.post" title="psyplot.plotter.Plotter.post"><code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code></a> formatoption<a class="headerlink" href="#adding-your-own-script-the-post-formatoption" title="Permalink to this heading"></a></h2>
 <p>Very likely, you will face the problem that not all your needs are satisfied
 by the formatoptions in one plotter. You then have two choices:</p>
 <ol class="arabic">
