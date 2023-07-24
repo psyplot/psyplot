@@ -8,7 +8,7 @@ environment:
 
 install:
     # windows config (for installation)
-    - cmd: "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - cmd: "%PYTHON%\\Scripts\\activate"
     - cmd: setlocal
     - cmd: set ANACONDA_API_TOKEN=
     # conda config
