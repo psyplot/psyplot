@@ -13,7 +13,7 @@ install:
     - cmd: set ANACONDA_API_TOKEN=
     # conda config
     - conda config --set always_yes yes --set changeps1 no
-    - conda update -q conda
+    - conda update -q conda tqdm
     - conda install conda-build anaconda-client
     - pip install -i https://pypi.anaconda.org/psyplot/simple --no-deps psyplot-ci-orb
     - conda config --add channels conda-forge
