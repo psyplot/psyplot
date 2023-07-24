@@ -48,6 +48,7 @@ import xarray
 import pandas as pd
 
 import matplotlib as mpl
+from matplotlib.axes import SubplotBase
 import matplotlib.figure as mfig
 import numpy as np
 import psyplot
@@ -1666,7 +1667,7 @@ class _ProjectLoader(object):
             for prop in ['linestyle', 'edgecolor', 'linewidth',
                          'facecolor', 'visible']:
                 ret['spines'][key][prop] = getattr(val, 'get_' + prop)()
-        if isinstance(ax, mfig.SubplotBase):
+        if isinstance(ax, SubplotBase):
             sp = ax.get_subplotspec().get_topmost_subplotspec()
             ret['grid_spec'] = sp.get_geometry()[:2]
             ret['subplotspec'] = [sp.num1, sp.num2]

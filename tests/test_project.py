@@ -185,13 +185,19 @@ class TestProject(td.TestArrayList):
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[0].psy.ax), 0)
         self.assertEqual(get_col_num(sp[0].psy.ax), 0)
-        self.assertEqual(sp[0].psy.ax.numCols, 2)
-        self.assertEqual(sp[0].psy.ax.numRows, 2)
+
+        gs = sp[0].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
         self.assertEqual(get_row_num(sp[1].psy.ax), 0)
         self.assertEqual(get_col_num(sp[1].psy.ax), 0)
-        self.assertEqual(sp[1].psy.ax.numCols, 2)
-        self.assertEqual(sp[1].psy.ax.numRows, 2)
+
+        gs = sp[1].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         arr_names = sp.arr_names
         self.assertEqual(tp.results[arr_names[0] + '.fmt1'], 'test')
         self.assertEqual(tp.results[arr_names[1] + '.fmt1'], 'test')
@@ -205,13 +211,19 @@ class TestProject(td.TestArrayList):
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[0].psy.ax), 0)
         self.assertEqual(get_col_num(sp[0].psy.ax), 0)
-        self.assertEqual(sp[0].psy.ax.numCols, 2)
-        self.assertEqual(sp[0].psy.ax.numRows, 2)
+
+        gs = sp[0].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
         self.assertEqual(get_row_num(sp[1].psy.ax), 0)
         self.assertEqual(get_col_num(sp[1].psy.ax), 0)
-        self.assertEqual(sp[1].psy.ax.numCols, 2)
-        self.assertEqual(sp[1].psy.ax.numRows, 2)
+
+        gs = sp[1].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
 
     def test_save_and_load_02_alternative_axes(self):
         """Test the saving and loading of a Project providing alternative axes
@@ -226,13 +238,19 @@ class TestProject(td.TestArrayList):
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[0].psy.ax), 0)
         self.assertEqual(get_col_num(sp[0].psy.ax), 0)
-        self.assertEqual(sp[0].psy.ax.numCols, 2)
-        self.assertEqual(sp[0].psy.ax.numRows, 2)
+
+        gs = sp[0].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
         self.assertEqual(get_row_num(sp[1].psy.ax), 0)
         self.assertEqual(get_col_num(sp[1].psy.ax), 0)
-        self.assertEqual(sp[1].psy.ax.numCols, 2)
-        self.assertEqual(sp[1].psy.ax.numRows, 2)
+
+        gs = sp[1].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         arr_names = sp.arr_names
         self.assertEqual(tp.results[arr_names[0] + '.fmt1'], 'test')
         self.assertEqual(tp.results[arr_names[1] + '.fmt1'], 'test')
@@ -247,13 +265,19 @@ class TestProject(td.TestArrayList):
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[0].psy.ax), 0)
         self.assertEqual(get_col_num(sp[0].psy.ax), 0)
-        self.assertEqual(sp[0].psy.ax.numCols, 2)
-        self.assertEqual(sp[0].psy.ax.numRows, 1)
+
+        gs = sp[0].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 1)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[1].psy.ax), 0)
         self.assertEqual(get_col_num(sp[1].psy.ax), 1)
-        self.assertEqual(sp[1].psy.ax.numCols, 2)
-        self.assertEqual(sp[1].psy.ax.numRows, 1)
+
+        gs = sp[1].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 1)
 
     def test_save_and_load_03_alternative_ds(self):
         """Test the saving and loading of a Project providing alternative axes
@@ -268,13 +292,19 @@ class TestProject(td.TestArrayList):
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[0].psy.ax), 0)
         self.assertEqual(get_col_num(sp[0].psy.ax), 0)
-        self.assertEqual(sp[0].psy.ax.numCols, 2)
-        self.assertEqual(sp[0].psy.ax.numRows, 2)
+
+        gs = sp[0].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
         self.assertEqual(get_row_num(sp[1].psy.ax), 0)
         self.assertEqual(get_col_num(sp[1].psy.ax), 0)
-        self.assertEqual(sp[1].psy.ax.numCols, 2)
-        self.assertEqual(sp[1].psy.ax.numRows, 2)
+
+        gs = sp[1].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         arr_names = sp.arr_names
         self.assertEqual(tp.results[arr_names[0] + '.fmt1'], 'test')
         self.assertEqual(tp.results[arr_names[1] + '.fmt1'], 'test')
@@ -290,13 +320,19 @@ class TestProject(td.TestArrayList):
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[0].psy.ax), 0)
         self.assertEqual(get_col_num(sp[0].psy.ax), 0)
-        self.assertEqual(sp[0].psy.ax.numCols, 2)
-        self.assertEqual(sp[0].psy.ax.numRows, 2)
+
+        gs = sp[0].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
         self.assertEqual(get_row_num(sp[1].psy.ax), 0)
         self.assertEqual(get_col_num(sp[1].psy.ax), 0)
-        self.assertEqual(sp[1].psy.ax.numCols, 2)
-        self.assertEqual(sp[1].psy.ax.numRows, 2)
+
+        gs = sp[1].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertIs(sp[0].psy.base, ds)
         self.assertIs(sp[1].psy.base, ds)
 
@@ -313,13 +349,19 @@ class TestProject(td.TestArrayList):
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[0].psy.ax), 0)
         self.assertEqual(get_col_num(sp[0].psy.ax), 0)
-        self.assertEqual(sp[0].psy.ax.numCols, 2)
-        self.assertEqual(sp[0].psy.ax.numRows, 2)
+
+        gs = sp[0].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
         self.assertEqual(get_row_num(sp[1].psy.ax), 0)
         self.assertEqual(get_col_num(sp[1].psy.ax), 0)
-        self.assertEqual(sp[1].psy.ax.numCols, 2)
-        self.assertEqual(sp[1].psy.ax.numRows, 2)
+
+        gs = sp[1].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         arr_names = sp.arr_names
         self.assertEqual(tp.results[arr_names[0] + '.fmt1'], 'test')
         self.assertEqual(tp.results[arr_names[1] + '.fmt1'], 'test')
@@ -336,13 +378,19 @@ class TestProject(td.TestArrayList):
         self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
         self.assertEqual(get_row_num(sp[0].psy.ax), 0)
         self.assertEqual(get_col_num(sp[0].psy.ax), 0)
-        self.assertEqual(sp[0].psy.ax.numCols, 2)
-        self.assertEqual(sp[0].psy.ax.numRows, 2)
+
+        gs = sp[0].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
         self.assertEqual(get_row_num(sp[1].psy.ax), 0)
         self.assertEqual(get_col_num(sp[1].psy.ax), 0)
-        self.assertEqual(sp[1].psy.ax.numCols, 2)
-        self.assertEqual(sp[1].psy.ax.numRows, 2)
+
+        gs = sp[1].psy.ax.get_gridspec()
+
+        self.assertEqual(gs.ncols, 2)
+        self.assertEqual(gs.nrows, 2)
         self.assertEqual(psyd.get_filename_ds(sp[0].psy.base)[0],
                          bt.get_file('circumpolar_test.nc'))
         self.assertEqual(psyd.get_filename_ds(sp[1].psy.base)[0],
