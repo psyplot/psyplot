@@ -1,0 +1,83 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: CC0-1.0
+
+image: python:3.9
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+
+before_script:
+  # replace git internal paths in order to use the CI_JOB_TOKEN
+  - apt-get update -y && apt-get install -y pandoc graphviz
+  - python -m pip install -U pip
+
+test-package:
+  stage: test
+  script:
+    - pip install build twine
+    - make dist
+  artifacts:
+    name: python-artifacts
+    paths:
+      - "dist/*"
+    expire_in: 7 days
+
+test:
+  stage: test
+  variables:
+    PIPENV_PIPFILE: "ci/matrix/${SCENARIO}/Pipfile"
+  script:
+    - pip install pipenv
+    - pipenv install
+    - make pipenv-test
+  parallel:
+    matrix:
+      - SCENARIO:
+          - default
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    name: pipfile
+    paths:
+      - "ci/matrix/${SCENARIO}/*"
+    expire_in: 30 days
+
+test-docs:
+  stage: test
+  script:
+    - make dev-install
+    - make -C docs html
+    - make -C docs linkcheck
+  artifacts:
+    paths:
+    - docs/_build
+
+
+deploy-package:
+  stage: deploy
+  needs:
+    - test-package
+    - test-docs
+    - test
+  only:
+    - main
+  script:
+    - pip install twine
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+
+
+
+pages:
+  stage: deploy
+  script:
+    - make dev-install
+    - sphinx-build -b html docs public
+  artifacts:
+    paths:
+    - public
+  only:
+  - main

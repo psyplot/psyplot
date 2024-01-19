@@ -5,49 +5,38 @@ the core of the visualization in the :mod:`psyplot` package. Each
 :class:`Plotter` combines a set of formatoption keys where each formatoption
 key is represented by a :class:`Formatoption` subclass."""
 
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
 
-import six
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
+import logging
 import weakref
 from abc import ABCMeta, abstractmethod
-from textwrap import TextWrapper
-import logging
-from itertools import chain, groupby, tee, repeat, starmap
 from collections import defaultdict
-from threading import RLock
 from datetime import datetime, timedelta
-from numpy import datetime64, timedelta64, ndarray, inf
-from xarray.core.formatting import format_timestamp, format_timedelta
+from itertools import chain, groupby, repeat, starmap, tee
+from textwrap import TextWrapper
+from threading import RLock
+
+import six
+from numpy import datetime64, inf, ndarray, timedelta64
+from xarray.core.formatting import format_timedelta, format_timestamp
+
 from psyplot import rcParams
-from psyplot.warning import warn, critical, PsyPlotRuntimeWarning
-from psyplot.compat.pycompat import map, filter, zip, range
 from psyplot.config.rcsetup import SubDict
-from psyplot.docstring import docstrings, dedent
-from psyplot.data import (
-    InteractiveList, _no_auto_update_getter, CFDecoder)
-from psyplot.utils import (DefaultOrderedDict, _TempBool, _temp_bool_prop,
-                           unique_everseen, check_key)
+from psyplot.data import CFDecoder, InteractiveList, _no_auto_update_getter
+from psyplot.docstring import dedent, docstrings
+from psyplot.utils import (
+    Defaultdict,
+    _temp_bool_prop,
+    _TempBool,
+    check_key,
+    unique_everseen,
+)
+from psyplot.warning import PsyPlotRuntimeWarning, warn
 
 #: the default function to use when printing formatoption infos (the default is
 #: use print or in the gui, use the help explorer)
@@ -56,18 +45,18 @@ default_print_func = six.print_
 
 #: :class:`dict`. Mapping from group to group names
 groups = {
-    'data': 'Data manipulation formatoptions',
-    'axes': 'Axes formatoptions',
-    'labels': 'Label formatoptions',
-    'plotting': 'Plot formatoptions',
-    'post_processing': 'Post processing formatoptions',
-    'colors': 'Color coding formatoptions',
-    'misc': 'Miscallaneous formatoptions',
-    'ticks': 'Axis tick formatoptions',
-    'vector': 'Vector plot formatoptions',
-    'masking': 'Masking formatoptions',
-    'regression': 'Fitting formatoptions',
-    }
+    "data": "Data manipulation formatoptions",
+    "axes": "Axes formatoptions",
+    "labels": "Label formatoptions",
+    "plotting": "Plot formatoptions",
+    "post_processing": "Post processing formatoptions",
+    "colors": "Color coding formatoptions",
+    "misc": "Miscallaneous formatoptions",
+    "ticks": "Axis tick formatoptions",
+    "vector": "Vector plot formatoptions",
+    "masking": "Masking formatoptions",
+    "regression": "Fitting formatoptions",
+}
 
 
 def _identity(*args):
@@ -131,7 +120,8 @@ def _child_property(childname):
         return getattr(self.plotter, self._child_mapping[childname])
 
     return property(
-        get_x, doc=childname + " Formatoption instance in the plotter")
+        get_x, doc=childname + " Formatoption instance in the plotter"
+    )
 
 
 class FormatoptionMeta(ABCMeta):
@@ -141,15 +131,21 @@ class FormatoptionMeta(ABCMeta):
     efficient docstring generation by using the
     :attr:`psyplot.docstring.docstrings` when creating a new formatoption
     class"""
+
     def __new__(cls, clsname, bases, dct):
         """Assign an automatic documentation to the formatoption"""
-        doc = dct.get('__doc__')
+        doc = dct.get("__doc__")
         if doc is not None:
-            dct['__doc__'] = docstrings.dedent(doc)
-        new_cls = super(FormatoptionMeta, cls).__new__(cls, clsname, bases,
-                                                       dct)
-        for childname in chain(new_cls.children, new_cls.dependencies,
-                               new_cls.connections, new_cls.parents):
+            dct["__doc__"] = docstrings.dedent(doc)
+        new_cls = super(FormatoptionMeta, cls).__new__(
+            cls, clsname, bases, dct
+        )
+        for childname in chain(
+            new_cls.children,
+            new_cls.dependencies,
+            new_cls.connections,
+            new_cls.parents,
+        ):
             setattr(new_cls, childname, _child_property(childname))
         if new_cls.plot_fmt:
             new_cls.data_dependent = True
@@ -230,7 +226,7 @@ class Formatoption(object):
 
     #: :class:`str`. Key of the group name in :data:`groups` of this
     #: formatoption keyword
-    group = 'misc'
+    group = "misc"
 
     #: :class:`bool` or a callable. This attribute indicates whether this
     #: :class:`Formatoption` depends on the data and should be updated if the
@@ -297,15 +293,18 @@ class Formatoption(object):
         try:
             return groups[self.group]
         except KeyError:
-            warn("Unknown formatoption group " + str(self.group),
-                 PsyPlotRuntimeWarning)
+            warn(
+                "Unknown formatoption group " + str(self.group),
+                PsyPlotRuntimeWarning,
+            )
             return self.group
 
     @property
     def raw_data(self):
         """The original data of the plotter of this formatoption"""
         if self.index_in_list is not None and isinstance(
-                self.plotter.data, InteractiveList):
+            self.plotter.data, InteractiveList
+        ):
             return self.plotter.data[self.index_in_list]
         else:
             return self.plotter.data
@@ -317,7 +316,8 @@ class Formatoption(object):
         # If the decoder is modified by one of the formatoptions, use this one
         if self.plotter.plot_data_decoder is not None:
             if self.index_in_list is not None and isinstance(
-                    self.plotter.plot_data, InteractiveList):
+                self.plotter.plot_data, InteractiveList
+            ):
                 ret = self.plotter.plot_data_decoder[self.index_in_list]
                 if ret is not None:
                     return ret
@@ -346,7 +346,8 @@ class Formatoption(object):
     def data(self):
         """The data that is plotted"""
         if self.index_in_list is not None and isinstance(
-                self.plotter.plot_data, InteractiveList):
+            self.plotter.plot_data, InteractiveList
+        ):
             return self.plotter.plot_data[self.index_in_list]
         else:
             return self.plotter.plot_data
@@ -380,9 +381,13 @@ class Formatoption(object):
             try:
                 self._validate = self.plotter.get_vfunc(self.key)
             except KeyError:
-                warn("Could not find a validation function for %s "
-                     "formatoption keyword! No validation will be made!" % (
-                         self.key), PsyPlotRuntimeWarning, logger=self.logger)
+                warn(
+                    "Could not find a validation function for %s "
+                    "formatoption keyword! No validation will be made!"
+                    % (self.key),
+                    PsyPlotRuntimeWarning,
+                    logger=self.logger,
+                )
                 self._validate = _identity
         return self._validate
 
@@ -440,11 +445,17 @@ class Formatoption(object):
         """
         return self.value
 
-    @docstrings.get_sections(base='Formatoption')
+    @docstrings.get_sections(base="Formatoption")
     @dedent
-    def __init__(self, key, plotter=None, index_in_list=None,
-                 additional_children=[], additional_dependencies=[],
-                 **kwargs):
+    def __init__(
+        self,
+        key,
+        plotter=None,
+        index_in_list=None,
+        additional_children=[],
+        additional_dependencies=[],
+        **kwargs,
+    ):
         """
         Parameters
         ----------
@@ -476,24 +487,38 @@ class Formatoption(object):
         self.additional_dependencies = additional_dependencies
         self.children = self.children + additional_children
         self.dependencies = self.dependencies + additional_dependencies
-        self._child_mapping = dict(zip(*tee(chain(
-            self.children, self.dependencies, self.connections,
-            self.parents), 2)))
+        self._child_mapping = dict(
+            zip(
+                *tee(
+                    chain(
+                        self.children,
+                        self.dependencies,
+                        self.connections,
+                        self.parents,
+                    ),
+                    2,
+                )
+            )
+        )
         # check kwargs
         for key in (key for key in kwargs if key not in self._child_mapping):
             raise TypeError(
-                '%s.__init__() got an unexpected keyword argument %r' % (
-                    self.__class__.__name__, key))
+                "%s.__init__() got an unexpected keyword argument %r"
+                % (self.__class__.__name__, key)
+            )
         # set up child mapping
         self._child_mapping.update(kwargs)
         # reset the dependency lists to match the current plotter setup
-        for attr in ['children', 'dependencies', 'connections', 'parents']:
-            setattr(self, attr,
-                    [self._child_mapping[key] for key in getattr(self, attr)])
+        for attr in ["children", "dependencies", "connections", "parents"]:
+            setattr(
+                self,
+                attr,
+                [self._child_mapping[key] for key in getattr(self, attr)],
+            )
 
     def __set__(self, instance, value):
         if isinstance(value, Formatoption):
-            setattr(instance, '_' + self.key, value)
+            setattr(instance, "_" + self.key, value)
         else:
             fmto = getattr(instance, self.key)
             fmto.set_value(value)
@@ -502,22 +527,25 @@ class Formatoption(object):
         if instance is None:
             return self
         try:
-            return getattr(instance, '_' + self.key)
+            return getattr(instance, "_" + self.key)
         except AttributeError:
             fmto = self.__class__(
-                self.key, instance, self.index_in_list,
+                self.key,
+                instance,
+                self.index_in_list,
                 additional_children=self.additional_children,
                 additional_dependencies=self.additional_dependencies,
-                **self.init_kwargs)
-            setattr(instance, '_' + self.key, fmto)
+                **self.init_kwargs,
+            )
+            setattr(instance, "_" + self.key, fmto)
             return fmto
 
     def __delete__(self, instance, owner):
-        fmto = getattr(instance, '_' + self.key)
+        fmto = getattr(instance, "_" + self.key)
         with instance.no_validation:
             instance[self.key] = fmto.default
 
-    @docstrings.get_sections(base='Formatoption.set_value')
+    @docstrings.get_sections(base="Formatoption.set_value")
     @dedent
     def set_value(self, value, validate=True, todefault=False):
         """
@@ -536,8 +564,9 @@ class Formatoption(object):
         if self.key in self.plotter._shared:
             return
         with self.plotter.no_validation:
-            self.plotter[self.key] = value if not validate else \
-                self.validate(value)
+            self.plotter[self.key] = (
+                value if not validate else self.validate(value)
+            )
 
     def set_data(self, data, i=None):
         """
@@ -562,8 +591,9 @@ class Formatoption(object):
         """
         if self.index_in_list is not None:
             i = self.index_in_list
-        if i is not None and isinstance(self.plotter.plot_data,
-                                        InteractiveList):
+        if i is not None and isinstance(
+            self.plotter.plot_data, InteractiveList
+        ):
             self.plotter.plot_data[i] = data
         else:
             self.plotter.plot_data = data
@@ -588,14 +618,16 @@ class Formatoption(object):
         # we do not modify the raw data but instead set it on the plotter
         # TODO: This is not safe for encapsulated InteractiveList instances!
         if i is not None and isinstance(
-                self.plotter.plot_data, InteractiveList):
+            self.plotter.plot_data, InteractiveList
+        ):
             n = len(self.plotter.plot_data)
             decoders = self.plotter.plot_data_decoder or [None] * n
             decoders[i] = decoder
             self.plotter.plot_data_decoder = decoders
         else:
-            if (isinstance(self.plotter.plot_data, InteractiveList) and
-                    isinstance(decoder, CFDecoder)):
+            if isinstance(
+                self.plotter.plot_data, InteractiveList
+            ) and isinstance(decoder, CFDecoder):
                 decoder = [decoder] * len(self.plotter.plot_data)
             self.plotter.plot_data_decoder = decoder
 
@@ -603,7 +635,8 @@ class Formatoption(object):
         # we do not modify the raw data but instead set it on the plotter
         # TODO: This is not safe for encapsulated InteractiveList instances!
         if i is not None and isinstance(
-                self.plotter.plot_data, InteractiveList):
+            self.plotter.plot_data, InteractiveList
+        ):
             n = len(self.plotter.plot_data)
             decoders = self.plotter.plot_data_decoder or [None] * n
             return decoders[i] or self.plotter.plot_data[i].psy.decoder
@@ -755,7 +788,7 @@ class Formatoption(object):
     @docstrings.get_extended_summary(base="Formatoption.convert_coordinate")
     @docstrings.get_sections(
         base="Formatoption.convert_coordinate",
-        sections=["Parameters", "Returns"]
+        sections=["Parameters", "Returns"],
     )
     def convert_coordinate(self, coord, *variables):
         """Convert a coordinate to units necessary for the plot.
@@ -847,21 +880,22 @@ class PostTiming(Formatoption):
     --------
     post: The post processing formatoption"""
 
-    default = 'never'
+    default = "never"
 
     priority = -inf
 
-    group = 'post_processing'
+    group = "post_processing"
 
-    name = 'Timing of the post processing'
+    name = "Timing of the post processing"
 
     @staticmethod
     def validate(value):
         value = six.text_type(value)
-        possible_values = ['never', 'always', 'replot']
+        possible_values = ["never", "always", "replot"]
         if value not in possible_values:
-            raise ValueError('String must be one of %s, not %r' % (
-                possible_values, value))
+            raise ValueError(
+                "String must be one of %s, not %r" % (possible_values, value)
+            )
         return value
 
     def update(self, value):
@@ -869,10 +903,12 @@ class PostTiming(Formatoption):
 
     def get_fmt_widget(self, parent, project):
         from psyplot_gui.compat.qtcompat import QComboBox
+
         combo = QComboBox(parent)
-        combo.addItems(['never', 'always', 'replot'])
+        combo.addItems(["never", "always", "replot"])
         combo.setCurrentText(
-            next((plotter[self.key] for plotter in project.plotters), 'never'))
+            next((plotter[self.key] for plotter in project.plotters), "never")
+        )
         combo.currentTextChanged.connect(parent.set_obj)
         return combo
 
@@ -881,10 +917,13 @@ class PostProcDependencies(object):
     """The dependencies of this formatoption"""
 
     def __get__(self, instance, owner):
-        if (instance is None or instance.plotter is None or
-                not instance.plotter._initialized):
+        if (
+            instance is None
+            or instance.plotter is None
+            or not instance.plotter._initialized
+        ):
             return []
-        elif instance.post_timing.value == 'always':
+        elif instance.post_timing.value == "always":
             return list(set(instance.plotter) - {instance.key})
         else:
             return []
@@ -926,12 +965,13 @@ class PostProcessing(Formatoption):
 
         from psyplot.plotter import Plotter
         from xarray import DataArray
+
         plotter = Plotter(DataArray([1, 2, 3]))
         # enable the post formatoption
         plotter.enable_post = True
         plotter.update(post="self.ax.set_title(str(self.data.mean()))")
         plotter.ax.get_title()
-        '2.0'
+        "2.0"
 
     By default, the ``post`` formatoption is only ran, when it is explicitly
     updated. However, you can use the :attr:`post_timing` formatoption, to
@@ -940,28 +980,28 @@ class PostProcessing(Formatoption):
 
     .. code-block:: python
 
-        plotter.update(post_timing='always')
+        plotter.update(post_timing="always")
 
     See Also
     --------
     post_timing: Determine the timing of this formatoption"""
 
-    children = ['post_timing']
+    children = ["post_timing"]
 
     default = None
 
     priority = -inf
 
-    group = 'post_processing'
+    group = "post_processing"
 
-    name = 'Custom post processing script'
+    name = "Custom post processing script"
 
     @staticmethod
     def validate(value):
         if value is None:
             return value
         elif not isinstance(value, six.string_types):
-            raise ValueError("Expected a string, not %s" % (type(value), ))
+            raise ValueError("Expected a string, not %s" % (type(value),))
         else:
             return six.text_type(value)
 
@@ -970,7 +1010,7 @@ class PostProcessing(Formatoption):
         """True if the corresponding :class:`post_timing <PostTiming>`
         formatoption is set to ``'replot'`` to run the post processing script
         after every change of the data"""
-        return self.post_timing.value == 'replot'
+        return self.post_timing.value == "replot"
 
     dependencies = PostProcDependencies()
 
@@ -980,9 +1020,10 @@ class PostProcessing(Formatoption):
         if not self.plotter.enable_post:
             warn(
                 "Post processing is disabled. Set the ``enable_post`` "
-                "attribute to True to run the script")
+                "attribute to True to run the script"
+            )
         else:
-            exec(value, {'self': self})
+            exec(value, {"self": self})
 
 
 class Plotter(dict):
@@ -995,10 +1036,12 @@ class Plotter(dict):
     #: List of base strings in the :attr:`psyplot.rcParams` dictionary
     _rcparams_string = []
 
-    post_timing = PostTiming('post_timing')
-    post = PostProcessing('post')
+    post_timing = PostTiming("post_timing")
+    post = PostProcessing("post")
 
-    no_validation = _temp_bool_prop('no_validation', """
+    no_validation = _temp_bool_prop(
+        "no_validation",
+        """
         Temporarily disable the validation
 
         Examples
@@ -1007,13 +1050,15 @@ class Plotter(dict):
         you can disable it via::
 
             >>> with plotter.no_validation:
-            ...     plotter['ticksize'] = 'x'
+            ...     plotter["ticksize"] = "x"
+            ...
 
         To permanently disable the validation, simply set
 
             >>> plotter.no_validation = True
-            >>> plotter['ticksize'] = 'x'
-            >>> plotter.no_validation = False  # reenable validation""")
+            >>> plotter["ticksize"] = "x"
+            >>> plotter.no_validation = False  # reenable validation""",
+    )
 
     #: Temporarily include links in the key descriptions from
     #: :meth:`show_keys`, :meth:`show_docs` and :meth:`show_summaries`.
@@ -1026,6 +1071,7 @@ class Plotter(dict):
         """Axes instance of the plot"""
         if self._ax is None:
             import matplotlib.pyplot as plt
+
             plt.figure()
             self._ax = plt.axes(projection=self._get_sample_projection())
         return self._ax
@@ -1071,9 +1117,14 @@ class Plotter(dict):
     def base_variables(self):
         """A mapping from the base_variable names to the variables"""
         if isinstance(self.data, InteractiveList):
-            return dict(chain(*map(
-                lambda arr: six.iteritems(arr.psy.base_variables),
-                self.data)))
+            return dict(
+                chain(
+                    *map(
+                        lambda arr: six.iteritems(arr.psy.base_variables),
+                        self.data,
+                    )
+                )
+            )
         else:
             return self.data.psy.base_variables
 
@@ -1085,8 +1136,9 @@ class Plotter(dict):
         else:
             return self.data.psy.iter_base_variables
 
-    no_auto_update = property(_no_auto_update_getter,
-                              doc=_no_auto_update_getter.__doc__)
+    no_auto_update = property(
+        _no_auto_update_getter, doc=_no_auto_update_getter.__doc__
+    )
 
     @no_auto_update.setter
     def no_auto_update(self, value):
@@ -1096,8 +1148,11 @@ class Plotter(dict):
     def changed(self):
         """:class:`dict` containing the key value pairs that are not the
         default"""
-        return {key: value for key, value in six.iteritems(self)
-                if getattr(self, key).changed}
+        return {
+            key: value
+            for key, value in six.iteritems(self)
+            if getattr(self, key).changed
+        }
 
     @property
     def figs2draw(self):
@@ -1155,7 +1210,7 @@ class Plotter(dict):
     @property
     def plot_data(self):
         """The data that is used for plotting"""
-        return getattr(self, '_plot_data', self.data)
+        return getattr(self, "_plot_data", self.data)
 
     @plot_data.setter
     def plot_data(self, value):
@@ -1181,16 +1236,25 @@ class Plotter(dict):
         try:
             return self.data.psy.logger.getChild(self.__class__.__name__)
         except AttributeError:
-            name = '%s.%s' % (self.__module__, self.__class__.__name__)
+            name = "%s.%s" % (self.__module__, self.__class__.__name__)
             return logging.getLogger(name)
 
-    docstrings.keep_params('InteractiveBase.parameters', 'auto_update')
+    docstrings.keep_params("InteractiveBase.parameters", "auto_update")
 
-    @docstrings.get_sections(base='Plotter')
+    @docstrings.get_sections(base="Plotter")
     @docstrings.dedent
-    def __init__(self, data=None, ax=None, auto_update=None, project=None,
-                 draw=False, make_plot=True, clear=False,
-                 enable_post=False, **kwargs):
+    def __init__(
+        self,
+        data=None,
+        ax=None,
+        auto_update=None,
+        project=None,
+        draw=False,
+        make_plot=True,
+        clear=False,
+        enable_post=False,
+        **kwargs,
+    ):
         """
         Parameters
         ----------
@@ -1219,7 +1283,7 @@ class Plotter(dict):
         self.data = data
         self.enable_post = enable_post
         if auto_update is None:
-            auto_update = rcParams['lists.auto_update']
+            auto_update = rcParams["lists.auto_update"]
         self.no_auto_update = not bool(auto_update)
         self._registered_updates = {}
         self._todefault = False
@@ -1257,8 +1321,9 @@ class Plotter(dict):
         self._set_rc()
         for key, value in six.iteritems(kwargs):  # then the user values
             self[key] = value
-        self.initialize_plot(data, ax=ax, draw=draw, clear=clear,
-                             make_plot=make_plot)
+        self.initialize_plot(
+            data, ax=ax, draw=draw, clear=clear, make_plot=make_plot
+        )
 
     def _try2set(self, fmto, *args, **kwargs):
         """Sets the value in `fmto` and gives additional informations when fail
@@ -1290,7 +1355,7 @@ class Plotter(dict):
     def __delitem__(self, key):
         self[key] = getattr(self, key).default
 
-    docstrings.delete_params('check_key.parameters', 'possible_keys', 'name')
+    docstrings.delete_params("check_key.parameters", "possible_keys", "name")
 
     @docstrings.dedent
     def check_key(self, key, raise_error=True, *args, **kwargs):
@@ -1309,12 +1374,18 @@ class Plotter(dict):
         ------
         %(check_key.raises)s"""
         return check_key(
-            key, possible_keys=list(self), raise_error=raise_error,
-            name='formatoption keyword', *args, **kwargs)
+            key,
+            possible_keys=list(self),
+            raise_error=raise_error,
+            name="formatoption keyword",
+            *args,
+            **kwargs,
+        )
 
     @classmethod
-    @docstrings.get_sections(base='Plotter.check_data', sections=['Parameters',
-                                                              'Returns'])
+    @docstrings.get_sections(
+        base="Plotter.check_data", sections=["Parameters", "Returns"]
+    )
     @dedent
     def check_data(cls, name, dims, is_unstructured):
         """
@@ -1349,16 +1420,25 @@ class Plotter(dict):
         N = len(name)
         if len(dims) != N or len(is_unstructured) != N:
             return [False] * N, [
-                'Number of provided names (%i) and dimensions '
-                '(%i) or unstructured information (%i) are not the same' % (
-                    N, len(dims), len(is_unstructured))] * N
-        return [True] * N, [''] * N
+                "Number of provided names (%i) and dimensions "
+                "(%i) or unstructured information (%i) are not the same"
+                % (N, len(dims), len(is_unstructured))
+            ] * N
+        return [True] * N, [""] * N
 
-    docstrings.keep_params('Plotter.parameters', 'ax', 'make_plot', 'clear')
+    docstrings.keep_params("Plotter.parameters", "ax", "make_plot", "clear")
 
     @docstrings.dedent
-    def initialize_plot(self, data=None, ax=None, make_plot=True, clear=False,
-                        draw=False, remove=False, priority=None):
+    def initialize_plot(
+        self,
+        data=None,
+        ax=None,
+        make_plot=True,
+        clear=False,
+        draw=False,
+        remove=False,
+        priority=None,
+    ):
         """
         Initialize the plot for a data array
 
@@ -1389,7 +1469,8 @@ class Plotter(dict):
         if data is None:  # nothing to do if no data is given
             return
         self.no_auto_update = not (
-            not self.no_auto_update or not data.psy.no_auto_update)
+            not self.no_auto_update or not data.psy.no_auto_update
+        )
         data.psy.plotter = self
         if not make_plot:  # stop here if we shall not plot
             return
@@ -1401,22 +1482,28 @@ class Plotter(dict):
                     fmto.remove()
                 except Exception:
                     self.logger.debug(
-                        "Could not remove %s while initializing", fmto.key,
-                        exc_info=True)
+                        "Could not remove %s while initializing",
+                        fmto.key,
+                        exc_info=True,
+                    )
         if clear:
             self.logger.debug("    Clearing axes...")
             self.ax.clear()
             self.cleared = True
         # get the formatoptions. We sort them here by key to make sure that the
         # order always stays the same (easier for debugging)
-        fmto_groups = self._grouped_fmtos(self._sorted_by_priority(
-            sorted(self._fmtos, key=lambda fmto: fmto.key)))
+        fmto_groups = self._grouped_fmtos(
+            self._sorted_by_priority(
+                sorted(self._fmtos, key=lambda fmto: fmto.key)
+            )
+        )
         self.plot_data = self.data
         self._updating = True
         for fmto_priority, grouper in fmto_groups:
             if priority is None or fmto_priority == priority:
-                self._plot_by_priority(fmto_priority, grouper,
-                                       initializing=True)
+                self._plot_by_priority(
+                    fmto_priority, grouper, initializing=True
+                )
         self._release_all(True)  # finish the update
         self.cleared = False
         self.replot = False
@@ -1424,19 +1511,21 @@ class Plotter(dict):
         self._updating = False
 
         if draw is None:
-            draw = rcParams['auto_draw']
+            draw = rcParams["auto_draw"]
         if draw:
             self.draw()
-            if rcParams['auto_show']:
+            if rcParams["auto_show"]:
                 self.show()
 
-    docstrings.keep_params('InteractiveBase._register_update.parameters',
-                           'force', 'todefault')
+    docstrings.keep_params(
+        "InteractiveBase._register_update.parameters", "force", "todefault"
+    )
 
-    @docstrings.get_sections(base='Plotter._register_update')
+    @docstrings.get_sections(base="Plotter._register_update")
     @docstrings.dedent
-    def _register_update(self, fmt={}, replot=False, force=False,
-                         todefault=False):
+    def _register_update(
+        self, fmt={}, replot=False, force=False, todefault=False
+    ):
         """
         Register formatoptions for the update
 
@@ -1456,7 +1545,8 @@ class Plotter(dict):
         if force is True:
             force = list(fmt)
         self._force.update(
-            [ret[0] for ret in map(self.check_key, force or [])])
+            [ret[0] for ret in map(self.check_key, force or [])]
+        )
         # check the keys
         list(map(self.check_key, fmt))
         self._registered_updates.update(fmt)
@@ -1489,27 +1579,33 @@ class Plotter(dict):
         See Also
         --------
         :attr:`no_auto_update`, update"""
+
         def update_the_others():
             for fmto in fmtos:
                 for other_fmto in fmto.shared:
                     if not other_fmto.plotter._updating:
                         other_fmto.plotter._register_update(
-                            force=[other_fmto.key])
+                            force=[other_fmto.key]
+                        )
             for fmto in fmtos:
                 for other_fmto in fmto.shared:
                     if not other_fmto.plotter._updating:
                         other_draw = other_fmto.plotter.start_update(
-                            draw=False, update_shared=False)
+                            draw=False, update_shared=False
+                        )
                         if other_draw:
                             self._figs2draw.add(
-                                other_fmto.plotter.ax.get_figure())
+                                other_fmto.plotter.ax.get_figure()
+                            )
+
         if self.disabled:
             return False
 
         if queues is not None:
             queues[0].get()
-        self.logger.debug("Starting update of %r",
-                          self._registered_updates.keys())
+        self.logger.debug(
+            "Starting update of %r", self._registered_updates.keys()
+        )
         # update the formatoptions
         self._save_state()
         try:
@@ -1536,8 +1632,13 @@ class Plotter(dict):
             # wait for the other tasks to finish
             queues[0].join()
             queues[1].get()
-        fmtos.extend([fmto for fmto in self._insert_additionals(list(
-            self._to_update)) if fmto not in fmtos])
+        fmtos.extend(
+            [
+                fmto
+                for fmto in self._insert_additionals(list(self._to_update))
+                if fmto not in fmtos
+            ]
+        )
         self._to_update.clear()
 
         fmto_groups = self._grouped_fmtos(self._sorted_by_priority(fmtos[:]))
@@ -1559,13 +1660,14 @@ class Plotter(dict):
             raise
         finally:
             # make sure that all locks are released
-            self._release_all(finish=True,
-                              queue=None if queues is None else queues[1])
+            self._release_all(
+                finish=True, queue=None if queues is None else queues[1]
+            )
         if draw is None:
-            draw = rcParams['auto_draw']
+            draw = rcParams["auto_draw"]
         if draw and arr_draw:
             self.draw()
-            if rcParams['auto_show']:
+            if rcParams["auto_show"]:
                 self.show()
         self.replot = False
         return arr_draw
@@ -1580,7 +1682,7 @@ class Plotter(dict):
                     fmto.lock.release()
                 except RuntimeError:
                     pass
-        except:
+        except Exception:
             raise
         finally:
             if queue is not None:
@@ -1592,8 +1694,11 @@ class Plotter(dict):
         def update(fmto):
             other_fmto = self._shared.get(fmto.key)
             if other_fmto:
-                self.logger.debug("%s is shared with %s", fmto.key,
-                                  other_fmto.plotter.logger.name)
+                self.logger.debug(
+                    "%s is shared with %s",
+                    fmto.key,
+                    other_fmto.plotter.logger.name,
+                )
                 other_fmto.share(fmto, initializing=initializing)
             # but if not, share them
             else:
@@ -1612,7 +1717,9 @@ class Plotter(dict):
 
         self.logger.debug(
             "%s formatoptions with priority %i",
-            "Initializing" if initializing else "Updating", priority)
+            "Initializing" if initializing else "Updating",
+            priority,
+        )
 
         if priority >= START or priority == END:
             for fmto in fmtos:
@@ -1643,9 +1750,12 @@ class Plotter(dict):
         # False if any fmto has requires_clearing attribute set to True,
         # because this then has been cleared before
         self.initialize_plot(
-            self.data, self._ax, draw=draw, clear=clear or any(
-                fmto.requires_clearing for fmto in self._fmtos),
-            remove=True)
+            self.data,
+            self._ax,
+            draw=draw,
+            clear=clear or any(fmto.requires_clearing for fmto in self._fmtos),
+            remove=True,
+        )
 
     def draw(self):
         """Draw the figures and those that are shared and have been changed"""
@@ -1661,6 +1771,7 @@ class Plotter(dict):
                 return BEFOREPLOTTING
             else:
                 return END
+
         return groupby(fmtos, key_func)
 
     def _set_and_filter(self):
@@ -1679,10 +1790,11 @@ class Plotter(dict):
         for key in self._force:
             self._registered_updates.setdefault(key, getattr(self, key).value)
         for key, value in chain(
-                six.iteritems(self._registered_updates),
-                six.iteritems(
-                    {key: getattr(self, key).default for key in self})
-                if self._todefault else ()):
+            six.iteritems(self._registered_updates),
+            six.iteritems({key: getattr(self, key).default for key in self})
+            if self._todefault
+            else (),
+        ):
             if key in seen:
                 continue
             seen.add(key)
@@ -1692,19 +1804,25 @@ class Plotter(dict):
             # project update)
             if key in self._shared and key not in self._force:
                 if not self._shared[key].plotter._updating:
-                    warn(("%s formatoption is shared with another plotter."
-                          " Use the unshare method to enable the updating") % (
-                              fmto.key),
-                         logger=self.logger)
+                    warn(
+                        (
+                            "%s formatoption is shared with another plotter."
+                            " Use the unshare method to enable the updating"
+                        )
+                        % (fmto.key),
+                        logger=self.logger,
+                    )
                 changed = False
             else:
                 try:
                     changed = fmto.check_and_set(
-                        value, todefault=self._todefault,
-                        validate=not self.no_validation)
+                        value,
+                        todefault=self._todefault,
+                        validate=not self.no_validation,
+                    )
                 except Exception as e:
                     self._registered_updates.pop(key, None)
-                    self.logger.debug('Failed to set %s', key)
+                    self.logger.debug("Failed to set %s", key)
                     raise e
             changed = changed or key in self._force
             if changed:
@@ -1746,22 +1864,32 @@ class Plotter(dict):
         `fmtos` and `seen` are modified in place (except that any formatoption
         in the initial `fmtos` has :attr:`~Formatoption.requires_clearing`
         attribute set to True)"""
+
         def get_dependencies(fmto):
             if fmto is None:
                 return []
-            return fmto.dependencies + list(chain(*map(
-                lambda key: get_dependencies(getattr(self, key, None)),
-                fmto.dependencies)))
+            return fmto.dependencies + list(
+                chain(
+                    *map(
+                        lambda key: get_dependencies(getattr(self, key, None)),
+                        fmto.dependencies,
+                    )
+                )
+            )
+
         seen = seen or {fmto.key for fmto in fmtos}
         keys = {fmto.key for fmto in fmtos}
         self.replot = self.replot or any(
-            fmto.requires_replot for fmto in fmtos)
+            fmto.requires_replot for fmto in fmtos
+        )
         if self.replot or any(fmto.priority >= START for fmto in fmtos):
             self.replot = True
             self.plot_data = self.data
-            new_fmtos = dict((f.key, f) for f in self._fmtos
-                             if ((f not in fmtos and is_data_dependent(
-                                 f, self.data))))
+            new_fmtos = dict(
+                (f.key, f)
+                for f in self._fmtos
+                if ((f not in fmtos and is_data_dependent(f, self.data)))
+            )
             seen.update(new_fmtos)
             keys.update(new_fmtos)
             fmtos += list(new_fmtos.values())
@@ -1769,8 +1897,11 @@ class Plotter(dict):
         # insert the formatoptions that have to be updated if the plot is
         # changed
         if any(fmto.priority >= BEFOREPLOTTING for fmto in fmtos):
-            new_fmtos = dict((f.key, f) for f in self._fmtos
-                             if ((f not in fmtos and f.update_after_plot)))
+            new_fmtos = dict(
+                (f.key, f)
+                for f in self._fmtos
+                if ((f not in fmtos and f.update_after_plot))
+            )
             fmtos += list(new_fmtos.values())
         for fmto in set(self._fmtos).difference(fmtos):
             all_dependencies = get_dependencies(fmto)
@@ -1799,6 +1930,7 @@ class Plotter(dict):
         Warnings
         --------
         The list `fmtos` is cleared by this method!"""
+
         def pop_fmto(key):
             idx = fmtos_keys.index(key)
             del fmtos_keys[idx]
@@ -1811,11 +1943,14 @@ class Plotter(dict):
                     continue
                 child_fmto = pop_fmto(key)
                 for childs_child in get_children(
-                        child_fmto, parents_keys + [child_fmto.key]):
+                    child_fmto, parents_keys + [child_fmto.key]
+                ):
                     yield childs_child
                 # filter out if parent is in update list
-                if (any(key in all_fmtos for key in child_fmto.parents) or
-                        fmto.key in child_fmto.parents):
+                if (
+                    any(key in all_fmtos for key in child_fmto.parents)
+                    or fmto.key in child_fmto.parents
+                ):
                     continue
                 yield child_fmto
 
@@ -1856,24 +1991,31 @@ class Plotter(dict):
         See Also
         --------
         _format_keys"""
+
         def base_fmtos(base):
             return filter(
                 lambda key: isinstance(getattr(cls, key), Formatoption),
-                getattr(base, '_get_formatoptions', empty)(False))
+                getattr(base, "_get_formatoptions", empty)(False),
+            )
 
         def empty(*args, **kwargs):
             return list()
-        fmtos = (attr for attr, obj in six.iteritems(cls.__dict__)
-                 if isinstance(obj, Formatoption))
+
+        fmtos = (
+            attr
+            for attr, obj in six.iteritems(cls.__dict__)
+            if isinstance(obj, Formatoption)
+        )
         if not include_bases:
             return fmtos
         return unique_everseen(chain(fmtos, *map(base_fmtos, cls.__mro__)))
 
-    docstrings.keep_types('check_key.parameters', 'kwargs',
-                          r'``\*args,\*\*kwargs``')
+    docstrings.keep_types(
+        "check_key.parameters", "kwargs", r"``\*args,\*\*kwargs``"
+    )
 
     @classmethod
-    @docstrings.get_sections(base='Plotter._enhance_keys')
+    @docstrings.get_sections(base="Plotter._enhance_keys")
     @docstrings.dedent
     def _enhance_keys(cls, keys=None, *args, **kwargs):
         """
@@ -1904,7 +2046,6 @@ class Plotter(dict):
             fmto_groups[getattr(cls, key).group].append(key)
         new_i = 0
         for i, key in enumerate(keys[:]):
-
             if key in fmto_groups:
                 del keys[new_i]
                 for key2 in fmto_groups[key]:
@@ -1913,8 +2054,13 @@ class Plotter(dict):
                         new_i += 1
             else:
                 valid, similar, message = check_key(
-                    key, all_keys, False, 'formatoption keyword', *args,
-                    **kwargs)
+                    key,
+                    all_keys,
+                    False,
+                    "formatoption keyword",
+                    *args,
+                    **kwargs,
+                )
                 if not valid:
                     keys.remove(key)
                     new_i -= 1
@@ -1923,12 +2069,21 @@ class Plotter(dict):
         return keys
 
     @classmethod
-    @docstrings.get_sections(base=
-        'Plotter.show_keys', sections=['Parameters', 'Returns',
-                                       'Other Parameters'])
+    @docstrings.get_sections(
+        base="Plotter.show_keys",
+        sections=["Parameters", "Returns", "Other Parameters"],
+    )
     @docstrings.dedent
-    def show_keys(cls, keys=None, indent=0, grouped=False, func=None,
-                  include_links=False, *args, **kwargs):
+    def show_keys(
+        cls,
+        keys=None,
+        indent=0,
+        grouped=False,
+        func=None,
+        include_links=False,
+        *args,
+        **kwargs,
+    ):
         """
         Classmethod to return a nice looking table with the given formatoptions
 
@@ -1961,23 +2116,32 @@ class Plotter(dict):
         See Also
         --------
         show_summaries, show_docs"""
+
         def titled_group(groupname):
-            bars = str_indent + '*' * len(groupname) + '\n'
-            return bars + str_indent + groupname + '\n' + bars
+            bars = str_indent + "*" * len(groupname) + "\n"
+            return bars + str_indent + groupname + "\n" + bars
 
         keys = cls._enhance_keys(keys, *args, **kwargs)
         str_indent = " " * indent
         func = func or default_print_func
         # call this function recursively when grouped is True
         if grouped:
-            grouped_keys = DefaultOrderedDict(list)
+            grouped_keys = Defaultdict(list)
             for fmto in map(lambda key: getattr(cls, key), keys):
                 grouped_keys[fmto.groupname].append(fmto.key)
             text = ""
             for group, keys in six.iteritems(grouped_keys):
-                text += titled_group(group) + cls.show_keys(
-                    keys, indent=indent, grouped=False, func=six.text_type,
-                    include_links=include_links) + '\n\n'
+                text += (
+                    titled_group(group)
+                    + cls.show_keys(
+                        keys,
+                        indent=indent,
+                        grouped=False,
+                        func=six.text_type,
+                        include_links=include_links,
+                    )
+                    + "\n\n"
+                )
             return func(text.rstrip())
 
         if not keys:
@@ -1990,28 +2154,48 @@ class Plotter(dict):
         #     3. The number of keys plus the empty cells in the last column
         ncells = n + ((ncols - (n % ncols)) if n != ncols else 0)
         if include_links or (include_links is None and cls.include_links):
-            long_keys = list(map(lambda key: ':attr:`~%s.%s.%s`' % (
-                cls.__module__, cls.__name__, key), keys))
+            long_keys = list(
+                map(
+                    lambda key: ":attr:`~%s.%s.%s`"
+                    % (cls.__module__, cls.__name__, key),
+                    keys,
+                )
+            )
         else:
             long_keys = keys
         maxn = max(map(len, long_keys))  # maximal lenght of the keys
         # extend with empty cells
-        long_keys.extend([' ' * maxn] * (ncells - n))
-        bars = (str_indent + '+-' + ("-"*(maxn) + "-+-")*ncols)[:-1]
-        lines = ('| %s |\n%s' % (' | '.join(
-            key.ljust(maxn) for key in long_keys[i:i+ncols]), bars)
-            for i in range(0, n, ncols))
-        text = bars + "\n" + str_indent + ("\n" + str_indent).join(
-            lines)
+        long_keys.extend([" " * maxn] * (ncells - n))
+        bars = (str_indent + "+-" + ("-" * (maxn) + "-+-") * ncols)[:-1]
+        lines = (
+            "| %s |\n%s"
+            % (
+                " | ".join(
+                    key.ljust(maxn) for key in long_keys[i : i + ncols]
+                ),
+                bars,
+            )
+            for i in range(0, n, ncols)
+        )
+        text = bars + "\n" + str_indent + ("\n" + str_indent).join(lines)
         if six.PY2:
-            text = text.encode('utf-8')
+            text = text.encode("utf-8")
 
         return func(text)
 
     @classmethod
     @docstrings.dedent
-    def _show_doc(cls, fmt_func, keys=None, indent=0, grouped=False,
-                  func=None, include_links=False, *args, **kwargs):
+    def _show_doc(
+        cls,
+        fmt_func,
+        keys=None,
+        indent=0,
+        grouped=False,
+        func=None,
+        include_links=False,
+        *args,
+        **kwargs,
+    ):
         """
         Classmethod to print the formatoptions and their documentation
 
@@ -2037,34 +2221,51 @@ class Plotter(dict):
         See Also
         --------
         show_summaries, show_docs"""
+
         def titled_group(groupname):
-            bars = str_indent + '*' * len(groupname) + '\n'
-            return bars + str_indent + groupname + '\n' + bars
+            bars = str_indent + "*" * len(groupname) + "\n"
+            return bars + str_indent + groupname + "\n" + bars
 
         func = func or default_print_func
 
         keys = cls._enhance_keys(keys, *args, **kwargs)
         str_indent = " " * indent
         if grouped:
-            grouped_keys = DefaultOrderedDict(list)
+            grouped_keys = Defaultdict(list)
             for fmto in map(lambda key: getattr(cls, key), keys):
                 grouped_keys[fmto.groupname].append(fmto.key)
             text = "\n\n".join(
-                titled_group(group) + cls._show_doc(
-                    fmt_func, keys, indent=indent, grouped=False,
-                    func=str, include_links=include_links)
-                for group, keys in six.iteritems(grouped_keys))
+                titled_group(group)
+                + cls._show_doc(
+                    fmt_func,
+                    keys,
+                    indent=indent,
+                    grouped=False,
+                    func=str,
+                    include_links=include_links,
+                )
+                for group, keys in six.iteritems(grouped_keys)
+            )
             return func(text.rstrip())
 
         if include_links or (include_links is None and cls.include_links):
-            long_keys = list(map(lambda key: ':attr:`~%s.%s.%s`' % (
-                cls.__module__, cls.__name__, key), keys))
+            long_keys = list(
+                map(
+                    lambda key: ":attr:`~%s.%s.%s`"
+                    % (cls.__module__, cls.__name__, key),
+                    keys,
+                )
+            )
         else:
             long_keys = keys
 
-        text = '\n'.join(str_indent + long_key + '\n' + fmt_func(
-            key, long_key, getattr(cls, key).__doc__) for long_key, key in zip(
-                long_keys, keys))
+        text = "\n".join(
+            str_indent
+            + long_key
+            + "\n"
+            + fmt_func(key, long_key, getattr(cls, key).__doc__)
+            for long_key, key in zip(long_keys, keys)
+        )
         return func(text)
 
     @classmethod
@@ -2088,13 +2289,19 @@ class Plotter(dict):
         See Also
         --------
         show_keys, show_docs"""
+
         def find_summary(key, key_txt, doc):
-            return '\n'.join(wrapper.wrap(doc[:doc.find('\n\n')]))
+            return "\n".join(wrapper.wrap(doc[: doc.find("\n\n")]))
+
         str_indent = " " * indent
-        wrapper = TextWrapper(width=80, initial_indent=str_indent + ' ' * 4,
-                              subsequent_indent=str_indent + ' ' * 4)
-        return cls._show_doc(find_summary, keys=keys, indent=indent,
-                             *args, **kwargs)
+        wrapper = TextWrapper(
+            width=80,
+            initial_indent=str_indent + " " * 4,
+            subsequent_indent=str_indent + " " * 4,
+        )
+        return cls._show_doc(
+            find_summary, keys=keys, indent=indent, *args, **kwargs
+        )
 
     @classmethod
     @docstrings.dedent
@@ -2117,10 +2324,13 @@ class Plotter(dict):
         See Also
         --------
         show_keys, show_docs"""
+
         def full_doc(key, key_txt, doc):
-            return ('=' * len(key_txt)) + '\n' + doc + '\n'
-        return cls._show_doc(full_doc, keys=keys, indent=indent,
-                             *args, **kwargs)
+            return ("=" * len(key_txt)) + "\n" + doc + "\n"
+
+        return cls._show_doc(
+            full_doc, keys=keys, indent=indent, *args, **kwargs
+        )
 
     @classmethod
     def _get_rc_strings(cls):
@@ -2140,33 +2350,56 @@ class Plotter(dict):
             the following the :attr:`_rcparams_string` attributes of the
             base classes according to the method resolution order of this
             class"""
-        return list(unique_everseen(chain(
-            *map(lambda base: getattr(base, '_rcparams_string', []),
-                 cls.__mro__))))
+        return list(
+            unique_everseen(
+                chain(
+                    *map(
+                        lambda base: getattr(base, "_rcparams_string", []),
+                        cls.__mro__,
+                    )
+                )
+            )
+        )
 
     def _set_rc(self):
         """Method to set the rcparams and defaultParams for this plotter"""
         base_str = self._get_rc_strings()
         # to make sure that the '.' is not interpreted as a regex pattern,
         # we specify the pattern_base by ourselves
-        pattern_base = map(lambda s: s.replace('.', r'\.'), base_str)
+        pattern_base = map(lambda s: s.replace(".", r"\."), base_str)
         # pattern for valid keys being all formatoptions in this plotter
-        pattern = '(%s)(?=$)' % '|'.join(self._get_formatoptions())
-        self._rc = rcParams.find_and_replace(base_str, pattern=pattern,
-                                             pattern_base=pattern_base)
-        user_rc = SubDict(rcParams['plotter.user'], base_str, pattern=pattern,
-                          pattern_base=pattern_base)
+        pattern = "(%s)(?=$)" % "|".join(self._get_formatoptions())
+        self._rc = rcParams.find_and_replace(
+            base_str, pattern=pattern, pattern_base=pattern_base
+        )
+        user_rc = SubDict(
+            rcParams["plotter.user"],
+            base_str,
+            pattern=pattern,
+            pattern_base=pattern_base,
+        )
         self._rc.update(user_rc.data)
 
-        self._defaultParams = SubDict(rcParams.defaultParams, base_str,
-                                      pattern=pattern,
-                                      pattern_base=pattern_base)
+        self._defaultParams = SubDict(
+            rcParams.defaultParams,
+            base_str,
+            pattern=pattern,
+            pattern_base=pattern_base,
+        )
 
-    docstrings.keep_params('InteractiveBase.update.parameters', 'auto_update')
+    docstrings.keep_params("InteractiveBase.update.parameters", "auto_update")
 
     @docstrings.dedent
-    def update(self, fmt={}, replot=False, auto_update=False, draw=None,
-               force=False, todefault=False, **kwargs):
+    def update(
+        self,
+        fmt={},
+        replot=False,
+        auto_update=False,
+        draw=None,
+        force=False,
+        todefault=False,
+        **kwargs,
+    ):
         """
         Update the formatoptions and the plot
 
@@ -2199,8 +2432,9 @@ class Plotter(dict):
                 self[key] = val
             return
 
-        self._register_update(fmt=fmt, replot=replot, force=force,
-                              todefault=todefault)
+        self._register_update(
+            fmt=fmt, replot=replot, force=force, todefault=todefault
+        )
         if not self.no_auto_update or auto_update:
             self.start_update(draw=draw)
 
@@ -2224,12 +2458,18 @@ class Plotter(dict):
             keys = {keys}
         keys = set(self) if keys is None else set(keys)
         fmto_groups = self._fmto_groups
-        keys.update(chain(*(map(lambda fmto: fmto.key, fmto_groups[key])
-                            for key in keys.intersection(fmto_groups))))
+        keys.update(
+            chain(
+                *(
+                    map(lambda fmto: fmto.key, fmto_groups[key])
+                    for key in keys.intersection(fmto_groups)
+                )
+            )
+        )
         keys.difference_update(fmto_groups)
         return keys
 
-    @docstrings.get_sections(base='Plotter.share')
+    @docstrings.get_sections(base="Plotter.share")
     @docstrings.dedent
     def share(self, plotters, keys=None, draw=None, auto_update=False):
         """
@@ -2274,16 +2514,16 @@ class Plotter(dict):
             plotter._registered_updates.clear()
             try:
                 plotter.update(force=keys, auto_update=auto_update, draw=draw)
-            except:
+            except Exception:
                 raise
             finally:
                 plotter._registered_updates.clear()
                 plotter._registered_updates.update(old_registered)
         if draw is None:
-            draw = rcParams['auto_draw']
+            draw = rcParams["auto_draw"]
         if draw:
             self.draw()
-            if rcParams['auto_show']:
+            if rcParams["auto_show"]:
                 self.show()
 
     @docstrings.dedent
@@ -2316,14 +2556,16 @@ class Plotter(dict):
             plotters = [plotters]
         keys = self._set_sharing_keys(keys)
         for plotter in plotters:
-            plotter.unshare_me(keys, auto_update=auto_update, draw=draw,
-                               update_other=False)
+            plotter.unshare_me(
+                keys, auto_update=auto_update, draw=draw, update_other=False
+            )
         self.update(force=keys, auto_update=auto_update, draw=draw)
 
-    @docstrings.get_sections(base='Plotter.unshare_me')
+    @docstrings.get_sections(base="Plotter.unshare_me")
     @docstrings.dedent
-    def unshare_me(self, keys=None, auto_update=False, draw=None,
-                   update_other=True):
+    def unshare_me(
+        self, keys=None, auto_update=False, draw=None, update_other=True
+    ):
         """
         Close the sharing connection of this plotter with others
 
@@ -2355,8 +2597,7 @@ class Plotter(dict):
             else:
                 other_fmto.shared.remove(fmto)
                 if update_other:
-                    other_fmto.plotter._register_update(
-                        force=[other_fmto.key])
+                    other_fmto.plotter._register_update(force=[other_fmto.key])
                     to_update.append(other_fmto.plotter)
         self.update(force=keys, draw=draw, auto_update=auto_update)
         if update_other and auto_update:
@@ -2384,6 +2625,7 @@ class Plotter(dict):
     def show(self):
         """Shows all open figures"""
         import matplotlib.pyplot as plt
+
         plt.show(block=False)
 
     @dedent
@@ -2414,17 +2656,24 @@ class Plotter(dict):
             old_val = self._old_fmt[-1][key]
         else:
             old_val = fmto.default
-        if (fmto.diff(old_val) or (include_last and
-                                   fmto.key in self._last_update)):
+        if fmto.diff(old_val) or (
+            include_last and fmto.key in self._last_update
+        ):
             return [old_val, fmto.value]
 
-    def get_enhanced_attrs(self, arr, axes=['x', 'y', 't', 'z']):
+    def get_enhanced_attrs(self, arr, axes=["x", "y", "t", "z"]):
         if isinstance(arr, InteractiveList):
-            all_attrs = list(starmap(self.get_enhanced_attrs, zip(
-                arr, repeat(axes))))
-            attrs = {key: val for key, val in six.iteritems(all_attrs[0])
-                     if all(key in attrs and attrs[key] == val
-                            for attrs in all_attrs[1:])}
+            all_attrs = list(
+                starmap(self.get_enhanced_attrs, zip(arr, repeat(axes)))
+            )
+            attrs = {
+                key: val
+                for key, val in six.iteritems(all_attrs[0])
+                if all(
+                    key in attrs and attrs[key] == val
+                    for attrs in all_attrs[1:]
+                )
+            }
             attrs.update(arr.attrs)
         else:
             attrs = arr.attrs.copy()
@@ -2432,12 +2681,15 @@ class Plotter(dict):
             if len(base_variables) > 1:  # multiple variables
                 for name, base_var in six.iteritems(base_variables):
                     attrs.update(
-                        {six.text_type(name)+key: value
-                         for key, value in six.iteritems(base_var.attrs)})
+                        {
+                            six.text_type(name) + key: value
+                            for key, value in six.iteritems(base_var.attrs)
+                        }
+                    )
             else:
                 base_var = next(six.itervalues(base_variables))
-            attrs['name'] = arr.name
-            for dim, coord in six.iteritems(getattr(arr, 'coords', {})):
+            attrs["name"] = arr.name
+            for dim, coord in six.iteritems(getattr(arr, "coords", {})):
                 if coord.size == 1:
                     attrs[dim] = format_time(coord.values)
             if isinstance(self.data, InteractiveList):
@@ -2446,13 +2698,14 @@ class Plotter(dict):
                 decoder = self.data.psy.decoder
             for dim in axes:
                 for obj in [base_var, arr]:
-                    coord = getattr(decoder, 'get_' + dim)(
-                        obj, coords=getattr(arr, 'coords', None))
+                    coord = getattr(decoder, "get_" + dim)(
+                        obj, coords=getattr(arr, "coords", None)
+                    )
                     if coord is None:
                         continue
                     if coord.size == 1:
                         attrs[dim] = format_time(coord.values)
-                    attrs[dim + 'name'] = coord.name
+                    attrs[dim + "name"] = coord.name
                     for key, val in six.iteritems(coord.attrs):
                         attrs[dim + key] = val
         self._enhanced_attrs = attrs

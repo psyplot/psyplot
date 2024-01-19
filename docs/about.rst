@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _about:
 
 About psyplot
@@ -66,7 +70,7 @@ What it is
 
   .. code-block:: python
 
-      psy.plot.mapplot('my-netcdf-file.nc', lonlatbox='Germany')
+      psy.plot.mapplot("my-netcdf-file.nc", lonlatbox="Germany")
 
   while still providing a very high range of flexible options to adjust the
   visualization. No GUI, independent of it's intuitiveness, can ever beat the

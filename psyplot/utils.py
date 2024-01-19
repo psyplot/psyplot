@@ -1,66 +1,68 @@
 """Miscallaneous utility functions for the psyplot package."""
 
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
 
-import sys
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
+import inspect
 import re
-import six
+import sys
 from difflib import get_close_matches
-from itertools import chain
-from psyplot.compat.pycompat import OrderedDict, filterfalse
+from itertools import chain, filterfalse
+
+import six
+
 from psyplot.docstring import dedent, docstrings
+
+
+def get_default_value(func, arg):
+    argspec = inspect.getfullargspec(func)
+    return next(
+        default
+        for a, default in zip(reversed(argspec[0]), reversed(argspec.defaults))
+        if a == arg
+    )
+
+
+def isstring(s):
+    return isinstance(s, str)
 
 
 def plugin_entrypoints(group="psyplot", name="name"):
     """This utility function gets the entry points of the psyplot plugins"""
     if sys.version_info[:2] > (3, 7):
         from importlib.metadata import entry_points
+
         try:
             eps = entry_points(group=group, name=name)
         except TypeError:  # python<3.10
-            eps = [ep for ep in entry_points().get(group, [])
-                   if ep.name ==  name]
+            eps = [
+                ep for ep in entry_points().get(group, []) if ep.name == name
+            ]
     else:
         from pkg_resources import iter_entry_points
+
         eps = iter_entry_points(group=group, name=name)
     return eps
 
 
-class DefaultOrderedDict(OrderedDict):
+class Defaultdict(dict):
     """An ordered :class:`collections.defaultdict`
 
     Taken from http://stackoverflow.com/a/6190500/562769"""
+
     def __init__(self, default_factory=None, *a, **kw):
-        if (default_factory is not None and
-           not callable(default_factory)):
-            raise TypeError('first argument must be callable')
-        OrderedDict.__init__(self, *a, **kw)
+        if default_factory is not None and not callable(default_factory):
+            raise TypeError("first argument must be callable")
+        dict.__init__(self, *a, **kw)
         self.default_factory = default_factory
 
     def __getitem__(self, key):
         try:
-            return OrderedDict.__getitem__(self, key)
+            return dict.__getitem__(self, key)
         except KeyError:
             return self.__missing__(key)
 
@@ -74,7 +76,7 @@ class DefaultOrderedDict(OrderedDict):
         if self.default_factory is None:
             args = tuple()
         else:
-            args = self.default_factory,
+            args = (self.default_factory,)
         return type(self), args, None, None, self.items()
 
     def copy(self):
@@ -86,12 +88,14 @@ class DefaultOrderedDict(OrderedDict):
 
     def __deepcopy__(self, memo):
         import copy
-        return type(self)(self.default_factory,
-                          copy.deepcopy(self.items()))
+
+        return type(self)(self.default_factory, copy.deepcopy(self.items()))
 
     def __repr__(self):
-        return 'DefaultOrderedDict(%s, %s)' % (self.default_factory,
-                                               OrderedDict.__repr__(self))
+        return "Defaultdict(%s, %s)" % (
+            self.default_factory,
+            dict.__repr__(self),
+        )
 
 
 class _TempBool(object):
@@ -129,9 +133,12 @@ class _TempBool(object):
             self.value = self.default
 
     if six.PY2:
+
         def __nonzero__(self):
             return self.value
+
     else:
+
         def __bool__(self):
             return self.value
 
@@ -172,12 +179,13 @@ def _temp_bool_prop(propname, doc="", default=False):
         The documentation of the property
     default: bool
         The default value of the _TempBool class"""
+
     def getx(self):
-        if getattr(self, '_' + propname, None) is not None:
-            return getattr(self, '_' + propname)
+        if getattr(self, "_" + propname, None) is not None:
+            return getattr(self, "_" + propname)
         else:
-            setattr(self, '_' + propname, _TempBool(default))
-        return getattr(self, '_' + propname)
+            setattr(self, "_" + propname, _TempBool(default))
+        return getattr(self, "_" + propname)
 
     def setx(self, value):
         getattr(self, propname).value = bool(value)
@@ -209,20 +217,25 @@ def unique_everseen(iterable, key=None):
 
 
 def is_remote_url(path):
-    patt = re.compile(r'^https?\://')
+    patt = re.compile(r"^https?\://")
     if not isinstance(path, six.string_types):
-        return all(map(patt.search, (s or '' for s in path)))
-    return bool(re.search(r'^https?\://', path))
+        return all(map(patt.search, (s or "" for s in path)))
+    return bool(re.search(r"^https?\://", path))
 
 
-@docstrings.get_sections(base='check_key', sections=['Parameters', 'Returns',
-                                                 'Raises'])
+@docstrings.get_sections(
+    base="check_key", sections=["Parameters", "Returns", "Raises"]
+)
 @dedent
-def check_key(key, possible_keys, raise_error=True,
-              name='formatoption keyword',
-              msg=("See show_fmtkeys function for possible formatopion "
-                   "keywords"),
-              *args, **kwargs):
+def check_key(
+    key,
+    possible_keys,
+    raise_error=True,
+    name="formatoption keyword",
+    msg=("See show_fmtkeys function for possible formatopion " "keywords"),
+    *args,
+    **kwargs,
+):
     """
     Checks whether the key is in a list of possible keys
 
@@ -263,15 +276,18 @@ def check_key(key, possible_keys, raise_error=True,
     if key not in possible_keys:
         similarkeys = get_close_matches(key, possible_keys, *args, **kwargs)
         if similarkeys:
-            msg = ('Unknown %s %s! Possible similiar '
-                   'frasings are %s.') % (name, key, ', '.join(similarkeys))
+            msg = ("Unknown %s %s! Possible similiar " "frasings are %s.") % (
+                name,
+                key,
+                ", ".join(similarkeys),
+            )
         else:
             msg = ("Unknown %s %s! ") % (name, key) + msg
         if not raise_error:
-            return '', similarkeys, msg
+            return "", similarkeys, msg
         raise KeyError(msg)
     else:
-        return key, [key], ''
+        return key, [key], ""
 
 
 def sort_kwargs(kwargs, *param_lists):
@@ -294,8 +310,12 @@ def sort_kwargs(kwargs, *param_lists):
         `kwargs` corresponding to the specified list in ``*param_lists``. The
         last dictionary contains the remaining items"""
     return chain(
-        ({key: kwargs.pop(key) for key in params.intersection(kwargs)}
-         for params in map(set, param_lists)), [kwargs])
+        (
+            {key: kwargs.pop(key) for key in params.intersection(kwargs)}
+            for params in map(set, param_lists)
+        ),
+        [kwargs],
+    )
 
 
 def hashable(val):
@@ -320,7 +340,7 @@ def hashable(val):
         return val
 
 
-@docstrings.get_sections(base='join_dicts')
+@docstrings.get_sections(base="join_dicts")
 def join_dicts(dicts, delimiter=None, keep_all=False):
     """Join multiple dictionaries into one
 

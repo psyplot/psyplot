@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: CC0-1.0
+
+.defaults: &defaults
+  year: "2021-2024"
+  copyright: "Helmholtz-Zentrum hereon GmbH"
+
+# The following dictionaries items map to dictionaries with three possible
+# keys:
+#
+#   copyright: The copyright statement
+#   year: year of copyright statement
+#   license: SPDX Identifier
+docs:
+  <<: *defaults
+  license: "CC-BY-4.0"
+code:
+  <<: *defaults
+  license: "LGPL-3.0-only"
+supp:
+  <<: *defaults
+  license: "CC0-1.0"

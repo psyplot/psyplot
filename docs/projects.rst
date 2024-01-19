@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _projects:
 
 Subprojects
@@ -8,54 +12,43 @@ splitted into several subprojects. Each of them is accessible via
 ``https://psyplot.github.io/<project-name>``
 
 - the :ref:`psyplot_gui <psyplot_gui:psyplot-gui>` package: The GUI to psyplot
-  |psyplot-gui-github| |psyplot-gui-release|
+  :bdg-link-primary:`Source <https://codebase.helmholtz.cloud/psyplot/psyplot-gui>`
+  |psyplot-gui-release|
 - the :ref:`psy_view <psy_view:psy-view>` package: An ncview-like interface for
-  psyplot |psy-view-github| |psy-view-release|
+  psyplot
+  :bdg-link-primary:`Source <https://codebase.helmholtz.cloud/psyplot/psy-view>`
+  |psy-view-release|
 - the :ref:`psy-simple <psy_simple:psy-simple>` package: A plugin for simple
-  visualization |psy-simple-github| |psy-simple-release|
+  visualization
+  :bdg-link-primary:`Source <https://codebase.helmholtz.cloud/psyplot/psy-simple>`
+  |psy-simple-release|
 - the :ref:`psy-maps <psy_maps:psy-maps>` package: A psyplot plugin for
-  visualizing data on a map |psy-maps-github| |psy-maps-release|
+  visualizing data on a map
+  :bdg-link-primary:`Source <https://codebase.helmholtz.cloud/psyplot/psy-maps>`
+  |psy-maps-release|
 - the :ref:`psy-reg <psy_reg:psy-reg>` package: A psyplot plugin for visualizing
-  and calculating regression fits |psy-reg-github| |psy-reg-release|
+  and calculating regression fits
+  :bdg-link-primary:`Source <https://codebase.helmholtz.cloud/psyplot/psy-reg>`
+  |psy-reg-release|
 
 See :ref:`plugins` for more informations on the plugins.
 
-.. |psyplot-gui-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/psyplot/psyplot-gui
-    :alt: github
-
-.. |psyplot-gui-release| image:: https://img.shields.io/github/v/release/psyplot/psyplot-gui.svg?style=flat-square
-    :target: https://github.com/psyplot/psyplot-gui/releases/latest
+.. |psyplot-gui-release| image:: https://codebase.helmholtz.cloud/psyplot/psyplot-gui/-/badges/release.svg
+    :target: https://codebase.helmholtz.cloud/psyplot/psyplot-gui/-/releases
     :alt: Latest release
 
-.. |psy-view-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/psyplot/psy-view
-    :alt: github
-
-.. |psy-view-release| image:: https://img.shields.io/github/v/release/psyplot/psy-view.svg?style=flat-square
-    :target: https://github.com/psyplot/psy-view/releases/latest
+.. |psy-view-release| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/-/badges/release.svg
+    :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/releases
     :alt: Latest release
 
-.. |psy-simple-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/psyplot/psy-simple
-    :alt: github
-
-.. |psy-simple-release| image:: https://img.shields.io/github/v/release/psyplot/psy-simple.svg?style=flat-square
-    :target: https://github.com/psyplot/psy-simple/releases/latest
+.. |psy-simple-release| image:: https://codebase.helmholtz.cloud/psyplot/psy-simple/-/badges/release.svg
+    :target: https://codebase.helmholtz.cloud/psyplot/psy-simple/-/releases
     :alt: Latest release
 
-.. |psy-maps-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/psyplot/psy-maps
-    :alt: github
-
-.. |psy-maps-release| image:: https://img.shields.io/github/v/release/psyplot/psy-maps.svg?style=flat-square
-    :target: https://github.com/psyplot/psy-maps/releases/latest
+.. |psy-maps-release| image:: https://codebase.helmholtz.cloud/psyplot/psy-maps/-/badges/release.svg
+    :target: https://codebase.helmholtz.cloud/psyplot/psy-maps/-/releases
     :alt: Latest release
 
-.. |psy-reg-github| image:: GitHub-Mark-16px.png
-    :target: https://github.com/psyplot/psy-reg
-    :alt: github
-
-.. |psy-reg-release| image:: https://img.shields.io/github/v/release/psyplot/psy-reg.svg?style=flat-square
-    :target: https://github.com/psyplot/psy-reg/releases/latest
+.. |psy-reg-release| image:: https://codebase.helmholtz.cloud/psyplot/psy-reg/-/badges/release.svg
+    :target: https://codebase.helmholtz.cloud/psyplot/psy-reg/-/releases
     :alt: Latest release

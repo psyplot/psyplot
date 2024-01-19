@@ -1,39 +1,30 @@
 """psyplot visualization framework."""
 
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
 
-import sys
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
 import datetime as dt
 import logging as _logging
-from psyplot.warning import warn, critical, disable_warnings
-from psyplot.config.rcsetup import rcParams
+import sys
+
 import psyplot.config as config
-from psyplot.data import (
-    ArrayList, InteractiveArray, InteractiveList, open_dataset, open_mfdataset)
+from psyplot.config.rcsetup import rcParams
+from psyplot.data import (  # noqa: F401
+    ArrayList,
+    InteractiveArray,
+    InteractiveList,
+    open_dataset,
+    open_mfdataset,
+)
+from psyplot.warning import critical, disable_warnings, warn  # noqa: F401
 
 from ._version import get_versions
-__version__ = get_versions()['version']
+
+__version__ = get_versions()["version"]
 del get_versions
 
 
@@ -55,7 +46,9 @@ __status__ = "Production"
 logger = _logging.getLogger(__name__)
 logger.debug(
     "%s: Initializing psyplot, version %s",
-    dt.datetime.now().isoformat(), __version__)
+    dt.datetime.now().isoformat(),
+    __version__,
+)
 logger.debug("Logging configuration file: %s", config.logcfg_path)
 logger.debug("Configuration file: %s", config.config_path)
 
@@ -101,35 +94,33 @@ def get_versions(requirements=True, key=None):
     .. code-block:: python
 
         import json
+
         print(json.dumps(psyplot.get_versions(), indent=4))
         {
-            "psy_simple.plugin": {
-                "version": "1.0.0.dev0"
-            },
+            "psy_simple.plugin": {"version": "1.0.0.dev0"},
             "psyplot": {
                 "version": "1.0.0.dev0",
                 "requirements": {
                     "matplotlib": "1.5.3",
                     "numpy": "1.11.3",
                     "pandas": "0.19.2",
-                    "xarray": "0.9.1"
-                }
+                    "xarray": "0.9.1",
+                },
             },
             "psy_maps.plugin": {
                 "version": "1.0.0.dev0",
-                "requirements": {
-                    "cartopy": "0.15.0"
-                }
-            }
+                "requirements": {"cartopy": "0.15.0"},
+            },
         }
     """
     from psyplot.utils import plugin_entrypoints
+
     eps = plugin_entrypoints("psyplot", "plugin")
 
-    ret = {'psyplot': _get_versions(requirements)}
+    ret = {"psyplot": _get_versions(requirements)}
     for ep in eps:
         if str(ep) in rcParams._plugins:
-            logger.debug('Loading entrypoint %s', ep)
+            logger.debug("Loading entrypoint %s", ep)
 
             try:
                 ep.module
@@ -140,39 +131,46 @@ def get_versions(requirements=True, key=None):
                 continue
             try:
                 mod = ep.load()
-            except (ImportError, ModuleNotFoundError) as e:
-                logger.debug("Could not import %s" % (ep, ), exc_info=True)
-                logger.warning("Could not import %s" % (ep, ), exc_info=True)
+            except (ImportError, ModuleNotFoundError):
+                logger.debug("Could not import %s" % (ep,), exc_info=True)
+                logger.warning("Could not import %s" % (ep,), exc_info=True)
             else:
                 try:
                     ret[str(ep.module)] = mod.get_versions(requirements)
                 except AttributeError:
                     ret[str(ep.module)] = {
-                        'version': getattr(
-                            mod, 'plugin_version',
-                            getattr(mod, '__version__', ''))
-                        }
+                        "version": getattr(
+                            mod,
+                            "plugin_version",
+                            getattr(mod, "__version__", ""),
+                        )
+                    }
     if key is None:
         try:
             import psyplot_gui
         except ImportError:
             pass
         else:
-            ret['psyplot_gui'] = psyplot_gui.get_versions(requirements)
+            ret["psyplot_gui"] = psyplot_gui.get_versions(requirements)
     return ret
 
 
 def _get_versions(requirements=True):
     if requirements:
         import matplotlib as mpl
-        import xarray as xr
-        import pandas as pd
         import numpy as np
-        return {'version': __version__,
-                'requirements': {'matplotlib': mpl.__version__,
-                                 'xarray': xr.__version__,
-                                 'pandas': pd.__version__,
-                                 'numpy': np.__version__,
-                                 'python': ' '.join(sys.version.splitlines())}}
+        import pandas as pd
+        import xarray as xr
+
+        return {
+            "version": __version__,
+            "requirements": {
+                "matplotlib": mpl.__version__,
+                "xarray": xr.__version__,
+                "pandas": pd.__version__,
+                "numpy": np.__version__,
+                "python": " ".join(sys.version.splitlines()),
+            },
+        }
     else:
-        return {'version': __version__}
+        return {"version": __version__}
