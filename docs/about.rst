@@ -97,7 +97,7 @@ What it is
     plotting methods
 - it will always be free and open-source under the LGPL License.
 
-.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _ICON: https://code.mpimet.mpg.de/projects/iconpublic
 .. _UGRID: https://ugrid-conventions.github.io/ugrid-conventions/
 
 
