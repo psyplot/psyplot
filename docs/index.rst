@@ -168,7 +168,7 @@ Indices and tables
 .. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/badges/main/pipeline.svg
    :target: https://codebase.helmholtz.cloud/psyplot/psyplot/-/pipelines?page=1&scope=all&ref=main
 .. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/badges/main/coverage.svg
-   :target: https://codebase.helmholtz.cloud/psyplot/psyplot/-/graphs/main/charts
+   :target: https://codebase.helmholtz.cloud/psyplot/psyplot/-/graphs/package-template/charts
 .. |Latest Release| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/-/badges/release.svg
    :target: https://codebase.helmholtz.cloud/psyplot/psyplot
 .. |PyPI version| image:: https://img.shields.io/pypi/v/psyplot.svg
