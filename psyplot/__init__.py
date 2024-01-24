@@ -2,7 +2,6 @@
 
 # SPDX-FileCopyrightText: 2016-2024 University of Lausanne
 # SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
-
 # SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
 #
 # SPDX-License-Identifier: LGPL-3.0-only
@@ -30,9 +29,9 @@ del get_versions
 
 __author__ = "Philipp S. Sommer"
 __copyright__ = """
-Copyright (C) 2021 Helmholtz-Zentrum Hereon
-Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-Copyright (C) 2016-2021 University of Lausanne
+2016-2024 University of Lausanne
+2020-2021 Helmholtz-Zentrum Geesthacht
+2021-2024 Helmholtz-Zentrum hereon GmbH
 """
 __credits__ = ["Philipp S. Sommer"]
 __license__ = "LGPL-3.0-only"
