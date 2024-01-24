@@ -8,7 +8,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-hereon-netcdf-sphinxext = {ref = "main", git = "git+https://codebase.helmholtz.cloud/hcdc/hereon-netcdf/sphinxext.git"}
 psyplot = {extras = ["testsite"], file = "../../..", editable=true}
 matplotlib = "3.7.*"
 

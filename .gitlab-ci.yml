@@ -21,6 +21,7 @@ test-package:
   script:
     - pip install build twine
     - make dist
+    - twine check dist/*
   artifacts:
     name: python-artifacts
     paths:

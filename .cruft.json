@@ -1,6 +1,6 @@
 {
   "template": "https://codebase.helmholtz.cloud/hcdc/software-templates/python-package-template.git",
-  "commit": "f1247eb9fd948db3c8b81bd476a67f26f80e7c1d",
+  "commit": "0f7c5891647ee85a0d127eca86c499bdae47b2cb",
   "checkout": null,
   "context": {
     "cookiecutter": {
