@@ -4128,7 +4128,12 @@ class ArrayList(list):
             # interactive treatment of DataArrays
             missing = set(arr.dims).difference(base.coords) - {"variable"}
             for dim in missing:
-                base[dim] = arr.coords[dim] = np.arange(base.dims[dim])
+                try:
+                    size = base.sizes[dim]
+                except AttributeError:
+                    # old xarray version
+                    size = base.dims[dim]
+                base[dim] = arr.coords[dim] = np.arange(size)
 
         if squeeze:
 
