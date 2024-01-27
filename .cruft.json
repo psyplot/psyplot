@@ -1,6 +1,6 @@
 {
   "template": "https://codebase.helmholtz.cloud/hcdc/software-templates/python-package-template.git",
-  "commit": "0f7c5891647ee85a0d127eca86c499bdae47b2cb",
+  "commit": "2a291586c1d99092860b9cf26a034a285479131e",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -28,7 +28,7 @@
       "use_markdown_for_documentation": "no",
       "ci_matrix": "pipenv",
       "deploy_package_in_ci": "yes",
-      "deploy_pages_in_ci": "yes",
+      "deploy_pages_in_ci": "git-push",
       "_extensions": [
         "local_extensions.UnderlinedExtension"
       ],
