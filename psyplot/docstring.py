@@ -5,33 +5,18 @@ We use the docrep_ package for managing our docstrings
 .. _docrep: http://docrep.readthedocs.io/en/latest/
 """
 
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
 
-import types
-import six
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
 import inspect
-from docrep import DocstringProcessor, safe_modulo
+import types
+
+import six
+from docrep import DocstringProcessor, safe_modulo  # noqa: F401
 
 
 def dedent(func):
@@ -50,24 +35,28 @@ def dedent(func):
 
 def indent(text, num=4):
     """Indet the given string"""
-    str_indent = ' ' * num
-    return str_indent + ('\n' + str_indent).join(text.splitlines())
+    str_indent = " " * num
+    return str_indent + ("\n" + str_indent).join(text.splitlines())
 
 
 def append_original_doc(parent, num=0):
     """Return an iterator that append the docstring of the given `parent`
     function to the applied function"""
+
     def func(func):
         func.__doc__ = func.__doc__ and func.__doc__ + indent(
-            parent.__doc__, num)
+            parent.__doc__, num
+        )
         return func
+
     return func
 
 
 _docstrings = DocstringProcessor()
 
-_docstrings.get_sections(base='DocstringProcessor.get_sections')(
-        dedent(DocstringProcessor.get_sections))
+_docstrings.get_sections(base="DocstringProcessor.get_sections")(
+    dedent(DocstringProcessor.get_sections)
+)
 
 
 class PsyplotDocstringProcessor(DocstringProcessor):
@@ -76,11 +65,16 @@ class PsyplotDocstringProcessor(DocstringProcessor):
     """
 
     param_like_sections = DocstringProcessor.param_like_sections + [
-        'Possible types']
+        "Possible types"
+    ]
 
     @_docstrings.dedent
-    def get_sections(self, s=None, base=None, sections=[
-            'Parameters', 'Other Parameters', 'Possible types']):
+    def get_sections(
+        self,
+        s=None,
+        base=None,
+        sections=["Parameters", "Other Parameters", "Possible types"],
+    ):
         """
         Extract the specified sections out of the given string
 
@@ -96,8 +90,10 @@ class PsyplotDocstringProcessor(DocstringProcessor):
         str
             The replaced string
         """
-        return super(PsyplotDocstringProcessor, self).get_sections(s, base,
-                                                                   sections)
+        return super(PsyplotDocstringProcessor, self).get_sections(
+            s, base, sections
+        )
+
 
 del _docstrings
 

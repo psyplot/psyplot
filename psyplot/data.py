@@ -1,60 +1,46 @@
 """Data management core routines of psyplot."""
 
-# Disclaimer
-# ----------
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
+
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
 #
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-3.0-only
 
 from __future__ import division
+
+import datetime as dt
+import inspect
+import logging
 import os
 import os.path as osp
-import inspect
-from threading import Thread
+import re
+from collections import defaultdict
 from functools import partial
 from glob import glob
 from importlib import import_module
-import re
-import six
-from collections import defaultdict
-from itertools import chain, product, repeat, starmap, count, cycle, islice
-import xarray as xr
-from xarray.core.utils import NDArrayMixin
-from xarray.core.formatting import first_n_items, format_item
+from itertools import chain, count, cycle, islice, product, repeat, starmap
+from queue import Queue
+from threading import Thread
+from warnings import warn
 
+import numpy as np
+import six
+import xarray as xr
 import xarray.backends.api as xarray_api
 from pandas import to_datetime
-import numpy as np
-import datetime as dt
-import logging
+from xarray.core.formatting import first_n_items, format_item
+from xarray.core.utils import NDArrayMixin
+
+import psyplot.utils as utils
 from psyplot.config.rcsetup import rcParams, safe_list
 from psyplot.docstring import dedent, docstrings
-from psyplot.compat.pycompat import (
-    zip, map, isstring, OrderedDict, filter, range, getcwd,
-    Queue)
+from psyplot.utils import isstring
 from psyplot.warning import PsyPlotRuntimeWarning
-from warnings import warn
-import psyplot.utils as utils
 
 try:
-    import dask
+    import dask  # noqa: F401
+
     with_dask = True
 except ImportError:
     with_dask = False
@@ -70,7 +56,7 @@ except ImportError:
 _NODATA = object
 
 
-VARIABLELABEL = 'variable'
+VARIABLELABEL = "variable"
 
 
 logger = logging.getLogger(__name__)
@@ -78,7 +64,7 @@ logger = logging.getLogger(__name__)
 
 _ds_counter = count(1)
 
-xr_version = tuple(map(int, xr.__version__.split('.')[:2]))
+xr_version = tuple(map(int, xr.__version__.split(".")[:2]))
 
 
 def _no_auto_update_getter(self):
@@ -99,7 +85,7 @@ def _no_auto_update_getter(self):
         >>> data.no_auto_update = True
         >>> data.update(time=1)
         >>> data.no_auto_update = False  # reenable automatical update"""
-    if getattr(self, '_no_auto_update', None) is not None:
+    if getattr(self, "_no_auto_update", None) is not None:
         return self._no_auto_update
     else:
         self._no_auto_update = utils._TempBool()
@@ -148,7 +134,7 @@ def _fix_times(dims):
             dims[key] = to_datetime([val])[0]
 
 
-@docstrings.get_sections(base='setup_coords')
+@docstrings.get_sections(base="setup_coords")
 @dedent
 def setup_coords(arr_names=None, sort=[], dims={}, **kwargs):
     """
@@ -166,12 +152,12 @@ def setup_coords(arr_names=None, sort=[], dims={}, **kwargs):
           number of dictionaries in the return depend in this case on the
           `dims` and ``**furtherdims``
         - dictionary:
-          Then nothing happens and an :class:`OrderedDict` version of
+          Then nothing happens and an :class:`dict` version of
           `arr_names` is returned.
     sort: list of strings
         This parameter defines how the dictionaries are ordered. It has no
         effect if `arr_names` is a dictionary (use a
-        :class:`~collections.OrderedDict` for that). It can be a list of
+        :class:`dict` for that). It can be a list of
         dimension strings matching to the dimensions in `dims` for the
         variable.
     dims: dict
@@ -188,23 +174,23 @@ def setup_coords(arr_names=None, sort=[], dims={}, **kwargs):
 
     Returns
     -------
-    ~collections.OrderedDict
+    dict
         A mapping from the keys in `arr_names` and to dictionaries. Each
         dictionary corresponds defines the coordinates of one data array to
         load"""
     try:
-        return OrderedDict(arr_names)
+        return dict(arr_names)
     except (ValueError, TypeError):
-        # ValueError for cyordereddict, TypeError for collections.OrderedDict
+        # ValueError for cydict, TypeError for dic
         pass
     if arr_names is None:
-        arr_names = repeat('arr{0}')
+        arr_names = repeat("arr{0}")
     elif isstring(arr_names):
         arr_names = repeat(arr_names)
-    dims = OrderedDict(dims)
+    dims = dict(dims)
     for key, val in six.iteritems(kwargs):
         dims.setdefault(key, val)
-    sorted_dims = OrderedDict()
+    sorted_dims = dict()
     if sort:
         for key in sort:
             sorted_dims[key] = dims.pop(key)
@@ -212,19 +198,22 @@ def setup_coords(arr_names=None, sort=[], dims={}, **kwargs):
             sorted_dims[key] = val
     else:
         # make sure, it is first sorted for the variable names
-        if 'name' in dims:
-            sorted_dims['name'] = None
+        if "name" in dims:
+            sorted_dims["name"] = None
         for key, val in sorted(dims.items()):
             sorted_dims[key] = val
         for key, val in six.iteritems(kwargs):
             sorted_dims.setdefault(key, val)
     for key, val in six.iteritems(sorted_dims):
         sorted_dims[key] = iter(safe_list(val))
-    return OrderedDict([
-        (arr_name.format(i), dict(zip(sorted_dims.keys(), dim_tuple)))
-        for i, (arr_name, dim_tuple) in enumerate(zip(
-            arr_names, product(
-                *map(list, sorted_dims.values()))))])
+    return dict(
+        [
+            (arr_name.format(i), dict(zip(sorted_dims.keys(), dim_tuple)))
+            for i, (arr_name, dim_tuple) in enumerate(
+                zip(arr_names, product(*map(list, sorted_dims.values())))
+            )
+        ]
+    )
 
 
 def to_slice(arr):
@@ -287,16 +276,16 @@ def get_index_from_coord(coord, base_index):
 
 #: mapping that translates datetime format strings to regex patterns
 t_patterns = {
-        '%Y': '[0-9]{4}',
-        '%m': '[0-9]{1,2}',
-        '%d': '[0-9]{1,2}',
-        '%H': '[0-9]{1,2}',
-        '%M': '[0-9]{1,2}',
-        '%S': '[0-9]{1,2}',
-    }
+    "%Y": "[0-9]{4}",
+    "%m": "[0-9]{1,2}",
+    "%d": "[0-9]{1,2}",
+    "%H": "[0-9]{1,2}",
+    "%M": "[0-9]{1,2}",
+    "%S": "[0-9]{1,2}",
+}
 
 
-@docstrings.get_sections(base='get_tdata')
+@docstrings.get_sections(base="get_tdata")
 @dedent
 def get_tdata(t_format, files):
     """
@@ -322,27 +311,41 @@ def get_tdata(t_format, files):
     References
     ----------
     .. [1] https://docs.python.org/2/library/datetime.html"""
+
     def median(arr):
-        return arr.min() + (arr.max() - arr.min())/2
+        return arr.min() + (arr.max() - arr.min()) / 2
+
     import re
+
     from pandas import Index
+
     t_pattern = t_format
     for fmt, patt in t_patterns.items():
         t_pattern = t_pattern.replace(fmt, patt)
     t_pattern = re.compile(t_pattern)
     time = list(range(len(files)))
     for i, f in enumerate(files):
-        time[i] = median(np.array(list(map(
-            lambda s: np.datetime64(dt.datetime.strptime(s, t_format)),
-            t_pattern.findall(f)))))
+        time[i] = median(
+            np.array(
+                list(
+                    map(
+                        lambda s: np.datetime64(
+                            dt.datetime.strptime(s, t_format)
+                        ),
+                        t_pattern.findall(f),
+                    )
+                )
+            )
+        )
     ind = np.argsort(time)  # sort according to time
     files = np.array(files)[ind]
     time = np.array(time)[ind]
-    return to_datetime(Index(time, name='time')), files
+    return to_datetime(Index(time, name="time")), files
 
 
-docstrings.get_sections(xr.Dataset.to_netcdf.__doc__,
-                        'xarray.Dataset.to_netcdf')
+docstrings.get_sections(
+    xr.Dataset.to_netcdf.__doc__, "xarray.Dataset.to_netcdf"
+)
 
 
 @docstrings.dedent
@@ -362,13 +365,17 @@ def to_netcdf(ds, *args, **kwargs):
     """
     to_update = {}
     for v, obj in six.iteritems(ds.variables):
-        units = obj.attrs.get('units', obj.encoding.get('units', None))
-        if units == 'day as %Y%m%d.%f' and np.issubdtype(
-                obj.dtype, np.datetime64):
+        units = obj.attrs.get("units", obj.encoding.get("units", None))
+        if units == "day as %Y%m%d.%f" and np.issubdtype(
+            obj.dtype, np.datetime64
+        ):
             to_update[v] = xr.Variable(
-                obj.dims, AbsoluteTimeEncoder(obj), attrs=obj.attrs.copy(),
-                encoding=obj.encoding)
-            to_update[v].attrs['units'] = units
+                obj.dims,
+                AbsoluteTimeEncoder(obj),
+                attrs=obj.attrs.copy(),
+                encoding=obj.encoding,
+            )
+            to_update[v].attrs["units"] = units
     if to_update:
         ds = ds.copy()
         ds.update(to_update)
@@ -377,7 +384,7 @@ def to_netcdf(ds, *args, **kwargs):
 
 def _get_fname_netCDF4(store):
     """Try to get the file name from the NetCDF4DataStore store"""
-    return getattr(store, '_filename', None)
+    return getattr(store, "_filename", None)
 
 
 def _get_fname_scipy(store):
@@ -420,11 +427,12 @@ class Signal(object):
             self._connections.append(func)
 
     def emit(self, *args, **kwargs):
-        if (not getattr(self.owner, 'block_signals', False) and
-                not getattr(self.instance, 'block_signals', False)):
-            logger.debug('Emitting signal %s', self.name)
+        if not getattr(self.owner, "block_signals", False) and not getattr(
+            self.instance, "block_signals", False
+        ):
+            logger.debug("Emitting signal %s", self.name)
             for func in self._connections[:]:
-                logger.debug('Calling %s', func)
+                logger.debug("Calling %s", func)
                 func(*args, **kwargs)
 
     def disconnect(self, func=None):
@@ -451,7 +459,7 @@ class Signal(object):
 get_fname_funcs = [_get_fname_netCDF4, _get_fname_scipy, _get_fname_nio]
 
 
-@docstrings.get_sections(base='get_filename_ds')
+@docstrings.get_sections(base="get_filename_ds")
 @docstrings.dedent
 def get_filename_ds(ds, dump=True, paths=None, **kwargs):
     """
@@ -502,12 +510,12 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
         # make sure that the data store is not closed by providing a
         # write argument
         if xr_version < (0, 11):
-            kwargs.setdefault('writer', xarray_api.ArrayWriter())
+            kwargs.setdefault("writer", xarray_api.ArrayWriter())
             store = to_netcdf(ds, fname, **kwargs)
         else:
             # `writer` parameter was removed by
             # https://github.com/pydata/xarray/pull/2261
-            kwargs.setdefault('multifile', True)
+            kwargs.setdefault("multifile", True)
             store = to_netcdf(ds, fname, **kwargs)[1]
         store_mod = store.__module__
         store_cls = store.__class__.__name__
@@ -516,39 +524,7 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
 
     def tmp_it():
         while True:
-            yield NamedTemporaryFile(suffix='.nc').name
-
-    def _legacy_get_filename_ds(ds):
-        # try to get the filename from the data store of the obj
-        #
-        # Outdated possibility since the backend plugin methodology of
-        # xarray 0.18
-        if store_mod is not None:
-            store = ds._file_obj
-            # try several engines
-            if hasattr(store, 'file_objs'):
-                fname = []
-                store_mod = []
-                store_cls = []
-                for obj in store.file_objs:  # mfdataset
-                    _fname = None
-                    for func in get_fname_funcs:
-                        if _fname is None:
-                            _fname = func(obj)
-                            if _fname is not None:
-                                fname.append(_fname)
-                                store_mod.append(obj.__module__)
-                                store_cls.append(obj.__class__.__name__)
-                fname = tuple(fname)
-                store_mod = tuple(store_mod)
-                store_cls = tuple(store_cls)
-            else:
-                for func in get_fname_funcs:
-                    fname = func(store)
-                    if fname is not None:
-                        break
-
-        return fname, store_mod, store_cls
+            yield NamedTemporaryFile(suffix=".nc").name
 
     fname = None
     if paths is True or (dump and paths is None):
@@ -559,13 +535,10 @@ def get_filename_ds(ds, dump=True, paths=None, **kwargs):
         else:
             paths = iter(paths)
     store_mod, store_cls = ds.psy.data_store
-    if xr_plugins is None:
-        fname, store_mod, store_cls = _legacy_get_filename_ds(ds)
-    elif "source" in ds.encoding:
+    if "source" in ds.encoding:
         fname = ds.encoding["source"]
         store_mod = None
         store_cls = None
-
 
     # check if paths is provided and if yes, save the file
     if fname is None and paths is not None:
@@ -592,9 +565,9 @@ class CFDecoder(object):
         try:
             return self._logger
         except AttributeError:
-            name = '%s.%s' % (self.__module__, self.__class__.__name__)
+            name = "%s.%s" % (self.__module__, self.__class__.__name__)
             self._logger = logging.getLogger(name)
-            self.logger.debug('Initializing...')
+            self.logger.debug("Initializing...")
             return self._logger
 
     @logger.setter
@@ -603,10 +576,10 @@ class CFDecoder(object):
 
     def __init__(self, ds=None, x=None, y=None, z=None, t=None):
         self.ds = ds
-        self.x = rcParams['decoder.x'].copy() if x is None else set(x)
-        self.y = rcParams['decoder.y'].copy() if y is None else set(y)
-        self.z = rcParams['decoder.z'].copy() if z is None else set(z)
-        self.t = rcParams['decoder.t'].copy() if t is None else set(t)
+        self.x = rcParams["decoder.x"].copy() if x is None else set(x)
+        self.y = rcParams["decoder.y"].copy() if y is None else set(y)
+        self.z = rcParams["decoder.z"].copy() if z is None else set(z)
+        self.t = rcParams["decoder.t"].copy() if t is None else set(t)
 
     @staticmethod
     def register_decoder(decoder_class, pos=0):
@@ -624,8 +597,9 @@ class CFDecoder(object):
         CFDecoder._registry.insert(pos, decoder_class)
 
     @classmethod
-    @docstrings.get_sections(base='CFDecoder.can_decode', sections=['Parameters',
-                                                                'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.can_decode", sections=["Parameters", "Returns"]
+    )
     def can_decode(cls, ds, var):
         """
         Class method to determine whether the object can be decoded by this
@@ -673,8 +647,9 @@ class CFDecoder(object):
         return CFDecoder(ds, *args, **kwargs)
 
     @staticmethod
-    @docstrings.get_sections(base='CFDecoder.decode_coords', sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.decode_coords", sections=["Parameters", "Returns"]
+    )
     def decode_coords(ds, gridfile=None):
         """
         Sets the coordinates and bounds in a dataset
@@ -696,14 +671,16 @@ class CFDecoder(object):
         -------
         xarray.Dataset
             `ds` with additional coordinates"""
+
         def add_attrs(obj):
-            if 'coordinates' in obj.attrs:
-                extra_coords.update(obj.attrs['coordinates'].split())
-                obj.encoding['coordinates'] = obj.attrs.pop('coordinates')
-            if 'grid_mapping' in obj.attrs:
-                extra_coords.add(obj.attrs['grid_mapping'])
-            if 'bounds' in obj.attrs:
-                extra_coords.add(obj.attrs['bounds'])
+            if "coordinates" in obj.attrs:
+                extra_coords.update(obj.attrs["coordinates"].split())
+                obj.encoding["coordinates"] = obj.attrs.pop("coordinates")
+            if "grid_mapping" in obj.attrs:
+                extra_coords.add(obj.attrs["grid_mapping"])
+            if "bounds" in obj.attrs:
+                extra_coords.add(obj.attrs["bounds"])
+
         if gridfile is not None and not isinstance(gridfile, xr.Dataset):
             gridfile = open_dataset(gridfile)
         extra_coords = set(ds.coords)
@@ -711,23 +688,30 @@ class CFDecoder(object):
             add_attrs(v)
         add_attrs(ds)
         if gridfile is not None:
-            ds.update({k: v for k, v in six.iteritems(gridfile.variables)
-                       if k in extra_coords})
+            ds.update(
+                {
+                    k: v
+                    for k, v in six.iteritems(gridfile.variables)
+                    if k in extra_coords
+                }
+            )
         if xr_version < (0, 11):
-            ds.set_coords(extra_coords.intersection(ds.variables),
-                          inplace=True)
+            ds.set_coords(
+                extra_coords.intersection(ds.variables), inplace=True
+            )
         else:
             ds._coord_names.update(extra_coords.intersection(ds.variables))
         return ds
 
-    @docstrings.get_sections(base='CFDecoder.is_unstructured', sections=[
-        'Parameters', 'Returns'])
-
-    @docstrings.get_sections(base=
-        'CFDecoder.get_cell_node_coord',
-        sections=['Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.is_unstructured", sections=["Parameters", "Returns"]
+    )
+    @docstrings.get_sections(
+        base="CFDecoder.get_cell_node_coord",
+        sections=["Parameters", "Returns"],
+    )
     @dedent
-    def get_cell_node_coord(self, var, coords=None, axis='x', nans=None):
+    def get_cell_node_coord(self, var, coords=None, axis="x", nans=None):
         """
         Checks whether the bounds in the variable attribute are triangular
 
@@ -751,65 +735,82 @@ class CFDecoder(object):
         if coords is None:
             coords = self.ds.coords
         axis = axis.lower()
-        get_coord = self.get_x if axis == 'x' else self.get_y
+        get_coord = self.get_x if axis == "x" else self.get_y
         coord = get_coord(var, coords=coords)
         if coord is not None:
-            bounds = self._get_coord_cell_node_coord(coord, coords, nans,
-                                                     var=var)
+            bounds = self._get_coord_cell_node_coord(
+                coord, coords, nans, var=var
+            )
             if bounds is None:
                 bounds = self.get_plotbounds(coord)
                 if bounds.ndim == 1:
                     dim0 = coord.dims[-1]
                     bounds = xr.DataArray(
                         np.dstack([bounds[:-1], bounds[1:]])[0],
-                        dims=(dim0, '_bnds'),  attrs=coord.attrs.copy(),
-                        name=coord.name + '_bnds')
+                        dims=(dim0, "_bnds"),
+                        attrs=coord.attrs.copy(),
+                        name=coord.name + "_bnds",
+                    )
                 elif bounds.ndim == 2:
                     warn("2D bounds are not yet sufficiently tested!")
                     bounds = xr.DataArray(
-                        np.dstack([bounds[1:, 1:].ravel(),
-                                   bounds[1:, :-1].ravel(),
-                                   bounds[:-1, :-1].ravel(),
-                                   bounds[:-1, 1:].ravel()])[0],
-                        dims=(''.join(var.dims[-2:]), '_bnds'),
+                        np.dstack(
+                            [
+                                bounds[1:, 1:].ravel(),
+                                bounds[1:, :-1].ravel(),
+                                bounds[:-1, :-1].ravel(),
+                                bounds[:-1, 1:].ravel(),
+                            ]
+                        )[0],
+                        dims=("".join(var.dims[-2:]), "_bnds"),
                         attrs=coord.attrs.copy(),
-                        name=coord.name + '_bnds')
+                        name=coord.name + "_bnds",
+                    )
                 else:
                     raise NotImplementedError(
-                        "More than 2D-bounds are not supported")
+                        "More than 2D-bounds are not supported"
+                    )
             if bounds is not None and bounds.shape[-1] == 2:
                 # normal CF-Conventions for rectangular grids
                 arr = bounds.values
-                if axis == 'y':
-                    stacked = np.c_[arr[..., :1], arr[..., :1],
-                                    arr[..., 1:], arr[..., 1:]]
+                if axis == "y":
+                    stacked = np.c_[
+                        arr[..., :1], arr[..., :1], arr[..., 1:], arr[..., 1:]
+                    ]
                     if bounds.ndim == 2:
                         stacked = np.repeat(
                             stacked.reshape((-1, 4)),
-                            len(self.get_x(var, coords)), axis=0)
+                            len(self.get_x(var, coords)),
+                            axis=0,
+                        )
                     else:
                         stacked = stacked.reshape((-1, 4))
                 else:
                     stacked = np.c_[arr, arr[..., ::-1]]
                     if bounds.ndim == 2:
                         stacked = np.tile(
-                            stacked, (len(self.get_y(var, coords)), 1))
+                            stacked, (len(self.get_y(var, coords)), 1)
+                        )
                     else:
                         stacked = stacked.reshape((-1, 4))
                 bounds = xr.DataArray(
                     stacked,
-                    dims=('cell', bounds.dims[1]), name=bounds.name,
-                    attrs=bounds.attrs)
+                    dims=("cell", bounds.dims[1]),
+                    name=bounds.name,
+                    attrs=bounds.attrs,
+                )
 
             return bounds
         return None
 
-    docstrings.delete_params('CFDecoder.get_cell_node_coord.parameters',
-                             'var', 'axis')
+    docstrings.delete_params(
+        "CFDecoder.get_cell_node_coord.parameters", "var", "axis"
+    )
 
     @docstrings.dedent
-    def _get_coord_cell_node_coord(self, coord, coords=None, nans=None,
-                                   var=None):
+    def _get_coord_cell_node_coord(
+        self, coord, coords=None, nans=None, var=None
+    ):
         """
         Get the boundaries of an unstructed coordinate
 
@@ -823,39 +824,47 @@ class CFDecoder(object):
         -------
         %(CFDecoder.get_cell_node_coord.returns)s
         """
-        bounds = coord.attrs.get('bounds')
+        bounds = coord.attrs.get("bounds")
         if bounds is not None:
             bounds = self.ds.coords.get(bounds)
         if bounds is not None:
             if coords is not None:
-                bounds = bounds.sel(**{
-                    key: coords[key]
-                    for key in set(coords).intersection(bounds.dims)})
+                bounds = bounds.sel(
+                    **{
+                        key: coords[key]
+                        for key in set(coords).intersection(bounds.dims)
+                    }
+                )
             if nans is not None and var is None:
                 raise ValueError("Need the variable to deal with NaN!")
             elif nans is None:
                 pass
-            elif nans == 'skip':
+            elif nans == "skip":
                 dims = [dim for dim in set(var.dims) - set(bounds.dims)]
                 mask = var.notnull().all(list(dims)) if dims else var.notnull()
                 try:
                     bounds = bounds[mask.values]
                 except IndexError:  # 3D bounds
                     bounds = bounds.where(mask)
-            elif nans == 'only':
+            elif nans == "only":
                 dims = [dim for dim in set(var.dims) - set(bounds.dims)]
                 mask = var.isnull().all(list(dims)) if dims else var.isnull()
                 bounds = bounds[mask.values]
             else:
                 raise ValueError(
                     "`nans` must be either None, 'skip', or 'only'! "
-                    "Not {0}!".format(str(nans)))
+                    "Not {0}!".format(str(nans))
+                )
             return bounds
 
-    @docstrings.get_sections(base='CFDecoder._check_unstructured_bounds', sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder._check_unstructured_bounds",
+        sections=["Parameters", "Returns"],
+    )
     @docstrings.dedent
-    def _check_unstructured_bounds(self, var, coords=None, axis='x', nans=None):
+    def _check_unstructured_bounds(
+        self, var, coords=None, axis="x", nans=None
+    ):
         """
         Checks whether the bounds in the variable attribute are triangular
 
@@ -893,12 +902,16 @@ class CFDecoder(object):
         -----
         Currently this is the same as :meth:`is_unstructured` method, but may
         change in the future to support hexagonal grids"""
-        if str(var.attrs.get('grid_type')) == 'unstructured':
+        if str(var.attrs.get("grid_type")) == "unstructured":
             return True
         xcoord = self.get_x(var)
         if xcoord is not None:
             bounds = self._get_coord_cell_node_coord(xcoord)
-            if bounds is not None and bounds.ndim == 2 and bounds.shape[-1] > 2:
+            if (
+                bounds is not None
+                and bounds.ndim == 2
+                and bounds.shape[-1] > 2
+            ):
                 return True
 
     @docstrings.dedent
@@ -973,39 +986,48 @@ class CFDecoder(object):
                     idims = var.psy.idims
                 except AttributeError:  # got xarray.Variable
                     idims = {}
-                return ret.isel(**{d: sl for d, sl in idims.items()
-                                   if d in ret.dims})
+                return ret.isel(
+                    **{d: sl for d, sl in idims.items() if d in ret.dims}
+                )
 
         axis = axis.lower()
-        if axis not in list('xyzt'):
-            raise ValueError("Axis must be one of X, Y, Z, T, not {0}".format(
-                axis))
+        if axis not in list("xyzt"):
+            raise ValueError(
+                "Axis must be one of X, Y, Z, T, not {0}".format(axis)
+            )
         # we first check for the dimensions and then for the coordinates
         # attribute
         coords = coords or self.ds.coords
-        coord_names = var.attrs.get('coordinates', var.encoding.get(
-            'coordinates', '')).split()
+        coord_names = var.attrs.get(
+            "coordinates", var.encoding.get("coordinates", "")
+        ).split()
         if not coord_names:
             return
         ret = []
         matched = []
-        for coord in map(lambda dim: coords[dim], filter(
-                lambda dim: dim in coords, chain(
-                    coord_names, var.dims))):
+        for coord in map(
+            lambda dim: coords[dim],
+            filter(lambda dim: dim in coords, chain(coord_names, var.dims)),
+        ):
             # check for the axis attribute or whether the coordinate is in the
             # list of possible coordinate names
             if coord.name not in (c.name for c in ret):
                 if coord.name in getattr(self, axis):
                     matched.append(coord)
-                elif coord.attrs.get('axis', '').lower() == axis:
+                elif coord.attrs.get("axis", "").lower() == axis:
                     ret.append(coord)
         if matched:
             if len(set([c.name for c in matched])) > 1:
-                warn("Found multiple matches for %s coordinate in the "
-                     "coordinates: %s. I use %s" % (
-                         axis, ', '.join([c.name for c in matched]),
-                         matched[0].name),
-                     PsyPlotRuntimeWarning)
+                warn(
+                    "Found multiple matches for %s coordinate in the "
+                    "coordinates: %s. I use %s"
+                    % (
+                        axis,
+                        ", ".join([c.name for c in matched]),
+                        matched[0].name,
+                    ),
+                    PsyPlotRuntimeWarning,
+                )
             return matched[0]
         elif ret:
             return None if len(ret) > 1 else ret[0]
@@ -1017,29 +1039,37 @@ class CFDecoder(object):
         # for latitude and longitude. This is not very nice, hence it is
         # better to specify the :attr:`x` and :attr:`y` attribute
         tnames = self.t.intersection(coord_names)
-        if axis == 'x':
-            for cname in filter(lambda cname: re.search('lon', cname),
-                                coord_names):
+        if axis == "x":
+            for cname in filter(
+                lambda cname: re.search("lon", cname), coord_names
+            ):
                 return get_coord(cname)
             return get_coord(coord_names[-1], raise_error=False)
-        elif axis == 'y' and len(coord_names) >= 2:
-            for cname in filter(lambda cname: re.search('lat', cname),
-                                coord_names):
+        elif axis == "y" and len(coord_names) >= 2:
+            for cname in filter(
+                lambda cname: re.search("lat", cname), coord_names
+            ):
                 return get_coord(cname)
             return get_coord(coord_names[-2], raise_error=False)
-        elif (axis == 'z' and len(coord_names) >= 3 and
-              coord_names[-3] not in tnames):
+        elif (
+            axis == "z"
+            and len(coord_names) >= 3
+            and coord_names[-3] not in tnames
+        ):
             return get_coord(coord_names[-3], raise_error=False)
-        elif axis == 't' and tnames:
+        elif axis == "t" and tnames:
             tname = next(iter(tnames))
             if len(tnames) > 1:
-                warn("Found multiple matches for time coordinate in the "
-                     "coordinates: %s. I use %s" % (', '.join(tnames), tname),
-                     PsyPlotRuntimeWarning)
+                warn(
+                    "Found multiple matches for time coordinate in the "
+                    "coordinates: %s. I use %s" % (", ".join(tnames), tname),
+                    PsyPlotRuntimeWarning,
+                )
             return get_coord(tname, raise_error=False)
 
-    @docstrings.get_sections(base="CFDecoder.get_x", sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.get_x", sections=["Parameters", "Returns"]
+    )
     @dedent
     def get_x(self, var, coords=None):
         """
@@ -1064,7 +1094,7 @@ class CFDecoder(object):
         xarray.Coordinate or None
             The y-coordinate or None if it could be found"""
         coords = coords or self.ds.coords
-        coord = self.get_variable_by_axis(var, 'x', coords)
+        coord = self.get_variable_by_axis(var, "x", coords)
         if coord is not None:
             return coord
         return coords.get(self.get_xname(var))
@@ -1092,22 +1122,25 @@ class CFDecoder(object):
         --------
         get_x"""
         if coords is not None:
-            coord = self.get_variable_by_axis(var, 'x', coords)
+            coord = self.get_variable_by_axis(var, "x", coords)
             if coord is not None and coord.name in var.dims:
                 return coord.name
         dimlist = list(self.x.intersection(var.dims))
         if dimlist:
             if len(dimlist) > 1:
-                warn("Found multiple matches for x coordinate in the variable:"
-                     "%s. I use %s" % (', '.join(dimlist), dimlist[0]),
-                     PsyPlotRuntimeWarning)
+                warn(
+                    "Found multiple matches for x coordinate in the variable:"
+                    "%s. I use %s" % (", ".join(dimlist), dimlist[0]),
+                    PsyPlotRuntimeWarning,
+                )
             return dimlist[0]
         # otherwise we return the coordinate in the last position
         if var.dims:
             return var.dims[-1]
 
-    @docstrings.get_sections(base="CFDecoder.get_y", sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.get_y", sections=["Parameters", "Returns"]
+    )
     @dedent
     def get_y(self, var, coords=None):
         """
@@ -1133,7 +1166,7 @@ class CFDecoder(object):
         xarray.Coordinate or None
             The y-coordinate or None if it could be found"""
         coords = coords or self.ds.coords
-        coord = self.get_variable_by_axis(var, 'y', coords)
+        coord = self.get_variable_by_axis(var, "y", coords)
         if coord is not None:
             return coord
         return coords.get(self.get_yname(var))
@@ -1161,15 +1194,17 @@ class CFDecoder(object):
         --------
         get_y"""
         if coords is not None:
-            coord = self.get_variable_by_axis(var, 'y', coords)
+            coord = self.get_variable_by_axis(var, "y", coords)
             if coord is not None and coord.name in var.dims:
                 return coord.name
         dimlist = list(self.y.intersection(var.dims))
         if dimlist:
             if len(dimlist) > 1:
-                warn("Found multiple matches for y coordinate in the variable:"
-                     "%s. I use %s" % (', '.join(dimlist), dimlist[0]),
-                     PsyPlotRuntimeWarning)
+                warn(
+                    "Found multiple matches for y coordinate in the variable:"
+                    "%s. I use %s" % (", ".join(dimlist), dimlist[0]),
+                    PsyPlotRuntimeWarning,
+                )
             return dimlist[0]
         # otherwise we return the coordinate in the last or second last
         # position
@@ -1178,8 +1213,9 @@ class CFDecoder(object):
                 return var.dims[-1]
             return var.dims[-2 if var.ndim > 1 else -1]
 
-    @docstrings.get_sections(base="CFDecoder.get_z", sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.get_z", sections=["Parameters", "Returns"]
+    )
     @dedent
     def get_z(self, var, coords=None):
         """
@@ -1205,7 +1241,7 @@ class CFDecoder(object):
         xarray.Coordinate or None
             The z-coordinate or None if no z coordinate could be found"""
         coords = coords or self.ds.coords
-        coord = self.get_variable_by_axis(var, 'z', coords)
+        coord = self.get_variable_by_axis(var, "z", coords)
         if coord is not None:
             return coord
         zname = self.get_zname(var)
@@ -1237,28 +1273,34 @@ class CFDecoder(object):
         --------
         get_z"""
         if coords is not None:
-            coord = self.get_variable_by_axis(var, 'z', coords)
+            coord = self.get_variable_by_axis(var, "z", coords)
             if coord is not None and coord.name in var.dims:
                 return coord.name
         dimlist = list(self.z.intersection(var.dims))
         if dimlist:
             if len(dimlist) > 1:
-                warn("Found multiple matches for z coordinate in the variable:"
-                     "%s. I use %s" % (', '.join(dimlist), dimlist[0]),
-                     PsyPlotRuntimeWarning)
+                warn(
+                    "Found multiple matches for z coordinate in the variable:"
+                    "%s. I use %s" % (", ".join(dimlist), dimlist[0]),
+                    PsyPlotRuntimeWarning,
+                )
             return dimlist[0]
         # otherwise we return the coordinate in the third last position
         if var.dims:
             is_unstructured = self.is_unstructured(var)
             icheck = -2 if is_unstructured else -3
-            min_dim = abs(icheck) if 'variable' not in var.dims else abs(icheck-1)
+            min_dim = (
+                abs(icheck) if "variable" not in var.dims else abs(icheck - 1)
+            )
             if var.ndim >= min_dim and var.dims[icheck] != self.get_tname(
-                    var, coords):
+                var, coords
+            ):
                 return var.dims[icheck]
         return None
 
-    @docstrings.get_sections(base="CFDecoder.get_t", sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.get_t", sections=["Parameters", "Returns"]
+    )
     @dedent
     def get_t(self, var, coords=None):
         """
@@ -1283,16 +1325,18 @@ class CFDecoder(object):
         xarray.Coordinate or None
             The time coordinate or None if no time coordinate could be found"""
         coords = coords or self.ds.coords
-        coord = self.get_variable_by_axis(var, 't', coords)
+        coord = self.get_variable_by_axis(var, "t", coords)
         if coord is not None:
             return coord
         dimlist = list(self.t.intersection(var.dims).intersection(coords))
         if dimlist:
             if len(dimlist) > 1:
-                warn("Found multiple matches for time coordinate in the "
-                     "variable: %s. I use %s" % (
-                         ', '.join(dimlist), dimlist[0]),
-                     PsyPlotRuntimeWarning)
+                warn(
+                    "Found multiple matches for time coordinate in the "
+                    "variable: %s. I use %s"
+                    % (", ".join(dimlist), dimlist[0]),
+                    PsyPlotRuntimeWarning,
+                )
             return coords[dimlist[0]]
         tname = self.get_tname(var)
         if tname is not None:
@@ -1321,15 +1365,17 @@ class CFDecoder(object):
         --------
         get_t"""
         if coords is not None:
-            coord = self.get_variable_by_axis(var, 't', coords)
+            coord = self.get_variable_by_axis(var, "t", coords)
             if coord is not None and coord.name in var.dims:
                 return coord.name
         dimlist = list(self.t.intersection(var.dims))
         if dimlist:
             if len(dimlist) > 1:
-                warn("Found multiple matches for t coordinate in the variable:"
-                     "%s. I use %s" % (', '.join(dimlist), dimlist[0]),
-                     PsyPlotRuntimeWarning)
+                warn(
+                    "Found multiple matches for t coordinate in the variable:"
+                    "%s. I use %s" % (", ".join(dimlist), dimlist[0]),
+                    PsyPlotRuntimeWarning,
+                )
             return dimlist[0]
         # otherwise we return None
         return None
@@ -1363,14 +1409,19 @@ class CFDecoder(object):
             coords = arr.coords
         else:
             coords = {
-                label: coord for label, coord in six.iteritems(arr.coords)
-                if label in coords}
+                label: coord
+                for label, coord in six.iteritems(arr.coords)
+                if label in coords
+            }
         ret = self.get_coord_idims(coords)
         # handle the coordinates that are not in the dataset
         missing = set(arr.dims).difference(ret)
         if missing:
-            warn('Could not get slices for the following dimensions: %r' % (
-                missing, ), PsyPlotRuntimeWarning)
+            warn(
+                "Could not get slices for the following dimensions: %r"
+                % (missing,),
+                PsyPlotRuntimeWarning,
+            )
         return ret
 
     def get_coord_idims(self, coords):
@@ -1393,11 +1444,13 @@ class CFDecoder(object):
         ret = dict(
             (label, get_index_from_coord(coord, self.ds.indexes[label]))
             for label, coord in six.iteritems(coords)
-            if label in self.ds.indexes)
+            if label in self.ds.indexes
+        )
         return ret
 
-    @docstrings.get_sections(base='CFDecoder.get_plotbounds', sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.get_plotbounds", sections=["Parameters", "Returns"]
+    )
     @dedent
     def get_plotbounds(self, coord, kind=None, ignore_shape=False):
         """
@@ -1426,8 +1479,8 @@ class CFDecoder(object):
             additional array (i.e. if `coord` has shape (4, ), `bounds` will
             have shape (5, ) and if `coord` has shape (4, 5), `bounds` will
             have shape (5, 6)"""
-        if 'bounds' in coord.attrs:
-            bounds = self.ds.coords[coord.attrs['bounds']]
+        if "bounds" in coord.attrs:
+            bounds = self.ds.coords[coord.attrs["bounds"]]
             if ignore_shape:
                 return bounds.values.ravel()
             if not bounds.shape[:-1] == coord.shape:
@@ -1435,8 +1488,10 @@ class CFDecoder(object):
             try:
                 return self._get_plotbounds_from_cf(coord, bounds)
             except ValueError as e:
-                warn((e.message if six.PY2 else str(e)) +
-                     " Bounds are calculated automatically!")
+                warn(
+                    (e.message if six.PY2 else str(e))
+                    + " Bounds are calculated automatically!"
+                )
         return self._infer_interval_breaks(coord, kind=kind)
 
     @staticmethod
@@ -1464,22 +1519,34 @@ class CFDecoder(object):
             raise ValueError(
                 "Cannot interprete bounds with shape {0} for {1} "
                 "coordinate with shape {2}.".format(
-                    bounds.shape, coord.name, coord.shape))
-        ret = np.zeros(tuple(map(lambda i: i+1, coord.shape)))
+                    bounds.shape, coord.name, coord.shape
+                )
+            )
+        ret = np.zeros(tuple(map(lambda i: i + 1, coord.shape)))
         ret[tuple(map(slice, coord.shape))] = bounds[..., 0]
         last_slices = tuple(slice(-1, None) for _ in coord.shape)
         ret[last_slices] = bounds[tuple(chain(last_slices, [1]))]
         return ret
 
-    docstrings.keep_params('CFDecoder._check_unstructured_bounds.parameters',
-                           'nans')
+    docstrings.keep_params(
+        "CFDecoder._check_unstructured_bounds.parameters", "nans"
+    )
 
-    @docstrings.get_sections(base='CFDecoder.get_triangles', sections=[
-        'Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="CFDecoder.get_triangles", sections=["Parameters", "Returns"]
+    )
     @docstrings.dedent
-    def get_triangles(self, var, coords=None, convert_radian=True,
-                      copy=False, src_crs=None, target_crs=None,
-                      nans=None, stacklevel=1):
+    def get_triangles(
+        self,
+        var,
+        coords=None,
+        convert_radian=True,
+        copy=False,
+        src_crs=None,
+        target_crs=None,
+        nans=None,
+        stacklevel=1,
+    ):
         """
         Get the triangles for the variable
 
@@ -1512,33 +1579,38 @@ class CFDecoder(object):
         ------
         ValueError
             If `src_crs` is not None and `target_crs` is None"""
-        warn("The 'get_triangles' method is depreceated and will be removed "
-             "soon! Use the 'get_cell_node_coord' method!",
-             DeprecationWarning, stacklevel=stacklevel)
+        warn(
+            "The 'get_triangles' method is depreceated and will be removed "
+            "soon! Use the 'get_cell_node_coord' method!",
+            DeprecationWarning,
+            stacklevel=stacklevel,
+        )
         from matplotlib.tri import Triangulation
 
         def get_vertices(axis):
-            bounds = self._check_unstructured_bounds(var, coords=coords,
-                                                   axis=axis, nans=nans)[1]
+            bounds = self._check_unstructured_bounds(
+                var, coords=coords, axis=axis, nans=nans
+            )[1]
             if coords is not None:
                 bounds = coords.get(bounds.name, bounds)
             vertices = bounds.values.ravel()
             if convert_radian:
-                coord = getattr(self, 'get_' + axis)(var)
-                if coord.attrs.get('units') == 'radian':
-                    vertices = vertices * 180. / np.pi
+                coord = getattr(self, "get_" + axis)(var)
+                if coord.attrs.get("units") == "radian":
+                    vertices = vertices * 180.0 / np.pi
             return vertices if not copy else vertices.copy()
 
         if coords is None:
             coords = self.ds.coords
 
-        xvert = get_vertices('x')
-        yvert = get_vertices('y')
+        xvert = get_vertices("x")
+        yvert = get_vertices("y")
         if src_crs is not None and src_crs != target_crs:
             if target_crs is None:
                 raise ValueError(
                     "Found %s for the source crs but got None for the "
-                    "target_crs!" % (src_crs, ))
+                    "target_crs!" % (src_crs,)
+                )
             arr = target_crs.transform_points(src_crs, xvert, yvert)
             xvert = arr[:, 0]
             yvert = arr[:, 1]
@@ -1546,7 +1618,8 @@ class CFDecoder(object):
         return Triangulation(xvert, yvert, triangles)
 
     docstrings.delete_params(
-        'CFDecoder.get_plotbounds.parameters', 'ignore_shape')
+        "CFDecoder.get_plotbounds.parameters", "ignore_shape"
+    )
 
     @staticmethod
     def _infer_interval_breaks(coord, kind=None):
@@ -1568,17 +1641,19 @@ class CFDecoder(object):
             return _infer_interval_breaks(coord)
         elif coord.ndim == 2:
             from scipy.interpolate import interp2d
-            kind = kind or rcParams['decoder.interp_kind']
+
+            kind = kind or rcParams["decoder.interp_kind"]
             y, x = map(np.arange, coord.shape)
             new_x, new_y = map(_infer_interval_breaks, [x, y])
             coord = np.asarray(coord)
             return interp2d(x, y, coord, kind=kind, copy=False)(new_x, new_y)
 
     @classmethod
-    @docstrings.get_sections(base='CFDecoder._decode_ds')
+    @docstrings.get_sections(base="CFDecoder._decode_ds")
     @docstrings.dedent
-    def _decode_ds(cls, ds, gridfile=None, decode_coords=True,
-                   decode_times=True):
+    def _decode_ds(
+        cls, ds, gridfile=None, decode_coords=True, decode_times=True
+    ):
         """
         Static method to decode coordinates and time informations
 
@@ -1601,11 +1676,15 @@ class CFDecoder(object):
             for k, v in six.iteritems(ds.variables):
                 # check for absolute time units and make sure the data is not
                 # already decoded via dtype check
-                if v.attrs.get('units', '') == 'day as %Y%m%d.%f' and (
-                        np.issubdtype(v.dtype, np.float64)):
+                if v.attrs.get("units", "") == "day as %Y%m%d.%f" and (
+                    np.issubdtype(v.dtype, np.float64)
+                ):
                     decoded = xr.Variable(
-                        v.dims, AbsoluteTimeDecoder(v), attrs=v.attrs,
-                        encoding=v.encoding)
+                        v.dims,
+                        AbsoluteTimeDecoder(v),
+                        attrs=v.attrs,
+                        encoding=v.encoding,
+                    )
                     ds.update({k: decoded})
         return ds
 
@@ -1642,13 +1721,16 @@ class CFDecoder(object):
         remove: bool
             If True, dimensions in `dims` that are not in the dimensions of
             `var` are removed"""
-        method_mapping = {'x': self.get_xname,
-                          'z': self.get_zname, 't': self.get_tname}
+        method_mapping = {
+            "x": self.get_xname,
+            "z": self.get_zname,
+            "t": self.get_tname,
+        }
         dims = dict(dims)
         if self.is_unstructured(var):  # we assume a one-dimensional grid
-            method_mapping['y'] = self.get_xname
+            method_mapping["y"] = self.get_xname
         else:
-            method_mapping['y'] = self.get_yname
+            method_mapping["y"] = self.get_yname
         for key in six.iterkeys(dims.copy()):
             if key in method_mapping and key not in var.dims:
                 dim_name = method_mapping[key](var, self.ds.coords)
@@ -1664,7 +1746,9 @@ class CFDecoder(object):
                 dims.pop(key)
                 self.logger.debug(
                     "Could not find a dimensions matching %s in variable %s!",
-                    key, var)
+                    key,
+                    var,
+                )
         return dims
 
     def standardize_dims(self, var, dims={}):
@@ -1682,10 +1766,12 @@ class CFDecoder(object):
         dict
             The dictionary with replaced dimensions"""
         dims = dict(dims)
-        name_map = {self.get_xname(var, self.ds.coords): 'x',
-                    self.get_yname(var, self.ds.coords): 'y',
-                    self.get_zname(var, self.ds.coords): 'z',
-                    self.get_tname(var, self.ds.coords): 't'}
+        name_map = {
+            self.get_xname(var, self.ds.coords): "x",
+            self.get_yname(var, self.ds.coords): "y",
+            self.get_zname(var, self.ds.coords): "z",
+            self.get_tname(var, self.ds.coords): "t",
+        }
         dims = dict(dims)
         for dim in set(dims).intersection(name_map):
             dims[name_map[dim]] = dims.pop(dim)
@@ -1720,7 +1806,7 @@ class UGridDecoder(CFDecoder):
         -------
         xarray.Coordinate
             The mesh coordinate"""
-        mesh = var.attrs.get('mesh')
+        mesh = var.attrs.get("mesh")
         if mesh is None:
             return None
         if coords is None:
@@ -1746,8 +1832,17 @@ class UGridDecoder(CFDecoder):
         return cls(ds).get_mesh(var) is not None
 
     @docstrings.dedent
-    def get_triangles(self, var, coords=None, convert_radian=True, copy=False,
-                      src_crs=None, target_crs=None, nans=None, stacklevel=1):
+    def get_triangles(
+        self,
+        var,
+        coords=None,
+        convert_radian=True,
+        copy=False,
+        src_crs=None,
+        target_crs=None,
+        nans=None,
+        stacklevel=1,
+    ):
         """
         Get the of the given coordinate.
 
@@ -1768,9 +1863,12 @@ class UGridDecoder(CFDecoder):
         .. todo::
             Implement the visualization for UGrid data shown on the edge of the
             triangles"""
-        warn("The 'get_triangles' method is depreceated and will be removed "
-             "soon! Use the 'get_cell_node_coord' method!",
-             DeprecationWarning, stacklevel=stacklevel)
+        warn(
+            "The 'get_triangles' method is depreceated and will be removed "
+            "soon! Use the 'get_cell_node_coord' method!",
+            DeprecationWarning,
+            stacklevel=stacklevel,
+        )
         from matplotlib.tri import Triangulation
 
         if coords is None:
@@ -1786,42 +1884,45 @@ class UGridDecoder(CFDecoder):
         xvert, yvert = nodes
         xvert = xvert.values
         yvert = yvert.values
-        loc = var.attrs.get('location', 'face')
-        if loc == 'face':
+        loc = var.attrs.get("location", "face")
+        if loc == "face":
             triangles = get_coord(
-                mesh.attrs.get('face_node_connectivity', '')).values
+                mesh.attrs.get("face_node_connectivity", "")
+            ).values
             if triangles is None:
                 raise ValueError(
-                    "Could not find the connectivity information!")
-        elif loc == 'node':
+                    "Could not find the connectivity information!"
+                )
+        elif loc == "node":
             triangles = None
         else:
             raise ValueError(
                 "Could not interprete location attribute (%s) of mesh "
-                "variable %s!" % (loc, mesh.name))
+                "variable %s!" % (loc, mesh.name)
+            )
 
         if convert_radian:
             for coord in nodes:
-                if coord.attrs.get('units') == 'radian':
-                    coord = coord * 180. / np.pi
+                if coord.attrs.get("units") == "radian":
+                    coord = coord * 180.0 / np.pi
         if src_crs is not None and src_crs != target_crs:
             if target_crs is None:
                 raise ValueError(
                     "Found %s for the source crs but got None for the "
-                    "target_crs!" % (src_crs, ))
+                    "target_crs!" % (src_crs,)
+                )
             xvert = xvert[triangles].ravel()
             yvert = yvert[triangles].ravel()
             arr = target_crs.transform_points(src_crs, xvert, yvert)
             xvert = arr[:, 0]
             yvert = arr[:, 1]
-            if loc == 'face':
-                triangles = np.reshape(range(len(xvert)), (len(xvert) // 3,
-                                                           3))
+            if loc == "face":
+                triangles = np.reshape(range(len(xvert)), (len(xvert) // 3, 3))
 
         return Triangulation(xvert, yvert, triangles)
 
     @docstrings.dedent
-    def get_cell_node_coord(self, var, coords=None, axis='x', nans=None):
+    def get_cell_node_coord(self, var, coords=None, axis="x", nans=None):
         """
         Checks whether the bounds in the variable attribute are triangular
 
@@ -1839,51 +1940,68 @@ class UGridDecoder(CFDecoder):
 
         def get_coord(coord):
             coord = coords.get(coord, self.ds.coords.get(coord))
-            return coord.isel(**{d: sl for d, sl in idims.items()
-                                 if d in coord.dims})
+            return coord.isel(
+                **{d: sl for d, sl in idims.items() if d in coord.dims}
+            )
 
         mesh = self.get_mesh(var, coords)
         if mesh is None:
             return
         nodes = self.get_nodes(mesh, coords)
         if not len(nodes):
-            raise ValueError("Could not find the nodes variables for the %s "
-                             "coordinate!" % axis)
-        vert = nodes[0 if axis == 'x' else 1]
+            raise ValueError(
+                "Could not find the nodes variables for the %s "
+                "coordinate!" % axis
+            )
+        vert = nodes[0 if axis == "x" else 1]
         if vert is None:
-            raise ValueError("Could not find the nodes variables for the %s "
-                             "coordinate!" % axis)
-        loc = var.attrs.get('location', 'face')
-        if loc == 'node':
+            raise ValueError(
+                "Could not find the nodes variables for the %s "
+                "coordinate!" % axis
+            )
+        loc = var.attrs.get("location", "face")
+        if loc == "node":
             # we assume a triangular grid and use matplotlibs triangulation
             from matplotlib.tri import Triangulation
+
             xvert, yvert = nodes
             triangles = Triangulation(xvert, yvert)
-            if axis == 'x':
+            if axis == "x":
                 bounds = triangles.x[triangles.triangles]
             else:
                 bounds = triangles.y[triangles.triangles]
-        elif loc in ['edge', 'face']:
+        elif loc in ["edge", "face"]:
             connectivity = get_coord(
-                mesh.attrs.get('%s_node_connectivity' % loc, ''))
+                mesh.attrs.get("%s_node_connectivity" % loc, "")
+            )
             if connectivity is None:
                 raise ValueError(
-                    "Could not find the connectivity information!")
+                    "Could not find the connectivity information!"
+                )
             connectivity = connectivity.values
             bounds = vert.values[
-                np.where(np.isnan(connectivity), connectivity[:, :1],
-                         connectivity).astype(int)]
+                np.where(
+                    np.isnan(connectivity), connectivity[:, :1], connectivity
+                ).astype(int)
+            ]
         else:
             raise ValueError(
                 "Could not interprete location attribute (%s) of mesh "
-                "variable %s!" % (loc, mesh.name))
-        dim0 = '__face' if loc == 'node' else var.dims[-1]
+                "variable %s!" % (loc, mesh.name)
+            )
+        dim0 = "__face" if loc == "node" else var.dims[-1]
         return xr.DataArray(
             bounds,
-            coords={key: val for key, val in coords.items()
-                    if (dim0, ) == val.dims},
-            dims=(dim0, '__bnds', ),
-            name=vert.name + '_bnds',  attrs=vert.attrs.copy())
+            coords={
+                key: val for key, val in coords.items() if (dim0,) == val.dims
+            },
+            dims=(
+                dim0,
+                "__bnds",
+            ),
+            name=vert.name + "_bnds",
+            attrs=vert.attrs.copy(),
+        )
 
     @staticmethod
     @docstrings.dedent
@@ -1900,28 +2018,36 @@ class UGridDecoder(CFDecoder):
         %(CFDecoder.decode_coords.returns)s"""
         extra_coords = set(ds.coords)
         for var in six.itervalues(ds.variables):
-            if 'mesh' in var.attrs:
-                mesh = var.attrs['mesh']
+            if "mesh" in var.attrs:
+                mesh = var.attrs["mesh"]
                 if mesh not in extra_coords:
                     extra_coords.add(mesh)
                     try:
                         mesh_var = ds.variables[mesh]
                     except KeyError:
-                        warn('Could not find mesh variable %s' % mesh)
+                        warn("Could not find mesh variable %s" % mesh)
                         continue
-                    if 'node_coordinates' in mesh_var.attrs:
+                    if "node_coordinates" in mesh_var.attrs:
                         extra_coords.update(
-                            mesh_var.attrs['node_coordinates'].split())
-                    if 'face_node_connectivity' in mesh_var.attrs:
+                            mesh_var.attrs["node_coordinates"].split()
+                        )
+                    if "face_node_connectivity" in mesh_var.attrs:
                         extra_coords.add(
-                            mesh_var.attrs['face_node_connectivity'])
+                            mesh_var.attrs["face_node_connectivity"]
+                        )
         if gridfile is not None and not isinstance(gridfile, xr.Dataset):
             gridfile = open_dataset(gridfile)
-            ds.update({k: v for k, v in six.iteritems(gridfile.variables)
-                       if k in extra_coords})
+            ds.update(
+                {
+                    k: v
+                    for k, v in six.iteritems(gridfile.variables)
+                    if k in extra_coords
+                }
+            )
         if xr_version < (0, 11):
-            ds.set_coords(extra_coords.intersection(ds.variables),
-                          inplace=True)
+            ds.set_coords(
+                extra_coords.intersection(ds.variables), inplace=True
+            )
         else:
             ds._coord_names.update(extra_coords.intersection(ds.variables))
         return ds
@@ -1935,10 +2061,13 @@ class UGridDecoder(CFDecoder):
             The mesh variable
         coords: dict
             The coordinates to use to get node coordinates"""
+
         def get_coord(coord):
             return coords.get(coord, self.ds.coords.get(coord))
-        return list(map(get_coord,
-                        coord.attrs.get('node_coordinates', '').split()[:2]))
+
+        return list(
+            map(get_coord, coord.attrs.get("node_coordinates", "").split()[:2])
+        )
 
     @docstrings.dedent
     def get_x(self, var, coords=None):
@@ -1958,9 +2087,12 @@ class UGridDecoder(CFDecoder):
         ret = super(UGridDecoder, self).get_x(var, coords)
         # but if that doesn't work because we get the variable name in the
         # dimension of `var`, we use the means of the triangles
-        if ret is None or ret.name in var.dims or (hasattr(var, 'mesh') and
-                                                   ret.name == var.mesh):
-            bounds = self.get_cell_node_coord(var, axis='x', coords=coords)
+        if (
+            ret is None
+            or ret.name in var.dims
+            or (hasattr(var, "mesh") and ret.name == var.mesh)
+        ):
+            bounds = self.get_cell_node_coord(var, axis="x", coords=coords)
             if bounds is not None:
                 centers = bounds.mean(axis=-1)
                 x = self.get_nodes(self.get_mesh(var, coords), coords)[0]
@@ -1990,9 +2122,12 @@ class UGridDecoder(CFDecoder):
         ret = super(UGridDecoder, self).get_y(var, coords)
         # but if that doesn't work because we get the variable name in the
         # dimension of `var`, we use the means of the triangles
-        if ret is None or ret.name in var.dims or (hasattr(var, 'mesh') and
-                                                   ret.name == var.mesh):
-            bounds = self.get_cell_node_coord(var, axis='y', coords=coords)
+        if (
+            ret is None
+            or ret.name in var.dims
+            or (hasattr(var, "mesh") and ret.name == var.mesh)
+        ):
+            bounds = self.get_cell_node_coord(var, axis="y", coords=coords)
             if bounds is not None:
                 centers = bounds.mean(axis=-1)
                 y = self.get_nodes(self.get_mesh(var, coords), coords)[1]
@@ -2008,17 +2143,25 @@ class UGridDecoder(CFDecoder):
 # register the UGridDecoder
 CFDecoder.register_decoder(UGridDecoder)
 
-docstrings.keep_params('CFDecoder.decode_coords.parameters', 'gridfile')
-docstrings.get_sections(inspect.cleandoc(
-    xr.open_dataset.__doc__.split('\n', 1)[1]),
-    'xarray.open_dataset')
-docstrings.delete_params('xarray.open_dataset.parameters', 'engine')
+docstrings.keep_params("CFDecoder.decode_coords.parameters", "gridfile")
+docstrings.get_sections(
+    inspect.cleandoc(xr.open_dataset.__doc__.split("\n", 1)[1]),
+    "xarray.open_dataset",
+)
+docstrings.delete_params("xarray.open_dataset.parameters", "engine")
 
 
-@docstrings.get_sections(base='open_dataset')
+@docstrings.get_sections(base="open_dataset")
 @docstrings.dedent
-def open_dataset(filename_or_obj, decode_cf=True, decode_times=True,
-                 decode_coords=True, engine=None, gridfile=None, **kwargs):
+def open_dataset(
+    filename_or_obj,
+    decode_cf=True,
+    decode_times=True,
+    decode_coords=True,
+    engine=None,
+    gridfile=None,
+    **kwargs,
+):
     """
     Open an instance of :class:`xarray.Dataset`.
 
@@ -2043,41 +2186,59 @@ def open_dataset(filename_or_obj, decode_cf=True, decode_times=True,
     # use the absolute path name (is saver when saving the project)
     if isstring(filename_or_obj) and osp.exists(filename_or_obj):
         filename_or_obj = osp.abspath(filename_or_obj)
-    if engine == 'gdal':
+    if engine == "gdal":
         from psyplot.gdal_store import GdalStore
+
         filename_or_obj = GdalStore(filename_or_obj)
         engine = None
-    ds = xr.open_dataset(filename_or_obj, decode_cf=decode_cf,
-                         decode_coords=False, engine=engine,
-                         decode_times=decode_times, **kwargs)
+    ds = xr.open_dataset(
+        filename_or_obj,
+        decode_cf=decode_cf,
+        decode_coords=False,
+        engine=engine,
+        decode_times=decode_times,
+        **kwargs,
+    )
     if isstring(filename_or_obj):
         ds.psy.filename = filename_or_obj
     if decode_cf:
         ds = CFDecoder.decode_ds(
-            ds, decode_coords=decode_coords, decode_times=decode_times,
-            gridfile=gridfile)
+            ds,
+            decode_coords=decode_coords,
+            decode_times=decode_times,
+            gridfile=gridfile,
+        )
     return ds
 
 
 docstrings.get_sections(
-    inspect.cleandoc(xr.open_mfdataset.__doc__.split('\n', 1)[1]),
-    'xarray.open_mfdataset')
-docstrings.delete_params('xarray.open_mfdataset.parameters', 'engine')
-docstrings.keep_params('get_tdata.parameters', 't_format')
+    inspect.cleandoc(xr.open_mfdataset.__doc__.split("\n", 1)[1]),
+    "xarray.open_mfdataset",
+)
+docstrings.delete_params("xarray.open_mfdataset.parameters", "engine")
+docstrings.keep_params("get_tdata.parameters", "t_format")
 
-docstrings.params['xarray.open_mfdataset.parameters.no_engine'] = \
-    docstrings.params['xarray.open_mfdataset.parameters.no_engine'].replace(
-        '**kwargs', '``**kwargs``').replace('"path/to/my/files/*.nc"',
-                                            '``"path/to/my/files/*.nc"``')
+docstrings.params["xarray.open_mfdataset.parameters.no_engine"] = (
+    docstrings.params["xarray.open_mfdataset.parameters.no_engine"]
+    .replace("**kwargs", "``**kwargs``")
+    .replace('"path/to/my/files/*.nc"', '``"path/to/my/files/*.nc"``')
+)
 
 
-docstrings.keep_params('open_dataset.parameters', 'engine')
+docstrings.keep_params("open_dataset.parameters", "engine")
 
 
 @docstrings.dedent
-def open_mfdataset(paths, decode_cf=True, decode_times=True,
-                   decode_coords=True, engine=None, gridfile=None,
-                   t_format=None, **kwargs):
+def open_mfdataset(
+    paths,
+    decode_cf=True,
+    decode_times=True,
+    decode_coords=True,
+    engine=None,
+    gridfile=None,
+    t_format=None,
+    **kwargs,
+):
     """
     Open multiple files as a single dataset.
 
@@ -2098,39 +2259,48 @@ def open_mfdataset(paths, decode_cf=True, decode_times=True,
     -------
     xarray.Dataset
         The dataset that contains the variables from `filename_or_obj`"""
-    if t_format is not None or engine == 'gdal':
+    if t_format is not None or engine == "gdal":
         if isinstance(paths, six.string_types):
             paths = sorted(glob(paths))
         if not paths:
-            raise IOError('no files to open')
+            raise IOError("no files to open")
     if t_format is not None:
         time, paths = get_tdata(t_format, paths)
-        kwargs['concat_dim'] = 'time'
+        kwargs["concat_dim"] = "time"
         if xr_version > (0, 11):
-            kwargs['combine'] = 'nested'
+            kwargs["combine"] = "nested"
     if all(map(isstring, paths)):
         filenames = list(paths)
     else:
         filenames = None
-    if engine == 'gdal':
+    if engine == "gdal":
         from psyplot.gdal_store import GdalStore
+
         paths = list(map(GdalStore, paths))
         engine = None
         if xr_version < (0, 18):
-            kwargs['lock'] = False
+            kwargs["lock"] = False
 
     ds = xr.open_mfdataset(
-        paths, decode_cf=decode_cf, decode_times=decode_times, engine=engine,
-        decode_coords=False, **kwargs)
+        paths,
+        decode_cf=decode_cf,
+        decode_times=decode_times,
+        engine=engine,
+        decode_coords=False,
+        **kwargs,
+    )
     ds.psy.filename = filenames
     if decode_cf:
-        ds = CFDecoder.decode_ds(ds, gridfile=gridfile,
-                                 decode_coords=decode_coords,
-                                 decode_times=decode_times)
-    ds.psy._concat_dim = kwargs.get('concat_dim')
-    ds.psy._combine = kwargs.get('combine')
+        ds = CFDecoder.decode_ds(
+            ds,
+            gridfile=gridfile,
+            decode_coords=decode_coords,
+            decode_times=decode_times,
+        )
+    ds.psy._concat_dim = kwargs.get("concat_dim")
+    ds.psy._combine = kwargs.get("combine")
     if t_format is not None:
-        ds['time'] = time
+        ds["time"] = time
     return ds
 
 
@@ -2159,8 +2329,9 @@ class InteractiveBase(object):
     def plotter(self):
         self._plotter = None
 
-    no_auto_update = property(_no_auto_update_getter,
-                              doc=_no_auto_update_getter.__doc__)
+    no_auto_update = property(
+        _no_auto_update_getter, doc=_no_auto_update_getter.__doc__
+    )
 
     @property
     def plot(self):
@@ -2181,6 +2352,7 @@ class InteractiveBase(object):
         psyplot.project.DataArrayPlotter: for the different plot methods"""
         if self._plot is None:
             import psyplot.project as psy
+
             self._plot = psy.DataArrayPlotter(self)
         return self._plot
 
@@ -2196,10 +2368,13 @@ class InteractiveBase(object):
         try:
             return self._logger
         except AttributeError:
-            name = '%s.%s.%s' % (self.__module__, self.__class__.__name__,
-                                 self.arr_name)
+            name = "%s.%s.%s" % (
+                self.__module__,
+                self.__class__.__name__,
+                self.arr_name,
+            )
             self._logger = logging.getLogger(name)
-            self.logger.debug('Initializing...')
+            self.logger.debug("Initializing...")
             return self._logger
 
     @logger.setter
@@ -2215,24 +2390,26 @@ class InteractiveBase(object):
     def ax(self, value):
         if self.plotter is None:
             raise ValueError(
-                'Cannot set the axes because the plotter attribute is None!')
+                "Cannot set the axes because the plotter attribute is None!"
+            )
         self.plotter.ax = value
 
     block_signals = utils._temp_bool_prop(
-        'block_signals', "Block the emitting of signals of this instance")
+        "block_signals", "Block the emitting of signals of this instance"
+    )
 
     # -------------------------------------------------------------------------
     # -------------------------------- SIGNALS --------------------------------
     # -------------------------------------------------------------------------
 
     #: :class:`Signal` to be emitted when the object has been updated
-    onupdate = Signal('_onupdate')
+    onupdate = Signal("_onupdate")
     _onupdate = None
 
     _plotter = None
 
     @property
-    @docstrings.get_docstring(base='InteractiveBase._njobs')
+    @docstrings.get_docstring(base="InteractiveBase._njobs")
     @dedent
     def _njobs(self):
         """
@@ -2264,9 +2441,9 @@ class InteractiveBase(object):
 
     _no_auto_update = None
 
-    @docstrings.get_sections(base='InteractiveBase')
+    @docstrings.get_sections(base="InteractiveBase")
     @dedent
-    def __init__(self, plotter=None, arr_name='arr0', auto_update=None):
+    def __init__(self, plotter=None, arr_name="arr0", auto_update=None):
         """
         Parameters
         ----------
@@ -2284,7 +2461,7 @@ class InteractiveBase(object):
         self.plotter = plotter
         self.arr_name = arr_name
         if auto_update is None:
-            auto_update = rcParams['lists.auto_update']
+            auto_update = rcParams["lists.auto_update"]
         self.no_auto_update = not bool(auto_update)
         self.replot = False
 
@@ -2294,10 +2471,11 @@ class InteractiveBase(object):
                 for i in range(n):
                     queue.task_done()
 
-    @docstrings.get_sections(base='InteractiveBase._register_update')
+    @docstrings.get_sections(base="InteractiveBase._register_update")
     @dedent
-    def _register_update(self, replot=False, fmt={}, force=False,
-                         todefault=False):
+    def _register_update(
+        self, replot=False, fmt={}, force=False, todefault=False
+    ):
         """
         Register new formatoptions for updating
 
@@ -2326,11 +2504,13 @@ class InteractiveBase(object):
         start_update"""
         self.replot = self.replot or replot
         if self.plotter is not None:
-            self.plotter._register_update(replot=self.replot, fmt=fmt,
-                                          force=force, todefault=todefault)
+            self.plotter._register_update(
+                replot=self.replot, fmt=fmt, force=force, todefault=todefault
+            )
 
-    @docstrings.get_sections(base='InteractiveBase.start_update',
-                              sections=['Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="InteractiveBase.start_update", sections=["Parameters", "Returns"]
+    )
     @dedent
     def start_update(self, draw=None, queues=None):
         """
@@ -2368,13 +2548,22 @@ class InteractiveBase(object):
         if self.plotter is not None:
             return self.plotter.start_update(draw=draw, queues=queues)
 
-    docstrings.keep_params('InteractiveBase.start_update.parameters', 'draw')
+    docstrings.keep_params("InteractiveBase.start_update.parameters", "draw")
 
-    @docstrings.get_sections(base='InteractiveBase.update',
-                              sections=['Parameters', 'Notes'])
+    @docstrings.get_sections(
+        base="InteractiveBase.update", sections=["Parameters", "Notes"]
+    )
     @docstrings.dedent
-    def update(self, fmt={}, replot=False, draw=None, auto_update=False,
-               force=False, todefault=False, **kwargs):
+    def update(
+        self,
+        fmt={},
+        replot=False,
+        draw=None,
+        auto_update=False,
+        force=False,
+        todefault=False,
+        **kwargs,
+    ):
         """
         Update the coordinates and the plot
 
@@ -2404,19 +2593,21 @@ class InteractiveBase(object):
         fmt = dict(fmt)
         fmt.update(kwargs)
 
-        self._register_update(replot=replot, fmt=fmt, force=force,
-                              todefault=todefault)
+        self._register_update(
+            replot=replot, fmt=fmt, force=force, todefault=todefault
+        )
 
         if not self.no_auto_update or auto_update:
             self.start_update(draw=draw)
 
     def to_interactive_list(self):
         """Return a :class:`InteractiveList` that contains this object"""
-        raise NotImplementedError('Not implemented for the %s class' % (
-            self.__class__.__name__, ))
+        raise NotImplementedError(
+            "Not implemented for the %s class" % (self.__class__.__name__,)
+        )
 
 
-@xr.register_dataarray_accessor('psy')
+@xr.register_dataarray_accessor("psy")
 class InteractiveArray(InteractiveBase):
     """Interactive psyplot accessor for the data array
 
@@ -2430,23 +2621,27 @@ class InteractiveArray(InteractiveBase):
     def base(self):
         """Base dataset this instance gets its data from"""
         if self._base is None:
-            if 'variable' in self.arr.dims:
+            if "variable" in self.arr.dims:
+
                 def to_dataset(i):
                     ret = self.isel(variable=i).to_dataset(
-                        name=self.arr.coords['variable'].values[i])
+                        name=self.arr.coords["variable"].values[i]
+                    )
                     try:
-                        return ret.drop_vars('variable')
+                        return ret.drop_vars("variable")
                     except ValueError:  # 'variable' Variable not defined
                         pass
                     return ret
+
                 ds = to_dataset(0)
-                if len(self.arr.coords['variable']) > 1:
-                    for i in range(1, len(self.arr.coords['variable'])):
+                if len(self.arr.coords["variable"]) > 1:
+                    for i in range(1, len(self.arr.coords["variable"])):
                         ds.update(ds.merge(to_dataset(i)))
                 self._base = ds
             else:
                 self._base = self.arr.to_dataset(
-                    name=self.arr.name or self.arr_name)
+                    name=self.arr.name or self.arr_name
+                )
             self.onbasechange.emit()
         return self._base
 
@@ -2497,7 +2692,7 @@ class InteractiveArray(InteractiveBase):
 
     # -------------- SIGNALS --------------------------------------------------
     #: :class:`Signal` to be emiited when the base of the object changes
-    onbasechange = Signal('_onbasechange')
+    onbasechange = Signal("_onbasechange")
     _onbasechange = None
 
     @docstrings.dedent
@@ -2528,8 +2723,9 @@ class InteractiveArray(InteractiveBase):
         self._new_dims = {}
         self.method = None
 
-    def init_accessor(self, base=None, idims=None, decoder=None,
-                      *args, **kwargs):
+    def init_accessor(
+        self, base=None, idims=None, decoder=None, *args, **kwargs
+    ):
         """
         Initialize the accessor instance
 
@@ -2557,8 +2753,12 @@ class InteractiveArray(InteractiveBase):
     def iter_base_variables(self):
         """An iterator over the base variables in the :attr:`base` dataset"""
         if VARIABLELABEL in self.arr.coords:
-            return (self._get_base_var(name) for name in safe_list(
-                self.arr.coords[VARIABLELABEL].values.tolist()))
+            return (
+                self._get_base_var(name)
+                for name in safe_list(
+                    self.arr.coords[VARIABLELABEL].values.tolist()
+                )
+            )
         name = self.arr.name
         if name is None:
             return iter([self.arr._variable])
@@ -2575,21 +2775,33 @@ class InteractiveArray(InteractiveBase):
         """A mapping from the variable name to the variablein the :attr:`base`
         dataset."""
         if VARIABLELABEL in self.arr.coords:
-            return OrderedDict([
-                (name, self._get_base_var(name)) for name in safe_list(
-                    self.arr.coords[VARIABLELABEL].values.tolist())])
+            return dict(
+                [
+                    (name, self._get_base_var(name))
+                    for name in safe_list(
+                        self.arr.coords[VARIABLELABEL].values.tolist()
+                    )
+                ]
+            )
         name = self.arr.name
         if name is None:
             return {name: self.arr._variable}
         else:
             return {self.arr.name: self.base.variables[self.arr.name]}
 
-    docstrings.keep_params('setup_coords.parameters', 'dims')
+    docstrings.keep_params("setup_coords.parameters", "dims")
 
-    @docstrings.get_sections(base='InteractiveArray._register_update')
+    @docstrings.get_sections(base="InteractiveArray._register_update")
     @docstrings.dedent
-    def _register_update(self, method='isel', replot=False, dims={}, fmt={},
-                         force=False, todefault=False):
+    def _register_update(
+        self,
+        method="isel",
+        replot=False,
+        dims={},
+        fmt={},
+        force=False,
+        todefault=False,
+    ):
         """
         Register new dimensions and formatoptions for updating
 
@@ -2610,22 +2822,27 @@ class InteractiveArray(InteractiveBase):
         if self._new_dims and self.method != method:
             raise ValueError(
                 "New dimensions were already specified for with the %s method!"
-                " I can not choose a new method %s" % (self.method, method))
+                " I can not choose a new method %s" % (self.method, method)
+            )
         else:
             self.method = method
-        if 'name' in dims:
-            self._new_dims['name'] = dims.pop('name')
-        if 'name' in self._new_dims:
-            name = self._new_dims['name']
+        if "name" in dims:
+            self._new_dims["name"] = dims.pop("name")
+        if "name" in self._new_dims:
+            name = self._new_dims["name"]
             if not isstring(name):
                 name = name[0]  # concatenated array
             arr = self.base[name]
         else:
-            arr= next(six.itervalues(self.base_variables))
+            arr = next(six.itervalues(self.base_variables))
         self._new_dims.update(self.decoder.correct_dims(arr, dims))
         InteractiveBase._register_update(
-            self, fmt=fmt, replot=replot or bool(self._new_dims), force=force,
-            todefault=todefault)
+            self,
+            fmt=fmt,
+            replot=replot or bool(self._new_dims),
+            force=force,
+            todefault=todefault,
+        )
 
     def _update_concatenated(self, dims, method):
         """Updates a concatenated array to new dimensions"""
@@ -2641,17 +2858,19 @@ class InteractiveArray(InteractiveBase):
 
         def filter_attrs(item):
             """Checks whether the attribute is from the base variable"""
-            return (item[0] not in self.base.attrs or
-                    is_unequal(item[1], self.base.attrs[item[0]]))
+            return item[0] not in self.base.attrs or is_unequal(
+                item[1], self.base.attrs[item[0]]
+            )
+
         saved_attrs = list(filter(filter_attrs, six.iteritems(self.arr.attrs)))
         saved_name = self.arr.name
-        self.arr.name = 'None'
-        if 'name' in dims:
-            name = dims.pop('name')
+        self.arr.name = "None"
+        if "name" in dims:
+            name = dims.pop("name")
         else:
-            name = list(self.arr.coords['variable'].values)
+            name = list(self.arr.coords["variable"].values)
         base_dims = self.base[name].dims
-        if method == 'isel':
+        if method == "isel":
             self.idims.update(dims)
             dims = self.idims
             for dim in set(base_dims) - set(dims):
@@ -2662,26 +2881,28 @@ class InteractiveArray(InteractiveBase):
         else:
             self._idims = None
             for key, val in six.iteritems(self.arr.coords):
-                if key in base_dims and key != 'variable':
+                if key in base_dims and key != "variable":
                     dims.setdefault(key, val)
             kws = dims.copy()
             # the sel method does not work with slice objects
             if not any(isinstance(idx, slice) for idx in dims.values()):
-                kws['method'] = method
+                kws["method"] = method
             try:
                 res = self.base[name].sel(**kws)
             except KeyError:
                 _fix_times(kws)
                 res = self.base[name].sel(**kws)
             res = res.to_array()
-        if 'coordinates' in self.base[name[0]].encoding:
-            res.encoding['coordinates'] = self.base[name[0]].encoding[
-                'coordinates']
+        if "coordinates" in self.base[name[0]].encoding:
+            res.encoding["coordinates"] = self.base[name[0]].encoding[
+                "coordinates"
+            ]
         self.arr._variable = res._variable
         self.arr._coords = res._coords
         try:
             self.arr._indexes = (
-                res._indexes.copy() if res._indexes is not None else None)
+                res._indexes.copy() if res._indexes is not None else None
+            )
         except AttributeError:  # res.indexes not existent for xr<0.12
             pass
         self.arr.name = saved_name
@@ -2702,18 +2923,19 @@ class InteractiveArray(InteractiveBase):
 
         def filter_attrs(item):
             """Checks whether the attribute is from the base variable"""
-            return (item[0] not in base_var.attrs or
-                    is_unequal(item[1], base_var.attrs[item[0]]))
+            return item[0] not in base_var.attrs or is_unequal(
+                item[1], base_var.attrs[item[0]]
+            )
 
         base_var = self.base.variables[self.arr.name]
-        if 'name' in dims:
-            name = dims.pop('name')
+        if "name" in dims:
+            name = dims.pop("name")
             self.arr.name = name
         else:
             name = self.arr.name
         # save attributes that have been changed by the user
         saved_attrs = list(filter(filter_attrs, six.iteritems(self.arr.attrs)))
-        if method == 'isel':
+        if method == "isel":
             self.idims.update(dims)
             dims = self.idims
             for dim in set(self.base[name].dims) - set(dims):
@@ -2730,21 +2952,26 @@ class InteractiveArray(InteractiveBase):
             kws = dims.copy()
             # the sel method does not work with slice objects
             if not any(isinstance(idx, slice) for idx in dims.values()):
-                kws['method'] = method
+                kws["method"] = method
             try:
                 res = self.base[name].sel(**kws)
             except KeyError:
                 _fix_times(kws)
                 res = self.base[name].sel(**kws)
             # squeeze the 0-dimensional dimensions
-            res = res.isel(**{
-                dim: 0 for i, dim in enumerate(res.dims) if (
-                    res.shape[i] == 1 and dim not in old_dims)})
+            res = res.isel(
+                **{
+                    dim: 0
+                    for i, dim in enumerate(res.dims)
+                    if (res.shape[i] == 1 and dim not in old_dims)
+                }
+            )
         self.arr._variable = res._variable
         self.arr._coords = res._coords
         try:
             self.arr._indexes = (
-                res._indexes.copy() if res._indexes is not None else None)
+                res._indexes.copy() if res._indexes is not None else None
+            )
         except AttributeError:  # res.indexes not existent for xr<0.12
             pass
         # update to old attributes
@@ -2771,28 +2998,33 @@ class InteractiveArray(InteractiveBase):
         """
         if xr_version < (0, 10):
             raise NotImplementedError(
-                "xarray>=0.10 is required for the shiftlon method!")
+                "xarray>=0.10 is required for the shiftlon method!"
+            )
         arr = self.arr
         ret = arr.copy(True, arr.values.copy())
         if arr.ndim > 2:
-            xname = self.get_dim('x')
-            yname = self.get_dim('y')
-            shapes = OrderedDict(
-                [(dim, range(i)) for dim, i in zip(arr.dims, arr.shape)
-                 if dim not in [xname, yname]])
+            xname = self.get_dim("x")
+            yname = self.get_dim("y")
+            shapes = dict(
+                [
+                    (dim, range(i))
+                    for dim, i in zip(arr.dims, arr.shape)
+                    if dim not in [xname, yname]
+                ]
+            )
             dims = list(shapes)
             for indexes in product(*shapes.values()):
                 d = dict(zip(dims, indexes))
                 shifted = ret[d].psy.shiftlon(central_longitude)
                 ret[d] = shifted.values
 
-            x = shifted.psy.get_coord('x')
+            x = shifted.psy.get_coord("x")
             ret[x.name] = shifted[x.name].variable
 
             return ret
 
-        lon = self.get_coord('x').variable
-        xname = self.get_dim('x')
+        lon = self.get_coord("x").variable
+        xname = self.get_dim("x")
         ix = arr.dims.index(xname)
         lon = lon.copy(True, lon.values.copy())
         lonsin = lon.values
@@ -2801,21 +3033,23 @@ class InteractiveArray(InteractiveBase):
         clon = np.asarray(central_longitude)
 
         if lonsin.ndim not in [1]:
-            raise ValueError('1D longitudes required')
+            raise ValueError("1D longitudes required")
         elif clon.ndim:
-            raise ValueError("Central longitude must be a scalar, not "
-                             "%i-dimensional!" % clon.ndim)
+            raise ValueError(
+                "Central longitude must be a scalar, not "
+                "%i-dimensional!" % clon.ndim
+            )
 
-        lonsin = np.where(lonsin > clon+180, lonsin-360, lonsin)
-        lonsin = np.where(lonsin < clon-180, lonsin+360, lonsin)
-        londiff = np.abs(lonsin[0:-1]-lonsin[1:])
+        lonsin = np.where(lonsin > clon + 180, lonsin - 360, lonsin)
+        lonsin = np.where(lonsin < clon - 180, lonsin + 360, lonsin)
+        londiff = np.abs(lonsin[0:-1] - lonsin[1:])
         londiff_sort = np.sort(londiff)
-        thresh = 360.-londiff_sort[-2]
+        thresh = 360.0 - londiff_sort[-2]
         itemindex = len(lonsin) - np.where(londiff >= thresh)[0]
         if itemindex.size:
             # check to see if cyclic (wraparound) point included
             # if so, remove it.
-            if np.abs(lonsin[0]-lonsin[-1]) < 1.e-4:
+            if np.abs(lonsin[0] - lonsin[-1]) < 1.0e-4:
                 hascyclic = True
                 lonsin_save = lonsin.copy()
                 lonsin = lonsin[1:]
@@ -2824,13 +3058,13 @@ class InteractiveArray(InteractiveBase):
                     datain = datain[1:]
             else:
                 hascyclic = False
-            lonsin = np.roll(lonsin, itemindex-1)
+            lonsin = np.roll(lonsin, itemindex - 1)
             if datain is not None:
-                datain = np.roll(datain, itemindex-1, [ix])
+                datain = np.roll(datain, itemindex - 1, [ix])
             # add cyclic point back at beginning.
             if hascyclic:
                 lonsin_save[1:] = lonsin
-                lonsin_save[0] = lonsin[-1]-360.
+                lonsin_save[0] = lonsin[-1] - 360.0
                 lonsin = lonsin_save
                 if datain is not None:
                     datain_save[1:] = datain
@@ -2864,9 +3098,13 @@ class InteractiveArray(InteractiveBase):
         --------
         :attr:`no_auto_update`, update
         """
+
         def filter_attrs(item):
-            return (item[0] not in self.base.attrs or
-                    item[1] != self.base.attrs[item[0]])
+            return (
+                item[0] not in self.base.attrs
+                or item[1] != self.base.attrs[item[0]]
+            )
+
         if queues is not None:
             # make sure that no plot is updated during gathering the data
             queues[0].get()
@@ -2887,12 +3125,22 @@ class InteractiveArray(InteractiveBase):
             raise
         return InteractiveBase.start_update(self, draw=draw, queues=queues)
 
-    @docstrings.get_sections(base='InteractiveArray.update',
-                              sections=['Parameters', 'Notes'])
+    @docstrings.get_sections(
+        base="InteractiveArray.update", sections=["Parameters", "Notes"]
+    )
     @docstrings.dedent
-    def update(self, method='isel', dims={}, fmt={}, replot=False,
-               auto_update=False, draw=None, force=False, todefault=False,
-               **kwargs):
+    def update(
+        self,
+        method="isel",
+        dims={},
+        fmt={},
+        replot=False,
+        auto_update=False,
+        draw=None,
+        force=False,
+        todefault=False,
+        **kwargs,
+    ):
         """
         Update the coordinates and the plot
 
@@ -2923,35 +3171,50 @@ class InteractiveArray(InteractiveBase):
         %(InteractiveBase.update.notes)s"""
         dims = dict(dims)
         fmt = dict(fmt)
-        vars_and_coords = set(chain(
-            self.arr.dims, self.arr.coords, ['name', 'x', 'y', 'z', 't']))
+        vars_and_coords = set(
+            chain(self.arr.dims, self.arr.coords, ["name", "x", "y", "z", "t"])
+        )
         furtherdims, furtherfmt = utils.sort_kwargs(kwargs, vars_and_coords)
         dims.update(furtherdims)
         fmt.update(furtherfmt)
 
-        self._register_update(method=method, replot=replot, dims=dims,
-                              fmt=fmt, force=force, todefault=todefault)
+        self._register_update(
+            method=method,
+            replot=replot,
+            dims=dims,
+            fmt=fmt,
+            force=force,
+            todefault=todefault,
+        )
 
         if not self.no_auto_update or auto_update:
             self.start_update(draw=draw)
 
     def _short_info(self, intend=0, maybe=False):
-        str_intend = ' ' * intend
-        if 'variable' in self.arr.coords:
-            name = ', '.join(self.arr.coords['variable'].values)
+        str_intend = " " * intend
+        if "variable" in self.arr.coords:
+            name = ", ".join(self.arr.coords["variable"].values)
         else:
             name = self.arr.name
         if self.arr.ndim > 0:
-            dims = ', with (%s)=%s' % (', '.join(self.arr.dims),
-                                       self.arr.shape)
+            dims = ", with (%s)=%s" % (
+                ", ".join(self.arr.dims),
+                self.arr.shape,
+            )
         else:
-            dims = ''
+            dims = ""
         return str_intend + "%s: %i-dim %s of %s%s, %s" % (
-            self.arr_name, self.arr.ndim, self.arr.__class__.__name__, name,
-            dims, ", ".join(
+            self.arr_name,
+            self.arr.ndim,
+            self.arr.__class__.__name__,
+            name,
+            dims,
+            ", ".join(
                 "%s=%s" % (coord, format_item(val.values))
                 for coord, val in six.iteritems(self.arr.coords)
-                if val.ndim == 0))
+                if val.ndim == 0
+            ),
+        )
 
     def __getitem__(self, key):
         ret = self.arr.__getitem__(key)
@@ -2959,13 +3222,21 @@ class InteractiveArray(InteractiveBase):
         return ret
 
     def isel(self, *args, **kwargs):
-        # reimplemented to keep the base. The doc is set below
+        """Select a subset of the array based on position.
+
+        Same method as :meth:`xarray.DataArray.isel` but keeps information on
+        the base dataset.
+        """
         ret = self.arr.isel(*args, **kwargs)
         ret.psy._base = self._base
         return ret
 
     def sel(self, *args, **kwargs):
-        # reimplemented to keep the base. The doc is set below
+        """Select a subset of the array based on indexes.
+
+        Same method as :meth:`xarray.DataArray.sel` but keeps information on
+        the base dataset.
+        """
         ret = self.arr.sel(*args, **kwargs)
         ret.psy._base = self._base
         return ret
@@ -2985,7 +3256,7 @@ class InteractiveArray(InteractiveBase):
     def to_interactive_list(self):
         return InteractiveList([self], arr_name=self.arr_name)
 
-    @docstrings.get_sections(base='InteractiveArray.get_coord')
+    @docstrings.get_sections(base="InteractiveArray.get_coord")
     @docstrings.dedent
     def get_coord(self, what, base=False):
         """
@@ -2998,9 +3269,10 @@ class InteractiveArray(InteractiveBase):
         base: bool
             If True, use the base variable in the :attr:`base` dataset."""
         what = what.lower()
-        return getattr(self.decoder, 'get_' + what)(
+        return getattr(self.decoder, "get_" + what)(
             next(six.itervalues(self.base_variables)) if base else self.arr,
-            self.arr.coords)
+            self.arr.coords,
+        )
 
     @docstrings.dedent
     def get_dim(self, what, base=False):
@@ -3011,29 +3283,32 @@ class InteractiveArray(InteractiveBase):
         ----------
         %(InteractiveArray.get_coord.parameters)s"""
         what = what.lower()
-        return getattr(self.decoder, 'get_%sname' % what)(
-            next(six.itervalues(self.base_variables)) if base else self.arr)
+        return getattr(self.decoder, "get_%sname" % what)(
+            next(six.itervalues(self.base_variables)) if base else self.arr
+        )
 
     # ------------------ Calculations -----------------------------------------
 
     def _gridweights(self):
         """Calculate the gridweights with a simple rectangular approximation"""
         arr = self.arr
-        xcoord = self.get_coord('x')
-        ycoord = self.get_coord('y')
+        xcoord = self.get_coord("x")
+        ycoord = self.get_coord("y")
         # convert the units
         xcoord_orig = xcoord
         ycoord_orig = ycoord
-        units = xcoord.attrs.get('units', '')
+        units = xcoord.attrs.get("units", "")
         in_metres = False
         in_degree = False
-        if 'deg' in units or (
-                'rad' not in units and 'lon' in xcoord.name and
-                'lat' in ycoord.name):
+        if "deg" in units or (
+            "rad" not in units
+            and "lon" in xcoord.name
+            and "lat" in ycoord.name
+        ):
             xcoord = xcoord * np.pi / 180
             ycoord = ycoord * np.pi / 180
             in_degree = True
-        elif 'rad' in units:
+        elif "rad" in units:
             pass
         else:
             in_metres = True
@@ -3046,16 +3321,20 @@ class InteractiveArray(InteractiveBase):
 
         # calculate the weights based on the units
         if xcoord.ndim == 2 or self.decoder.is_unstructured(self.arr):
-            warn("[%s] - Curvilinear grids are not supported! "
-                 "Using constant grid cell area weights!" % self.logger.name,
-                 PsyPlotRuntimeWarning)
+            warn(
+                "[%s] - Curvilinear grids are not supported! "
+                "Using constant grid cell area weights!" % self.logger.name,
+                PsyPlotRuntimeWarning,
+            )
             weights = np.ones_like(xcoord.values)
         elif in_metres:
             weights = np.abs(xbounds[:-1, :-1] - xbounds[1:, 1:]) * (
-                np.abs(ybounds[:-1, :-1] - ybounds[1:, 1:]))
+                np.abs(ybounds[:-1, :-1] - ybounds[1:, 1:])
+            )
         else:
             weights = np.abs(xbounds[:-1, :-1] - xbounds[1:, 1:]) * (
-                np.sin(ybounds[:-1, :-1]) - np.sin(ybounds[1:, 1:]))
+                np.sin(ybounds[:-1, :-1]) - np.sin(ybounds[1:, 1:])
+            )
 
         # normalize the weights by dividing through the sum
         if in_degree:
@@ -3071,26 +3350,32 @@ class InteractiveArray(InteractiveBase):
 
     def _gridweights_cdo(self):
         """Estimate the gridweights using CDOs"""
-        from cdo import Cdo
         from tempfile import NamedTemporaryFile
-        sdims = {self.get_dim('y'), self.get_dim('x')}
+
+        from cdo import Cdo
+
+        sdims = {self.get_dim("y"), self.get_dim("x")}
         cdo = Cdo()
-        fname = NamedTemporaryFile(prefix='psy', suffix='.nc').name
+        fname = NamedTemporaryFile(prefix="psy", suffix=".nc").name
         arr = self.arr
         base = arr.psy.base
         dims = arr.dims
         ds = arr.isel(**{d: 0 for d in set(dims) - sdims}).to_dataset()
         for coord in six.itervalues(ds.coords):
-            bounds = coord.attrs.get('bounds', coord.encoding.get('bounds'))
-            if (bounds and bounds in set(base.coords) - set(ds.coords) and
-                    sdims.intersection(base.coords[bounds].dims)):
+            bounds = coord.attrs.get("bounds", coord.encoding.get("bounds"))
+            if (
+                bounds
+                and bounds in set(base.coords) - set(ds.coords)
+                and sdims.intersection(base.coords[bounds].dims)
+            ):
                 ds[bounds] = base.sel(
                     **{d: arr.coords[d].values for d in sdims}
-                    ).coords[bounds]
-            ds = ds.drop_vars([c.name for c in six.itervalues(ds.coords)
-                               if not c.ndim])
+                ).coords[bounds]
+            ds = ds.drop_vars(
+                [c.name for c in six.itervalues(ds.coords) if not c.ndim]
+            )
         to_netcdf(ds, fname)
-        ret = cdo.gridweights(input=fname, returnArray='cell_weights')
+        ret = cdo.gridweights(input=fname, returnArray="cell_weights")
         try:
             os.remove(fname)
         except Exception:
@@ -3098,16 +3383,15 @@ class InteractiveArray(InteractiveBase):
         return ret
 
     def _weights_to_da(self, weights, keepdims=False, keepshape=False):
-        """Convert the 2D weights into a DataArray and potentially enlarge it
-        """
+        """Convert the 2D weights into a DataArray and potentially enlarge it"""
         arr = self.arr
-        xcoord = self.get_coord('x')
-        ycoord = self.get_coord('y')
-        sdims = (self.get_dim('y'), self.get_dim('x'))
-        if sdims[0] == sdims[1]:   # unstructured grids
+        xcoord = self.get_coord("x")
+        ycoord = self.get_coord("y")
+        sdims = (self.get_dim("y"), self.get_dim("x"))
+        if sdims[0] == sdims[1]:  # unstructured grids
             sdims = sdims[:1]
         if (ycoord.name, xcoord.name) != sdims:
-            attrs = dict(coordinates=ycoord.name + ' ' + xcoord.name)
+            attrs = dict(coordinates=ycoord.name + " " + xcoord.name)
         else:
             attrs = {}
 
@@ -3143,13 +3427,17 @@ class InteractiveArray(InteractiveBase):
         else:
             dims = arr.dims
             coords = arr.isel(
-                **{d: 0 if d not in sdims else slice(None)
-                   for d in dims}).coords
+                **{d: 0 if d not in sdims else slice(None) for d in dims}
+            ).coords
             weights = weights.reshape(
-                tuple(1 if dim not in sdims else s
-                      for s, dim in zip(arr.shape, arr.dims)))
-        return xr.DataArray(weights, dims=dims, coords=coords,
-                            name='cell_weights', attrs=attrs)
+                tuple(
+                    1 if dim not in sdims else s
+                    for s, dim in zip(arr.shape, arr.dims)
+                )
+            )
+        return xr.DataArray(
+            weights, dims=dims, coords=coords, name="cell_weights", attrs=attrs
+        )
 
     def gridweights(self, keepdims=False, keepshape=False, use_cdo=None):
         """Calculate the cell weights for each grid cell
@@ -3172,7 +3460,7 @@ class InteractiveArray(InteractiveBase):
         xarray.DataArray
             The 2D-DataArray with the grid weights"""
         if use_cdo is None:
-            use_cdo = rcParams['gridweights.use_cdo']
+            use_cdo = rcParams["gridweights.use_cdo"]
         if not use_cdo and self.decoder.is_unstructured(self.arr):
             use_cdo = True
         if use_cdo is None or use_cdo:
@@ -3186,34 +3474,37 @@ class InteractiveArray(InteractiveBase):
         else:
             weights = self._gridweights()
 
-        return self._weights_to_da(weights, keepdims=keepdims,
-                                   keepshape=keepshape)
+        return self._weights_to_da(
+            weights, keepdims=keepdims, keepshape=keepshape
+        )
 
     def _fldaverage_args(self):
         """Masked array, xname, yname and axis for calculating the average"""
         arr = self.arr
-        sdims = (self.get_dim('y'), self.get_dim('x'))
+        sdims = (self.get_dim("y"), self.get_dim("x"))
         if sdims[0] == sdims[1]:
             sdims = sdims[:1]
         axis = tuple(map(arr.dims.index, sdims))
         return arr, sdims, axis
 
     def _insert_fldmean_bounds(self, da, keepdims=False):
-        xcoord = self.get_coord('x')
-        ycoord = self.get_coord('y')
-        sdims = (self.get_dim('y'), self.get_dim('x'))
+        xcoord = self.get_coord("x")
+        ycoord = self.get_coord("y")
+        sdims = (self.get_dim("y"), self.get_dim("x"))
         xbounds = np.array([[xcoord.min(), xcoord.max()]])
         ybounds = np.array([[ycoord.min(), ycoord.max()]])
-        xdims = (sdims[-1], 'bnds') if keepdims else ('bnds', )
-        ydims = (sdims[0], 'bnds') if keepdims else ('bnds', )
+        xdims = (sdims[-1], "bnds") if keepdims else ("bnds",)
+        ydims = (sdims[0], "bnds") if keepdims else ("bnds",)
         xattrs = xcoord.attrs.copy()
-        xattrs.pop('bounds', None)
+        xattrs.pop("bounds", None)
         yattrs = ycoord.attrs.copy()
-        yattrs.pop('bounds', None)
-        da.psy.base.coords[xcoord.name + '_bnds'] = xr.Variable(
-            xdims, xbounds if keepdims else xbounds[0], attrs=xattrs)
-        da.psy.base.coords[ycoord.name + '_bnds'] = xr.Variable(
-            ydims, ybounds if keepdims else ybounds[0], attrs=yattrs)
+        yattrs.pop("bounds", None)
+        da.psy.base.coords[xcoord.name + "_bnds"] = xr.Variable(
+            xdims, xbounds if keepdims else xbounds[0], attrs=xattrs
+        )
+        da.psy.base.coords[ycoord.name + "_bnds"] = xr.Variable(
+            ydims, ybounds if keepdims else ybounds[0], attrs=yattrs
+        )
 
     def fldmean(self, keepdims=False):
         """Calculate the weighted mean over the x- and y-dimension
@@ -3244,12 +3535,15 @@ class InteractiveArray(InteractiveBase):
         gridweights = self.gridweights()
         arr, sdims, axis = self._fldaverage_args()
 
-        xcoord = self.decoder.get_x(next(six.itervalues(self.base_variables)),
-                                    arr.coords)
-        ycoord = self.decoder.get_y(next(six.itervalues(self.base_variables)),
-                                    arr.coords)
+        xcoord = self.decoder.get_x(
+            next(six.itervalues(self.base_variables)), arr.coords
+        )
+        ycoord = self.decoder.get_y(
+            next(six.itervalues(self.base_variables)), arr.coords
+        )
         means = ((arr * gridweights)).sum(axis=axis) * (
-            gridweights.size / arr.notnull().sum(axis=axis))
+            gridweights.size / arr.notnull().sum(axis=axis)
+        )
         if keepdims:
             means = means.expand_dims(sdims, axis=axis)
 
@@ -3259,8 +3553,8 @@ class InteractiveArray(InteractiveBase):
         else:
             means[xcoord.name] = xcoord.mean()
             means[ycoord.name] = ycoord.mean()
-        means.coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
-        means.coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
+        means.coords[xcoord.name].attrs["bounds"] = xcoord.name + "_bnds"
+        means.coords[ycoord.name].attrs["bounds"] = ycoord.name + "_bnds"
         self._insert_fldmean_bounds(means, keepdims)
         means.name = arr.name
         return means
@@ -3294,19 +3588,25 @@ class InteractiveArray(InteractiveBase):
         arr, sdims, axis = self._fldaverage_args()
         means = self.fldmean(keepdims=True)
         weights = self.gridweights(keepshape=True)
-        variance = ((arr - means.values)**2 * weights).sum(axis=axis)
+        variance = ((arr - means.values) ** 2 * weights).sum(axis=axis)
         if keepdims:
             variance = variance.expand_dims(sdims, axis=axis)
         for key, coord in six.iteritems(means.coords):
             if key not in variance.coords:
                 dims = set(sdims).intersection(coord.dims)
-                variance[key] = coord if keepdims else coord.isel(
-                    **dict(zip(dims, repeat(0))))
+                variance[key] = (
+                    coord
+                    if keepdims
+                    else coord.isel(**dict(zip(dims, repeat(0))))
+                )
         for key, coord in six.iteritems(means.psy.base.coords):
             if key not in variance.psy.base.coords:
                 dims = set(sdims).intersection(coord.dims)
-                variance.psy.base[key] = coord if keepdims else coord.isel(
-                    **dict(zip(dims, repeat(0))))
+                variance.psy.base[key] = (
+                    coord
+                    if keepdims
+                    else coord.isel(**dict(zip(dims, repeat(0))))
+                )
         std = variance**0.5
         std.name = arr.name
         return std
@@ -3347,9 +3647,9 @@ class InteractiveArray(InteractiveBase):
         gridweights = self.gridweights(keepshape=True)
         arr = self.arr
 
-        q = np.asarray(q) / 100.
+        q = np.asarray(q) / 100.0
         if not (np.all(q >= 0) and np.all(q <= 100)):
-            raise ValueError('q should be in [0, 100]')
+            raise ValueError("q should be in [0, 100]")
         reduce_shape = False if keepdims else (not bool(q.ndim))
         if not q.ndim:
             q = q[np.newaxis]
@@ -3361,22 +3661,25 @@ class InteractiveArray(InteractiveBase):
             data = np.rollaxis(data, ax, 0)
             weights = np.rollaxis(weights, ax, 0)
         data = data.reshape(
-            (np.product(data.shape[:len(axis)]), ) + data.shape[len(axis):])
+            (np.product(data.shape[: len(axis)]),) + data.shape[len(axis) :]
+        )
         weights = weights.reshape(
-            (np.product(weights.shape[:len(axis)]), ) +
-            weights.shape[len(axis):])
+            (np.product(weights.shape[: len(axis)]),)
+            + weights.shape[len(axis) :]
+        )
 
         # sort the data
         sorter = np.argsort(data, axis=0)
         all_indices = map(tuple, product(*map(range, data.shape[1:])))
         for indices in all_indices:
-            indices = (slice(None), ) + indices
+            indices = (slice(None),) + indices
             data.__setitem__(
-                indices, data.__getitem__(indices)[
-                    sorter.__getitem__(indices)])
+                indices, data.__getitem__(indices)[sorter.__getitem__(indices)]
+            )
             weights.__setitem__(
-                indices, weights.__getitem__(indices)[
-                    sorter.__getitem__(indices)])
+                indices,
+                weights.__getitem__(indices)[sorter.__getitem__(indices)],
+            )
 
         # compute the percentiles
         try:
@@ -3385,25 +3688,33 @@ class InteractiveArray(InteractiveBase):
             notnull = ~np.isnan(weights)
             weights[notnull] = np.cumsum(weights[notnull])
         all_indices = map(tuple, product(*map(range, data.shape[1:])))
-        pctl = np.zeros((len(q), ) + data.shape[1:])
+        pctl = np.zeros((len(q),) + data.shape[1:])
 
         for indices in all_indices:
-            indices = (slice(None), ) + indices
+            indices = (slice(None),) + indices
             mask = ~np.isnan(data.__getitem__(indices))
-            pctl.__setitem__(indices, np.interp(
-                q, weights.__getitem__(indices)[mask],
-                data.__getitem__(indices)[mask]))
+            pctl.__setitem__(
+                indices,
+                np.interp(
+                    q,
+                    weights.__getitem__(indices)[mask],
+                    data.__getitem__(indices)[mask],
+                ),
+            )
 
         # setup the data array and it's coordinates
-        xcoord = self.decoder.get_x(next(six.itervalues(self.base_variables)),
-                                    arr.coords)
-        ycoord = self.decoder.get_y(next(six.itervalues(self.base_variables)),
-                                    arr.coords)
+        xcoord = self.decoder.get_x(
+            next(six.itervalues(self.base_variables)), arr.coords
+        )
+        ycoord = self.decoder.get_y(
+            next(six.itervalues(self.base_variables)), arr.coords
+        )
         coords = dict(arr.coords)
         if keepdims:
             pctl = pctl.reshape(
-                (len(q), ) +
-                tuple(1 if i in axis else s for i, s in enumerate(arr.shape)))
+                (len(q),)
+                + tuple(1 if i in axis else s for i, s in enumerate(arr.shape))
+            )
             coords[xcoord.name] = xcoord.mean().expand_dims(xcoord.dims[0])
             coords[ycoord.name] = ycoord.mean().expand_dims(ycoord.dims[0])
             dims = arr.dims
@@ -3413,23 +3724,28 @@ class InteractiveArray(InteractiveBase):
             dims = tuple(d for d in arr.dims if d not in sdims)
         if reduce_shape:
             pctl = pctl[0]
-            coords['pctl'] = xr.Variable((), q[0] * 100.,
-                                         attrs={'long_name': 'Percentile'})
+            coords["pctl"] = xr.Variable(
+                (), q[0] * 100.0, attrs={"long_name": "Percentile"}
+            )
         else:
-            coords['pctl'] = xr.Variable(('pctl', ), q * 100.,
-                                         attrs={'long_name': 'Percentile'})
-            dims = ('pctl', ) + dims
-        coords[xcoord.name].attrs['bounds'] = xcoord.name + '_bnds'
-        coords[ycoord.name].attrs['bounds'] = ycoord.name + '_bnds'
-        coords = {name: c for name, c in coords.items()
-                  if set(c.dims) <= set(dims)}
-        ret = xr.DataArray(pctl, name=arr.name, dims=dims, coords=coords,
-                           attrs=arr.attrs.copy())
+            coords["pctl"] = xr.Variable(
+                ("pctl",), q * 100.0, attrs={"long_name": "Percentile"}
+            )
+            dims = ("pctl",) + dims
+        coords[xcoord.name].attrs["bounds"] = xcoord.name + "_bnds"
+        coords[ycoord.name].attrs["bounds"] = ycoord.name + "_bnds"
+        coords = {
+            name: c for name, c in coords.items() if set(c.dims) <= set(dims)
+        }
+        ret = xr.DataArray(
+            pctl,
+            name=arr.name,
+            dims=dims,
+            coords=coords,
+            attrs=arr.attrs.copy(),
+        )
         self._insert_fldmean_bounds(ret, keepdims)
         return ret
-
-    isel.__doc__ = xr.DataArray.isel.__doc__
-    sel.__doc__ = xr.DataArray.sel.__doc__
 
 
 class ArrayList(list):
@@ -3437,7 +3753,7 @@ class ArrayList(list):
 
     This list contains and manages :class:`InteractiveArray` instances"""
 
-    docstrings.keep_params('InteractiveBase.parameters', 'auto_update')
+    docstrings.keep_params("InteractiveBase.parameters", "auto_update")
 
     @property
     def dims(self):
@@ -3446,10 +3762,12 @@ class ArrayList(list):
 
     @property
     def dims_intersect(self):
-        """Dimensions of the arrays in this list that are used in all arrays
-        """
-        return set.intersection(*map(
-            set, (getattr(arr, 'dims_intersect', arr.dims) for arr in self)))
+        """Dimensions of the arrays in this list that are used in all arrays"""
+        return set.intersection(
+            *map(
+                set, (getattr(arr, "dims_intersect", arr.dims) for arr in self)
+            )
+        )
 
     @property
     def arr_names(self):
@@ -3464,8 +3782,9 @@ class ArrayList(list):
         value = list(islice(value, 0, len(self)))
         if not len(set(value)) == len(self):
             raise ValueError(
-                "Got %i unique array names for %i data objects!" % (
-                    len(set(value)), len(self)))
+                "Got %i unique array names for %i data objects!"
+                % (len(set(value)), len(self))
+            )
         for arr, n in zip(self, value):
             arr.psy.arr_name = n
 
@@ -3484,26 +3803,29 @@ class ArrayList(list):
     def all_names(self):
         """The variable names for each of the arrays in this list"""
         return [
-            _get_variable_names(arr) if not isinstance(arr, ArrayList) else
-            arr.all_names
-            for arr in self]
+            _get_variable_names(arr)
+            if not isinstance(arr, ArrayList)
+            else arr.all_names
+            for arr in self
+        ]
 
     @property
     def all_dims(self):
         """The dimensions for each of the arrays in this list"""
         return [
-            _get_dims(arr) if not isinstance(arr, ArrayList) else
-            arr.all_dims
-            for arr in self]
+            _get_dims(arr) if not isinstance(arr, ArrayList) else arr.all_dims
+            for arr in self
+        ]
 
     @property
     def is_unstructured(self):
         """A boolean for each array whether it is unstructured or not"""
         return [
             arr.psy.decoder.is_unstructured(arr)
-            if not isinstance(arr, ArrayList) else
-            arr.is_unstructured
-            for arr in self]
+            if not isinstance(arr, ArrayList)
+            else arr.is_unstructured
+            for arr in self
+        ]
 
     @property
     def coords(self):
@@ -3512,21 +3834,25 @@ class ArrayList(list):
 
     @property
     def coords_intersect(self):
-        """Coordinates of the arrays in this list that are used in all arrays
-        """
-        return set.intersection(*map(
-            set, (getattr(arr, 'coords_intersect', arr.coords) for arr in self)
-            ))
+        """Coordinates of the arrays in this list that are used in all arrays"""
+        return set.intersection(
+            *map(
+                set,
+                (getattr(arr, "coords_intersect", arr.coords) for arr in self),
+            )
+        )
 
     @property
     def with_plotter(self):
         """The arrays in this instance that are visualized with a plotter"""
         return self.__class__(
             (arr for arr in self if arr.psy.plotter is not None),
-            auto_update=bool(self.auto_update))
+            auto_update=bool(self.auto_update),
+        )
 
-    no_auto_update = property(_no_auto_update_getter,
-                              doc=_no_auto_update_getter.__doc__)
+    no_auto_update = property(
+        _no_auto_update_getter, doc=_no_auto_update_getter.__doc__
+    )
 
     @no_auto_update.setter
     def no_auto_update(self, value):
@@ -3540,9 +3866,9 @@ class ArrayList(list):
         try:
             return self._logger
         except AttributeError:
-            name = '%s.%s' % (self.__module__, self.__class__.__name__)
+            name = "%s.%s" % (self.__module__, self.__class__.__name__)
             self._logger = logging.getLogger(name)
-            self.logger.debug('Initializing...')
+            self.logger.debug("Initializing...")
             return self._logger
 
     @logger.setter
@@ -3551,14 +3877,21 @@ class ArrayList(list):
 
     @property
     def arrays(self):
-        """A list of all the :class:`xarray.DataArray` instances in this list
-        """
-        return list(chain.from_iterable(
-            ([arr] if not isinstance(arr, InteractiveList) else arr.arrays
-             for arr in self)))
+        """A list of all the :class:`xarray.DataArray` instances in this list"""
+        return list(
+            chain.from_iterable(
+                (
+                    [arr]
+                    if not isinstance(arr, InteractiveList)
+                    else arr.arrays
+                    for arr in self
+                )
+            )
+        )
 
-    @docstrings.get_sections(base='ArrayList.rename', sections=[
-        'Parameters', 'Raises'])
+    @docstrings.get_sections(
+        base="ArrayList.rename", sections=["Parameters", "Raises"]
+    )
     @dedent
     def rename(self, arr, new_name=True):
         """
@@ -3599,17 +3932,18 @@ class ArrayList(list):
             if new_name is False:
                 raise ValueError(
                     "Array name %s is already in use! Set the `new_name` "
-                    "parameter to None for renaming!" % arr.psy.arr_name)
+                    "parameter to None for renaming!" % arr.psy.arr_name
+                )
             elif new_name is True:
-                new_name = new_name if isstring(new_name) else 'arr{0}'
+                new_name = new_name if isstring(new_name) else "arr{0}"
                 arr.psy.arr_name = self.next_available_name(new_name)
                 return arr, True
         return arr, None
 
-    docstrings.keep_params('ArrayList.rename.parameters', 'new_name')
-    docstrings.keep_params('InteractiveBase.parameters', 'auto_update')
+    docstrings.keep_params("ArrayList.rename.parameters", "new_name")
+    docstrings.keep_params("InteractiveBase.parameters", "auto_update")
 
-    @docstrings.get_sections(base='ArrayList')
+    @docstrings.get_sections(base="ArrayList")
     @docstrings.dedent
     def __init__(self, iterable=[], attrs={}, auto_update=None, new_name=True):
         """
@@ -3622,15 +3956,20 @@ class ArrayList(list):
         %(InteractiveBase.parameters.auto_update)s
         %(ArrayList.rename.parameters.new_name)s"""
         super(ArrayList, self).__init__()
-        self.attrs = OrderedDict(attrs)
+        self.attrs = dict(attrs)
         if auto_update is None:
-            auto_update = rcParams['lists.auto_update']
+            auto_update = rcParams["lists.auto_update"]
         self.auto_update = not bool(auto_update)
         # append the data in order to set the correct names
-        self.extend(filter(
-            lambda arr: isinstance(getattr(arr, 'psy', None),
-                                   InteractiveBase),
-            iterable), new_name=new_name)
+        self.extend(
+            filter(
+                lambda arr: isinstance(
+                    getattr(arr, "psy", None), InteractiveBase
+                ),
+                iterable,
+            ),
+            new_name=new_name,
+        )
 
     def copy(self, deep=False):
         """Returns a copy of the list
@@ -3641,22 +3980,39 @@ class ArrayList(list):
             If False (default), only the list is copied and not the contained
             arrays, otherwise the contained arrays are deep copied"""
         if not deep:
-            return self.__class__(self[:], attrs=self.attrs.copy(),
-                                  auto_update=not bool(self.no_auto_update))
+            return self.__class__(
+                self[:],
+                attrs=self.attrs.copy(),
+                auto_update=not bool(self.no_auto_update),
+            )
         else:
             return self.__class__(
-                [arr.psy.copy(deep) for arr in self], attrs=self.attrs.copy(),
-                auto_update=not bool(self.auto_update))
+                [arr.psy.copy(deep) for arr in self],
+                attrs=self.attrs.copy(),
+                auto_update=not bool(self.auto_update),
+            )
 
-    docstrings.keep_params('InteractiveArray.update.parameters', 'method')
+    docstrings.keep_params("InteractiveArray.update.parameters", "method")
 
     @classmethod
-    @docstrings.get_sections(base='ArrayList.from_dataset', sections=[
-        'Parameters', 'Other Parameters', 'Returns'])
+    @docstrings.get_sections(
+        base="ArrayList.from_dataset",
+        sections=["Parameters", "Other Parameters", "Returns"],
+    )
     @docstrings.dedent
-    def from_dataset(cls, base, method='isel', default_slice=None,
-                     decoder=None, auto_update=None, prefer_list=False,
-                     squeeze=True, attrs=None, load=False, **kwargs):
+    def from_dataset(
+        cls,
+        base,
+        method="isel",
+        default_slice=None,
+        decoder=None,
+        auto_update=None,
+        prefer_list=False,
+        squeeze=True,
+        attrs=None,
+        load=False,
+        **kwargs,
+    ):
         """
         Construct an ArrayList instance from an existing base dataset
 
@@ -3707,9 +4063,12 @@ class ArrayList(list):
         try:
             load = dict(load)
         except (TypeError, ValueError):
+
             def maybe_load(arr):
                 return arr.load() if load else arr
+
         else:
+
             def maybe_load(arr):
                 return arr.load(**load)
 
@@ -3719,7 +4078,7 @@ class ArrayList(list):
                 while 1:
                     yield {}
             else:
-                dims = OrderedDict(dims)
+                dims = dict(dims)
                 keys = dims.keys()
                 for vals in zip(*map(cycle, map(safe_list, dims.values()))):
                     yield dict(zip(keys, vals))
@@ -3727,23 +4086,27 @@ class ArrayList(list):
         def recursive_selection(key, dims, names):
             names = safe_list(names)
             if len(names) > 1 and prefer_list:
-                keys = ('arr%i' % i for i in range(len(names)))
+                keys = ("arr%i" % i for i in range(len(names)))
                 return InteractiveList(
                     starmap(sel_method, zip(keys, iter_dims(dims), names)),
-                    auto_update=auto_update, arr_name=key)
+                    auto_update=auto_update,
+                    arr_name=key,
+                )
             elif len(names) > 1:
                 return sel_method(key, dims, tuple(names))
             else:
                 return sel_method(key, dims, names[0])
 
         def ds2arr(arr):
-            base_var = next(var for key, var in arr.variables.items()
-                            if key not in arr.coords)
+            base_var = next(
+                var
+                for key, var in arr.variables.items()
+                if key not in arr.coords
+            )
             attrs = base_var.attrs
             arr = arr.to_array()
-            if 'coordinates' in base_var.encoding:
-                arr.encoding['coordinates'] = base_var.encoding[
-                    'coordinates']
+            if "coordinates" in base_var.encoding:
+                arr.encoding["coordinates"] = base_var.encoding["coordinates"]
             arr.attrs.update(attrs)
             return arr
 
@@ -3763,23 +4126,39 @@ class ArrayList(list):
             # add the missing dimensions to the dataset. This is not anymore
             # done by default from xarray >= 0.9 but we need it to ensure the
             # interactive treatment of DataArrays
-            missing = set(arr.dims).difference(base.coords) - {'variable'}
+            missing = set(arr.dims).difference(base.coords) - {"variable"}
             for dim in missing:
-                base[dim] = arr.coords[dim] = np.arange(base.dims[dim])
+                try:
+                    size = base.sizes[dim]
+                except AttributeError:
+                    # old xarray version
+                    size = base.dims[dim]
+                base[dim] = arr.coords[dim] = np.arange(size)
 
         if squeeze:
+
             def squeeze_array(arr):
-                return arr.isel(**{dim: 0 for i, dim in enumerate(arr.dims)
-                                   if arr.shape[i] == 1})
+                return arr.isel(
+                    **{
+                        dim: 0
+                        for i, dim in enumerate(arr.dims)
+                        if arr.shape[i] == 1
+                    }
+                )
+
         else:
+
             def squeeze_array(arr):
                 return arr
-        if method == 'isel':
+
+        if method == "isel":
+
             def sel_method(key, dims, name=None):
                 if name is None:
-                    return recursive_selection(key, dims, dims.pop('name'))
-                elif (isinstance(name, six.string_types) or
-                      not utils.is_iterable(name)):
+                    return recursive_selection(key, dims, dims.pop("name"))
+                elif isinstance(
+                    name, six.string_types
+                ) or not utils.is_iterable(name):
                     arr = base[name]
                     decoder = get_decoder(arr)
                     dims = decoder.correct_dims(arr, dims)
@@ -3787,27 +4166,36 @@ class ArrayList(list):
                     arr = base[list(name)]
                     decoder = get_decoder(base[name[0]])
                     dims = decoder.correct_dims(base[name[0]], dims)
-                def_slice = slice(None) if default_slice is None else \
-                    default_slice
-                dims.update({
-                    dim: def_slice for dim in set(arr.dims).difference(
-                        dims) if dim != 'variable'})
+                def_slice = (
+                    slice(None) if default_slice is None else default_slice
+                )
+                dims.update(
+                    {
+                        dim: def_slice
+                        for dim in set(arr.dims).difference(dims)
+                        if dim != "variable"
+                    }
+                )
                 add_missing_dimensions(arr)
                 ret = arr.isel(**dims)
                 if not isinstance(ret, xr.DataArray):
                     ret = ds2arr(ret)
                 ret = squeeze_array(ret)
                 # delete the variable dimension for the idims
-                dims.pop('variable', None)
-                ret.psy.init_accessor(arr_name=key, base=base, idims=dims,
-                                      decoder=decoder)
+                dims.pop("variable", None)
+                ret.psy.init_accessor(
+                    arr_name=key, base=base, idims=dims, decoder=decoder
+                )
                 return maybe_load(ret)
+
         else:
+
             def sel_method(key, dims, name=None):
                 if name is None:
-                    return recursive_selection(key, dims, dims.pop('name'))
-                elif (isinstance(name, six.string_types) or
-                      not utils.is_iterable(name)):
+                    return recursive_selection(key, dims, dims.pop("name"))
+                elif isinstance(
+                    name, six.string_types
+                ) or not utils.is_iterable(name):
                     arr = base[name]
                     decoder = get_decoder(arr)
                     dims = decoder.correct_dims(arr, dims)
@@ -3817,17 +4205,23 @@ class ArrayList(list):
                     dims = decoder.correct_dims(base[name[0]], dims)
                 if default_slice is not None:
                     if isinstance(default_slice, slice):
-                        dims.update({
-                            dim: default_slice
-                            for dim in set(arr.dims).difference(dims)
-                            if dim != 'variable'})
+                        dims.update(
+                            {
+                                dim: default_slice
+                                for dim in set(arr.dims).difference(dims)
+                                if dim != "variable"
+                            }
+                        )
                     else:
-                        dims.update({
-                            dim: arr.coords[dim][default_slice]
-                            for dim in set(arr.dims).difference(dims)
-                            if dim != 'variable'})
+                        dims.update(
+                            {
+                                dim: arr.coords[dim][default_slice]
+                                for dim in set(arr.dims).difference(dims)
+                                if dim != "variable"
+                            }
+                        )
                 kws = dims.copy()
-                kws['method'] = method
+                kws["method"] = method
                 # the sel method does not work with slice objects
                 for dim, val in dims.items():
                     if isinstance(val, slice):
@@ -3846,32 +4240,43 @@ class ArrayList(list):
                 ret = squeeze_array(ret)
                 ret.psy.init_accessor(arr_name=key, base=base, decoder=decoder)
                 return maybe_load(ret)
-        if 'name' not in kwargs:
+
+        if "name" not in kwargs:
             default_names = list(
-                key for key in base.variables if key not in base.coords)
+                key for key in base.variables if key not in base.coords
+            )
             try:
                 default_names.sort()
             except TypeError:
                 pass
-            kwargs['name'] = default_names
+            kwargs["name"] = default_names
         names = setup_coords(**kwargs)
         # check coordinates
-        possible_keys = ['t', 'x', 'y', 'z', 'name'] + list(base.dims)
+        possible_keys = ["t", "x", "y", "z", "name"] + list(base.dims)
         for key in set(chain(*six.itervalues(names))):
-            utils.check_key(key, possible_keys, name='dimension')
-        instance = cls(starmap(sel_method, six.iteritems(names)),
-                       attrs=base.attrs, auto_update=auto_update)
+            utils.check_key(key, possible_keys, name="dimension")
+        instance = cls(
+            starmap(sel_method, six.iteritems(names)),
+            attrs=base.attrs,
+            auto_update=auto_update,
+        )
         # convert to interactive lists if an instance is not
         if prefer_list and any(
-                not isinstance(arr, InteractiveList) for arr in instance):
+            not isinstance(arr, InteractiveList) for arr in instance
+        ):
             # if any instance is an interactive list, than convert the others
             if any(isinstance(arr, InteractiveList) for arr in instance):
                 for i, arr in enumerate(instance):
                     if not isinstance(arr, InteractiveList):
                         instance[i] = InteractiveList([arr])
             else:  # put everything into one single interactive list
-                instance = cls([InteractiveList(instance, attrs=base.attrs,
-                                                auto_update=auto_update)])
+                instance = cls(
+                    [
+                        InteractiveList(
+                            instance, attrs=base.attrs, auto_update=auto_update
+                        )
+                    ]
+                )
                 instance[0].psy.arr_name = instance[0][0].psy.arr_name
         if attrs is not None:
             for arr in instance:
@@ -3879,70 +4284,107 @@ class ArrayList(list):
         return instance
 
     @classmethod
-    def _get_dsnames(cls, data, ignore_keys=['attrs', 'plotter', 'ds'],
-                     concat_dim=False, combine=False):
+    def _get_dsnames(
+        cls,
+        data,
+        ignore_keys=["attrs", "plotter", "ds"],
+        concat_dim=False,
+        combine=False,
+    ):
         """Recursive method to get all the file names out of a dictionary
         `data` created with the :meth`array_info` method"""
+
         def filter_ignores(item):
             return item[0] not in ignore_keys and isinstance(item[1], dict)
-        if 'fname' in data:
-            return {tuple(
-                [data['fname'], data['store']] +
-                ([data.get('concat_dim')] if concat_dim else []) +
-                ([data.get('combine')] if combine else []))}
-        return set(chain(*map(partial(cls._get_dsnames, concat_dim=concat_dim,
-                                      combine=combine,
-                                      ignore_keys=ignore_keys),
-                              dict(filter(filter_ignores,
-                                          six.iteritems(data))).values())))
+
+        if "fname" in data:
+            return {
+                tuple(
+                    [data["fname"], data["store"]]
+                    + ([data.get("concat_dim")] if concat_dim else [])
+                    + ([data.get("combine")] if combine else [])
+                )
+            }
+        return set(
+            chain(
+                *map(
+                    partial(
+                        cls._get_dsnames,
+                        concat_dim=concat_dim,
+                        combine=combine,
+                        ignore_keys=ignore_keys,
+                    ),
+                    dict(filter(filter_ignores, six.iteritems(data))).values(),
+                )
+            )
+        )
 
     @classmethod
     def _get_ds_descriptions(
-            cls, data, ds_description={'ds', 'fname', 'arr'}, **kwargs):
+        cls, data, ds_description={"ds", "fname", "arr"}, **kwargs
+    ):
         def new_dict():
             return defaultdict(list)
+
         ret = defaultdict(new_dict)
         ds_description = set(ds_description)
         for d in cls._get_ds_descriptions_unsorted(data, **kwargs):
             try:
-                num = d.get('num') or d['ds'].psy.num
+                num = d.get("num") or d["ds"].psy.num
             except KeyError:
                 raise ValueError(
-                    'Could not find either the dataset number nor the dataset '
-                    'in the data! However one must be provided.')
+                    "Could not find either the dataset number nor the dataset "
+                    "in the data! However one must be provided."
+                )
             d_ret = ret[num]
             for key, val in six.iteritems(d):
-                if key == 'arr':
-                    d_ret['arr'].append(d['arr'])
+                if key == "arr":
+                    d_ret["arr"].append(d["arr"])
                 else:
                     d_ret[key] = val
         return ret
 
     @classmethod
     def _get_ds_descriptions_unsorted(
-            cls, data, ignore_keys=['attrs', 'plotter'], nums=None):
+        cls, data, ignore_keys=["attrs", "plotter"], nums=None
+    ):
         """Recursive method to get all the file names or datasets out of a
         dictionary `data` created with the :meth`array_info` method"""
-        ds_description = {'ds', 'fname', 'num', 'arr', 'store'}
-        if 'ds' in data:
+        ds_description = {"ds", "fname", "num", "arr", "store"}
+        if "ds" in data:
             # make sure that the data set has a number assigned to it
-            data['ds'].psy.num
+            data["ds"].psy.num
         keys_in_data = ds_description.intersection(data)
         if keys_in_data:
             return {key: data[key] for key in keys_in_data}
         for key in ignore_keys:
             data.pop(key, None)
-        func = partial(cls._get_ds_descriptions_unsorted,
-                       ignore_keys=ignore_keys, nums=nums)
-        return chain(*map(lambda d: [d] if isinstance(d, dict) else d,
-                          map(func, six.itervalues(data))))
+        func = partial(
+            cls._get_ds_descriptions_unsorted,
+            ignore_keys=ignore_keys,
+            nums=nums,
+        )
+        return chain(
+            *map(
+                lambda d: [d] if isinstance(d, dict) else d,
+                map(func, six.itervalues(data)),
+            )
+        )
 
     @classmethod
-    @docstrings.get_sections(base='ArrayList.from_dict')
+    @docstrings.get_sections(base="ArrayList.from_dict")
     @docstrings.dedent
-    def from_dict(cls, d, alternative_paths={}, datasets=None,
-                  pwd=None, ignore_keys=['attrs', 'plotter', 'ds'],
-                  only=None, chname={}, **kwargs):
+    def from_dict(
+        cls,
+        d,
+        alternative_paths={},
+        datasets=None,
+        pwd=None,
+        ignore_keys=["attrs", "plotter", "ds"],
+        only=None,
+        chname={},
+        **kwargs,
+    ):
         """
         Create a list from the dictionary returned by :meth:`array_info`
 
@@ -3960,7 +4402,7 @@ class ArrayList(list):
             working directory.
             If `alternative_paths` is a list (or any other iterable) is
             provided, the file names will be replaced as they appear in `d`
-            (note that this is very unsafe if `d` is not and OrderedDict)
+            (note that this is very unsafe if `d` is not and dict)
         datasets: dict or list or None
             A mapping from original filenames in `d` to the instances of
             :class:`xarray.Dataset` to use. If it is an iterable, the same
@@ -4022,29 +4464,38 @@ class ArrayList(list):
         See Also
         --------
         from_dataset, array_info"""
-        pwd = pwd or getcwd()
+        pwd = pwd or os.getcwd()
         if only is None:
+
             def only_filter(arr_name, info):
                 return True
+
         elif callable(only):
             only_filter = only
         elif isstring(only):
+
             def only_filter(arr_name, info):
                 return patt.search(arr_name) is not None
+
             patt = re.compile(only)
             only = None
         else:
+
             def only_filter(arr_name, info):
                 return arr_name in save_only
+
             save_only = only
             only = None
 
         def get_fname_use(fname):
             squeeze = isstring(fname)
             fname = safe_list(fname)
-            ret = tuple(f if utils.is_remote_url(f) or osp.isabs(f) else
-                        osp.join(pwd, f)
-                        for f in fname)
+            ret = tuple(
+                f
+                if utils.is_remote_url(f) or osp.isabs(f)
+                else osp.join(pwd, f)
+                for f in fname
+            )
             return ret[0] if squeeze else ret
 
         def get_name(name):
@@ -4058,23 +4509,29 @@ class ArrayList(list):
             alternative_paths = defaultdict(partial(next, it, None))
         # first open all datasets if not already done
         if datasets is None:
-            replace_concat_dim = 'concat_dim' not in kwargs
-            replace_combine = 'combine' not in kwargs
+            replace_concat_dim = "concat_dim" not in kwargs
+            replace_combine = "combine" not in kwargs
 
             names_and_stores = cls._get_dsnames(
-                d, concat_dim=True, combine=True)
+                d, concat_dim=True, combine=True
+            )
             datasets = {}
-            for fname, (store_mod, store_cls), concat_dim, combine in names_and_stores:
+            for (
+                fname,
+                (store_mod, store_cls),
+                concat_dim,
+                combine,
+            ) in names_and_stores:
                 fname_use = fname
                 got = True
                 if replace_concat_dim and concat_dim is not None:
-                    kwargs['concat_dim'] = concat_dim
+                    kwargs["concat_dim"] = concat_dim
                 elif replace_concat_dim and concat_dim is None:
-                    kwargs.pop('concat_dim', None)
+                    kwargs.pop("concat_dim", None)
                 if replace_combine and combine is not None:
-                    kwargs['combine'] = combine
+                    kwargs["combine"] = combine
                 elif replace_combine and combine is None:
-                    kwargs.pop('combine', None)
+                    kwargs.pop("combine", None)
                 try:
                     fname_use = alternative_paths[fname]
                 except KeyError:
@@ -4084,7 +4541,8 @@ class ArrayList(list):
                         fname_use = get_fname_use(fname)
                 if fname_use is not None:
                     datasets[fname] = _open_ds_from_store(
-                        fname_use, store_mod, store_cls, **kwargs)
+                        fname_use, store_mod, store_cls, **kwargs
+                    )
             if alternative_paths is not None:
                 for fname in set(alternative_paths).difference(datasets):
                     datasets[fname] = _open_ds_from_store(fname, **kwargs)
@@ -4097,27 +4555,34 @@ class ArrayList(list):
             if arr_name in ignore_keys or not only_filter(arr_name, info):
                 arrays.pop(i)
                 continue
-            if not {'fname', 'ds', 'arr'}.intersection(info):
+            if not {"fname", "ds", "arr"}.intersection(info):
                 # the described object is an InteractiveList
                 arr = InteractiveList.from_dict(
-                    info, alternative_paths=alternative_paths,
-                    datasets=datasets, chname=chname)
+                    info,
+                    alternative_paths=alternative_paths,
+                    datasets=datasets,
+                    chname=chname,
+                )
                 if not arr:
                     warn("Skipping empty list %s!" % arr_name)
                     arrays.pop(i)
                     continue
             else:
-                if 'arr' in info:
-                    arr = info.pop('arr')
-                elif 'ds' in info:
+                if "arr" in info:
+                    arr = info.pop("arr")
+                elif "ds" in info:
                     arr = cls.from_dataset(
-                        info['ds'], dims=info['dims'],
-                        name=get_name(info['name']))[0]
+                        info["ds"],
+                        dims=info["dims"],
+                        name=get_name(info["name"]),
+                    )[0]
                 else:
-                    fname = info['fname']
+                    fname = info["fname"]
                     if fname is None:
-                        warn("Could not open array %s because no filename was "
-                             "specified!" % arr_name)
+                        warn(
+                            "Could not open array %s because no filename was "
+                            "specified!" % arr_name
+                        )
                         arrays.pop(i)
                         continue
                     try:  # in case, datasets is a defaultdict
@@ -4125,28 +4590,42 @@ class ArrayList(list):
                     except KeyError:
                         pass
                     if fname not in datasets:
-                        warn("Could not open array %s because %s was not in "
-                             "the list of datasets!" % (arr_name, fname))
+                        warn(
+                            "Could not open array %s because %s was not in "
+                            "the list of datasets!" % (arr_name, fname)
+                        )
                         arrays.pop(i)
                         continue
                     arr = cls.from_dataset(
-                        datasets[fname], dims=info['dims'],
-                        name=get_name(info['name']))[0]
-                for key, val in six.iteritems(info.get('attrs', {})):
+                        datasets[fname],
+                        dims=info["dims"],
+                        name=get_name(info["name"]),
+                    )[0]
+                for key, val in six.iteritems(info.get("attrs", {})):
                     arr.attrs.setdefault(key, val)
             arr.psy.arr_name = arr_name
             arrays[i] = arr
             i += 1
-        return cls(arrays, attrs=d.get('attrs', {}))
+        return cls(arrays, attrs=d.get("attrs", {}))
 
-    docstrings.delete_params('get_filename_ds.parameters', 'ds', 'dump')
+    docstrings.delete_params("get_filename_ds.parameters", "ds", "dump")
 
-    @docstrings.get_sections(base='ArrayList.array_info')
+    @docstrings.get_sections(base="ArrayList.array_info")
     @docstrings.dedent
-    def array_info(self, dump=None, paths=None, attrs=True,
-                   standardize_dims=True, pwd=None, use_rel_paths=True,
-                   alternative_paths={}, ds_description={'fname', 'store'},
-                   full_ds=True, copy=False, **kwargs):
+    def array_info(
+        self,
+        dump=None,
+        paths=None,
+        attrs=True,
+        standardize_dims=True,
+        pwd=None,
+        use_rel_paths=True,
+        alternative_paths={},
+        ds_description={"fname", "store"},
+        full_ds=True,
+        copy=False,
+        **kwargs,
+    ):
         """
         Get dimension informations on you arrays
 
@@ -4204,20 +4683,26 @@ class ArrayList(list):
 
         Returns
         -------
-        OrderedDict
+        dict
             An ordered mapping from array names to dimensions and filename
             corresponding to the array
 
         See Also
         --------
         from_dict"""
-        saved_ds = kwargs.pop('_saved_ds', {})
+        saved_ds = kwargs.pop("_saved_ds", {})
 
         def get_alternative(f):
-            return next(filter(lambda t: osp.samefile(f, t[0]),
-                               six.iteritems(alternative_paths)), [False, f])
+            return next(
+                filter(
+                    lambda t: osp.samefile(f, t[0]),
+                    six.iteritems(alternative_paths),
+                ),
+                [False, f],
+            )
 
         if copy:
+
             def copy_obj(obj):
                 # try to get the number of the dataset and create only one copy
                 # copy for each dataset
@@ -4232,12 +4717,15 @@ class ArrayList(list):
                         saved_ds[num] = obj.psy.copy(True)
                         return saved_ds[num]
                 return obj.psy.copy(True)
+
         else:
+
             def copy_obj(obj):
                 return obj
-        ret = OrderedDict()
-        if ds_description == 'all':
-            ds_description = {'fname', 'ds', 'num', 'arr', 'store'}
+
+        ret = dict()
+        if ds_description == "all":
+            ds_description = {"fname", "ds", "num", "arr", "store"}
         if paths is not None:
             if dump is None:
                 dump = True
@@ -4245,64 +4733,74 @@ class ArrayList(list):
         elif dump is None:
             dump = False
         if pwd is None:
-            pwd = getcwd()
+            pwd = os.getcwd()
         for arr in self:
             if isinstance(arr, InteractiveList):
                 ret[arr.arr_name] = arr.array_info(
-                    dump, paths, pwd=pwd, attrs=attrs,
+                    dump,
+                    paths,
+                    pwd=pwd,
+                    attrs=attrs,
                     standardize_dims=standardize_dims,
-                    use_rel_paths=use_rel_paths, ds_description=ds_description,
-                    alternative_paths=alternative_paths, copy=copy,
-                    _saved_ds=saved_ds, **kwargs)
+                    use_rel_paths=use_rel_paths,
+                    ds_description=ds_description,
+                    alternative_paths=alternative_paths,
+                    copy=copy,
+                    _saved_ds=saved_ds,
+                    **kwargs,
+                )
             else:
                 if standardize_dims:
                     idims = arr.psy.decoder.standardize_dims(
-                        next(arr.psy.iter_base_variables), arr.psy.idims)
+                        next(arr.psy.iter_base_variables), arr.psy.idims
+                    )
                 else:
                     idims = arr.psy.idims
-                ret[arr.psy.arr_name] = d = {'dims': idims}
-                if 'variable' in arr.coords:
-                    d['name'] = [list(arr.coords['variable'].values)]
+                ret[arr.psy.arr_name] = d = {"dims": idims}
+                if "variable" in arr.coords:
+                    d["name"] = [list(arr.coords["variable"].values)]
                 else:
-                    d['name'] = arr.name
-                if 'fname' in ds_description or 'store' in ds_description:
+                    d["name"] = arr.name
+                if "fname" in ds_description or "store" in ds_description:
                     fname, store_mod, store_cls = get_filename_ds(
-                        arr.psy.base, dump=dump, paths=paths, **kwargs)
-                    if 'store' in ds_description:
-                        d['store'] = (store_mod, store_cls)
-                    if 'fname' in ds_description:
-                        d['fname'] = []
+                        arr.psy.base, dump=dump, paths=paths, **kwargs
+                    )
+                    if "store" in ds_description:
+                        d["store"] = (store_mod, store_cls)
+                    if "fname" in ds_description:
+                        d["fname"] = []
                         for i, f in enumerate(safe_list(fname)):
-                            if (f is None or utils.is_remote_url(f)):
-                                d['fname'].append(f)
+                            if f is None or utils.is_remote_url(f):
+                                d["fname"].append(f)
                             else:
                                 found, f = get_alternative(f)
                                 if use_rel_paths:
                                     f = osp.relpath(f, pwd)
                                 else:
                                     f = osp.abspath(f)
-                                d['fname'].append(f)
-                        if fname is None or isinstance(fname,
-                                                       six.string_types):
-                            d['fname'] = d['fname'][0]
+                                d["fname"].append(f)
+                        if fname is None or isinstance(
+                            fname, six.string_types
+                        ):
+                            d["fname"] = d["fname"][0]
                         else:
-                            d['fname'] = tuple(safe_list(fname))
+                            d["fname"] = tuple(safe_list(fname))
                         if arr.psy.base.psy._concat_dim is not None:
-                            d['concat_dim'] = arr.psy.base.psy._concat_dim
+                            d["concat_dim"] = arr.psy.base.psy._concat_dim
                         if arr.psy.base.psy._combine is not None:
-                            d['combine'] = arr.psy.base.psy._combine
-                if 'ds' in ds_description:
+                            d["combine"] = arr.psy.base.psy._combine
+                if "ds" in ds_description:
                     if full_ds:
-                        d['ds'] = copy_obj(arr.psy.base)
+                        d["ds"] = copy_obj(arr.psy.base)
                     else:
-                        d['ds'] = copy_obj(arr.to_dataset())
-                if 'num' in ds_description:
-                    d['num'] = arr.psy.base.psy.num
-                if 'arr' in ds_description:
-                    d['arr'] = copy_obj(arr)
+                        d["ds"] = copy_obj(arr.to_dataset())
+                if "num" in ds_description:
+                    d["num"] = arr.psy.base.psy.num
+                if "arr" in ds_description:
+                    d["arr"] = copy_obj(arr)
                 if attrs:
-                    d['attrs'] = arr.attrs
-        ret['attrs'] = self.attrs
+                    d["attrs"] = arr.attrs
+        ret["attrs"] = self.attrs
         return ret
 
     def _get_tnames(self):
@@ -4312,13 +4810,23 @@ class ArrayList(list):
             if isinstance(arr, InteractiveList):
                 tnames.update(arr.get_tnames())
             else:
-                tnames.add(arr.psy.decoder.get_tname(
-                    next(arr.psy.iter_base_variables), arr.coords))
+                tnames.add(
+                    arr.psy.decoder.get_tname(
+                        next(arr.psy.iter_base_variables), arr.coords
+                    )
+                )
         return tnames - {None}
 
     @docstrings.dedent
-    def _register_update(self, method='isel', replot=False, dims={}, fmt={},
-                         force=False, todefault=False):
+    def _register_update(
+        self,
+        method="isel",
+        replot=False,
+        dims={},
+        fmt={},
+        force=False,
+        todefault=False,
+    ):
         """
         Register new dimensions and formatoptions for updating. The keywords
         are the same as for each single array
@@ -4328,10 +4836,16 @@ class ArrayList(list):
         %(InteractiveArray._register_update.parameters)s"""
 
         for arr in self:
-            arr.psy._register_update(method=method, replot=replot, dims=dims,
-                                     fmt=fmt, force=force, todefault=todefault)
+            arr.psy._register_update(
+                method=method,
+                replot=replot,
+                dims=dims,
+                fmt=fmt,
+                force=force,
+                todefault=todefault,
+            )
 
-    @docstrings.get_sections(base='ArrayList.start_update')
+    @docstrings.get_sections(base="ArrayList.start_update")
     @dedent
     def start_update(self, draw=None):
         """
@@ -4352,16 +4866,22 @@ class ArrayList(list):
         See Also
         --------
         :attr:`no_auto_update`, update"""
+
         def worker(arr):
             results[arr.psy.arr_name] = arr.psy.start_update(
-                draw=False, queues=queues)
+                draw=False, queues=queues
+            )
+
         if len(self) == 0:
             return
 
         results = {}
-        threads = [Thread(target=worker, args=(arr,),
-                          name='update_%s' % arr.psy.arr_name)
-                   for arr in self]
+        threads = [
+            Thread(
+                target=worker, args=(arr,), name="update_%s" % arr.psy.arr_name
+            )
+            for arr in self
+        ]
         jobs = [arr.psy._njobs for arr in self]
         queues = [Queue() for _ in range(max(map(len, jobs)))]
         # populate the queues
@@ -4376,21 +4896,33 @@ class ArrayList(list):
         for thread in threads:
             thread.join()
         if draw is None:
-            draw = rcParams['auto_draw']
+            draw = rcParams["auto_draw"]
         if draw:
-            self(arr_name=[name for name, adraw in six.iteritems(results)
-                           if adraw]).draw()
-            if rcParams['auto_show']:
+            self(
+                arr_name=[
+                    name for name, adraw in six.iteritems(results) if adraw
+                ]
+            ).draw()
+            if rcParams["auto_show"]:
                 self.show()
 
-    docstrings.keep_params('InteractiveArray.update.parameters',
-                           'auto_update')
+    docstrings.keep_params("InteractiveArray.update.parameters", "auto_update")
 
-    @docstrings.get_sections(base='ArrayList.update')
+    @docstrings.get_sections(base="ArrayList.update")
     @docstrings.dedent
-    def update(self, method='isel', dims={}, fmt={}, replot=False,
-               auto_update=False, draw=None, force=False, todefault=False,
-               enable_post=None, **kwargs):
+    def update(
+        self,
+        method="isel",
+        dims={},
+        fmt={},
+        replot=False,
+        auto_update=False,
+        draw=None,
+        force=False,
+        todefault=False,
+        enable_post=None,
+        **kwargs,
+    ):
         """
         Update the coordinates and the plot
 
@@ -4418,14 +4950,21 @@ class ArrayList(list):
         no_auto_update, start_update"""
         dims = dict(dims)
         fmt = dict(fmt)
-        vars_and_coords = set(chain(
-            self.dims, self.coords, ['name', 'x', 'y', 'z', 't']))
+        vars_and_coords = set(
+            chain(self.dims, self.coords, ["name", "x", "y", "z", "t"])
+        )
         furtherdims, furtherfmt = utils.sort_kwargs(kwargs, vars_and_coords)
         dims.update(furtherdims)
         fmt.update(furtherfmt)
 
-        self._register_update(method=method, replot=replot, dims=dims, fmt=fmt,
-                              force=force, todefault=todefault)
+        self._register_update(
+            method=method,
+            replot=replot,
+            dims=dims,
+            fmt=fmt,
+            force=force,
+            todefault=todefault,
+        )
         if enable_post is not None:
             for arr in self.with_plotter:
                 arr.psy.plotter.enable_post = enable_post
@@ -4434,8 +4973,11 @@ class ArrayList(list):
 
     def draw(self):
         """Draws all the figures in this instance"""
-        for fig in set(chain(*map(
-                lambda arr: arr.psy.plotter.figs2draw, self.with_plotter))):
+        for fig in set(
+            chain(
+                *map(lambda arr: arr.psy.plotter.figs2draw, self.with_plotter)
+            )
+        ):
             self.logger.debug("Drawing figure %s", fig.number)
             fig.canvas.draw()
         for arr in self:
@@ -4443,7 +4985,7 @@ class ArrayList(list):
                 arr.psy.plotter._figs2draw.clear()
         self.logger.debug("Done drawing.")
 
-    def __call__(self, types=None, method='isel', fmts=[], **attrs):
+    def __call__(self, types=None, method="isel", fmts=[], **attrs):
         """Get the arrays specified by their attributes
 
         Parameters
@@ -4468,34 +5010,45 @@ class ArrayList(list):
             Values may be iterables (e.g. lists) of the attributes to consider
             or callable functions that accept the attribute as a value. If the
             value is a string, it will be put into a list."""
+
         def safe_item_list(key, val):
             return key, val if callable(val) else safe_list(val)
 
         def filter_list(arr):
             other_attrs = attrs.copy()
-            arr_names = other_attrs.pop('arr_name', None)
-            return ((arr_names is None or (
-                        arr_names(arr.psy.arr_name) if callable(arr_names)
-                        else arr.psy.arr_name in arr_names)) and
-                    len(arr) == len(arr(types=types, method=method,
-                                        **other_attrs)))
+            arr_names = other_attrs.pop("arr_name", None)
+            return (
+                arr_names is None
+                or (
+                    arr_names(arr.psy.arr_name)
+                    if callable(arr_names)
+                    else arr.psy.arr_name in arr_names
+                )
+            ) and len(arr) == len(
+                arr(types=types, method=method, **other_attrs)
+            )
+
         if not attrs:
+
             def filter_by_attrs(arr):
                 return True
-        elif method == 'sel':
+
+        elif method == "sel":
+
             def filter_by_attrs(arr):
                 if isinstance(arr, InteractiveList):
                     return filter_list(arr)
                 tname = arr.psy.decoder.get_tname(
-                    next(six.itervalues(arr.psy.base_variables)))
+                    next(six.itervalues(arr.psy.base_variables))
+                )
 
                 def check_values(arr, key, vals):
-                    if key == 'arr_name':
+                    if key == "arr_name":
                         attr = arr.psy.arr_name
-                    elif key == 'ax':
+                    elif key == "ax":
                         attr = arr.psy.ax
-                    elif key == 'fig':
-                        attr = getattr(arr.psy.ax, 'figure', None)
+                    elif key == "fig":
+                        attr = getattr(arr.psy.ax, "figure", None)
                     else:
                         try:
                             attr = getattr(arr, key)
@@ -4503,8 +5056,7 @@ class ArrayList(list):
                             return False
                     if np.ndim(attr):  # do not filter for multiple items
                         return False
-                    if hasattr(arr.psy, 'decoder') and (
-                            arr.name == tname):
+                    if hasattr(arr.psy, "decoder") and (arr.name == tname):
                         try:
                             vals = np.asarray(vals, dtype=np.datetime64)
                         except ValueError:
@@ -4513,20 +5065,28 @@ class ArrayList(list):
                             return attr.values.astype(vals.dtype) in vals
                     if callable(vals):
                         return vals(attr)
-                    return getattr(attr, 'values', attr) in vals
+                    return getattr(attr, "values", attr) in vals
+
                 return all(
                     check_values(arr, key, val)
                     for key, val in six.iteritems(
-                        arr.psy.decoder.correct_dims(next(six.itervalues(
-                            arr.psy.base_variables)), attrs, remove=False)))
+                        arr.psy.decoder.correct_dims(
+                            next(six.itervalues(arr.psy.base_variables)),
+                            attrs,
+                            remove=False,
+                        )
+                    )
+                )
+
         else:
+
             def check_values(arr, key, vals):
-                if key == 'arr_name':
+                if key == "arr_name":
                     attr = arr.psy.arr_name
-                elif key == 'ax':
+                elif key == "ax":
                     attr = arr.psy.ax
-                elif key == 'fig':
-                    attr = getattr(arr.psy.ax, 'figure', None)
+                elif key == "fig":
+                    attr = getattr(arr.psy.ax, "figure", None)
                 elif key in arr.coords:
                     attr = arr.psy.idims[key]
                 else:
@@ -4546,23 +5106,37 @@ class ArrayList(list):
                 return all(
                     check_values(arr, key, val)
                     for key, val in six.iteritems(
-                        arr.psy.decoder.correct_dims(next(six.itervalues(
-                            arr.psy.base_variables)), attrs, remove=False)))
+                        arr.psy.decoder.correct_dims(
+                            next(six.itervalues(arr.psy.base_variables)),
+                            attrs,
+                            remove=False,
+                        )
+                    )
+                )
+
         attrs = dict(starmap(safe_item_list, six.iteritems(attrs)))
         ret = self.__class__(
             # iterable
-            (arr for arr in self if
-             (types is None or isinstance(arr.psy.plotter, types)) and
-             filter_by_attrs(arr)),
+            (
+                arr
+                for arr in self
+                if (types is None or isinstance(arr.psy.plotter, types))
+                and filter_by_attrs(arr)
+            ),
             # give itself as base and the auto_update parameter
-            auto_update=bool(self.auto_update))
+            auto_update=bool(self.auto_update),
+        )
         # now filter for the formatoptions
         if fmts:
             fmts = set(safe_list(fmts))
             ret = self.__class__(
-                filter(lambda arr: (arr.psy.plotter and
-                                    fmts <= set(arr.psy.plotter)),
-                       ret))
+                filter(
+                    lambda arr: (
+                        arr.psy.plotter and fmts <= set(arr.psy.plotter)
+                    ),
+                    ret,
+                )
+            )
         return ret
 
     def __contains__(self, val):
@@ -4572,16 +5146,18 @@ class ArrayList(list):
             return False
         else:
             return name in self.arr_names and (
-                isstring(val) or self._contains_array(val))
+                isstring(val) or self._contains_array(val)
+            )
 
     def _contains_array(self, val):
         """Checks whether exactly this array is in the list"""
         arr = self(arr_name=val.psy.arr_name)[0]
         is_not_list = any(
-            map(lambda a: not isinstance(a, InteractiveList),
-                [arr, val]))
-        is_list = any(map(lambda a: isinstance(a, InteractiveList),
-                          [arr, val]))
+            map(lambda a: not isinstance(a, InteractiveList), [arr, val])
+        )
+        is_list = any(
+            map(lambda a: isinstance(a, InteractiveList), [arr, val])
+        )
         # if one is an InteractiveList and the other not, they differ
         if is_list and is_not_list:
             return False
@@ -4594,19 +5170,22 @@ class ArrayList(list):
     def _short_info(self, intend=0, maybe=False):
         if maybe:
             intend = 0
-        str_intend = ' ' * intend
+        str_intend = " " * intend
         if len(self) == 1:
             return str_intend + "%s%s.%s([%s])" % (
-                '' if not hasattr(self, 'arr_name') else self.arr_name + ': ',
-                self.__class__.__module__, self.__class__.__name__,
-                self[0].psy._short_info(intend+4, maybe=True))
+                "" if not hasattr(self, "arr_name") else self.arr_name + ": ",
+                self.__class__.__module__,
+                self.__class__.__name__,
+                self[0].psy._short_info(intend + 4, maybe=True),
+            )
         return str_intend + "%s%s.%s([\n%s])" % (
-            '' if not hasattr(self, 'arr_name') else self.arr_name + ': ',
-            self.__class__.__module__, self.__class__.__name__,
+            "" if not hasattr(self, "arr_name") else self.arr_name + ": ",
+            self.__class__.__module__,
+            self.__class__.__name__,
             ",\n".join(
-                '%s' % (
-                    arr.psy._short_info(intend+4))
-                for arr in self))
+                "%s" % (arr.psy._short_info(intend + 4)) for arr in self
+            ),
+        )
 
     def __str__(self):
         return self._short_info()
@@ -4618,16 +5197,16 @@ class ArrayList(list):
         """Overwrites lists __getitem__ by returning an ArrayList if `key` is a
         slice"""
         if isinstance(key, slice):  # return a new ArrayList
-            return self.__class__(
-                super(ArrayList, self).__getitem__(key))
+            return self.__class__(super(ArrayList, self).__getitem__(key))
         else:  # return the item
             return super(ArrayList, self).__getitem__(key)
 
     if six.PY2:  # for compatibility to python 2.7
+
         def __getslice__(self, *args):
             return self[slice(*args)]
 
-    def next_available_name(self, fmt_str='arr{0}', counter=None):
+    def next_available_name(self, fmt_str="arr{0}", counter=None):
         """Create a new array out of the given format string
 
         Parameters
@@ -4646,11 +5225,10 @@ class ArrayList(list):
         counter = counter or iter(range(1000))
         try:
             new_name = next(
-                filter(lambda n: n not in names,
-                       map(fmt_str.format, counter)))
+                filter(lambda n: n not in names, map(fmt_str.format, counter))
+            )
         except StopIteration:
-            raise ValueError(
-                "{0} already in the list".format(fmt_str))
+            raise ValueError("{0} already in the list".format(fmt_str))
         return new_name
 
     @docstrings.dedent
@@ -4694,9 +5272,13 @@ class ArrayList(list):
         --------
         list.extend, append, rename"""
         # extend those arrays that aren't alredy in the list
-        super(ArrayList, self).extend(t[0] for t in filter(
-            lambda t: t[1] is not None, (
-                self.rename(arr, new_name) for arr in iterable)))
+        super(ArrayList, self).extend(
+            t[0]
+            for t in filter(
+                lambda t: t[1] is not None,
+                (self.rename(arr, new_name) for arr in iterable),
+            )
+        )
 
     def remove(self, arr):
         """Removes an array from the list
@@ -4712,17 +5294,15 @@ class ArrayList(list):
             If no array with the specified array name is in the list"""
         name = arr if isinstance(arr, six.string_types) else arr.psy.arr_name
         if arr not in self:
-            raise ValueError(
-                "Array {0} not in the list".format(name))
+            raise ValueError("Array {0} not in the list".format(name))
         for i, arr in enumerate(self):
             if arr.psy.arr_name == name:
                 del self[i]
                 return
-        raise ValueError(
-            "No array found with name {0}".format(name))
+        raise ValueError("No array found with name {0}".format(name))
 
 
-@xr.register_dataset_accessor('psy')
+@xr.register_dataset_accessor("psy")
 class DatasetAccessor(object):
     """A dataset accessor to interface with the psyplot package"""
 
@@ -4770,6 +5350,7 @@ class DatasetAccessor(object):
         """
         if self._plot is None:
             import psyplot.project as psy
+
             self._plot = psy.DatasetPlotter(self.ds)
         return self._plot
 
@@ -4791,7 +5372,7 @@ class DatasetAccessor(object):
         dataset"""
         store_info = self._data_store
         if store_info is None or any(s is None for s in store_info):
-            store = getattr(self.ds, '_file_obj', None)
+            store = getattr(self.ds, "_file_obj", None)
             store_mod = store.__module__ if store is not None else None
             store_cls = store.__class__.__name__ if store is not None else None
             return store_mod, store_cls
@@ -4839,13 +5420,14 @@ class DatasetAccessor(object):
         return ret
 
     def __getattr__(self, attr):
-        if attr != 'ds' and attr in self.ds:
+        if attr != "ds" and attr in self.ds:
             ret = getattr(self.ds, attr)
             ret.psy.base = self.ds
             return ret
         else:
-            raise AttributeError("%s has not Attribute %s" % (
-                self.__class__.__name__, attr))
+            raise AttributeError(
+                "%s has not Attribute %s" % (self.__class__.__name__, attr)
+            )
 
     def copy(self, deep=False):
         """Copy the array
@@ -4864,8 +5446,9 @@ class InteractiveList(ArrayList, InteractiveBase):
     through :class:`psyplot.plotter.Plotter` classes. It is mainly used by the
     :mod:`psyplot.plotter.simple` module"""
 
-    no_auto_update = property(_no_auto_update_getter,
-                              doc=_no_auto_update_getter.__doc__)
+    no_auto_update = property(
+        _no_auto_update_getter, doc=_no_auto_update_getter.__doc__
+    )
 
     @no_auto_update.setter
     def no_auto_update(self, value):
@@ -4887,7 +5470,7 @@ class InteractiveList(ArrayList, InteractiveBase):
 
     logger = InteractiveBase.logger
 
-    docstrings.delete_params('InteractiveBase.parameters', 'auto_update')
+    docstrings.delete_params("InteractiveBase.parameters", "auto_update")
 
     @docstrings.dedent
     def __init__(self, *args, **kwargs):
@@ -4897,15 +5480,23 @@ class InteractiveList(ArrayList, InteractiveBase):
         %(ArrayList.parameters)s
         %(InteractiveBase.parameters.no_auto_update)s"""
         ibase_kwargs, array_kwargs = utils.sort_kwargs(
-            kwargs, ['plotter', 'arr_name'])
+            kwargs, ["plotter", "arr_name"]
+        )
         self._registered_updates = {}
         InteractiveBase.__init__(self, **ibase_kwargs)
         with self.block_signals:
             ArrayList.__init__(self, *args, **kwargs)
 
     @docstrings.dedent
-    def _register_update(self, method='isel', replot=False, dims={}, fmt={},
-                         force=False, todefault=False):
+    def _register_update(
+        self,
+        method="isel",
+        replot=False,
+        dims={},
+        fmt={},
+        force=False,
+        todefault=False,
+    ):
         """
         Register new dimensions and formatoptions for updating
 
@@ -4913,9 +5504,13 @@ class InteractiveList(ArrayList, InteractiveBase):
         ----------
         %(InteractiveArray._register_update.parameters)s"""
         ArrayList._register_update(self, method=method, dims=dims)
-        InteractiveBase._register_update(self, fmt=fmt, todefault=todefault,
-                                         replot=bool(dims) or replot,
-                                         force=force)
+        InteractiveBase._register_update(
+            self,
+            fmt=fmt,
+            todefault=todefault,
+            replot=bool(dims) or replot,
+            force=force,
+        )
 
     @docstrings.dedent
     def start_update(self, draw=None, queues=None):
@@ -4956,24 +5551,27 @@ class InteractiveList(ArrayList, InteractiveBase):
     def to_dataframe(self):
         def to_df(arr):
             df = arr.to_pandas()
-            if hasattr(df, 'to_frame'):
+            if hasattr(df, "to_frame"):
                 df = df.to_frame()
             if not keep_names:
                 return df.rename(columns={df.keys()[0]: arr.psy.arr_name})
             return df
+
         if len(self) == 1:
             return self[0].to_series().to_frame()
         else:
             keep_names = len(set(arr.name for arr in self)) == self
             df = to_df(self[0])
             for arr in self[1:]:
-                df = df.merge(to_df(arr), left_index=True, right_index=True,
-                              how='outer')
+                df = df.merge(
+                    to_df(arr), left_index=True, right_index=True, how="outer"
+                )
             return df
 
-    docstrings.delete_params('ArrayList.from_dataset.parameters', 'plotter')
-    docstrings.delete_kwargs('ArrayList.from_dataset.other_parameters',
-                             'args', 'kwargs')
+    docstrings.delete_params("ArrayList.from_dataset.parameters", "plotter")
+    docstrings.delete_kwargs(
+        "ArrayList.from_dataset.other_parameters", "args", "kwargs"
+    )
 
     @classmethod
     @docstrings.dedent
@@ -5000,8 +5598,8 @@ class InteractiveList(ArrayList, InteractiveBase):
         Returns
         -------
         %(ArrayList.from_dataset.returns)s"""
-        plotter = kwargs.pop('plotter', None)
-        make_plot = kwargs.pop('make_plot', True)
+        plotter = kwargs.pop("plotter", None)
+        make_plot = kwargs.pop("make_plot", True)
         instance = super(InteractiveList, cls).from_dataset(*args, **kwargs)
         if plotter is not None:
             plotter.initialize_plot(instance, make_plot=make_plot)
@@ -5025,6 +5623,7 @@ class _MissingModule(object):
     """Class that can be used if an optional module is not avaible.
 
     This class raises an error if any attribute is accessed or it is called"""
+
     def __init__(self, error):
         """
         Parameters
@@ -5055,10 +5654,12 @@ def _open_ds_from_store(fname, store_mod=None, store_cls=None, **kwargs):
                     store_mod = repeat(store_mod)
                 if isstring(store_cls):
                     store_cls = repeat(store_cls)
-                fname = [_open_store(sm, sc, f)
-                         for sm, sc, f in zip(store_mod, store_cls, fname)]
-                kwargs['engine'] = None
-                kwargs['lock'] = False
+                fname = [
+                    _open_store(sm, sc, f)
+                    for sm, sc, f in zip(store_mod, store_cls, fname)
+                ]
+                kwargs["engine"] = None
+                kwargs["lock"] = False
                 return open_mfdataset(fname, **kwargs)
             else:
                 # try guessing with open_dataset
@@ -5076,21 +5677,24 @@ def decode_absolute_time(times):
         # round microseconds
         if rest.microseconds:
             rest += dt.timedelta(microseconds=1e6 - rest.microseconds)
-        return np.datetime64(dt.datetime.strptime(
-            "%i" % day, "%Y%m%d") + rest)
+        return np.datetime64(dt.datetime.strptime("%i" % day, "%Y%m%d") + rest)
+
     return np.vectorize(decode, [np.datetime64])(times)
 
 
 def encode_absolute_time(times):
     def encode(t):
         t = to_datetime(t)
-        return float(t.strftime('%Y%m%d')) + (
-            t - dt.datetime(t.year, t.month, t.day)).total_seconds() / 86400.
+        return (
+            float(t.strftime("%Y%m%d"))
+            + (t - dt.datetime(t.year, t.month, t.day)).total_seconds()
+            / 86400.0
+        )
+
     return np.vectorize(encode, [float])(times)
 
 
 class AbsoluteTimeDecoder(NDArrayMixin):
-
     def __init__(self, array):
         self.array = array
         example_value = first_n_items(array, 1) or 0
@@ -5100,7 +5704,7 @@ class AbsoluteTimeDecoder(NDArrayMixin):
             logger.error("Could not interprete absolute time values!")
             raise
         else:
-            self._dtype = getattr(result, 'dtype', np.dtype('object'))
+            self._dtype = getattr(result, "dtype", np.dtype("object"))
 
     @property
     def dtype(self):
@@ -5111,7 +5715,6 @@ class AbsoluteTimeDecoder(NDArrayMixin):
 
 
 class AbsoluteTimeEncoder(NDArrayMixin):
-
     def __init__(self, array):
         self.array = array
         example_value = first_n_items(array, 1) or 0
@@ -5121,7 +5724,7 @@ class AbsoluteTimeEncoder(NDArrayMixin):
             logger.error("Could not interprete absolute time values!")
             raise
         else:
-            self._dtype = getattr(result, 'dtype', np.dtype('object'))
+            self._dtype = getattr(result, "dtype", np.dtype("object"))
 
     @property
     def dtype(self):

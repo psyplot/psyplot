@@ -1,0 +1,58 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# https://pre-commit.com/
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+  # isort should run before black as black sometimes tweaks the isort output
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args:
+          - --profile
+          - black
+          - --line-length
+          - "79"
+          - --filter-files
+          - -skip-gitignore
+          - --float-to-top
+  # https://github.com/python/black#version-control-integration
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+        args:
+          - --line-length
+          - "79"
+          - --exclude
+          - venv
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+  # - repo: https://github.com/pre-commit/mirrors-mypy  # disabled for now
+  #   rev: v1.0.1
+  #   hooks:
+  #     - id: mypy
+  #       additional_dependencies:
+  #         - types-PyYAML
+  #       args:
+  #         - --ignore-missing-imports
+
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v1.1.2
+    hooks:
+      - id: reuse
+
+  - repo: https://github.com/citation-file-format/cff-converter-python
+    # there is no release with this hook yet
+    rev: "44e8fc9"
+    hooks:
+      - id: validate-cff

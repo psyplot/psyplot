@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _about:
 
 About psyplot
@@ -66,7 +70,7 @@ What it is
 
   .. code-block:: python
 
-      psy.plot.mapplot('my-netcdf-file.nc', lonlatbox='Germany')
+      psy.plot.mapplot("my-netcdf-file.nc", lonlatbox="Germany")
 
   while still providing a very high range of flexible options to adjust the
   visualization. No GUI, independent of it's intuitiveness, can ever beat the
@@ -93,7 +97,7 @@ What it is
     plotting methods
 - it will always be free and open-source under the LGPL License.
 
-.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _ICON: https://code.mpimet.mpg.de/projects/iconpublic
 .. _UGRID: https://ugrid-conventions.github.io/ugrid-conventions/
 
 

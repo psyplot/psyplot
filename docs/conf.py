@@ -1,294 +1,269 @@
-# -*- coding: utf-8 -*-
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
 #
-# psyplot documentation build configuration file
-#
+# SPDX-License-Identifier: LGPL-3.0-only
 
-# Disclaimer
-# ----------
+# Configuration file for the Sphinx documentation builder.
 #
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# This file only contains a selection of the most common options. For a full
+# list see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+# -- Path setup --------------------------------------------------------------
 
-import sphinx
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+#
 import os
-import os.path as osp
 import sys
-import re
-import six
-import subprocess as spr
-from itertools import product
 import warnings
+from itertools import product
+from pathlib import Path
 
-if six.PY2:
-    from urllib import urlopen
-else:
-    from urllib.request import urlopen
+from sphinx.ext import apidoc
 
 # make sure, psyplot from parent directory is used
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath(".."))
+
+# isort: off
+
 import psyplot
+
+# isort: on
+
 from psyplot.plotter import Formatoption, Plotter
 
 # automatically import all plotter classes
-psyplot.rcParams['project.auto_import'] = True
+psyplot.rcParams["project.auto_import"] = True
 # include links to the formatoptions in the documentation of the
 # :attr:`psyplot.project.ProjectPlotter` methods
 Plotter.include_links(True)
 
-warnings.filterwarnings('ignore', message="axes.color_cycle is deprecated")
+warnings.filterwarnings("ignore", message="axes.color_cycle is deprecated")
 warnings.filterwarnings(
-    'ignore', message=("This has been deprecated in mpl 1.5,"))
-warnings.filterwarnings('ignore', message="invalid value encountered in ")
-warnings.filterwarnings('ignore', message=r"\s*examples.directory")
-warnings.filterwarnings('ignore', message='numpy.dtype size changed')
+    "ignore", message=("This has been deprecated in mpl 1.5,")
+)
+warnings.filterwarnings("ignore", message="invalid value encountered in ")
+warnings.filterwarnings("ignore", message=r"\s*examples.directory")
+warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings(
-    'ignore', message='Using an implicitly registered datetime converter')
+    "ignore", message="Using an implicitly registered datetime converter"
+)
 warnings.filterwarnings(
-    'ignore', message=r"\s*The on_mappable_changed function")
+    "ignore", message=r"\s*The on_mappable_changed function"
+)
 warnings.filterwarnings(
-    'ignore', message=r".+multi-part geometries is deprecated")
+    "ignore", message=r".+multi-part geometries is deprecated"
+)
 warnings.filterwarnings(
-    'ignore', message=r"\s*The array interface is deprecated")
+    "ignore", message=r"\s*The array interface is deprecated"
+)
 
-# -- General configuration ------------------------------------------------
+
+def generate_apidoc(app):
+    appdir = Path(app.__file__).parent
+    apidoc.main(
+        ["-fMEeTo", str(api), str(appdir), str(appdir / "migrations" / "*")]
+    )
+
+
+api = Path("api")
+
+if not api.exists():
+    generate_apidoc(psyplot)
+
+# -- Project information -----------------------------------------------------
+
+project = "psyplot"
+copyright = "2021-2024 Helmholtz-Zentrum hereon GmbH"
+author = "Philipp S. Sommer"
+
+
+linkcheck_ignore = [
+    # we do not check link of the psyplot as the
+    # badges might not yet work everywhere. Once psyplot
+    # is settled, the following link should be removed
+    r"https://.*psyplot"
+    # HACK: SNF seems to have a temporary problem
+    r"https://p3.snf.ch/project-\d+",
+]
+
+linkcheck_anchors_ignore = ["^install$"]
+
+
+# -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.todo',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.extlinks',
-    'matplotlib.sphinxext.plot_directive',
-    'IPython.sphinxext.ipython_console_highlighting',
-    'IPython.sphinxext.ipython_directive',
-    'sphinxarg.ext',
-    'psyplot.sphinxext.extended_napoleon',
-    'autodocsumm',
-    'sphinx.ext.imgconverter',
+    "hereon_nc_sphinxext",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx_design",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.extlinks",
+    "matplotlib.sphinxext.plot_directive",
+    "IPython.sphinxext.ipython_console_highlighting",
+    "IPython.sphinxext.ipython_directive",
+    "sphinxarg.ext",
+    "psyplot.sphinxext.extended_napoleon",
+    "autodocsumm",
+    "sphinx.ext.imgconverter",
 ]
+
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
-
-linkcheck_anchors_ignore = ["^install$"]
-
-linkcheck_ignore = [
-    # HACK: SNF seems to have a temporary problem
-    r"https://p3.snf.ch/project-\d+",
-]
-
-# create the api documentation
-if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
-    spr.check_call(['bash', 'apigen.bash'])
-
-napoleon_use_admonition_for_examples = True
-
-# The suffix(es) of source filenames.
-# You can specify multiple suffix as a list of string:
-source_suffix = '.rst'
-
-# The master toctree document.
-master_doc = 'index'
-
-autodoc_default_options = {
-    'show_inheritance': True,
-    'autosummary': True,
-}
-
-autoclass_content = 'both'
-
-not_document_data = ['psyplot.config.rcsetup.defaultParams',
-                     'psyplot.config.rcsetup.rcParams']
-
-ipython_savefig_dir = os.path.join(os.path.dirname(__file__), '_static')
-
-# General information about the project.
-project = 'psyplot'
-copyright = ", ".join(
-    psyplot.__copyright__.strip().replace("Copyright (C) ", "").splitlines()
-)
-author = psyplot.__author__
-
-# The version info for the project you're documenting, acts as replacement for
-# |version| and |release|, also used in various other places throughout the
-# built documents.
-#
-# The short X.Y version.
-version = re.match('\d+\.\d+\.\d+', psyplot.__version__).group()
-# The full version, including alpha/beta/rc tags.
-release = psyplot.__version__
-
-# The language for content autogenerated by Sphinx. Refer to documentation
-# for a list of supported languages.
-#
-# This is also used if you do content translation via gettext catalogs.
-# Usually you set "language" from the command line for these cases.
-language = None
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+# This pattern also affects html_static_path and html_extra_path.
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
-# The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
-
-# If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
+napoleon_use_admonition_for_examples = True
 
 
-# -- Options for HTML output ----------------------------------------------
+autodoc_default_options = {
+    "show_inheritance": True,
+    "members": True,
+    "autosummary": True,
+}
+
+autoclass_content = "both"
+
+not_document_data = [
+    "psyplot.config.rcsetup.defaultParams",
+    "psyplot.config.rcsetup.rcParams",
+]
+
+ipython_savefig_dir = "_static"
+
+# fontawesome icons
+html_css_files = [
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+]
+
+sd_fontawesome_latex = True
+
+# -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 
-# Add any paths that contain custom static files (such as style sheets)
-# here, relative to this directory. They are copied after the builtin
-# static files, so a file named "default.css" will overwrite the builtin
-# "default.css".
-html_static_path = ['_static']
+html_theme_options = {
+    "collapse_navigation": False,
+    "includehidden": False,
+}
 
-# Output file base name for HTML help builder.
-htmlhelp_basename = 'psyplotdoc'
+# Add any paths that contain custom static files (such as style sheets) here,
+# relative to this directory. They are copied after the builtin static files,
+# so a file named "default.css" will overwrite the builtin "default.css".
+html_static_path = ["_static"]
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = '_static/psyplot.png'
+html_logo = "_static/psyplot.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = '_static/psyplot.ico'
-
-# Custom sidebar templates, maps document names to template names.
-html_sidebars = {
-    'index': ['sidebarlogo.html', 'sidebarusefullinks.html', 'searchbox.html'],
-    '**': ['sidebarlogo.html', 'relations.html', 'searchbox.html',
-           'localtoc.html', 'sidebarusefullinks.html']
-}
+html_favicon = "_static/psyplot.ico"
 
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
     # Additional stuff for the LaTeX preamble.
-    'preamble': '\setcounter{tocdepth}{10}'
+    "preamble": r"\setcounter{tocdepth}{10}"
 }
 
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-  (master_doc, 'psyplot.tex', u'psyplot Documentation',
-   author, 'manual'),
-]
-
-
-# -- Options for manual page output ---------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'psyplot', u'psyplot Documentation',
-     [author], 1)
-]
-
-
-# -- Options for Texinfo output -------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-texinfo_documents = [
-  (master_doc, 'psyplot', u'psyplot Documentation',
-   author, 'psyplot', 'Python framework for interactive data documentation',
-   'Miscellaneous'),
-]
-
-
-# -- Options for Epub output ----------------------------------------------
-
-# Bibliographic Dublin Core info.
-epub_title = project
-epub_author = author
-epub_publisher = author
-epub_copyright = copyright
-
-# A list of files that should not be packed into the epub file.
-epub_exclude_files = ['search.html']
-
-# Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
-    'numpy': ('https://numpy.org/doc/stable/', None),
-    'matplotlib': ('https://matplotlib.org/stable/', None),
-    'seaborn': ('https://seaborn.pydata.org/', None),
-    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
-    'xarray': ('https://xarray.pydata.org/en/stable/', None),
-    'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
-    'mpl_toolkits': ('https://matplotlib.org/basemap/', None),
-    'psy_maps': ('https://psyplot.github.io/psy-maps/', None),
-    'psy_simple': ('https://psyplot.github.io/psy-simple/', None),
-    'psy_reg': ('https://psyplot.github.io/psy-reg/', None),
-    'psyplot_gui': ('https://psyplot.github.io/psyplot-gui/', None),
-    'psy_view': ('https://psyplot.github.io/psy-view/', None),
-    "psyplot_examples": ('https://psyplot.github.io/examples/', None),
-    'python': ('https://docs.python.org/3/', None),
+    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "matplotlib": ("https://matplotlib.org/stable/", None),
+    "seaborn": ("https://seaborn.pydata.org/", None),
+    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+    "xarray": ("https://xarray.pydata.org/en/stable/", None),
+    "cartopy": ("https://scitools.org.uk/cartopy/docs/latest/", None),
+    "psy_maps": ("https://psyplot.github.io/psy-maps/", None),
+    "psy_simple": ("https://psyplot.github.io/psy-simple/", None),
+    "psy_reg": ("https://psyplot.github.io/psy-reg/", None),
+    "psyplot_gui": ("https://psyplot.github.io/psyplot-gui/", None),
+    "psy_view": ("https://psyplot.github.io/psy-view/", None),
+    "psyplot_examples": ("https://psyplot.github.io/examples/", None),
+    "python": ("https://docs.python.org/3/", None),
 }
 
 replacements = {
-    '`psyplot.rcParams`': '`~psyplot.config.rcsetup.rcParams`',
-    '`psyplot.InteractiveList`': '`~psyplot.data.InteractiveList`',
-    '`psyplot.InteractiveArray`': '`~psyplot.data.InteractiveArray`',
-    '`psyplot.open_dataset`': '`~psyplot.data.open_dataset`',
-    '`psyplot.open_mfdataset`': '`~psyplot.data.open_mfdataset`',
-    }
+    "`psyplot.rcParams`": "`~psyplot.config.rcsetup.rcParams`",
+    "`psyplot.InteractiveList`": "`~psyplot.data.InteractiveList`",
+    "`psyplot.InteractiveArray`": "`~psyplot.data.InteractiveArray`",
+    "`psyplot.open_dataset`": "`~psyplot.data.open_dataset`",
+    "`psyplot.open_mfdataset`": "`~psyplot.data.open_mfdataset`",
+}
 
 
 def link_aliases(app, what, name, obj, options, lines):
-    for (key, val), (i, line) in product(six.iteritems(replacements),
-                                         enumerate(lines)):
+    for (key, val), (i, line) in product(
+        replacements.items(), enumerate(lines)
+    ):
         lines[i] = line.replace(key, val)
 
 
 fmt_attrs_map = {
-    'Interface to other formatoptions': [
-        'children', 'dependencies', 'connections', 'parents',
-        'shared', 'shared_by'],
-    'Formatoption intrinsic': [
-        'value', 'value2share', 'value2pickle', 'default', 'validate'],
-    'Interface for the plotter': [
-        'lock', 'diff', 'set_value', 'check_and_set', 'initialize_plot',
-        'update', 'share', 'finish_update', 'remove', 'changed', 'plotter',
-        'priority', 'key', 'plot_fmt', 'update_after_plot',
-        'requires_clearing', 'requires_replot'],
-    'Interface to the data': ['data_dependent', 'index_in_list', 'project',
-                              'ax', 'raw_data', 'decoder', 'any_decoder',
-                              'data', 'iter_data', 'iter_raw_data',
-                              'set_data', 'set_decoder'],
-    'Information attributes': ['group', 'name', 'groupname', 'default_key'],
-    'Miscellaneous': ['init_kwargs', 'logger'],
+    "Interface to other formatoptions": [
+        "children",
+        "dependencies",
+        "connections",
+        "parents",
+        "shared",
+        "shared_by",
+    ],
+    "Formatoption intrinsic": [
+        "value",
+        "value2share",
+        "value2pickle",
+        "default",
+        "validate",
+    ],
+    "Interface for the plotter": [
+        "lock",
+        "diff",
+        "set_value",
+        "check_and_set",
+        "initialize_plot",
+        "update",
+        "share",
+        "finish_update",
+        "remove",
+        "changed",
+        "plotter",
+        "priority",
+        "key",
+        "plot_fmt",
+        "update_after_plot",
+        "requires_clearing",
+        "requires_replot",
+    ],
+    "Interface to the data": [
+        "data_dependent",
+        "index_in_list",
+        "project",
+        "ax",
+        "raw_data",
+        "decoder",
+        "any_decoder",
+        "data",
+        "iter_data",
+        "iter_raw_data",
+        "set_data",
+        "set_decoder",
+    ],
+    "Information attributes": ["group", "name", "groupname", "default_key"],
+    "Miscellaneous": ["init_kwargs", "logger"],
 }
 
 
@@ -296,10 +271,10 @@ def group_fmt_attributes(app, what, name, obj, section, parent):
     if parent is Formatoption:
         return next(
             (group for group, val in fmt_attrs_map.items() if name in val),
-            None)
+            None,
+        )
 
 
 def setup(app):
-    app.connect('autodoc-process-docstring', link_aliases)
-    app.connect('autodocsumm-grouper', group_fmt_attributes)
-    return {'version': sphinx.__display_version__, 'parallel_read_safe': True}
+    app.connect("autodoc-process-docstring", link_aliases)
+    app.connect("autodocsumm-grouper", group_fmt_attributes)

@@ -1,0 +1,43 @@
+{
+  "template": "https://codebase.helmholtz.cloud/hcdc/software-templates/python-package-template.git",
+  "commit": "2a291586c1d99092860b9cf26a034a285479131e",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_authors": "Philipp S. Sommer",
+      "project_author_emails": "philipp.sommer@hereon.de",
+      "project_maintainers": "Philipp S. Sommer",
+      "project_maintainer_emails": "philipp.sommer@hereon.de",
+      "gitlab_host": "codebase.helmholtz.cloud",
+      "gitlab_username": "psyplot",
+      "git_remote_protocoll": "ssh",
+      "institution": "Helmholtz-Zentrum Hereon",
+      "institution_url": "https://www.hereon.de",
+      "copyright_holder": "Helmholtz-Zentrum hereon GmbH",
+      "copyright_year": "2021-2024",
+      "use_reuse": "yes",
+      "code_license": "LGPL-3.0-only",
+      "documentation_license": "CC-BY-4.0",
+      "supplementary_files_license": "CC0-1.0",
+      "project_title": "psyplot",
+      "project_slug": "psyplot",
+      "package_folder": "psyplot",
+      "project_short_description": "Python package for interactive data visualization",
+      "keywords": "visualization,netcdf,raster,cartopy,earth-sciences",
+      "documentation_url": "https://psyplot.github.io",
+      "use_markdown_for_documentation": "no",
+      "ci_matrix": "pipenv",
+      "deploy_package_in_ci": "yes",
+      "deploy_pages_in_ci": "git-push",
+      "_extensions": [
+        "local_extensions.UnderlinedExtension"
+      ],
+      "_template": "https://codebase.helmholtz.cloud/hcdc/software-templates/python-package-template.git"
+    }
+  },
+  "directory": null,
+  "skip": [
+    ".git",
+    ".mypy_cache"
+  ]
+}
