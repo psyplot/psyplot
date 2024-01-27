@@ -1,0 +1,101 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: CC0-1.0
+
+image: python:3.9
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+
+before_script:
+  # replace git internal paths in order to use the CI_JOB_TOKEN
+  - apt-get update -y && apt-get install -y pandoc graphviz
+  - python -m pip install -U pip
+
+test-package:
+  stage: test
+  script:
+    - pip install build twine
+    - make dist
+    - twine check dist/*
+  artifacts:
+    name: python-artifacts
+    paths:
+      - "dist/*"
+    expire_in: 7 days
+
+test:
+  stage: test
+  variables:
+    PIPENV_PIPFILE: "ci/matrix/${SCENARIO}/Pipfile"
+  script:
+    - pip install pipenv
+    - pipenv install
+    - make pipenv-test
+  parallel:
+    matrix:
+      - SCENARIO:
+          - default
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    name: pipfile
+    paths:
+      - "ci/matrix/${SCENARIO}/*"
+    expire_in: 30 days
+
+test-docs:
+  stage: test
+  script:
+    - make dev-install
+    - make -C docs html
+    - make -C docs linkcheck
+  artifacts:
+    paths:
+    - docs/_build
+
+
+deploy-package:
+  stage: deploy
+  needs:
+    - test-package
+    - test-docs
+    - test
+  only:
+    - master
+  script:
+    - pip install twine
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+
+
+
+deploy-docs:
+  stage: deploy
+  only:
+    - master
+  needs:
+    - test-docs
+  image: node:21
+  before_script:
+    - npm install -g gh-pages@6.1.1
+    - mkdir .gh-pages-cache
+  script:
+    # make sure, the DEPLOY_TOKEN is defined
+    - >-
+      [ ${CI_DEPLOY_TOKEN} ] ||
+      echo "The CI_DEPLOY_TOKEN variable is not set. Please create an access
+      token with scope 'read_repository' and 'write_repository'" &&
+      [ ${CI_DEPLOY_TOKEN} ]
+    - >-
+      CACHE_DIR=$(realpath .gh-pages-cache)
+      gh-pages
+      --dotfiles
+      --nojekyll
+      --branch gh-pages
+      --repo https://ci-user:${CI_DEPLOY_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git
+      --user "${CI_COMMIT_AUTHOR}"
+      --message "CI Pipeline ${CI_PIPELINE_ID}, commit ${CI_COMMIT_SHORT_SHA}"
+      --dist docs/_build/html

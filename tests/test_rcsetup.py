@@ -1,93 +1,88 @@
 """Test module of the :mod:`psyplot.config.rcsetup` module."""
 
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
 
-import _base_testing as bt
-import os.path as osp
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
 import unittest
+
 import six
+
 import psyplot
-from psyplot.config.rcsetup import SubDict, RcParams, rcParams
+from psyplot.config.rcsetup import RcParams, SubDict, rcParams
 
 
 class SubDictTest(unittest.TestCase):
-
     def test_basic(self):
-        """Test the basic functionality
-        """
-        d = {'test.1': 'test1', 'test.2': 'test2',
-             'test1.1': 'test11', 'test1.2': 'test12'}
-        sub = SubDict(d, 'test.', pattern_base=r'test\.')
-        self.assertIn('1', sub)
-        self.assertIn('2', sub)
-        self.assertEqual(sub['1'], 'test1')
-        self.assertEqual(sub['2'], 'test2')
-        self.assertNotIn('test11', sub.values(),
-                         msg='Item test1.1 catched in %s' % (sub, ))
-        self.assertNotIn('test12', sub.values(),
-                         msg='Item test1.2 catched in %s' % (sub, ))
+        """Test the basic functionality"""
+        d = {
+            "test.1": "test1",
+            "test.2": "test2",
+            "test1.1": "test11",
+            "test1.2": "test12",
+        }
+        sub = SubDict(d, "test.", pattern_base=r"test\.")
+        self.assertIn("1", sub)
+        self.assertIn("2", sub)
+        self.assertEqual(sub["1"], "test1")
+        self.assertEqual(sub["2"], "test2")
+        self.assertNotIn(
+            "test11", sub.values(), msg="Item test1.1 catched in %s" % (sub,)
+        )
+        self.assertNotIn(
+            "test12", sub.values(), msg="Item test1.2 catched in %s" % (sub,)
+        )
 
     def test_replace(self):
-        """Test the replace property
-        """
-        d = {'test.1': 'test1', 'test.2': 'test2',
-             'test1.1': 'test11', 'test1.2': 'test12'}
-        sub = SubDict(d, 'test.', pattern_base=r'test\.')
-        sub['test'] = 5  # test something that is not traced back to d
-        self.assertNotIn('test.1', sub)
-        self.assertIn('1', sub)
+        """Test the replace property"""
+        d = {
+            "test.1": "test1",
+            "test.2": "test2",
+            "test1.1": "test11",
+            "test1.2": "test12",
+        }
+        sub = SubDict(d, "test.", pattern_base=r"test\.")
+        sub["test"] = 5  # test something that is not traced back to d
+        self.assertNotIn("test.1", sub)
+        self.assertIn("1", sub)
         sub.replace = False
         sub.trace = True
-        sub['test.2'] = 4
-        self.assertIn('test.1', sub)
-        self.assertNotIn('1', sub)
-        self.assertEqual(sub['test.2'], 4)
-        self.assertEqual(d['test.2'], 4)
+        sub["test.2"] = 4
+        self.assertIn("test.1", sub)
+        self.assertNotIn("1", sub)
+        self.assertEqual(sub["test.2"], 4)
+        self.assertEqual(d["test.2"], 4)
         sub.replace = True
-        self.assertNotIn('test.1', sub)
-        self.assertIn('1', sub)
+        self.assertNotIn("test.1", sub)
+        self.assertIn("1", sub)
 
     def test_trace(self):
         """Test the backtracing to the origin dictionary"""
-        d = {'test.1': 'test1', 'test.2': 'test2',
-             'test1.1': 'test11', 'test1.2': 'test12'}
-        sub = SubDict(d, 'test.', pattern_base=r'test\.', trace=True)
-        self.assertIn('1', sub)
-        sub['1'] = 'change in d'
-        sub['test.3'] = 'test3'  # new item
-        self.assertEqual(d['test.1'], 'change in d')
-        self.assertEqual(sub['1'], 'change in d')
-        self.assertIn('3', sub)
-        self.assertIn('test.3', d)
+        d = {
+            "test.1": "test1",
+            "test.2": "test2",
+            "test1.1": "test11",
+            "test1.2": "test12",
+        }
+        sub = SubDict(d, "test.", pattern_base=r"test\.", trace=True)
+        self.assertIn("1", sub)
+        sub["1"] = "change in d"
+        sub["test.3"] = "test3"  # new item
+        self.assertEqual(d["test.1"], "change in d")
+        self.assertEqual(sub["1"], "change in d")
+        self.assertIn("3", sub)
+        self.assertIn("test.3", d)
 
         sub.trace = False
-        sub['1'] = 'do not change in d'
-        sub['4'] = 'test4'
-        self.assertEqual(d['test.1'], 'change in d')
-        self.assertEqual(sub['1'], 'do not change in d')
-        self.assertIn('4', sub)
-        self.assertNotIn('4', d)
+        sub["1"] = "do not change in d"
+        sub["4"] = "test4"
+        self.assertEqual(d["test.1"], "change in d")
+        self.assertEqual(sub["1"], "do not change in d")
+        self.assertIn("4", sub)
+        self.assertNotIn("4", d)
 
 
 class RcParamsTest(unittest.TestCase):
@@ -96,62 +91,90 @@ class RcParamsTest(unittest.TestCase):
     @unittest.skipIf(six.PY2, "Missing necessary unittest methods")
     def test_dump(self):
         """Test the dumping of the rcParams"""
-        rc = RcParams(defaultParams={
-            'some.test': [1, lambda i: int(i), 'The documentation'],
-            'some.other_test': [2, lambda i: int(i), 'Another documentation']})
+        rc = RcParams(
+            defaultParams={
+                "some.test": [1, lambda i: int(i), "The documentation"],
+                "some.other_test": [
+                    2,
+                    lambda i: int(i),
+                    "Another documentation",
+                ],
+            }
+        )
         rc.update_from_defaultParams()
 
-        rc.HEADER = 'the header'
+        rc.HEADER = "the header"
         s = rc.dump(default_flow_style=False)
-        self.assertIn('the header', s)
-        self.assertRegex(s, r'# The documentation\n\s*some.test')
-        self.assertRegex(s, r'# Another documentation\n\s*some.other_test')
+        self.assertIn("the header", s)
+        self.assertRegex(s, r"# The documentation\n\s*some.test")
+        self.assertRegex(s, r"# Another documentation\n\s*some.other_test")
 
     def test_catch(self):
-        rc = RcParams(defaultParams={
-            'some.test': [1, lambda i: int(i), 'The documentation'],
-            'some.other_test': [2, lambda i: int(i), 'Another documentation']})
+        rc = RcParams(
+            defaultParams={
+                "some.test": [1, lambda i: int(i), "The documentation"],
+                "some.other_test": [
+                    2,
+                    lambda i: int(i),
+                    "Another documentation",
+                ],
+            }
+        )
         rc.update_from_defaultParams()
         with rc.catch():
-            rc['some.test'] = 2
-            self.assertEqual(rc['some.test'], 2)
-        self.assertEqual(rc['some.test'], 1)
+            rc["some.test"] = 2
+            self.assertEqual(rc["some.test"], 2)
+        self.assertEqual(rc["some.test"], 1)
 
-    @unittest.skipIf(six.PY2, 'Method not available on Python2')
+    @unittest.skipIf(six.PY2, "Method not available on Python2")
     def test_error(self):
         """Test whether the correct Error is raised"""
+
         def validate(i):
             try:
                 return int(i)
-            except:
+            except Exception:
                 raise ValueError("Expected failure")
-        rc = RcParams(defaultParams={
-            'some.test': [1, validate, 'The documentation'],
-            'some.other_test': [2, validate, 'Another documentation']})
+
+        rc = RcParams(
+            defaultParams={
+                "some.test": [1, validate, "The documentation"],
+                "some.other_test": [2, validate, "Another documentation"],
+            }
+        )
         rc.update_from_defaultParams()
         with self.assertRaisesRegex(ValueError, "Expected failure"):
-            rc['some.test'] = 'test'
+            rc["some.test"] = "test"
         with self.assertRaises(KeyError):
-            rc['wrong_key'] = 1
-        rc._deprecated_map['something'] = ['some.test', lambda x: x]
-        with self.assertWarnsRegex(UserWarning, rc.msg_depr % ('something',
-                                                               'some.test')):
-            rc['something'] = 3
+            rc["wrong_key"] = 1
+        rc._deprecated_map["something"] = ["some.test", lambda x: x]
+        with self.assertWarnsRegex(
+            UserWarning, rc.msg_depr % ("something", "some.test")
+        ):
+            rc["something"] = 3
         # check whether the value has been changed correctly
-        self.assertEqual(rc['some.test'], 3)
-        rc._deprecated_ignore_map['ignored'] = 'some.test'
-        with self.assertWarnsRegex(UserWarning, rc.msg_depr_ignore % (
-                'ignored', 'some.test')):
-            rc['ignored'] = None
+        self.assertEqual(rc["some.test"], 3)
+        rc._deprecated_ignore_map["ignored"] = "some.test"
+        with self.assertWarnsRegex(
+            UserWarning, rc.msg_depr_ignore % ("ignored", "some.test")
+        ):
+            rc["ignored"] = None
         # check whether the value has not been changed
-        self.assertEqual(rc['some.test'], 3)
+        self.assertEqual(rc["some.test"], 3)
 
     def test_findall(self):
-        rc = RcParams(defaultParams={
-            'some.test': [1, lambda i: int(i), 'The documentation'],
-            'some.other_test': [2, lambda i: int(i), 'Another documentation']})
+        rc = RcParams(
+            defaultParams={
+                "some.test": [1, lambda i: int(i), "The documentation"],
+                "some.other_test": [
+                    2,
+                    lambda i: int(i),
+                    "Another documentation",
+                ],
+            }
+        )
         rc.update_from_defaultParams()
-        self.assertEqual(rc.find_all('other'), {'some.other_test': 2})
+        self.assertEqual(rc.find_all("other"), {"some.other_test": 2})
 
     @unittest.skipIf(six.PY2, "Missing necessary unittest methods")
     def test_plugin(self):
@@ -164,20 +187,22 @@ class RcParamsTest(unittest.TestCase):
             return
         rc = psyplot.rcParams.copy()
         rc.load_plugins()
-        self.assertIn('test', rc)
-        self.assertEqual(rc['test'], 1)
+        self.assertIn("test", rc)
+        self.assertEqual(rc["test"], 1)
         with self.assertRaisesRegex(
-                ImportError, "plotters have already been defined"):
+            ImportError, "plotters have already been defined"
+        ):
             rc.load_plugins(True)
-        plotters = test_rc.pop('project.plotters')
+        plotters = test_rc.pop("project.plotters")
         try:
             with self.assertRaisesRegex(
-                    ImportError, "default keys have already been defined"):
+                ImportError, "default keys have already been defined"
+            ):
                 rc.load_plugins(True)
-        except:
+        except Exception:
             raise
         finally:
-            test_rc['project.plotters'] = plotters
+            test_rc["project.plotters"] = plotters
 
     def test_connect(self):
         """Test the connection and disconnection to rcParams"""
@@ -190,24 +215,24 @@ class RcParamsTest(unittest.TestCase):
         def update_y(val):
             y.update(val)
 
-        rcParams.connect('decoder.x', update_x)
-        rcParams.connect('decoder.y', update_y)
+        rcParams.connect("decoder.x", update_x)
+        rcParams.connect("decoder.y", update_y)
 
-        rcParams['decoder.x'] = {'test'}
-        self.assertEqual(x, {'test'})
+        rcParams["decoder.x"] = {"test"}
+        self.assertEqual(x, {"test"})
         self.assertEqual(y, set())
 
-        rcParams['decoder.y'] = {'test2'}
-        self.assertEqual(y, {'test2'})
+        rcParams["decoder.y"] = {"test2"}
+        self.assertEqual(y, {"test2"})
 
-        rcParams.disconnect('decoder.x', update_x)
-        rcParams['decoder.x'] = {'test3'}
-        self.assertEqual(x, {'test'})
+        rcParams.disconnect("decoder.x", update_x)
+        rcParams["decoder.x"] = {"test3"}
+        self.assertEqual(x, {"test"})
 
         rcParams.disconnect()
-        rcParams['decoder.y'] = {'test4'}
-        self.assertEqual(y, {'test2'})
+        rcParams["decoder.y"] = {"test4"}
+        self.assertEqual(y, {"test2"})
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _plugins_guide:
 
 How to implement your own plotters and plugins
@@ -327,6 +331,11 @@ The advantages of this methodology are basically:
 
 Creating new plugins
 --------------------
+
+.. todo::
+
+    The plugin generation needs to be revised
+
 Now that you have created your plotter, you may want to include it in the
 plot methods of the :class:`~psyplot.project.Project` class such that you can
 do something like
@@ -353,6 +362,7 @@ For our demonstration, let's create a plugin named my-plugin. This is simply
 done via
 
 .. ipython::
+    :verbatim:
 
     In [1]: !psyplot-plugin my-plugin
 
@@ -373,10 +383,6 @@ The following files are created in a directory named ``'my-plugin'``:
 
 If you want to see more, look into the comments in the created files.
 
-.. ipython::
-
-    @suppress
-    In [4]: !rm -r my-plugin
 
 .. _psy-maps: https://psyplot.github.io/psy-maps/
 .. _psy-simple: https://psyplot.github.io/psy-simple/

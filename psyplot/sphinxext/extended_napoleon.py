@@ -10,32 +10,17 @@ If you use this module as a sphinx extension, you should not list the
 :mod:`sphinx.ext.napoleon` module in the extensions variable of your conf.py.
 This module has been tested for sphinx 1.3.1."""
 
-# Disclaimer
-# ----------
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
+
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
 #
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-3.0-only
 
 from abc import ABCMeta, abstractmethod
-from sphinx.ext.napoleon import (
-    NumpyDocstring, GoogleDocstring, setup as napoleon_setup)
+
+from sphinx.ext.napoleon import GoogleDocstring, NumpyDocstring
+from sphinx.ext.napoleon import setup as napoleon_setup
 
 
 class DocstringExtension(object):
@@ -54,9 +39,9 @@ class DocstringExtension(object):
         >>> from sphinx.ext.napoleon import Config
 
         >>> from psyplot.sphinxext.extended_napoleon import (
-        ...     ExtendedNumpyDocstring)
-        >>> config = Config(napoleon_use_param=True,
-        ...                 napoleon_use_rtype=True)
+        ...     ExtendedNumpyDocstring,
+        ... )
+        >>> config = Config(napoleon_use_param=True, napoleon_use_rtype=True)
         >>> docstring = '''
         ... Possible types
         ... --------------
@@ -71,19 +56,20 @@ class DocstringExtension(object):
           Description of `type1`
         * *type2* --
           Description of `type2`"""
+
     __metaclass__ = ABCMeta
 
     def _parse_possible_types_section(self, section):
         fields = self._consume_fields(prefer_type=True)
-        lines = ['.. rubric:: %s' % section, '']
+        lines = [".. rubric:: %s" % section, ""]
         multi = len(fields) > 1
         for _name, _type, _desc in fields:
             field = self._format_field(_name, _type, _desc)
             if multi:
-                lines.extend(self._format_block('* ', field))
+                lines.extend(self._format_block("* ", field))
             else:
                 lines.extend(field)
-        return lines + ['']
+        return lines + [""]
 
     @abstractmethod
     def _parse(self):
@@ -94,14 +80,15 @@ class ExtendedNumpyDocstring(NumpyDocstring, DocstringExtension):
     """:class:`sphinx.ext.napoleon.NumpyDocstring` with more sections"""
 
     def _parse(self, *args, **kwargs):
-        self._sections['possible types'] = self._parse_possible_types_section
+        self._sections["possible types"] = self._parse_possible_types_section
         return super(ExtendedNumpyDocstring, self)._parse(*args, **kwargs)
 
 
 class ExtendedGoogleDocstring(GoogleDocstring, DocstringExtension):
     """:class:`sphinx.ext.napoleon.GoogleDocstring` with more sections"""
+
     def _parse(self, *args, **kwargs):
-        self._sections['possible types'] = self._parse_possible_types_section
+        self._sections["possible types"] = self._parse_possible_types_section
         return super(ExtendedGoogleDocstring, self)._parse(*args, **kwargs)
 
 
@@ -147,11 +134,13 @@ def process_docstring(app, what, name, obj, options, lines):
     result_lines = lines
     if app.config.napoleon_numpy_docstring:
         docstring = ExtendedNumpyDocstring(
-            result_lines, app.config, app, what, name, obj, options)
+            result_lines, app.config, app, what, name, obj, options
+        )
         result_lines = docstring.lines()
     if app.config.napoleon_google_docstring:
         docstring = ExtendedGoogleDocstring(
-            result_lines, app.config, app, what, name, obj, options)
+            result_lines, app.config, app, what, name, obj, options
+        )
         result_lines = docstring.lines()
 
     lines[:] = result_lines[:]
@@ -174,8 +163,9 @@ def setup(app):
     This function uses the setup function of the :mod:`sphinx.ext.napoleon`
     module"""
     from sphinx.application import Sphinx
+
     if not isinstance(app, Sphinx):
         return  # probably called by tests
 
-    app.connect('autodoc-process-docstring', process_docstring)
+    app.connect("autodoc-process-docstring", process_docstring)
     return napoleon_setup(app)
