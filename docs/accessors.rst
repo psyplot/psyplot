@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _accessors:
 
 .. currentmodule:: psyplot.data
@@ -31,10 +35,10 @@ dataset itself, e.g.
 
     In [1]: import psyplot
 
-    In [2]: ds = psyplot.open_dataset('demo.nc')
+    In [2]: ds = psyplot.open_dataset("demo.nc")
 
     @savefig docs_dataset_accessor.png width=4in
-    In [3]: sp = ds.psy.plot.mapplot(name='t2m', cmap='Reds')
+    In [3]: sp = ds.psy.plot.mapplot(name="t2m", cmap="Reds")
 
 The variable ``sp`` is a psyplot subproject of the current main project.
 
@@ -44,7 +48,8 @@ The variable ``sp`` is a psyplot subproject of the current main project.
 
     @suppress
     In [4]: import psyplot.project as psy
-       ...: psy.close('all')
+       ...:
+       ...: psy.close("all")
 
 Hence, it would be completely equivalent if you type
 
@@ -53,7 +58,7 @@ Hence, it would be completely equivalent if you type
 
     In [5]: import psyplot.project as psyplot
 
-    In [6]: sp = psy.plot.mapplot(ds, name='t2m', cmap='Reds')
+    In [6]: sp = psy.plot.mapplot(ds, name="t2m", cmap="Reds")
 
 Note that the :attr:`DatasetAccessor.plot` attribute has the
 same plotmethods as the :attr:`psyplot.project.plot` instance.
@@ -88,7 +93,7 @@ Just use the :attr:`~psyplot.data.InteractiveBase.plot` attribute the accessor.
 
     In [1]: import psyplot
 
-    In [2]: ds = psyplot.open_dataset('demo.nc')
+    In [2]: ds = psyplot.open_dataset("demo.nc")
 
     In [3]: da = ds.t2m[0, 0]
 
@@ -101,7 +106,8 @@ Just use the :attr:`~psyplot.data.InteractiveBase.plot` attribute the accessor.
 
     @suppress
     In [6]: import matplotlib.pyplot as plt
-       ...: plt.close('all')
+       ...:
+       ...: plt.close("all")
 
 The resulting plotter, an instance of the :class:`psyplot.plotter.Plotter`
 class, is the object that visualizes the data array. It can also
@@ -120,17 +126,19 @@ multiple lines. Consider the following example:
     In [7]: ds0 = ds.isel(lev=0)  # select a subset of the dataset
 
     # create a list of arrays at different longitudes
-    In [8]: l = psyplot.InteractiveList([
-       ...:     ds0.t2m.sel(lon=2.35, lat=48.86, method='nearest'),  # Paris
-       ...:     ds0.t2m.sel(lon=13.39, lat=52.52, method='nearest'),  # Berlin
-       ...:     ds0.t2m.sel(lon=-74.01, lat=40.71, method='nearest'),  # NYC
-       ...:     ])
+    In [8]: l = psyplot.InteractiveList(
+       ...:     [
+       ...:         ds0.t2m.sel(lon=2.35, lat=48.86, method="nearest"),  # Paris
+       ...:         ds0.t2m.sel(lon=13.39, lat=52.52, method="nearest"),  # Berlin
+       ...:         ds0.t2m.sel(lon=-74.01, lat=40.71, method="nearest"),  # NYC
+       ...:     ]
+       ...: )
 
-    In [9]: l.arr_names = ['Paris', 'Berlin', 'NYC']
+    In [9]: l.arr_names = ["Paris", "Berlin", "NYC"]
 
     # plot the list
     @savefig docs_dataarray_accessor_2.png width=4in
-    In [10]: plotter = l.psy.plot.lineplot(xticks='data', xticklabels='%B')
+    In [10]: plotter = l.psy.plot.lineplot(xticks="data", xticklabels="%B")
 
     @suppress
     In [10]: import matplotlib.pyplot as plt
@@ -155,14 +163,14 @@ subset of a dataset, e.g. via
 .. ipython::
 
     In [1]: da = ds.t2m[0, 0]
-       ...: print(da.time) # January 1979
+       ...: print(da.time)  # January 1979
 
 You can change to a different slice using the :meth:`InteractiveArray.update`
 method.
 
 .. ipython::
 
-    In [2]: da.psy.base = ds   # tell psyplot the source of the dataarray
+    In [2]: da.psy.base = ds  # tell psyplot the source of the dataarray
 
     In [3]: da.psy.update(time=2)
        ...: print(da.time)  # changed to March 1979
@@ -178,7 +186,7 @@ xarray framework.
 
     .. ipython::
 
-        In [4]: da = ds.psy.create_list(time=0, lev=0, name='t2m')[0]
+        In [4]: da = ds.psy.create_list(time=0, lev=0, name="t2m")[0]
            ...: print(da.psy.base is ds)
 
 If you plotted the data, you can also change the formatoptions using the
@@ -188,25 +196,29 @@ If you plotted the data, you can also change the formatoptions using the
 
     # create plot
     @savefig docs_dataarray_accessor_3.png width=4in
-    In [5]: da.psy.plot.mapplot();
+    In[5]: da.psy.plot.mapplot()
 
 .. ipython::
 
     @savefig docs_dataarray_accessor_4.png width=4in
-    In [6]: da.psy.update(cmap='Reds')
+    In [6]: da.psy.update(cmap="Reds")
 
     @suppress
     In [6]: import matplotlib.pyplot as plt
-       ...: plt.close('all')
+       ...:
+       ...: plt.close("all")
 
 The same holds for the Interactive list
 
 .. ipython::
 
     @suppress
-    In [6]: plotter = l.psy.plot.lineplot(xticks='data', xticklabels='%B')
+    In [6]: plotter = l.psy.plot.lineplot(xticks="data", xticklabels="%B")
 
     @savefig docs_dataarray_accessor_5.png width=4in
-    In [7]: l.update(time=slice(1, 4),  # change the data by selecting a subset of the timeslice
-       ...:          title='Subset',    # change a formatoption, the title of the plot
-       ...:          )
+    In [7]: l.update(
+       ...:     time=slice(
+       ...:         1, 4
+       ...:     ),  # change the data by selecting a subset of the timeslice
+       ...:     title="Subset",  # change a formatoption, the title of the plot
+       ...: )

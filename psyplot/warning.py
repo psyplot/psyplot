@@ -10,49 +10,44 @@ builtin warnings module and introduces three new warning classes:
     PsyPlotWarning
     PsyPlotCritical"""
 
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
 
-import warnings
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
 import logging
-
+import warnings
 
 # disable a warning about "comparison to 'None' in backend_pdf which occurs
 # in the matplotlib.backends.backend_pdf.PdfPages class
 warnings.filterwarnings(
-    'ignore', 'comparison', FutureWarning, 'matplotlib.backends.backend_pdf',
-    2264)
+    "ignore",
+    "comparison",
+    FutureWarning,
+    "matplotlib.backends.backend_pdf",
+    2264,
+)
 # disable a warning about "np.array_split" that occurs for certain numpy
 # versions
 warnings.filterwarnings(
-    'ignore', 'in the future np.array_split will retain', FutureWarning,
-    'numpy.lib.shape_base', 431)
+    "ignore",
+    "in the future np.array_split will retain",
+    FutureWarning,
+    "numpy.lib.shape_base",
+    431,
+)
 # disable a warning about "elementwise comparison of a string" in the
 # matplotlib.collection.Collection.get_edgecolor method that occurs for certain
 # matplotlib and numpy versions
 warnings.filterwarnings(
-    'ignore', 'elementwise comparison failed', FutureWarning,
-    'matplotlib.collections', 590)
+    "ignore",
+    "elementwise comparison failed",
+    FutureWarning,
+    "matplotlib.collections",
+    590,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -60,21 +55,24 @@ logger = logging.getLogger(__name__)
 
 class PsyPlotRuntimeWarning(RuntimeWarning):
     """Runtime warning that appears only ones"""
+
     pass
 
 
 class PsyPlotWarning(UserWarning):
     """Normal UserWarning for psyplot module"""
+
     pass
 
 
 class PsyPlotCritical(UserWarning):
     """Critical UserWarning for psyplot module"""
+
     pass
 
 
-warnings.simplefilter('always', PsyPlotWarning, append=True)
-warnings.simplefilter('always', PsyPlotCritical, append=True)
+warnings.simplefilter("always", PsyPlotWarning, append=True)
+warnings.simplefilter("always", PsyPlotCritical, append=True)
 
 
 def disable_warnings(critical=False):
@@ -82,9 +80,9 @@ def disable_warnings(critical=False):
     critical evaluates to True) related to the psyplot Module.
     Please note that you can also configure the warnings via the
     psyplot.warning logger (logging.getLogger(psyplot.warning))."""
-    warnings.filterwarnings('ignore', '\w', PsyPlotWarning, 'psyplot', 0)
+    warnings.filterwarnings("ignore", r"\w", PsyPlotWarning, "psyplot", 0)
     if critical:
-        warnings.filterwarnings('ignore', '\w', PsyPlotCritical, 'psyplot', 0)
+        warnings.filterwarnings("ignore", r"\w", PsyPlotCritical, "psyplot", 0)
 
 
 def warn(message, category=PsyPlotWarning, logger=None):
@@ -111,12 +109,18 @@ def customwarn(message, category, filename, lineno, *args, **kwargs):
     PsyPlotWarning and PsyPlotCritical and the default warnings.showwarning
     function for all the others."""
     if category is PsyPlotWarning:
-        logger.warning(warnings.formatwarning(
-            "\n%s" % message, category, filename, lineno))
+        logger.warning(
+            warnings.formatwarning(
+                "\n%s" % message, category, filename, lineno
+            )
+        )
     elif category is PsyPlotCritical:
-        logger.critical(warnings.formatwarning(
-            "\n%s" % message, category, filename, lineno),
-            exc_info=True)
+        logger.critical(
+            warnings.formatwarning(
+                "\n%s" % message, category, filename, lineno
+            ),
+            exc_info=True,
+        )
     else:
         old_showwarning(message, category, filename, lineno, *args, **kwargs)
 

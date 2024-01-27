@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _configuration:
 
 Configuration
@@ -27,6 +31,7 @@ object. Without any plugins, this looks like
     @suppress
     In [1]: # is not shown because we have to disable the plugins
        ...: from psyplot.config.rcsetup import RcParams, defaultParams_orig
+       ...:
        ...: rcParams = RcParams(defaultParams=defaultParams_orig)
        ...: rcParams.update_from_defaultParams()
 
@@ -38,7 +43,7 @@ example, if you do not want, that the seaborn_ package is imported when the
 
 .. ipython::
 
-    In [3]: rcParams['project.import_seaborn'] = False
+    In [3]: rcParams["project.import_seaborn"] = False
 
 Additionally, you can make these changes permanent. At every first import of
 the ``psyplot`` module, the rcParams are updated from a yaml configuration
@@ -55,13 +60,15 @@ To make our changes from above permanent, we could just do:
     In [4]: import yaml
        ...: from psyplot.config.rcsetup import psyplot_fname
 
-    In [5]: with open(psyplot_fname(if_exists=False), 'w') as f:
-       ...:     yaml.dump({'project.import_seaborn': False}, f)
+    In [5]: with open(psyplot_fname(if_exists=False), "w") as f:
+       ...:     yaml.dump({"project.import_seaborn": False}, f)
 
     # or we use the dump method
-    In [6]: rcParams.dump(psyplot_fname(if_exists=False),
-       ...:               overwrite=True,  # update the existing file
-       ...:               include_keys=['project.import_seaborn'])
+    In [6]: rcParams.dump(
+       ...:     psyplot_fname(if_exists=False),
+       ...:     overwrite=True,  # update the existing file
+       ...:     include_keys=["project.import_seaborn"],
+       ...: )
 
 Default formatoptions
 ---------------------

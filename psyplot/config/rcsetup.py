@@ -7,54 +7,39 @@ package.
 
 .. _matplotlib: http://matplotlib.org/api/"""
 
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
 
-import os
-import sys
-import six
-import logging
-import re
-import inspect
-import yaml
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
 import contextlib
+import inspect
+import logging
+import os
+import re
+import sys
+from collections import UserDict, defaultdict
 from itertools import chain
-from collections import defaultdict
-from psyplot.warning import warn
-from psyplot.compat.pycompat import (
-    UserDict, DictMethods, getcwd, zip, isstring, map)
-from psyplot.docstring import docstrings, dedent, safe_modulo
+
+import six
+import yaml
+
 from psyplot.config.logsetup import _get_home
+from psyplot.docstring import dedent, docstrings, safe_modulo
+from psyplot.utils import isstring
+from psyplot.warning import warn
 
 
-@docstrings.get_sections(base='safe_list')
+@docstrings.get_sections(base="safe_list")
 @dedent
-def safe_list(l):
+def safe_list(iterable):
     """Function to create a list
 
     Parameters
     ----------
-    l: iterable or anything else
+    iterable: iterable or anything else
         Parameter that shall be converted to a list.
 
         - If string or any non-iterable, it will be put into a list
@@ -64,20 +49,20 @@ def safe_list(l):
     -------
     list
         `l` put (or converted) into a list"""
-    if isstring(l):
-        return [l]
+    if isstring(iterable):
+        return [iterable]
     try:
-        return list(l)
+        return list(iterable)
     except TypeError:
-        return [l]
+        return [iterable]
 
 
-class SubDict(UserDict, dict):
+class SubDict(UserDict, dict):  # type: ignore
     """Class that keeps week reference to the base dictionary
 
-This class is used by the :meth:`RcParams.find_and_replace` method
-to provide an easy handable instance that keeps reference to the
-base rcParams dictionary."""
+    This class is used by the :meth:`RcParams.find_and_replace` method
+    to provide an easy handable instance that keeps reference to the
+    base rcParams dictionary."""
 
     @property
     def data(self):
@@ -87,7 +72,7 @@ base rcParams dictionary."""
         --------
         iteritems
         """
-        return dict(self.iteritems())
+        return dict(list(self.iteritems()))
 
     @property
     def replace(self):
@@ -100,22 +85,23 @@ base rcParams dictionary."""
         def replace_base(key):
             for pattern in self.patterns:
                 try:
-                    return pattern.match(key).group('key')
+                    return pattern.match(key).group("key")
                 except AttributeError:  # if match is None
                     pass
             raise KeyError(
                 "Could not find any matching key for %s in the base "
-                "dictionary!" % key)
+                "dictionary!" % key
+            )
 
         value = bool(value)
-        if hasattr(self, '_replace') and value == self._replace:
+        if hasattr(self, "_replace") and value == self._replace:
             return
-        if not hasattr(self, '_replace'):
+        if not hasattr(self, "_replace"):
             self._replace = value
             return
         # if the value has changed, we change the key in the SubDict instance
         # to match the ones in the base dictionary (if they exist)
-        for key, val in DictMethods.iteritems(self):
+        for key, val in iter(dict.items(self)):
             try:
                 if value:
                     new_key = replace_base(key)
@@ -141,11 +127,12 @@ base rcParams dictionary."""
     #: :class:`bool`. If True, changes are traced back to the :attr:`base` dict
     trace = False
 
-    @docstrings.get_sections(base='SubDict.add_base_str')
+    @docstrings.get_sections(base="SubDict.add_base_str")
     @dedent
-    def add_base_str(self, base_str, pattern='.+', pattern_base=None,
-                     append=True):
-        """
+    def add_base_str(
+        self, base_str, pattern=".+", pattern_base=None, append=True
+    ):
+        r"""
         Add further base string to this instance
 
         Parameters
@@ -176,25 +163,40 @@ base rcParams dictionary."""
         base_str = safe_list(base_str)
         pattern_base = safe_list(pattern_base or [])
         for i, s in enumerate(base_str):
-            if '%(key)s' not in s:
-                base_str[i] += '%(key)s'
+            if "%(key)s" not in s:
+                base_str[i] += "%(key)s"
         if pattern_base:
             for i, s in enumerate(pattern_base):
-                if '%(key)s' not in s:
-                    pattern_base[i] += '%(key)s'
+                if "%(key)s" not in s:
+                    pattern_base[i] += "%(key)s"
         else:
             pattern_base = base_str
         self.base_str = base_str + self.base_str
-        self.patterns = list(map(lambda s: re.compile(s.replace(
-            '%(key)s', '(?P<key>%s)' % pattern)), pattern_base)) + \
-            self.patterns
+        self.patterns = (
+            list(
+                map(
+                    lambda s: re.compile(
+                        s.replace("%(key)s", "(?P<key>%s)" % pattern)
+                    ),
+                    pattern_base,
+                )
+            )
+            + self.patterns
+        )
 
-    docstrings.delete_params('SubDict.add_base_str.parameters', 'append')
+    docstrings.delete_params("SubDict.add_base_str.parameters", "append")
 
-    @docstrings.get_sections(base='SubDict')
+    @docstrings.get_sections(base="SubDict")
     @docstrings.dedent
-    def __init__(self, base, base_str, pattern='.+', pattern_base=None,
-                 trace=False, replace=True):
+    def __init__(
+        self,
+        base,
+        base_str,
+        pattern=".+",
+        pattern_base=None,
+        trace=False,
+        replace=True,
+    ):
         """
         Parameters
         ----------
@@ -271,11 +273,12 @@ base rcParams dictionary."""
         self.patterns = []
         self.replace = bool(replace)
         self.trace = bool(trace)
-        self.add_base_str(base_str, pattern=pattern, pattern_base=pattern_base,
-                          append=False)
+        self.add_base_str(
+            base_str, pattern=pattern, pattern_base=pattern_base, append=False
+        )
 
     def __getitem__(self, key):
-        if key in DictMethods.iterkeys(self):
+        if key in iter(dict.keys(self)):
             return dict.__getitem__(self, key)
         if not self.replace:
             return self.base[key]
@@ -312,20 +315,20 @@ base rcParams dictionary."""
                     return m.group(), self.base[m.group()]
                 else:
                     raise KeyError(
-                        "{0} does not match the specified pattern!".format(
-                            s))
-            except KeyError as e:
+                        "{0} does not match the specified pattern!".format(s)
+                    )
+            except KeyError:
                 pass
         if not found:
             if e is not None:
                 raise
-        raise KeyError("{0} does not match the specified pattern!".format(
-                            key))
+        raise KeyError("{0} does not match the specified pattern!".format(key))
 
     def _iter_base_and_pattern(self, key):
         return zip(
-            map(lambda s: safe_modulo(s, {'key': key}), self.base_str),
-            self.patterns)
+            map(lambda s: safe_modulo(s, {"key": key}), self.base_str),
+            self.patterns,
+        )
 
     def iterkeys(self):
         """Unsorted iterator over keys"""
@@ -336,12 +339,12 @@ base rcParams dictionary."""
             for pattern in patterns:
                 m = pattern.match(key)
                 if m:
-                    ret = m.group('key') if replace else m.group()
+                    ret = m.group("key") if replace else m.group()
                     if ret not in seen:
                         seen.add(ret)
                         yield ret
                     break
-        for key in DictMethods.iterkeys(self):
+        for key in iter(dict.keys(self)):
             if key not in seen:
                 yield key
 
@@ -359,7 +362,7 @@ base rcParams dictionary."""
             self[k] = v
 
 
-docstrings.delete_params('SubDict.parameters', 'base')
+docstrings.delete_params("SubDict.parameters", "base")
 
 
 class RcParams(dict):
@@ -376,15 +379,20 @@ class RcParams(dict):
     def validate(self):
         """Dictionary with validation methods as values"""
         depr = self._all_deprecated
-        return dict((key, val[1]) for key, val in
-                    six.iteritems(self.defaultParams)
-                    if key not in depr)
+        return dict(
+            (key, val[1])
+            for key, val in six.iteritems(self.defaultParams)
+            if key not in depr
+        )
 
     @property
     def descriptions(self):
         """The description of each keyword in the rcParams dictionary"""
-        return {key: val[2] for key, val in six.iteritems(self.defaultParams)
-                if len(val) >= 3}
+        return {
+            key: val[2]
+            for key, val in six.iteritems(self.defaultParams)
+            if len(val) >= 3
+        }
 
     HEADER = """Configuration parameters of the psyplot module
 
@@ -408,7 +416,7 @@ environment variable."""
 
     @property
     def defaultParams(self):
-        return getattr(self, '_defaultParams', defaultParams)
+        return getattr(self, "_defaultParams", defaultParams)
 
     @defaultParams.setter
     def defaultParams(self, value):
@@ -433,7 +441,7 @@ environment variable."""
         *args, **kwargs
             Any key-value pair for the initialization of the dictionary
         """
-        defaultParams = kwargs.pop('defaultParams', None)
+        defaultParams = kwargs.pop("defaultParams", None)
         if defaultParams is not None:
             self.defaultParams = defaultParams
         self._deprecated_map = {}
@@ -443,8 +451,11 @@ environment variable."""
                 self[k] = v
             except (ValueError, RuntimeError):
                 # force the issue
-                warn(_rcparam_warn_str.format(key=repr(k), value=repr(v),
-                                              func='__init__'))
+                warn(
+                    _rcparam_warn_str.format(
+                        key=repr(k), value=repr(v), func="__init__"
+                    )
+                )
                 dict.__setitem__(self, k, v)
 
     def __setitem__(self, key, val):
@@ -471,8 +482,9 @@ environment variable."""
             return None, None
         elif key not in self.defaultParams:
             raise KeyError(
-                '%s is not a valid rc parameter. See rcParams.keys() for a '
-                'list of valid parameters.' % (key,))
+                "%s is not a valid rc parameter. See rcParams.keys() for a "
+                "list of valid parameters." % (key,)
+            )
         return key, args[0] if args else None
 
     def __getitem__(self, key):
@@ -532,12 +544,14 @@ environment variable."""
                 self[k] = v
             except (ValueError, RuntimeError):
                 # force the issue
-                warn(_rcparam_warn_str.format(key=repr(k), value=repr(v),
-                                              func='update'))
+                warn(
+                    _rcparam_warn_str.format(
+                        key=repr(k), value=repr(v), func="update"
+                    )
+                )
                 dict.__setitem__(self, k, v)
 
-    def update_from_defaultParams(self, defaultParams=None,
-                                  plotters=True):
+    def update_from_defaultParams(self, defaultParams=None, plotters=True):
         """Update from the a dictionary like the :attr:`defaultParams`
 
         Parameters
@@ -549,21 +563,29 @@ environment variable."""
             If True, ``'project.plotters'`` will be updated too"""
         if defaultParams is None:
             defaultParams = self.defaultParams
-        self.update({key: val[0] for key, val in defaultParams.items()
-                     if plotters or key != 'project.plotters'})
+        self.update(
+            {
+                key: val[0]
+                for key, val in defaultParams.items()
+                if plotters or key != "project.plotters"
+            }
+        )
 
     def __repr__(self):
         import pprint
+
         class_name = self.__class__.__name__
         indent = len(class_name) + 1
-        repr_split = pprint.pformat(dict(self), indent=1,
-                                    width=80 - indent).split('\n')
-        repr_indented = ('\n' + ' ' * indent).join(repr_split)
-        return '{0}({1})'.format(class_name, repr_indented)
+        repr_split = pprint.pformat(
+            dict(self), indent=1, width=80 - indent
+        ).split("\n")
+        repr_indented = ("\n" + " " * indent).join(repr_split)
+        return "{0}({1})".format(class_name, repr_indented)
 
     def __str__(self):
-        return '\n'.join('{0}: {1}'.format(k, v)
-                         for k, v in sorted(self.items()))
+        return "\n".join(
+            "{0}: {1}".format(k, v) for k, v in sorted(self.items())
+        )
 
     def keys(self):
         """
@@ -606,8 +628,11 @@ environment variable."""
         pattern_re = re.compile(pattern)
         ret = RcParams()
         ret.defaultParams = self.defaultParams
-        ret.update((key, value) for key, value in self.items()
-                   if pattern_re.search(key))
+        ret.update(
+            (key, value)
+            for key, value in self.items()
+            if pattern_re.search(key)
+        )
         return ret
 
     @docstrings.dedent
@@ -672,13 +697,21 @@ environment variable."""
             with open(fname) as f:
                 d = yaml.load(f, Loader=yaml.SafeLoader)
                 self.update(d)
-                if (d.get('project.plotters.user') and
-                        'project.plotters' in self):
-                    self['project.plotters'].update(d['project.plotters.user'])
+                if (
+                    d.get("project.plotters.user")
+                    and "project.plotters" in self
+                ):
+                    self["project.plotters"].update(d["project.plotters.user"])
 
-    def dump(self, fname=None, overwrite=True, include_keys=None,
-             exclude_keys=['project.plotters'], include_descriptions=True,
-             **kwargs):
+    def dump(
+        self,
+        fname=None,
+        overwrite=True,
+        include_keys=None,
+        exclude_keys=["project.plotters"],
+        include_descriptions=True,
+        **kwargs,
+    ):
         """Dump this instance to a yaml file
 
         Parameters
@@ -715,38 +748,45 @@ environment variable."""
         load_from_file"""
         if fname is not None and not overwrite and os.path.exists(fname):
             raise IOError(
-                '%s already exists! Set overwrite=True to overwrite it!' % (
-                    fname))
+                "%s already exists! Set overwrite=True to overwrite it!"
+                % (fname)
+            )
         if six.PY2:
-            kwargs.setdefault('encoding', 'utf-8')
-        d = {key: val for key, val in six.iteritems(self) if (
-                include_keys is None or key in include_keys) and
-             key not in exclude_keys}
-        kwargs['default_flow_style'] = False
+            kwargs.setdefault("encoding", "utf-8")
+        d = {
+            key: val
+            for key, val in six.iteritems(self)
+            if (include_keys is None or key in include_keys)
+            and key not in exclude_keys
+        }
+        kwargs["default_flow_style"] = False
         if include_descriptions:
             s = yaml.dump(d, **kwargs)
             desc = self.descriptions
             i = 2
-            header = self.HEADER.splitlines() + [
-                '', 'Created with python', ''] + sys.version.splitlines() + [
-                    '', '']
-            lines = ['# ' + l for l in header] + s.splitlines()
-            for l in lines[2:]:
-                key = l.split(':')[0]
+            header = (
+                self.HEADER.splitlines()
+                + ["", "Created with python", ""]
+                + sys.version.splitlines()
+                + ["", ""]
+            )
+            lines = ["# " + line for line in header] + s.splitlines()
+            for line in lines[2:]:
+                key = line.split(":")[0]
                 if key in desc:
-                    lines.insert(i, '# ' + '\n# '.join(desc[key].splitlines()))
+                    lines.insert(i, "# " + "\n# ".join(desc[key].splitlines()))
                     i += 1
                 i += 1
-            s = '\n'.join(lines)
+            s = "\n".join(lines)
             if fname is None:
                 return s
             else:
-                with open(fname, 'w') as f:
+                with open(fname, "w") as f:
                     f.write(s)
         else:
             if fname is None:
                 return yaml.dump(d, **kwargs)
-            with open(fname, 'w') as f:
+            with open(fname, "w") as f:
                 yaml.dump(d, f, **kwargs)
         return None
 
@@ -760,16 +800,15 @@ environment variable."""
         from psyplot.utils import plugin_entrypoints
 
         def load_plugin(ep):
-
             try:
                 ep.module
             except AttributeError:  # python<3.10
                 try:
                     ep.module = ep.pattern.match(ep.value).group("module")
-                except AttributeError: # python<3.8
+                except AttributeError:  # python<3.8
                     ep.module = ep.module_name
 
-            if plugins_env == ['no']:
+            if plugins_env == ["no"]:
                 return False
             elif ep.module in exclude_plugins:
                 return False
@@ -779,19 +818,19 @@ environment variable."""
 
         self._plugins = self._plugins or []
 
-        plugins_env = os.getenv('PSYPLOT_PLUGINS', '').split('::')
-        include_plugins = [s[4:] for s in plugins_env if s.startswith('yes:')]
-        exclude_plugins = [s[3:] for s in plugins_env if s.startswith('no:')]
+        plugins_env = os.getenv("PSYPLOT_PLUGINS", "").split("::")
+        include_plugins = [s[4:] for s in plugins_env if s.startswith("yes:")]
+        exclude_plugins = [s[3:] for s in plugins_env if s.startswith("no:")]
 
         logger = logging.getLogger(__name__)
 
         eps = plugin_entrypoints("psyplot", "plugin")
         for ep in eps:
             if not load_plugin(ep):
-                logger.debug('Skipping entrypoint %s', ep)
+                logger.debug("Skipping entrypoint %s", ep)
                 continue
             self._plugins.append(str(ep))
-            logger.debug('Loading entrypoint %s', ep)
+            logger.debug("Loading entrypoint %s", ep)
             yield ep
 
     def load_plugins(self, raise_error=False):
@@ -809,83 +848,108 @@ environment variable."""
             If True, an error is raised when multiple plugins define the same
             plotter or rcParams key. Otherwise only a warning is raised"""
 
-        pm_env = os.getenv('PSYPLOT_PLOTMETHODS', '').split('::')
-        include_pms = [s[4:] for s in pm_env if s.startswith('yes:')]
-        exclude_pms = [s[3:] for s in pm_env if s.startswith('no:')]
+        pm_env = os.getenv("PSYPLOT_PLOTMETHODS", "").split("::")
+        include_pms = [s[4:] for s in pm_env if s.startswith("yes:")]
+        exclude_pms = [s[3:] for s in pm_env if s.startswith("no:")]
 
         logger = logging.getLogger(__name__)
 
-        plotters = self['project.plotters']
-        def_plots = {'default': list(plotters)}
+        plotters = self["project.plotters"]
+        def_plots = {"default": list(plotters)}
         defaultParams = self.defaultParams
-        def_keys = {'default': defaultParams}
+        def_keys = {"default": defaultParams}
 
         def register_pm(ep, name):
-            full_name = '%s:%s' % (ep.module, name)
+            full_name = "%s:%s" % (ep.module, name)
             ret = True
-            if pm_env == ['no']:
+            if pm_env == ["no"]:
                 ret = False
             elif name in exclude_pms or full_name in exclude_pms:
                 ret = False
-            elif include_pms and (name not in include_pms and
-                                  full_name not in include_pms):
+            elif include_pms and (
+                name not in include_pms and full_name not in include_pms
+            ):
                 ret = False
             if not ret:
-                logger.debug('Skipping plot method %s', full_name)
+                logger.debug("Skipping plot method %s", full_name)
             return ret
 
         for ep in self._load_plugin_entrypoints():
             try:
                 plugin_mod = ep.load()
             except (ModuleNotFoundError, ImportError):
-                logger.debug("Failed to import %s!" % (ep, ), exc_info=True)
-                logger.warning("Failed to import %s!" % (ep, ))
+                logger.debug("Failed to import %s!" % (ep,), exc_info=True)
+                logger.warning("Failed to import %s!" % (ep,))
                 continue
             rc = plugin_mod.rcParams
 
             # load the plotters
             plugin_plotters = {
-                key: val for key, val in rc.get('project.plotters', {}).items()
-                if register_pm(ep, key)}
+                key: val
+                for key, val in rc.get("project.plotters", {}).items()
+                if register_pm(ep, key)
+            }
             already_defined = set(plotters).intersection(plugin_plotters)
             if already_defined:
-                msg = ("Error while loading psyplot plugin %s! The "
-                       "following plotters have already been "
-                       "defined") % ep
-                msg += 'and will be overwritten:' if not raise_error else ':'
-                msg += '\n' + '\n'.join(chain.from_iterable(
-                    (('%s by %s' % (key, plugin)
-                      for plugin, keys in def_plots.items() if key in keys)
-                     for key in already_defined)))
+                msg = (
+                    "Error while loading psyplot plugin %s! The "
+                    "following plotters have already been "
+                    "defined"
+                ) % ep
+                msg += "and will be overwritten:" if not raise_error else ":"
+                msg += "\n" + "\n".join(
+                    chain.from_iterable(
+                        (
+                            (
+                                "%s by %s" % (key, plugin)
+                                for plugin, keys in def_plots.items()
+                                if key in keys
+                            )
+                            for key in already_defined
+                        )
+                    )
+                )
                 if raise_error:
                     raise ImportError(msg)
                 else:
                     warn(msg)
             for d in plugin_plotters.values():
-                d['plugin'] = ep.module
+                d["plugin"] = ep.module
             plotters.update(plugin_plotters)
             def_plots[ep] = list(plugin_plotters)
 
             # load the defaultParams keys
             plugin_defaultParams = rc.defaultParams
             already_defined = set(defaultParams).intersection(
-                plugin_defaultParams) - {'project.plotters'}
+                plugin_defaultParams
+            ) - {"project.plotters"}
             if already_defined:
-                msg = ("Error while loading psyplot plugin %s! The "
-                       "following default keys have already been "
-                       "defined:") % ep
-                msg += '\n' + '\n'.join(chain.from_iterable(
-                    (('%s by %s' % (key, plugin)
-                      for plugin, keys in def_keys.items() if key in keys)
-                     for key in already_defined)))
+                msg = (
+                    "Error while loading psyplot plugin %s! The "
+                    "following default keys have already been "
+                    "defined:"
+                ) % ep
+                msg += "\n" + "\n".join(
+                    chain.from_iterable(
+                        (
+                            (
+                                "%s by %s" % (key, plugin)
+                                for plugin, keys in def_keys.items()
+                                if key in keys
+                            )
+                            for key in already_defined
+                        )
+                    )
+                )
                 if raise_error:
                     raise ImportError(msg)
                 else:
                     warn(msg)
-            update_keys = set(plugin_defaultParams) - {'project.plotters'}
+            update_keys = set(plugin_defaultParams) - {"project.plotters"}
             def_keys[ep] = update_keys
             self.defaultParams.update(
-                {key: plugin_defaultParams[key] for key in update_keys})
+                {key: plugin_defaultParams[key] for key in update_keys}
+            )
 
             # load the rcParams (without validation)
             super(RcParams, self).update({key: rc[key] for key in update_keys})
@@ -915,8 +979,7 @@ environment variable."""
         super().update(save)  # reset settings
 
 
-def psyplot_fname(env_key='PSYPLOTRC', fname='psyplotrc.yml',
-                  if_exists=True):
+def psyplot_fname(env_key="PSYPLOTRC", fname="psyplotrc.yml", if_exists=True):
     """
     Get the location of the config file.
 
@@ -960,7 +1023,7 @@ def psyplot_fname(env_key='PSYPLOTRC', fname='psyplotrc.yml',
     -----
     This function is motivated by the :func:`matplotlib.matplotlib_fname`
     function"""
-    cwd = getcwd()
+    cwd = os.getcwd()
     full_fname = os.path.join(cwd, fname)
     if os.path.exists(full_fname):
         return full_fname
@@ -984,7 +1047,7 @@ def psyplot_fname(env_key='PSYPLOTRC', fname='psyplotrc.yml',
     return None
 
 
-def get_configdir(name='psyplot', env_key='PSYPLOTCONFIGDIR'):
+def get_configdir(name="psyplot", env_key="PSYPLOTCONFIGDIR"):
     """
     Return the string representing the configuration directory.
 
@@ -1018,11 +1081,12 @@ def get_configdir(name='psyplot', env_key='PSYPLOTCONFIGDIR'):
 
     p = None
     h = _get_home()
-    if ((sys.platform.startswith('linux') or sys.platform == 'darwin') and
-            h is not None):
-        p = os.path.join(h, '.config/' + name)
+    if (
+        sys.platform.startswith("linux") or sys.platform == "darwin"
+    ) and h is not None:
+        p = os.path.join(h, ".config/" + name)
     elif h is not None:
-        p = os.path.join(h, '.' + name)
+        p = os.path.join(h, "." + name)
 
     if not os.path.exists(p):
         os.makedirs(p, exist_ok=True)
@@ -1039,10 +1103,9 @@ def validate_path_exists(s):
         raise ValueError('"%s" should be a path but it does not exist' % s)
 
 
-def validate_files_exist(l):
+def validate_files_exist(files):
     """Validate if all pathnames in a given list exists"""
-    return [validate_str(s) and validate_path_exists(s)
-            for s in l]
+    return [validate_str(fn) and validate_path_exists(fn) for fn in files]
 
 
 def validate_dict(d):
@@ -1072,10 +1135,10 @@ def validate_dict(d):
 
 
 def validate_bool_maybe_none(b):
-    'Convert b to a boolean or raise'
+    "Convert b to a boolean or raise"
     if isinstance(b, six.string_types):
         b = b.lower()
-    if b is None or b == 'none':
+    if b is None or b == "none":
         return None
     return validate_bool(b)
 
@@ -1084,9 +1147,9 @@ def validate_bool(b):
     """Convert b to a boolean or raise"""
     if isinstance(b, six.string_types):
         b = b.lower()
-    if b in ('t', 'y', 'yes', 'on', 'true', '1', 1, True):
+    if b in ("t", "y", "yes", "on", "true", "1", 1, True):
         return True
-    elif b in ('f', 'n', 'no', 'off', 'false', '0', 0, False):
+    elif b in ("f", "n", "no", "off", "false", "0", 0, False):
         return False
     else:
         raise ValueError('Could not convert "%s" to boolean' % b)
@@ -1127,7 +1190,7 @@ def validate_stringlist(s):
     ------
     ValueError"""
     if isinstance(s, six.string_types):
-        return [six.text_type(v.strip()) for v in s.split(',') if v.strip()]
+        return [six.text_type(v.strip()) for v in s.split(",") if v.strip()]
     else:
         try:
             return list(map(validate_str, s))
@@ -1156,95 +1219,136 @@ def validate_stringset(*args, **kwargs):
 #: :class:`dict` with default values and validation functions
 defaultParams = {
     # user defined plotter keys
-    'plotter.user': [
-        {}, validate_dict,
-        inspect.cleandoc("""
+    "plotter.user": [
+        {},
+        validate_dict,
+        inspect.cleandoc(
+            """
         formatoption keys and values that are defined by the user to be used by
         the specified plotters. For example to modify the title of all
         :class:`psyplot.plotter.maps.FieldPlotter` instances, set
-        ``{'plotter.fieldplotter.title': 'my title'}``""")],
-
-    'gridweights.use_cdo': [
-        None, validate_bool_maybe_none,
-        'Boolean flag to control whether CDOs (Climate Data Operators) should '
-        'be used to calculate grid weights. If None, they are tried to be '
-        'used.'],
-
+        ``{'plotter.fieldplotter.title': 'my title'}``"""
+        ),
+    ],
+    "gridweights.use_cdo": [
+        None,
+        validate_bool_maybe_none,
+        "Boolean flag to control whether CDOs (Climate Data Operators) should "
+        "be used to calculate grid weights. If None, they are tried to be "
+        "used.",
+    ],
     # decoder
-    'decoder.x': [set(), validate_stringset,
-                  'names that shall be interpreted as the longitudinal x dim'],
-    'decoder.y': [set(), validate_stringset,
-                  'names that shall be interpreted as the latitudinal y dim'],
-    'decoder.z': [set(), validate_stringset,
-                  'names that shall be interpreted as the vertical z dim'],
-    'decoder.t': [{'time'}, validate_stringset,
-                  'names that shall be interpreted as the time dimension'],
-    'decoder.interp_kind': [
-        'linear', validate_str,
-        'interpolation method to calculate 2D-bounds (see the `kind` parameter'
-        'in the :meth:`psyplot.data.CFDecoder.get_plotbounds` method)'],
-
+    "decoder.x": [
+        set(),
+        validate_stringset,
+        "names that shall be interpreted as the longitudinal x dim",
+    ],
+    "decoder.y": [
+        set(),
+        validate_stringset,
+        "names that shall be interpreted as the latitudinal y dim",
+    ],
+    "decoder.z": [
+        set(),
+        validate_stringset,
+        "names that shall be interpreted as the vertical z dim",
+    ],
+    "decoder.t": [
+        {"time"},
+        validate_stringset,
+        "names that shall be interpreted as the time dimension",
+    ],
+    "decoder.interp_kind": [
+        "linear",
+        validate_str,
+        "interpolation method to calculate 2D-bounds (see the `kind` parameter"
+        "in the :meth:`psyplot.data.CFDecoder.get_plotbounds` method)",
+    ],
     # specify automatic drawing and showing of figures
-    'auto_draw': [True, validate_bool,
-                  ('Automatically draw the figures if the draw keyword in the '
-                   'update and start_update methods is None')],
-    'auto_show': [False, validate_bool,
-                  ('Automatically show the figures after the update and'
-                   'start_update methods')],
-
+    "auto_draw": [
+        True,
+        validate_bool,
+        (
+            "Automatically draw the figures if the draw keyword in the "
+            "update and start_update methods is None"
+        ),
+    ],
+    "auto_show": [
+        False,
+        validate_bool,
+        (
+            "Automatically show the figures after the update and"
+            "start_update methods"
+        ),
+    ],
     # data
-    'datapath': [None, validate_path_exists, 'path for supplementary data'],
-
+    "datapath": [None, validate_path_exists, "path for supplementary data"],
     # list settings
-    'lists.auto_update': [True, validate_bool,
-                          'default value (boolean) for the auto_update '
-                          'parameter in the initialization of Plotter, '
-                          'Project, etc. instances'],
-
+    "lists.auto_update": [
+        True,
+        validate_bool,
+        "default value (boolean) for the auto_update "
+        "parameter in the initialization of Plotter, "
+        "Project, etc. instances",
+    ],
     # project settings
     # auto_import: If True the plotters in project,plotters are automatically
     # imported
-    'project.auto_import': [False, validate_bool,
-                            'boolean controlling whether all plotters '
-                            'specified in the project.plotters item will be '
-                            'automatically imported when importing the '
-                            'psyplot.project module'],
-    'project.import_seaborn': [
-        None, validate_bool_maybe_none,
-        'boolean controlling whether the seaborn module shall be imported '
-        'when importing the project module. If None, it is only tried to '
-        'import the module.'],
-    'project.plotters': [
-        {}, validate_dict,
-        'mapping from identifier to plotter definitions for the Project class.'
-        ' See the :func:`psyplot.project.register_plotter` function for '
-        'possible keywords and values. See '
-        ':attr:`psyplot.project.registered_plotters` for examples.'],
-
-    'project.plotters.user': [
-        {}, validate_dict,
+    "project.auto_import": [
+        False,
+        validate_bool,
+        "boolean controlling whether all plotters "
+        "specified in the project.plotters item will be "
+        "automatically imported when importing the "
+        "psyplot.project module",
+    ],
+    "project.import_seaborn": [
+        None,
+        validate_bool_maybe_none,
+        "boolean controlling whether the seaborn module shall be imported "
+        "when importing the project module. If None, it is only tried to "
+        "import the module.",
+    ],
+    "project.plotters": [
+        {},
+        validate_dict,
+        "mapping from identifier to plotter definitions for the Project class."
+        " See the :func:`psyplot.project.register_plotter` function for "
+        "possible keywords and values. See "
+        ":attr:`psyplot.project.registered_plotters` for examples.",
+    ],
+    "project.plotters.user": [
+        {},
+        validate_dict,
         "Plot methods that are defined by the user and overwrite those in the"
         "``'project.plotters'`` key. Use this if you want to define your own "
-        "plotters without writing a plugin"],
-
+        "plotters without writing a plugin",
+    ],
     # presets
-    'presets.trusted': [
-        [], validate_files_exist,
-        "A list of filenames with trusted presets"]
-    }
+    "presets.trusted": [
+        [],
+        validate_files_exist,
+        "A list of filenames with trusted presets",
+    ],
+}
 
 
-_rcparam_warn_str = ("Trying to set {key} to {value} via the {func} "
-                     "method of RcParams which does not validate cleanly. ")
+_rcparam_warn_str = (
+    "Trying to set {key} to {value} via the {func} "
+    "method of RcParams which does not validate cleanly. "
+)
 
 
-_seq_err_msg = ('You must supply exactly {n:d} values, you provided '
-                '{num:d} values: {s}')
+_seq_err_msg = (
+    "You must supply exactly {n:d} values, you provided " "{num:d} values: {s}"
+)
 
 
-_str_err_msg = ('You must supply exactly {n:d} comma-separated values, '
-                'you provided '
-                '{num:d} comma-separated values: {s}')
+_str_err_msg = (
+    "You must supply exactly {n:d} comma-separated values, "
+    "you provided "
+    "{num:d} comma-separated values: {s}"
+)
 
 #: :class:`~psyplot.config.rcsetup.RcParams` instance that stores default
 #: formatoptions and configuration settings.
