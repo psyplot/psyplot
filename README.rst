@@ -8,76 +8,14 @@ The psyplot interactive visualization framework
 
 .. start-badges
 
-.. list-table::
-    :stub-columns: 1
-    :widths: 10 90
-
-    * - docs
-      - |docs| |joss| |zenodo|
-    * - tests
-      - |circleci| |appveyor| |codecov|
-    * - package
-      - |version| |conda| |github|
-    * - implementations
-      - |supported-versions| |supported-implementations|
-    * - get in touch
-      - |mattermost| |mailing-list| |issues|
-
-.. |docs| image:: https://img.shields.io/github/deployments/psyplot/psyplot/github-pages
-    :alt: Documentation
-    :target: http://psyplot.github.io/psyplot/
-
-.. |circleci| image:: https://circleci.com/gh/psyplot/psyplot/tree/master.svg?style=svg
-    :alt: CircleCI
-    :target: https://circleci.com/gh/psyplot/psyplot/tree/master
-
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/4nt6qrw66iw65w33/branch/master?svg=true
-    :alt: AppVeyor
-    :target: https://ci.appveyor.com/project/psyplot/psyplot/branch/master
-
-.. |codecov| image:: https://codecov.io/gh/psyplot/psyplot/branch/master/graph/badge.svg
-    :alt: Coverage
-    :target: https://codecov.io/gh/psyplot/psyplot
-
-.. |version| image:: https://img.shields.io/pypi/v/psyplot.svg?style=flat
-    :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/psyplot
-
-.. |conda| image:: https://anaconda.org/conda-forge/psyplot/badges/version.svg
-    :alt: conda
-    :target: https://anaconda.org/conda-forge/psyplot
-
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/psyplot.svg?style=flat
-    :alt: Supported versions
-    :target: https://pypi.python.org/pypi/psyplot
-
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/psyplot.svg?style=flat
-    :alt: Supported implementations
-    :target: https://pypi.python.org/pypi/psyplot
-
-.. |joss| image:: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60/status.svg
-    :alt: Journal of Open Source Software
-    :target: http://joss.theoj.org/papers/3535c28017003f0b5fb63b1b64118b60
-
-.. |zenodo| image:: https://zenodo.org/badge/87944102.svg
-    :alt: Zenodo
-    :target: https://zenodo.org/badge/latestdoi/87944102
-
-.. |github| image:: https://img.shields.io/github/release/psyplot/psyplot.svg
-    :target: https://github.com/psyplot/psyplot/releases/latest
-    :alt: Latest github release
-
-.. |mattermost| image:: https://img.shields.io/badge/chat-on%20mattermost-success?logo=mattermost
-    :target: https://mattermost.hzdr.de/psyplot/
-    :alt: Mattermost
-
-.. |mailing-list| image:: https://img.shields.io/badge/join-mailing%20list-brightgreen.svg?style=flat
-    :target: https://www.listserv.dfn.de/sympa/subscribe/psyplot
-    :alt: DFN mailing list
-
-.. |issues| image:: https://img.shields.io/github/issues-raw/psyplot/psyplot.svg?style=flat
-    :target: https://github.com/psyplot/psyplot/issues
-    :alt: GitHub issues
+|CI|
+|Code coverage|
+|Latest Release|
+|PyPI version|
+|Code style: black|
+|Imports: isort|
+|PEP8|
+|REUSE status|
 
 .. end-badges
 
@@ -209,3 +147,22 @@ GNU LGPL-3.0 license for more details.
 
 You should have received a copy of the GNU LGPL-3.0 license
 along with this program.  If not, see https://www.gnu.org/licenses/.
+
+
+.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/badges/master/pipeline.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psyplot/-/pipelines?page=1&scope=all&ref=master
+.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/badges/master/coverage.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psyplot/-/graphs/package-template/charts
+.. |Latest Release| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/-/badges/release.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psyplot
+.. |PyPI version| image:: https://img.shields.io/pypi/v/psyplot.svg
+   :target: https://pypi.python.org/pypi/psyplot/
+.. |Code style: black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/psf/black
+.. |Imports: isort| image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
+   :target: https://pycqa.github.io/isort/
+.. |PEP8| image:: https://img.shields.io/badge/code%20style-pep8-orange.svg
+   :target: https://www.python.org/dev/peps/pep-0008/
+.. TODO: uncomment the following line when the package is registered at https://api.reuse.software
+.. .. |REUSE status| image:: https://api.reuse.software/badge/codebase.helmholtz.cloud/psyplot/psyplot
+..    :target: https://api.reuse.software/info/codebase.helmholtz.cloud/psyplot/psyplot

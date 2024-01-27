@@ -18,7 +18,6 @@ Interactive data visualization with python
 |Code style: black|
 |Imports: isort|
 |PEP8|
-|Checked with mypy|
 |REUSE status|
 
 .. image:: _static/psyplot.png
@@ -165,9 +164,9 @@ Indices and tables
 * :ref:`search`
 
 
-.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/badges/main/pipeline.svg
-   :target: https://codebase.helmholtz.cloud/psyplot/psyplot/-/pipelines?page=1&scope=all&ref=main
-.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/badges/main/coverage.svg
+.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/badges/master/pipeline.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psyplot/-/pipelines?page=1&scope=all&ref=master
+.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/badges/master/coverage.svg
    :target: https://codebase.helmholtz.cloud/psyplot/psyplot/-/graphs/package-template/charts
 .. |Latest Release| image:: https://codebase.helmholtz.cloud/psyplot/psyplot/-/badges/release.svg
    :target: https://codebase.helmholtz.cloud/psyplot/psyplot
@@ -179,8 +178,6 @@ Indices and tables
    :target: https://pycqa.github.io/isort/
 .. |PEP8| image:: https://img.shields.io/badge/code%20style-pep8-orange.svg
    :target: https://www.python.org/dev/peps/pep-0008/
-.. |Checked with mypy| image:: http://www.mypy-lang.org/static/mypy_badge.svg
-   :target: http://mypy-lang.org/
 .. TODO: uncomment the following line when the package is registered at https://api.reuse.software
 .. .. |REUSE status| image:: https://api.reuse.software/badge/codebase.helmholtz.cloud/psyplot/psyplot
 ..    :target: https://api.reuse.software/info/codebase.helmholtz.cloud/psyplot/psyplot
