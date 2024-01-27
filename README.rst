@@ -163,6 +163,5 @@ along with this program.  If not, see https://www.gnu.org/licenses/.
    :target: https://pycqa.github.io/isort/
 .. |PEP8| image:: https://img.shields.io/badge/code%20style-pep8-orange.svg
    :target: https://www.python.org/dev/peps/pep-0008/
-.. TODO: uncomment the following line when the package is registered at https://api.reuse.software
-.. .. |REUSE status| image:: https://api.reuse.software/badge/codebase.helmholtz.cloud/psyplot/psyplot
-..    :target: https://api.reuse.software/info/codebase.helmholtz.cloud/psyplot/psyplot
+.. |REUSE status| image:: https://api.reuse.software/badge/codebase.helmholtz.cloud/psyplot/psyplot
+   :target: https://api.reuse.software/info/codebase.helmholtz.cloud/psyplot/psyplot
