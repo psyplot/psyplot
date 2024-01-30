@@ -71,8 +71,11 @@ class PsyPlotCritical(UserWarning):
     pass
 
 
-warnings.simplefilter("always", PsyPlotWarning, append=True)
-warnings.simplefilter("always", PsyPlotCritical, append=True)
+_issued_psyplot_warnings = []
+
+
+warnings.simplefilter("default", PsyPlotWarning)
+warnings.simplefilter("always", PsyPlotCritical)
 
 
 def disable_warnings(critical=False):
@@ -109,11 +112,17 @@ def customwarn(message, category, filename, lineno, *args, **kwargs):
     PsyPlotWarning and PsyPlotCritical and the default warnings.showwarning
     function for all the others."""
     if category is PsyPlotWarning:
-        logger.warning(
-            warnings.formatwarning(
-                "\n%s" % message, category, filename, lineno
+        # for whatever reason, the `default` warnings filter does not work
+        # when hovering over plots. This is why we implement a custom warning
+        # filter here
+        key = (str(message), filename, lineno)
+        if key not in _issued_psyplot_warnings:
+            logger.warning(
+                warnings.formatwarning(
+                    "\n%s" % message, category, filename, lineno
+                )
             )
-        )
+            _issued_psyplot_warnings.append(key)
     elif category is PsyPlotCritical:
         logger.critical(
             warnings.formatwarning(

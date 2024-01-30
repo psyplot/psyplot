@@ -22,7 +22,6 @@ from importlib import import_module
 from itertools import chain, count, cycle, islice, product, repeat, starmap
 from queue import Queue
 from threading import Thread
-from warnings import warn
 
 import numpy as np
 import six
@@ -36,7 +35,7 @@ import psyplot.utils as utils
 from psyplot.config.rcsetup import rcParams, safe_list
 from psyplot.docstring import dedent, docstrings
 from psyplot.utils import isstring
-from psyplot.warning import PsyPlotRuntimeWarning
+from psyplot.warning import PsyPlotRuntimeWarning, warn
 
 try:
     import dask  # noqa: F401
