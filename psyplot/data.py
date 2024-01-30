@@ -266,7 +266,11 @@ def get_index_from_coord(coord, base_index):
     except AttributeError:
         values = coord
     if values.ndim == 0:
-        return base_index.get_loc(values[()])
+        try:
+            return base_index.get_loc(values[()])
+        except KeyError:
+            # the location does not exactly match, so we try a nearest match
+            return base_index.get_indexer([values[()]], "nearest")[0]
     if len(values) == len(base_index) and (values == base_index).all():
         return slice(None)
     values = np.array(list(map(lambda i: base_index.get_loc(i), values)))
