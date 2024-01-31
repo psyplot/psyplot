@@ -241,3 +241,22 @@ class TestCommandLine(unittest.TestCase):
         ref = psy.plot._plot_methods
         d = yaml.load(proc.stdout.read(), yaml.Loader)
         self.assertEqual(d, ref)
+
+    def test_metadata_info(self):
+        """Test to the metadata info"""
+        proc = spr.Popen(
+            [
+                sys.executable,
+                "-m",
+                "psyplot",
+                bt.get_file("test-t2m-u-v.nc"),
+                "-i",
+            ],
+            stdout=spr.PIPE,
+            stderr=spr.PIPE,
+        )
+        proc.wait()
+        self.assertFalse(proc.poll(), msg=proc.stderr.read())
+
+        d = yaml.load(proc.stdout.read(), yaml.Loader)
+        self.assertNotIn("error", yaml.safe_dump(d))

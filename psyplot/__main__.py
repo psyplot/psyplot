@@ -294,6 +294,15 @@ def get_parser(create=True):
     )
 
     parser.update_arg(
+        "info",
+        short="i",
+        long="info",
+        action=ShowGridInfo,
+        if_existent=False,
+        group=info_grp,
+    )
+
+    parser.update_arg(
         "list_plugins",
         short="lp",
         long="list-plugins",
@@ -500,6 +509,65 @@ class ListPluginsAction(argparse.Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
         print(yaml.dump(psyplot.rcParams._plugins, default_flow_style=False))
+        sys.exit(0)
+
+
+class ShowGridInfo(argparse.Action):
+    """Action to show the grid info on a variable"""
+
+    def __init__(
+        self,
+        option_strings,
+        metavar="VARIABLE",
+        nargs="*",
+        dest=argparse.SUPPRESS,
+        default=argparse.SUPPRESS,
+        **kwargs,
+    ):
+        kwargs.setdefault(
+            "help",
+            "Show grid information on one of more variables. If no variables "
+            "are provided, show info on all variables in the dataset.",
+        )
+        super().__init__(
+            option_strings,
+            metavar=metavar,
+            nargs="*",
+            dest=dest,
+            default=default,
+            **kwargs,
+        )
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        from psyplot.data import CFDecoder, open_dataset, open_mfdataset
+
+        if not namespace.fnames:
+            print("Please specify a dataset for the info option.")
+        fnames = namespace.fnames
+        engine = namespace.engine
+        concat_dim = namespace.concat_dim
+        mf_mode = len(fnames) > 1
+        if mf_mode:
+            ds = open_mfdataset(fnames, engine=engine, concat_dim=concat_dim)
+        else:
+            ds = open_dataset(fnames[0], engine=engine)
+
+        data = {}
+
+        values = values or list(ds.variables)
+
+        if not values:
+            print("No variables found in the given dataset.")
+            sys.exit(1)
+
+        for value in values:
+            if value not in ds.variables:
+                data[value] = {
+                    "error": f"Variable {value} could not be found in the dataset."
+                }
+            decoder = CFDecoder.get_decoder(ds, ds[value])
+            data[value] = decoder.get_metadata_for_variable(ds[value])
+        print(yaml.dump(data, default_flow_style=False))
         sys.exit(0)
 
 
