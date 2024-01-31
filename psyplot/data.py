@@ -997,6 +997,18 @@ class CFDecoder(object):
                     **{d: sl for d, sl in idims.items() if d in ret.dims}
                 )
 
+        def guess_x(cname):
+            cname = cname.lower()
+            return (
+                "lon" in cname or cname.endswith("x") or cname.startswith("x")
+            )
+
+        def guess_y(cname):
+            cname = cname.lower()
+            return (
+                "lat" in cname or cname.endswith("y") or cname.startswith("y")
+            )
+
         axis = axis.lower()
         if axis not in list("xyzt"):
             raise ValueError(
@@ -1047,15 +1059,11 @@ class CFDecoder(object):
         # better to specify the :attr:`x` and :attr:`y` attribute
         tnames = self.t.intersection(coord_names)
         if axis == "x":
-            for cname in filter(
-                lambda cname: re.search("lon", cname), coord_names
-            ):
+            for cname in filter(guess_x, coord_names):
                 return get_coord(cname)
             return get_coord(coord_names[-1], raise_error=False)
         elif axis == "y" and len(coord_names) >= 2:
-            for cname in filter(
-                lambda cname: re.search("lat", cname), coord_names
-            ):
+            for cname in filter(guess_y, coord_names):
                 return get_coord(cname)
             return get_coord(coord_names[-2], raise_error=False)
         elif (
