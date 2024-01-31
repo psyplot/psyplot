@@ -2389,6 +2389,7 @@ class Plotter(dict):
 
     docstrings.keep_params("InteractiveBase.update.parameters", "auto_update")
 
+    @docstrings.get_sections(base="Plotter.update")
     @docstrings.dedent
     def update(
         self,
