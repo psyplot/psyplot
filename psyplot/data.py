@@ -1799,6 +1799,13 @@ class UGridDecoder(CFDecoder):
     --------
     Currently only triangles are supported."""
 
+    #: True if the data of the CFDecoder supports the extraction of a subset of
+    #: the data based on the indices.
+    #:
+    #: For UGRID conventions, this is not easily possible because the
+    #: extraction of a subset breaks the connectivity information of the mesh
+    supports_spatial_slicing: bool = False
+
     def is_unstructured(self, *args, **kwargs):
         """Reimpletemented to return always True. Any ``*args`` and ``**kwargs``
         are ignored"""
