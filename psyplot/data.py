@@ -562,6 +562,10 @@ class CFDecoder(object):
 
     _registry = []
 
+    #: True if the data of the CFDecoder supports the extraction of a subset of
+    #: the data based on the indices.
+    supports_spatial_slicing = True
+
     @property
     def logger(self):
         """:class:`logging.Logger` of this instance"""
@@ -1779,6 +1783,12 @@ class CFDecoder(object):
         for dim in set(dims).intersection(name_map):
             dims[name_map[dim]] = dims.pop(dim)
         return dims
+
+    def clear_cache(self):
+        """Clear any cached data.
+        The default method does nothing but can be reimplemented by subclasses
+        to clear data has been computed."""
+        pass
 
 
 class UGridDecoder(CFDecoder):
@@ -3115,6 +3125,7 @@ class InteractiveArray(InteractiveBase):
             dims = self._new_dims
             method = self.method
             if dims:
+                self.decoder.clear_cache()
                 if VARIABLELABEL in self.arr.coords:
                     self._update_concatenated(dims, method)
                 else:
