@@ -11,10 +11,12 @@ from __future__ import division
 
 import datetime as dt
 import inspect
+import io
 import logging
 import os
 import os.path as osp
 import re
+import traceback as tb
 from collections import defaultdict
 from functools import partial
 from glob import glob
@@ -22,6 +24,7 @@ from importlib import import_module
 from itertools import chain, count, cycle, islice, product, repeat, starmap
 from queue import Queue
 from threading import Thread
+from typing import Dict, List, Optional
 
 import numpy as np
 import six
@@ -633,6 +636,7 @@ class CFDecoder(object):
         return True
 
     @classmethod
+    @docstrings.get_sections(base="CFDecoder.get_decoder")
     @docstrings.dedent
     def get_decoder(cls, ds, var, *args, **kwargs):
         """
@@ -1797,6 +1801,333 @@ class CFDecoder(object):
         The default method does nothing but can be reimplemented by subclasses
         to clear data has been computed."""
         pass
+
+    # -------------------------------------------------------------------------
+    # --------------- Grid informations on a variable -------------------------
+    # -------------------------------------------------------------------------
+
+    @docstrings.get_sections(base="CFDecoder.get_metadata_for_variable")
+    @docstrings.dedent
+    def get_metadata_for_variable(
+        self,
+        var: xr.DataArray,
+        coords: Optional[Dict] = None,
+        fail_on_error: bool = False,
+        include_tracebacks: bool = False,
+    ) -> Dict[str, Dict[str, str]]:
+        """Get the metadata information on a variable.
+
+        Parameters
+        ----------
+        var : xarray.DataArray
+            The data array to get the metadata for
+        coords: Dict, optional
+            The coordinates to use. If none, we'll fallback to the coordinates
+            of the base dataset.
+        fail_on_error: bool, default False
+            If True, an error is raised when an error occurs. Otherwise it is
+            captured and entered as an attribute to the metadata.
+        include_tracebacks: bool, default False
+            If True, the full traceback of the error is included
+
+        Returns
+        -------
+        Dict[str, Dict[str, str]]
+            A mapping from meta data sections for meta data attributes on the
+            specific section.
+        """
+        sections = self.get_metadata_sections(var)
+        ret = {}
+        if coords is None:
+            coords = self.ds.coords
+        for section in sections:
+            try:
+                attrs = self.get_metadata_for_section(var, section, coords)
+            except Exception as e:
+                if fail_on_error:
+                    raise
+                else:
+                    attrs = {"error": str(e)}
+                    if include_tracebacks:
+                        s = io.StringIO()
+                        tb.print_exc(file=s)
+                        attrs["traceback"] = s.getvalue()
+            if attrs:
+                ret[section] = attrs
+        return ret
+
+    docstrings.keep_params(
+        "CFDecoder.get_metadata_for_variable.parameters", "var"
+    )
+
+    def get_metadata_sections(self, var: xr.DataArray) -> List[str]:
+        """Get the metadata sections for a variable.
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+
+        Returns
+        -------
+        List[str]
+            The sections for the metadata information
+        """
+        return [
+            "Attributes",
+            "Time information",
+            "Vertical information",
+            "X-Coordinate information",
+            "Y-Coordinate information",
+            "Other dimensions",
+            "Projection info",
+            "Grid type info",
+        ]
+
+    @docstrings.dedent
+    def get_metadata_for_section(
+        self, var: xr.DataArray, section: str, coords: Dict
+    ) -> Dict[str, str]:
+        """Get the metadata for a specific section
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+        section : str
+            The section name
+        coords : Dict
+            Other coordinates in the dataset
+
+        Returns
+        -------
+        Dict[str, str]
+            A mapping from metadata name to section.
+        """
+        standard_dimensions = {
+            "Time information": self.get_t_metadata,
+            "Vertical information": self.get_z_metadata,
+            "X-Coordinate information": self.get_x_metadata,
+            "Y-Coordinate information": self.get_y_metadata,
+        }
+        if section in standard_dimensions:
+            return standard_dimensions[section](var, coords)
+        elif section == "Other dimensions":
+            xyzt = {
+                self.get_xname(var, self.ds.coords),
+                self.get_yname(var, self.ds.coords),
+                self.get_zname(var, self.ds.coords),
+                self.get_tname(var, self.ds.coords),
+            }
+            other_dims = list(map(str, set(var.dims) - xyzt))
+            if other_dims:
+                return {"Dimension names": ", ".join(other_dims)}
+        elif section == "Attributes":
+            return {key: str(val) for key, val in var.attrs.items()}
+        elif section == "Projection info":
+            if "grid_mapping" in var.attrs:
+                return self.get_projection_info(var, coords)
+        elif section == "Grid type info":
+            return self.get_grid_type_info(var, coords)
+
+        return {}
+
+    def get_grid_type_info(
+        self, var: xr.DataArray, coords: Dict
+    ) -> Dict[str, str]:
+        """Get info on the grid type
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+        coords : Dict
+            Other coordinates in the dataset
+
+        Returns
+        -------
+        Dict[str, str]
+            The info on the grid type
+        """
+        return {
+            "unstructured": self.is_unstructured(var),
+            "curvilinear": self.is_circumpolar(var),
+        }
+
+    def get_projection_info(
+        self, var: xr.DataArray, coords: Dict
+    ) -> Dict[str, str]:
+        """Get info on the projection
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+        coords : Dict
+            Other coordinates in the dataset
+
+        Returns
+        -------
+        Dict[str, str]
+            The grid mapping attributes
+
+        Raises
+        ------
+        KeyError
+            when the variable specified by the `grid_mapping` is not part of
+            the given `coords`
+        """
+        try:
+            grid_mapping = coords[var.attrs["grid_mapping"]]
+        except KeyError:
+            raise KeyError(
+                f"Grid mapping variable {repr(var.attrs['grid_mapping'])}"
+                f"could not be found in list of coordinates {tuple(coords)}"
+            )
+        else:
+            return {key: str(val) for key, val in grid_mapping.attrs.items()}
+
+    @docstrings.dedent
+    def get_coord_info(
+        self,
+        var: xr.DataArray,
+        dimname: str,
+        coord: xr.DataArray,
+        coords: Dict,
+        what: str,
+    ) -> Dict[str, str]:
+        """_summary_
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+        dimname : str
+            The dimension in the dimension of `var`
+        coord : Union[xr.Variable, xr.DataArray]
+            The coordinate to get the info from
+        coords : Dict
+            Other coordinates in the dataset
+        what : str
+            The name on what this is all bout
+
+        Returns
+        -------
+        Dict[str, str]
+            The coordinate infos
+
+        Raises
+        ------
+        ValueError
+            When the coordinates specifies boundaries but they could not be
+            found in the given `coords`
+        """
+        ret: Dict[str, str] = {
+            "Dimension name": dimname,
+            "Coordinate": str(coord.name),
+            "Shape": f"{coord.dims} -> {coord.shape}",
+        }
+        if "bounds" in coord.attrs:
+            bounds = coord.attrs["bounds"]
+            ret["Boundary variable"] = bounds
+            try:
+                bc = coords[bounds]
+            except KeyError:
+                raise KeyError(
+                    f"{what} {repr(coord.name)} specifies a bounds "
+                    f"attribute, but {repr(bounds)} is not part of the given "
+                    f"coordinates {tuple(coords)}."
+                )
+            else:
+                ret["Boundary variable shape"] = f"{bc.dims} -> {bc.shape}"
+        return ret
+
+    @docstrings.dedent
+    def get_t_metadata(
+        self, var: xr.DataArray, coords: Dict
+    ) -> Dict[str, str]:
+        """Get the temporal metadata for a variable.
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+        coords: Dict
+            The coordinates to use
+
+        Returns
+        -------
+        %(CFDecoder.get_metadata_for_section.returns)s
+        """
+        dimname = self.get_tname(var)
+        coord = self.get_t(var)
+        if not dimname or coord is None:
+            return {}
+        return self.get_coord_info(
+            var, dimname, coord, coords, "Time coordinate"
+        )
+
+    @docstrings.dedent
+    def get_z_metadata(
+        self, var: xr.DataArray, coords: Dict
+    ) -> Dict[str, str]:
+        """Get the vertical level metadata for a variable.
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+        coords: Dict
+            The coordinates to use
+
+        Returns
+        -------
+        %(CFDecoder.get_metadata_for_section.returns)s
+        """
+        dimname = self.get_zname(var)
+        coord = self.get_z(var)
+        if not dimname or coord is None:
+            return {}
+        return self.get_coord_info(
+            var, dimname, coord, coords, "Vertical coordinate"
+        )
+
+    @docstrings.dedent
+    def get_x_metadata(
+        self, var: xr.DataArray, coords: Dict
+    ) -> Dict[str, str]:
+        """Get the metadata for spatial x-dimension.
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+        coords: Dict
+            The coordinates to use
+
+        Returns
+        -------
+        %(CFDecoder.get_metadata_for_section.returns)s
+        """
+        dimname = self.get_xname(var)
+        coord = self.get_x(var)
+        if not dimname or coord is None:
+            return {}
+        return self.get_coord_info(var, dimname, coord, coords, "X-coordinate")
+
+    @docstrings.dedent
+    def get_y_metadata(
+        self, var: xr.DataArray, coords: Dict
+    ) -> Dict[str, str]:
+        """Get the metadata for spatial y-dimension.
+
+        Parameters
+        ----------
+        %(CFDecoder.get_metadata_for_variable.parameters.var)s
+        coords: Dict
+            The coordinates to use
+
+        Returns
+        -------
+        %(CFDecoder.get_metadata_for_section.returns)s
+        """
+        dimname = self.get_yname(var)
+        coord = self.get_y(var)
+        if not dimname or coord is None:
+            return {}
+        return self.get_coord_info(var, dimname, coord, coords, "X-coordinate")
 
 
 class UGridDecoder(CFDecoder):
