@@ -518,24 +518,18 @@ class ShowGridInfo(argparse.Action):
     def __init__(
         self,
         option_strings,
-        metavar="VARIABLE",
-        nargs="*",
+        nargs=None,
         dest=argparse.SUPPRESS,
         default=argparse.SUPPRESS,
         **kwargs,
     ):
+        if nargs is not None:
+            raise ValueError("nargs not allowed")
         kwargs.setdefault(
-            "help",
-            "Show grid information on one of more variables. If no variables "
-            "are provided, show info on all variables in the dataset.",
+            "help", "Show grid information on the specified variables."
         )
         super().__init__(
-            option_strings,
-            metavar=metavar,
-            nargs="*",
-            dest=dest,
-            default=default,
-            **kwargs,
+            option_strings, nargs=0, dest=dest, default=default, **kwargs
         )
 
     def __call__(self, parser, namespace, values, option_string=None):
@@ -554,19 +548,20 @@ class ShowGridInfo(argparse.Action):
 
         data = {}
 
-        values = values or list(ds.variables)
+        names = namespace.name or list(ds.variables)
 
-        if not values:
+        if not names:
             print("No variables found in the given dataset.")
             sys.exit(1)
 
-        for value in values:
-            if value not in ds.variables:
-                data[value] = {
-                    "error": f"Variable {value} could not be found in the dataset."
+        for name in names:
+            if name not in ds.variables:
+                data[name] = {
+                    "error": f"Variable {name} could not be found in the dataset."
                 }
-            decoder = CFDecoder.get_decoder(ds, ds[value])
-            data[value] = decoder.get_metadata_for_variable(ds[value])
+                continue
+            decoder = CFDecoder.get_decoder(ds, ds[name])
+            data[name] = decoder.get_metadata_for_variable(ds[name])
         print(yaml.dump(data, default_flow_style=False))
         sys.exit(0)
 
