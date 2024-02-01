@@ -10,6 +10,7 @@
 
 import argparse
 import glob
+import json
 import logging
 import os.path as osp
 import pickle
@@ -23,12 +24,10 @@ import yaml
 from funcargparse import FuncArgParser
 
 import psyplot
+from psyplot.config.rcsetup import rcParams, safe_list
 from psyplot.docstring import docstrings
 from psyplot.utils import get_default_value
 from psyplot.warning import warn
-
-rcParams = psyplot.rcParams
-
 
 logger = logging.getLogger(__name__)
 
@@ -78,6 +77,7 @@ def make_plot(
     concat_dim=get_default_value(xr.open_mfdataset, "concat_dim"),
     chname={},
     preset=None,
+    decoder=None,
 ):
     """
     Eventually start the QApplication or only make a plot
@@ -137,6 +137,8 @@ def make_plot(
         the path to an existing yaml file, it will be loaded. Otherwise we
         look up the `preset` in the psyplot configuration directory (see
         :func:`~psyplot.config.rcsetup.get_configdir`).
+    decoder: str
+        Keyword arguments for the decoder.
     """
     if project is not None and (name != [] or dims is not None):
         warn(
@@ -201,6 +203,7 @@ def make_plot(
             fmt=formatoptions or {},
             mf_mode=True,
             concat_dim=concat_dim,
+            decoder=decoder,
             **kwargs,
         )
         p.export(output, tight=tight)
@@ -386,10 +389,24 @@ def get_parser(create=True):
         short="fmt",
         type=_load_dict,
         help="""
-        The path to a yaml (``'.yml'`` or ``'.yaml'``) or pickle file
-        defining a dictionary of formatoption that is applied to the data
-        visualized by the chosen `plot_method`""",
-        metavar="FILENAME",
+        YAML-formatted formatoption (e.g. 'cmap: Reds'), or the path to a yaml
+        (``'.yml'`` or ``'.yaml'``), JSON (``'.json'``) or  pickle file
+        defining a dictionary of formatoption that is applied to the
+        data visualized by the chosen `plot_method`""",
+        metavar="FILENAME_OR_YAML",
+    )
+
+    parser.update_arg(
+        "decoder",
+        long="decoder",
+        short=None,
+        type=_load_decoder,
+        help="""
+        YAML-formatted decoder options (e.g. 'x: x-coordinate'), or the path to
+        a yaml (``'.yml'`` or ``'.yaml'``), JSON (``'.json'``) or  pickle file
+        defining a dictionary of formatoption that is applied to the
+        data visualized by the chosen `plot_method`""",
+        metavar="FILENAME_OR_YAML",
     )
 
     parser.update_arg(
@@ -423,10 +440,23 @@ def get_parser(create=True):
 
 
 def _load_dict(fname):
-    with open(fname) as f:
-        if fname.endswith(".yml") or fname.endswith(".yaml"):
-            return yaml.load(f, Loader=yaml.SafeLoader)
-        return pickle.load(f)
+    data = yaml.safe_load(fname)
+    if isinstance(data, str):  # assume a file and load from disc
+        with open(data) as f:
+            if data.endswith(".yml") or data.endswith(".yaml"):
+                return yaml.safe_load(f)
+            elif data.endswith(".json"):
+                return json.load(f)
+            return pickle.load(f)
+    return data
+
+
+def _load_decoder(fname):
+    data = _load_dict(fname)
+    for key in "xyzt":
+        if key in data:
+            data[key] = set(safe_list(data[key]))
+    return data
 
 
 def _load_dims(s):
@@ -554,13 +584,15 @@ class ShowGridInfo(argparse.Action):
             print("No variables found in the given dataset.")
             sys.exit(1)
 
+        decoder_kwargs = namespace.decoder or {}
+
         for name in names:
             if name not in ds.variables:
                 data[name] = {
                     "error": f"Variable {name} could not be found in the dataset."
                 }
                 continue
-            decoder = CFDecoder.get_decoder(ds, ds[name])
+            decoder = CFDecoder.get_decoder(ds, ds[name], **decoder_kwargs)
             data[name] = decoder.get_metadata_for_variable(ds[name])
         print(yaml.dump(data, default_flow_style=False))
         sys.exit(0)
