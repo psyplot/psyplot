@@ -2694,11 +2694,12 @@ class Plotter(dict):
                 if coord.size == 1:
                     attrs[dim] = format_time(coord.values)
             if isinstance(self.data, InteractiveList):
-                decoder = self.data[0].psy.decoder
+                base = self.data[0].psy.base
             else:
-                decoder = self.data.psy.decoder
+                base = self.data.psy.base
             for dim in axes:
                 for obj in [base_var, arr]:
+                    decoder = CFDecoder.get_decoder(base, obj)
                     coord = getattr(decoder, "get_" + dim)(
                         obj, coords=getattr(arr, "coords", None)
                     )

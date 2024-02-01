@@ -1860,6 +1860,7 @@ class CFDecoder(object):
         "CFDecoder.get_metadata_for_variable.parameters", "var"
     )
 
+    @docstrings.dedent
     def get_metadata_sections(self, var: xr.DataArray) -> List[str]:
         """Get the metadata sections for a variable.
 
@@ -1884,6 +1885,10 @@ class CFDecoder(object):
         ]
 
     @docstrings.dedent
+    @docstrings.get_sections(
+        base="CFDecoder.get_metadata_for_section",
+        sections=["Parameters", "Returns"],
+    )
     def get_metadata_for_section(
         self, var: xr.DataArray, section: str, coords: Dict
     ) -> Dict[str, str]:
