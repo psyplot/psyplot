@@ -1568,6 +1568,14 @@ class Project(ArrayList):
                 alternatives.difference_update(obj(ax=ax_base).arr_names)
             return ax_base
 
+        def join_axes(grouper_view, *axes):
+            """Join multiple axes together"""
+            try:
+                grouper = grouper_view._grouper
+            except AttributeError:  # matplotlib 3.5
+                grouper = grouper_view
+            grouper.join(*axes)
+
         pwd = kwargs.pop("pwd", None)
         if isinstance(fname, six.string_types):
             with open(fname, "rb") as f:
@@ -1657,16 +1665,20 @@ class Project(ArrayList):
         for key, names in sharex.items():
             ax_base = get_ax_base(key, names)
             if ax_base is not None:
-                ax_base.get_shared_x_axes()._grouper.join(
-                    ax_base, *obj(arr_name=names).axes
+                join_axes(
+                    ax_base.get_shared_x_axes(),
+                    ax_base,
+                    *obj(arr_name=names).axes,
                 )
                 for ax in obj(arr_name=names).axes:
                     ax._sharex = ax_base
         for key, names in sharey.items():
             ax_base = get_ax_base(key, names)
             if ax_base is not None:
-                ax_base.get_shared_y_axes()._grouper.join(
-                    ax_base, *obj(arr_name=names).axes
+                join_axes(
+                    ax_base.get_shared_y_axes(),
+                    ax_base,
+                    *obj(arr_name=names).axes,
                 )
                 for ax in obj(arr_name=names).axes:
                     ax._sharey = ax_base
