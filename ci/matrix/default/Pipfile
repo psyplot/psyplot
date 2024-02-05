@@ -9,7 +9,7 @@ name = "pypi"
 
 [packages]
 psyplot = {extras = ["testsite"], file = "../../..", editable=true}
-matplotlib = "3.7.*"
+matplotlib = "3.8.*"
 
 [dev-packages]
 

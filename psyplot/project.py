@@ -1657,7 +1657,7 @@ class Project(ArrayList):
         for key, names in sharex.items():
             ax_base = get_ax_base(key, names)
             if ax_base is not None:
-                ax_base.get_shared_x_axes().join(
+                ax_base.get_shared_x_axes()._grouper.join(
                     ax_base, *obj(arr_name=names).axes
                 )
                 for ax in obj(arr_name=names).axes:
@@ -1665,7 +1665,7 @@ class Project(ArrayList):
         for key, names in sharey.items():
             ax_base = get_ax_base(key, names)
             if ax_base is not None:
-                ax_base.get_shared_y_axes().join(
+                ax_base.get_shared_y_axes()._grouper.join(
                     ax_base, *obj(arr_name=names).axes
                 )
                 for ax in obj(arr_name=names).axes:
