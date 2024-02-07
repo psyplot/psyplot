@@ -27,6 +27,8 @@ export PRINT_HELP_PYSCRIPT
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
+NPROCS ?= 1
+
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
@@ -78,7 +80,7 @@ pipenv-test: ## run tox
 	pipenv run isort --check psyplot
 	pipenv run black --line-length 79 --check psyplot
 	pipenv run flake8 psyplot
-	pipenv run pytest -v --cov=psyplot -x
+	pipenv run pytest -v --cov=psyplot -x -n $(NPROCS)
 	pipenv run reuse lint
 	pipenv run cffconvert --validate
 

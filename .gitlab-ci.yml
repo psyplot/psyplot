@@ -36,7 +36,7 @@ test:
   script:
     - pip install pipenv
     - pipenv install
-    - make pipenv-test
+    - NPROCS=auto make pipenv-test
   parallel:
     matrix:
       - SCENARIO: default
