@@ -1,6 +1,6 @@
 {
   "template": "https://codebase.helmholtz.cloud/hcdc/software-templates/python-package-template.git",
-  "commit": "2a291586c1d99092860b9cf26a034a285479131e",
+  "commit": "71c4db6174bf781afed09576794a52587e5cc7c4",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -26,7 +26,9 @@
       "keywords": "visualization,netcdf,raster,cartopy,earth-sciences",
       "documentation_url": "https://psyplot.github.io",
       "use_markdown_for_documentation": "no",
+      "ci_build_stage": "no",
       "ci_matrix": "pipenv",
+      "use_pytest_xdist": "yes",
       "deploy_package_in_ci": "yes",
       "deploy_pages_in_ci": "git-push",
       "_extensions": [

@@ -14,13 +14,9 @@ description = "Python package for interactive data visualization"
 readme = "README.rst"
 keywords = [
     "visualization",
-
     "netcdf",
-
     "raster",
-
     "cartopy",
-
     "earth-sciences",
     ]
 
@@ -77,6 +73,7 @@ testsite = [
     "pytest-cov",
     "reuse",
     "cffconvert",
+    "pytest-xdist",
     "netCDF4",
     "dask",
     "scipy",
