@@ -10,6 +10,7 @@
 import os
 import os.path as osp
 import shutil
+import tempfile
 import unittest
 from itertools import chain
 
@@ -211,29 +212,30 @@ class TestProject(td.TestArrayList):
         arr_names = sp.arr_names
         self.assertEqual(tp.results[arr_names[0] + ".fmt1"], "test")
         self.assertEqual(tp.results[arr_names[1] + ".fmt1"], "test")
-        fname = "test.pkl"
-        self._created_files.add(fname)
-        sp.save_project(fname)
-        psy.close()
-        tp.results.clear()
-        sp = psy.Project.load_project(fname)
-        self.assertEqual(len(sp), 2)
-        self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
-        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
 
-        gs = sp[0].psy.ax.get_gridspec()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fname = str(tmpdir + "test.pkl")
+            sp.save_project(fname)
+            psy.close()
+            tp.results.clear()
+            sp = psy.Project.load_project(fname)
+            self.assertEqual(len(sp), 2)
+            self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
+            self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+            self.assertEqual(get_col_num(sp[0].psy.ax), 0)
 
-        self.assertEqual(gs.ncols, 2)
-        self.assertEqual(gs.nrows, 2)
-        self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
-        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
+            gs = sp[0].psy.ax.get_gridspec()
 
-        gs = sp[1].psy.ax.get_gridspec()
+            self.assertEqual(gs.ncols, 2)
+            self.assertEqual(gs.nrows, 2)
+            self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
+            self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+            self.assertEqual(get_col_num(sp[1].psy.ax), 0)
 
-        self.assertEqual(gs.ncols, 2)
-        self.assertEqual(gs.nrows, 2)
+            gs = sp[1].psy.ax.get_gridspec()
+
+            self.assertEqual(gs.ncols, 2)
+            self.assertEqual(gs.nrows, 2)
 
     def test_save_and_load_02_alternative_axes(self):
         """Test the saving and loading of a Project providing alternative axes"""
@@ -268,30 +270,31 @@ class TestProject(td.TestArrayList):
         arr_names = sp.arr_names
         self.assertEqual(tp.results[arr_names[0] + ".fmt1"], "test")
         self.assertEqual(tp.results[arr_names[1] + ".fmt1"], "test")
-        fname = "test.pkl"
-        self._created_files.add(fname)
-        sp.save_project(fname)
-        psy.close()
-        tp.results.clear()
-        fig, axes = plt.subplots(1, 2)
-        sp = psy.Project.load_project(fname, alternative_axes=axes.ravel())
-        self.assertEqual(len(sp), 2)
-        self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
-        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
 
-        gs = sp[0].psy.ax.get_gridspec()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fname = str(tmpdir + "test.pkl")
+            sp.save_project(fname)
+            psy.close()
+            tp.results.clear()
+            fig, axes = plt.subplots(1, 2)
+            sp = psy.Project.load_project(fname, alternative_axes=axes.ravel())
+            self.assertEqual(len(sp), 2)
+            self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
+            self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+            self.assertEqual(get_col_num(sp[0].psy.ax), 0)
 
-        self.assertEqual(gs.ncols, 2)
-        self.assertEqual(gs.nrows, 1)
-        self.assertEqual(sp[1].psy.ax.get_figure().number, 1)
-        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
-        self.assertEqual(get_col_num(sp[1].psy.ax), 1)
+            gs = sp[0].psy.ax.get_gridspec()
 
-        gs = sp[1].psy.ax.get_gridspec()
+            self.assertEqual(gs.ncols, 2)
+            self.assertEqual(gs.nrows, 1)
+            self.assertEqual(sp[1].psy.ax.get_figure().number, 1)
+            self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+            self.assertEqual(get_col_num(sp[1].psy.ax), 1)
 
-        self.assertEqual(gs.ncols, 2)
-        self.assertEqual(gs.nrows, 1)
+            gs = sp[1].psy.ax.get_gridspec()
+
+            self.assertEqual(gs.ncols, 2)
+            self.assertEqual(gs.nrows, 1)
 
     def test_save_and_load_03_alternative_ds(self):
         """Test the saving and loading of a Project providing alternative axes"""
@@ -326,33 +329,34 @@ class TestProject(td.TestArrayList):
         arr_names = sp.arr_names
         self.assertEqual(tp.results[arr_names[0] + ".fmt1"], "test")
         self.assertEqual(tp.results[arr_names[1] + ".fmt1"], "test")
-        fname = "test.pkl"
-        self._created_files.add(fname)
-        sp.save_project(fname)
-        psy.close()
-        tp.results.clear()
-        fig, axes = plt.subplots(1, 2)
-        ds = psy.open_dataset(bt.get_file("circumpolar_test.nc"))
-        sp = psy.Project.load_project(fname, datasets=[ds], new_fig=False)
-        self.assertEqual(len(sp), 2)
-        self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
-        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
 
-        gs = sp[0].psy.ax.get_gridspec()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fname = str(tmpdir + "test.pkl")
+            sp.save_project(fname)
+            psy.close()
+            tp.results.clear()
+            fig, axes = plt.subplots(1, 2)
+            ds = psy.open_dataset(bt.get_file("circumpolar_test.nc"))
+            sp = psy.Project.load_project(fname, datasets=[ds], new_fig=False)
+            self.assertEqual(len(sp), 2)
+            self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
+            self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+            self.assertEqual(get_col_num(sp[0].psy.ax), 0)
 
-        self.assertEqual(gs.ncols, 2)
-        self.assertEqual(gs.nrows, 2)
-        self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
-        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
+            gs = sp[0].psy.ax.get_gridspec()
 
-        gs = sp[1].psy.ax.get_gridspec()
+            self.assertEqual(gs.ncols, 2)
+            self.assertEqual(gs.nrows, 2)
+            self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
+            self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+            self.assertEqual(get_col_num(sp[1].psy.ax), 0)
 
-        self.assertEqual(gs.ncols, 2)
-        self.assertEqual(gs.nrows, 2)
-        self.assertIs(sp[0].psy.base, ds)
-        self.assertIs(sp[1].psy.base, ds)
+            gs = sp[1].psy.ax.get_gridspec()
+
+            self.assertEqual(gs.ncols, 2)
+            self.assertEqual(gs.nrows, 2)
+            self.assertIs(sp[0].psy.base, ds)
+            self.assertIs(sp[1].psy.base, ds)
 
     def test_save_and_load_04_alternative_fname(self):
         """Test the saving and loading of a Project providing alternative axes"""
@@ -387,42 +391,43 @@ class TestProject(td.TestArrayList):
         arr_names = sp.arr_names
         self.assertEqual(tp.results[arr_names[0] + ".fmt1"], "test")
         self.assertEqual(tp.results[arr_names[1] + ".fmt1"], "test")
-        fname = "test.pkl"
-        self._created_files.add(fname)
-        sp.save_project(fname)
-        psy.close()
-        tp.results.clear()
-        fig, axes = plt.subplots(1, 2)
-        sp = psy.Project.load_project(
-            fname,
-            alternative_paths=[bt.get_file("circumpolar_test.nc")],
-            new_fig=False,
-        )
-        self.assertEqual(len(sp), 2)
-        self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
-        self.assertEqual(get_row_num(sp[0].psy.ax), 0)
-        self.assertEqual(get_col_num(sp[0].psy.ax), 0)
 
-        gs = sp[0].psy.ax.get_gridspec()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fname = str(tmpdir + "test.pkl")
+            sp.save_project(fname)
+            psy.close()
+            tp.results.clear()
+            fig, axes = plt.subplots(1, 2)
+            sp = psy.Project.load_project(
+                fname,
+                alternative_paths=[bt.get_file("circumpolar_test.nc")],
+                new_fig=False,
+            )
+            self.assertEqual(len(sp), 2)
+            self.assertEqual(sp[0].psy.ax.get_figure().number, 1)
+            self.assertEqual(get_row_num(sp[0].psy.ax), 0)
+            self.assertEqual(get_col_num(sp[0].psy.ax), 0)
 
-        self.assertEqual(gs.ncols, 2)
-        self.assertEqual(gs.nrows, 2)
-        self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
-        self.assertEqual(get_row_num(sp[1].psy.ax), 0)
-        self.assertEqual(get_col_num(sp[1].psy.ax), 0)
+            gs = sp[0].psy.ax.get_gridspec()
 
-        gs = sp[1].psy.ax.get_gridspec()
+            self.assertEqual(gs.ncols, 2)
+            self.assertEqual(gs.nrows, 2)
+            self.assertEqual(sp[1].psy.ax.get_figure().number, 2)
+            self.assertEqual(get_row_num(sp[1].psy.ax), 0)
+            self.assertEqual(get_col_num(sp[1].psy.ax), 0)
 
-        self.assertEqual(gs.ncols, 2)
-        self.assertEqual(gs.nrows, 2)
-        self.assertEqual(
-            psyd.get_filename_ds(sp[0].psy.base)[0],
-            bt.get_file("circumpolar_test.nc"),
-        )
-        self.assertEqual(
-            psyd.get_filename_ds(sp[1].psy.base)[0],
-            bt.get_file("circumpolar_test.nc"),
-        )
+            gs = sp[1].psy.ax.get_gridspec()
+
+            self.assertEqual(gs.ncols, 2)
+            self.assertEqual(gs.nrows, 2)
+            self.assertEqual(
+                psyd.get_filename_ds(sp[0].psy.base)[0],
+                bt.get_file("circumpolar_test.nc"),
+            )
+            self.assertEqual(
+                psyd.get_filename_ds(sp[1].psy.base)[0],
+                bt.get_file("circumpolar_test.nc"),
+            )
 
     def test_save_and_load_05_pack(self):
         import tempfile
@@ -534,17 +539,18 @@ class TestProject(td.TestArrayList):
             post='self.ax.set_title("test")',
         )
         self.assertEqual(sp.plotters[0].ax.get_title(), "test")
-        fname = "test.pkl"
-        self._created_files.add(fname)
-        sp.save_project(fname)
-        psy.close("all")
-        # test without enabled post
-        sp = psy.Project.load_project(fname)
-        self.assertEqual(sp.plotters[0].ax.get_title(), "")
-        psy.close("all")
-        # test with enabled post
-        sp = psy.Project.load_project(fname, enable_post=True)
-        self.assertEqual(sp.plotters[0].ax.get_title(), "test")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fname = str(tmpdir + "test.pkl")
+            sp.save_project(fname)
+            psy.close("all")
+            # test without enabled post
+            sp = psy.Project.load_project(fname)
+            self.assertEqual(sp.plotters[0].ax.get_title(), "")
+            psy.close("all")
+            # test with enabled post
+            sp = psy.Project.load_project(fname, enable_post=True)
+            self.assertEqual(sp.plotters[0].ax.get_title(), "test")
 
     def test_save_and_load_07_sharedx(self):
         """Test whether shared x- and y-axis are restored correctly"""
@@ -562,25 +568,26 @@ class TestProject(td.TestArrayList):
         )
         axes[0].set_xlim(5, 10)
         self.assertEqual(list(axes[1].get_xlim()), [5, 10])
+
         # save the project
-        fname = "test.pkl"
-        self._created_files.add(fname)
-        sp.save_project(fname)
-        psy.close("all")
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fname = str(tmpdir + "test.pkl")
+            sp.save_project(fname)
+            psy.close("all")
 
-        # load the project
-        sp = psy.Project.load_project(fname)
-        self.assertEqual(len(sp.axes), 3, msg=sp.axes)
-        sp[0].psy.ax.set_xlim(10, 15)
-        self.assertEqual(list(sp[1].psy.ax.get_xlim()), [10, 15])
+            # load the project
+            sp = psy.Project.load_project(fname)
+            self.assertEqual(len(sp.axes), 3, msg=sp.axes)
+            sp[0].psy.ax.set_xlim(10, 15)
+            self.assertEqual(list(sp[1].psy.ax.get_xlim()), [10, 15])
 
-        # now we test, if it still works, if we remove the source axes
-        names2use = sp.arr_names[1:]
-        psy.close("all")
-        sp = psy.Project.load_project(fname, only=names2use)
-        self.assertEqual(len(sp.axes), 2, msg=sp.axes)
-        sp[0].psy.ax.set_xlim(10, 15)
-        self.assertEqual(list(sp[1].psy.ax.get_xlim()), [10, 15])
+            # now we test, if it still works, if we remove the source axes
+            names2use = sp.arr_names[1:]
+            psy.close("all")
+            sp = psy.Project.load_project(fname, only=names2use)
+            self.assertEqual(len(sp.axes), 2, msg=sp.axes)
+            sp[0].psy.ax.set_xlim(10, 15)
+            self.assertEqual(list(sp[1].psy.ax.get_xlim()), [10, 15])
 
     def test_save_and_load_08_sharedy(self):
         """Test whether shared x- and y-axis are restored correctly"""
@@ -598,25 +605,26 @@ class TestProject(td.TestArrayList):
         )
         axes[0].set_ylim(5, 10)
         self.assertEqual(list(axes[1].get_ylim()), [5, 10])
+
         # save the project
-        fname = "test.pkl"
-        self._created_files.add(fname)
-        sp.save_project(fname)
-        psy.close("all")
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fname = str(tmpdir + "test.pkl")
+            sp.save_project(fname)
+            psy.close("all")
 
-        # load the project
-        sp = psy.Project.load_project(fname)
-        self.assertEqual(len(sp.axes), 3, msg=sp.axes)
-        sp[0].psy.ax.set_ylim(10, 15)
-        self.assertEqual(list(sp[1].psy.ax.get_ylim()), [10, 15])
+            # load the project
+            sp = psy.Project.load_project(fname)
+            self.assertEqual(len(sp.axes), 3, msg=sp.axes)
+            sp[0].psy.ax.set_ylim(10, 15)
+            self.assertEqual(list(sp[1].psy.ax.get_ylim()), [10, 15])
 
-        # now we test, if it still works, if we remove the source axes
-        names2use = sp.arr_names[1:]
-        psy.close("all")
-        sp = psy.Project.load_project(fname, only=names2use)
-        self.assertEqual(len(sp.axes), 2, msg=sp.axes)
-        sp[0].psy.ax.set_ylim(10, 15)
-        self.assertEqual(list(sp[1].psy.ax.get_ylim()), [10, 15])
+            # now we test, if it still works, if we remove the source axes
+            names2use = sp.arr_names[1:]
+            psy.close("all")
+            sp = psy.Project.load_project(fname, only=names2use)
+            self.assertEqual(len(sp.axes), 2, msg=sp.axes)
+            sp[0].psy.ax.set_ylim(10, 15)
+            self.assertEqual(list(sp[1].psy.ax.get_ylim()), [10, 15])
 
     def test_versions_and_patch(self):
         import warnings
