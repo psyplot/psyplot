@@ -79,11 +79,11 @@ See also the `code of conduct`, and our
 :ref:`contribution guide <how-to-contribute>` for more information and a guide
 about good bug reports.
 
-.. _bug tracker: https://github.com/psyplot/psyplot
+.. _bug tracker: https://codebase.helmholtz.cloud/psyplot/psyplot
 .. _team on mattermost: https://mattermost.hzdr.de/psyplot/
 .. _mailing list: https://www.listserv.dfn.de/sympa/subscribe/psyplot
-.. _code of conduct: https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md
-.. _contribution guide: https://github.com/psyplot/psyplot/blob/master/CONTRIBUTING.md
+.. _code of conduct: https://codebase.helmholtz.cloud/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md
+.. _contribution guide: https://codebase.helmholtz.cloud/psyplot/psyplot/blob/master/CONTRIBUTING.md
 
 .. _citation:
 

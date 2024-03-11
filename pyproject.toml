@@ -91,6 +91,11 @@ docs = [
     "netCDF4",
     "sphinx-argparse",
     "cdo",
+    # packages for the psyplot-plugin-template
+    "cookiecutter",
+    "GitPython",
+    "pre-commit",
+    "reuse",
 ]
 dev = [
     "psyplot[testsite]",

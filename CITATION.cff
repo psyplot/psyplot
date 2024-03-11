@@ -22,7 +22,7 @@ contact:
   - email: psyplot@hereon.de
     name: "Psyplot developers at hereon"
 license: "LGPL-3.0-only"
-repository-code: https://github.com/psyplot/psyplot
+repository-code: https://codebase.helmholtz.cloud/psyplot/psyplot
 type: software
 keywords:
   - psyplot

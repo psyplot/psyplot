@@ -332,10 +332,6 @@ The advantages of this methodology are basically:
 Creating new plugins
 --------------------
 
-.. todo::
-
-    The plugin generation needs to be revised
-
 Now that you have created your plotter, you may want to include it in the
 plot methods of the :class:`~psyplot.project.Project` class such that you can
 do something like
@@ -354,32 +350,57 @@ There are three possibilities how you can do this:
    :attr:`~psyplot.config.rcsetup.rcParams`
 3. The steady and shareable solution: Create a new plugin
 
-The third solution has been used for the psy-maps_ and psy-simple_ plugins. To
-create a skeleton for your plugin, you can use the ``psyplot-plugin`` command
-that is installed when you install psyplot.
+The third solution has been used for the psy-maps_ and psy-simple_ plugins and
+will be described in the following section.
 
-For our demonstration, let's create a plugin named my-plugin. This is simply
-done via
+Creating a package with the psyplot-plugin-template
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The psyplot-plugin-template_ provides a template to create a python package that
+integrates with the psyplot environment. We recommend using this template as it
+already contains a setup for automated formatters and linters, and a setup for
+continuous integration.
+
+.. note::
+
+    When creating a real package, we strongly recommend to use cruft_ instead
+    of cookiecutter_!
+
+.. _psyplot-plugin-template: https://codebase.helmholtz.cloud/psyplot/psyplot-plugin-template
+.. _cruft: https://cruft.github.io/cruft
+.. _cookiecutter: https://cookiecutter.readthedocs.io
+
+For our demonstration, let's create a plugin named *my-plugin*. We will save
+this name in to a YAML-file and use this to create our new plugin.
 
 .. ipython::
-    :verbatim:
 
-    In [1]: !psyplot-plugin my-plugin
+    In [1]: !echo "default_context: {project_slug: my-plugin}" > "config.yaml"
+
+    @suppress
+    In [1]: !rm -rf my-plugin
+       ...: !PARENT_GIT_REPO="../../" SILENT_HOOKS=1 cookiecutter --no-input --config-file config.yaml https://codebase.helmholtz.cloud/psyplot/psyplot-plugin-template.git
+
+    @verbatim
+    In [1]: cookiecutter --no-input --config-file config.yaml https://codebase.helmholtz.cloud/psyplot/psyplot-plugin-template.git
 
     In [2]: import glob
 
     In [3]: glob.glob('my-plugin/**', recursive=True)
 
+    @suppress
+    In [1]: !rm -rf my-plugin config.yaml LICENSES/EUPL-1.2.txt
+
 The following files are created in a directory named ``'my-plugin'``:
 
-``'setup.py'``
-    The installation script
-``'my_plugin/plugin.py'``
+``pyproject.toml``
+    The python package configuration
+``'my_python_package/plugin.py'``
     The file that sets up the configuration of our plugin. This file should
     define the ``rcParams`` for the plugin (see also :ref:`plugins-rcParams`)
-``'my_plugin/plotters.py'``
-    The file in which we define the plotters. This file should define the
-    plotters and formatoptions.
+``'my_python_package/plotters.py'``
+    The file in which we define the plotters. This file should contain the
+    plotters and formatoptions from our previous section.
 
 If you want to see more, look into the comments in the created files.
 

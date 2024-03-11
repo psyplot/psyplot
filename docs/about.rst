@@ -55,7 +55,7 @@ What it is, and what it is not
     points below, `edit this document`_ and click on *Propose File Change* and
     *Create pull request*. We can then discuss your changes.
 
-.. _edit this document: https://github.com/psyplot/psyplot/edit/master/docs/about.rst
+.. _edit this document: https://codebase.helmholtz.cloud/psyplot/psyplot/edit/master/docs/about.rst
 
 There are tons of software tools around for visualization, so what is special
 about psyplot? The following list should hopefully provide you some guidance.
@@ -137,7 +137,7 @@ with a few downsides.
 .. _flask: https://flask.palletsprojects.com
 .. _options provided by matplotlib: https://matplotlib.org/3.1.1/faq/howto_faq.html#how-to-use-matplotlib-in-a-web-application-server
 .. _other visualization backends: https://github.com/psyplot/psy-vtk
-.. _psy-view: https://github.com/psyplot/psy-view
+.. _psy-view: https://codebase.helmholtz.cloud/psyplot/psy-view
 .. _ncview: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 .. _psy-reg: https://psyplot.github.io/psy-reg
 .. _seaborn: https://seaborn.pydata.org
