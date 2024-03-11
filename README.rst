@@ -33,7 +33,7 @@ provides a graphical user interface for an easier interactive usage.
 
 The package is very new and there are many features that will be included in
 the future. So we are very pleased for feedback! Please simply raise an issue
-on `GitHub <https://github.com/psyplot/psyplot>`__ (see also
+on `GitHub <https://codebase.helmholtz.cloud/psyplot/psyplot>`__ (see also
 `How to contribute`_ in the docs).
 
 .. _psyplot-gui: http://psyplot.github.io/psyplot-gui/
@@ -55,11 +55,11 @@ Any quesions? Do not hessitate to get in touch with the psyplot developers.
 See also the `code of conduct`_, and our `contribution guide`_ for more
 information and a guide about good bug reports.
 
-.. _bug tracker: https://github.com/psyplot/psyplot
+.. _bug tracker: https://codebase.helmholtz.cloud/psyplot/psyplot
 .. _team on mattermost: https://mattermost.hzdr.de/psyplot/
 .. _mailing list: https://www.listserv.dfn.de/sympa/subscribe/psyplot
-.. _code of conduct: https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md
-.. _contribution guide: https://github.com/psyplot/psyplot/blob/master/CONTRIBUTING.md
+.. _code of conduct: https://codebase.helmholtz.cloud/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md
+.. _contribution guide: https://codebase.helmholtz.cloud/psyplot/psyplot/blob/master/CONTRIBUTING.md
 
 
 How to cite psyplot
@@ -85,7 +85,7 @@ releases page of the corresponding subproject.
 .. _the Journal of Open Source Software: http://joss.theoj.org/
 .. _subprojects: https://psyplot.github.io/
 .. _zenodo.org: https://zenodo.org/
-.. _releases page of psyplot: https://github.com/psyplot/psyplot/releases/
+.. _releases page of psyplot: https://codebase.helmholtz.cloud/psyplot/psyplot/-/releases
 
 
 Acknowledgment

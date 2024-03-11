@@ -434,7 +434,8 @@ class DecoderTest(unittest.TestCase, AlmostArrayEqualMixin):
 
     def test_get_variable_by_axis_02(self):
         """Test the :meth:`CFDecoder.get_variable_by_axis` method with missing
-        coordinates, see https://github.com/psyplot/psyplot/pull/19"""
+        coordinates, see https://codebase.helmholtz.cloud/psyplot/psyplot/pull/19
+        """
         fname = os.path.join(bt.test_dir, "icon_test.nc")
         with psyd.open_dataset(fname) as ds:
             ds["ncells"] = ("ncells", np.arange(ds.dims["ncells"]))

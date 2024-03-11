@@ -65,7 +65,7 @@ Installation from source
 To install it from source, make sure you have the :ref:`dependencies`
 installed, clone the github_ repository via::
 
-    git clone https://github.com/psyplot/psyplot.git
+    git clone https://codebase.helmholtz.cloud/psyplot/psyplot.git
 
 and install it via::
 
@@ -164,7 +164,7 @@ Then build the docs via::
     You then have to install the necessary modules for each of the examples in
     the new ``'py37'`` environment.
 
-.. _github: https://github.com/psyplot/psyplot
+.. _github: https://codebase.helmholtz.cloud/psyplot/psyplot
 .. _ipykernel: https://ipykernel.readthedocs.io
 .. _pytest: https://pytest.org/latest/contents.html
 

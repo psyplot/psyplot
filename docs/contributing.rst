@@ -32,7 +32,7 @@ Code of Conduct
 ---------------
 
 This project and everyone participating in it is governed by the
-`psyplot Code of Conduct <https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md>`__.
+`psyplot Code of Conduct <https://codebase.helmholtz.cloud/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md>`__.
 By participating, you are expected to uphold this code.
 
 What should I know before I get started?
@@ -46,19 +46,19 @@ and visualization. Much of the functionality however is implemented by
 other packages. What package is the correct one for your bug
 report/feature request, can be determined by the following list
 
--  `psyplot-gui <https://github.com/psyplot/psyplot-gui/issues>`__:
+-  `psyplot-gui <https://codebase.helmholtz.cloud/psyplot/psyplot-gui/issues>`__:
    Everything specific to the graphical user interface
-- `psy-view <https://github.com/psyplot/psy-view/issues>`__:
+- `psy-view <https://codebase.helmholtz.cloud/psyplot/psy-view/issues>`__:
   Everything specific to the psy-view graphical user interface
--  `psy-simple <https://github.com/psyplot/psy-simple/issues>`__:
+-  `psy-simple <https://codebase.helmholtz.cloud/psyplot/psy-simple/issues>`__:
    Everything concerning, e.g. the ``lineplot``, ``plot2d``, ``density``
    or ``vector`` plot methods
--  `psy-maps <https://github.com/psyplot/psy-maps/issues>`__: Everything
+-  `psy-maps <https://codebase.helmholtz.cloud/psyplot/psy-maps/issues>`__: Everything
    concerning, e.g. the ``mapplot``, ``mapvector`` ``mapcombined`` plot
    methods
--  `psy-reg <https://github.com/psyplot/psy-reg/issues>`__: Everything
+-  `psy-reg <https://codebase.helmholtz.cloud/psyplot/psy-reg/issues>`__: Everything
    concerning, e.g. the ``linreg`` or ``densityreg`` plot methods
--  `psyplot <https://github.com/psyplot/psyplot/issues>`__: Everything
+-  `psyplot <https://codebase.helmholtz.cloud/psyplot/psyplot/issues>`__: Everything
    concerning the general framework, e.g. data handling, parallel
    update, etc.
 
@@ -72,7 +72,7 @@ implemented it via
     print(psy.plot.name - of - your - plot - method._plugin)
 
 If you still don’t know, where to open the issue, just go for
-`psyplot <https://github.com/psyplot/psyplot/issues>`__.
+`psyplot <https://codebase.helmholtz.cloud/psyplot/psyplot/issues>`__.
 
 .. _Helmholtz-Zentrum Hereon: https://www.hereon.de
 .. _open an issue at the source code repository: https://codebase.helmholtz.cloud/psyplot/psyplot

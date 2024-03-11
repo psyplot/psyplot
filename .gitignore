@@ -153,3 +153,5 @@ ci/matrix/*/Pipfile.lock
 
 
 *psyplot_testresults
+docs/my-plugin/
+LICENSES/EUPL-1.2.txt
