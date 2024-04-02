@@ -1,49 +1,33 @@
 # -*- coding: utf-8 -*-
 """Main commandline entrypoint for psyplot."""
 
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-# Copyright (C) 2016-2021 University of Lausanne
-#
-# This file is part of psyplot and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2016-2024 University of Lausanne
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
 
-import os
-import os.path as osp
-import sys
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
 import argparse
-import pickle
-import six
 import glob
-from itertools import chain
-from collections import defaultdict
-import yaml
-import xarray as xr
-import psyplot
-from psyplot.docstring import docstrings
-from psyplot.warning import warn
-from psyplot.compat.pycompat import get_default_value
-from funcargparse import FuncArgParser
+import json
 import logging
+import os.path as osp
+import pickle
+import sys
+from collections import defaultdict
+from itertools import chain
 
-rcParams = psyplot.rcParams
+import six
+import xarray as xr
+import yaml
+from funcargparse import FuncArgParser
 
+import psyplot
+from psyplot.config.rcsetup import rcParams, safe_list
+from psyplot.docstring import docstrings
+from psyplot.utils import get_default_value
+from psyplot.warning import warn
 
 logger = logging.getLogger(__name__)
 
@@ -61,10 +45,10 @@ def main(args=None):
         The parser that has been used from the command line"""
     try:
         from psyplot_gui import get_parser as _get_parser
-    except (ImportError, ModuleNotFoundError) as e:
-        logger.debug('Failed to import gui', exc_info=True)
+    except (ImportError, ModuleNotFoundError):
+        logger.debug("Failed to import gui", exc_info=True)
         parser = get_parser(create=False)
-        parser.update_arg('output', required=True)
+        parser.update_arg("output", required=True)
         parser.create_arguments()
         parser.parse2func(args)
     else:
@@ -73,14 +57,28 @@ def main(args=None):
         parser.parse_known2func(args)
 
 
-@docstrings.get_sections(base='make_plot')
+@docstrings.get_sections(base="make_plot")
 @docstrings.dedent
-def make_plot(fnames=[], name=[], dims=None, plot_method=None,
-              output=None, project=None, engine=None, formatoptions=None,
-              tight=False, rc_file=None, encoding=None, enable_post=False,
-              seaborn_style=None, output_project=None,
-              concat_dim=get_default_value(xr.open_mfdataset, 'concat_dim'),
-              chname={}, preset=None):
+def make_plot(
+    fnames=[],
+    name=[],
+    dims=None,
+    plot_method=None,
+    output=None,
+    project=None,
+    engine=None,
+    formatoptions=None,
+    tight=False,
+    rc_file=None,
+    encoding=None,
+    enable_post=False,
+    seaborn_style=None,
+    output_project=None,
+    concat_dim=get_default_value(xr.open_mfdataset, "concat_dim"),
+    chname={},
+    preset=None,
+    decoder=None,
+):
     """
     Eventually start the QApplication or only make a plot
 
@@ -139,10 +137,14 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
         the path to an existing yaml file, it will be loaded. Otherwise we
         look up the `preset` in the psyplot configuration directory (see
         :func:`~psyplot.config.rcsetup.get_configdir`).
+    decoder: str
+        Keyword arguments for the decoder.
     """
     if project is not None and (name != [] or dims is not None):
-        warn('The `name` and `dims` parameter are ignored if the `project`'
-             ' parameter is set!')
+        warn(
+            "The `name` and `dims` parameter are ignored if the `project`"
+            " parameter is set!"
+        )
     if rc_file is not None:
         rcParams.load_from_file(rc_file)
 
@@ -154,25 +156,35 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
     if not fnames and not project:
         raise ValueError(
             "Either a filename or a project file must be provided if "
-            "the output parameter is set!")
+            "the output parameter is set!"
+        )
     elif project is None and plot_method is None:
         raise ValueError(
             "A plotting method must be provided if the output parameter "
-            "is set and not the project!")
+            "is set and not the project!"
+        )
     if seaborn_style is not None:
         import seaborn as sns
+
         sns.set_style(seaborn_style)
     import psyplot.project as psy
+
     if project is not None:
-        fnames = [s.split(',') for s in fnames]
+        fnames = [s.split(",") for s in fnames]
         chname = dict(chname)
-        single_files = (l[0] for l in fnames if len(l) == 1)
+        single_files = (fn_list[0] for fn_list in fnames if len(fn_list) == 1)
         alternative_paths = defaultdict(lambda: next(single_files, None))
-        alternative_paths.update([l for l in fnames if len(l) == 2])
+        alternative_paths.update(
+            (fn_list for fn_list in fnames if len(fn_list) == 2)
+        )
         p = psy.Project.load_project(
-            project, alternative_paths=alternative_paths,
-            engine=engine, encoding=encoding, enable_post=enable_post,
-            chname=chname)
+            project,
+            alternative_paths=alternative_paths,
+            engine=engine,
+            encoding=encoding,
+            enable_post=enable_post,
+            chname=chname,
+        )
         if preset:
             p.load_preset(preset)
         if formatoptions is not None:
@@ -182,11 +194,18 @@ def make_plot(fnames=[], name=[], dims=None, plot_method=None,
         pm = getattr(psy.plot, plot_method, None)
         if pm is None:
             raise ValueError("Unknown plot method %s!" % plot_method)
-        kwargs = {'name': name} if name else {}
+        kwargs = {"name": name} if name else {}
         p = pm(
-            fnames, dims=dims or {}, engine=engine, preset=preset,
-            fmt=formatoptions or {}, mf_mode=True, concat_dim=concat_dim,
-            **kwargs)
+            fnames,
+            dims=dims or {},
+            engine=engine,
+            preset=preset,
+            fmt=formatoptions or {},
+            mf_mode=True,
+            concat_dim=concat_dim,
+            decoder=decoder,
+            **kwargs,
+        )
         p.export(output, tight=tight)
     if output_project is not None:
         p.save_project(output_project)
@@ -202,7 +221,9 @@ def get_parser(create=True):
     psyplot.parser.FuncArgParser
         The :class:`argparse.ArgumentParser` instance"""
     #: The parse that is used to parse arguments from the command line
-    epilog = docstrings.get_sections(docstrings.dedent("""
+    epilog = docstrings.get_sections(
+        docstrings.dedent(
+            """
         Examples
         --------
 
@@ -237,95 +258,180 @@ def get_parser(create=True):
 
             $ echo 'title: my title' > fmt.yaml
             $ psyplot myfile.nc -n t2m  -pm mapplot -fmt fmt.yaml -o test.pdf
-        """), 'parser', ['Examples'])
+        """
+        ),
+        "parser",
+        ["Examples"],
+    )
 
-    epilog = '.. rubric:: Examples\n' + '\n'.join(epilog.splitlines()[2:])
+    epilog = ".. rubric:: Examples\n" + "\n".join(epilog.splitlines()[2:])
 
     parser = FuncArgParser(
         description="""
         Load a dataset, make the plot and save the result to a file""",
         epilog=epilog,
-        formatter_class=argparse.RawDescriptionHelpFormatter)
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
 
     info_grp = parser.add_argument_group(
-        'Info options',
-        'Options that print informations and quit afterwards')
-
-    parser.update_arg('version', short='V', long='version', action='version',
-                      version=psyplot.__version__, if_existent=False,
-                      group=info_grp)
-
-    parser.update_arg('all_versions', short='aV', long='all-versions',
-                      action=AllVersionsAction, if_existent=False,
-                      group=info_grp)
-
-    parser.update_arg('list_plugins', short='lp', long='list-plugins',
-                      action=ListPluginsAction, if_existent=False,
-                      group=info_grp)
-    parser.update_arg(
-        'list_plot_methods', short='lpm', long='list-plot-methods',
-        action=ListPlotMethodsAction, if_existent=False, group=info_grp)
-    parser.update_arg(
-        'list_datasets', short='lds', long='list-datasets',
-        action=ListDsNamesAction, if_existent=False, group=info_grp,
-        help="""List the used dataset names in the given `project`.""")
+        "Info options", "Options that print informations and quit afterwards"
+    )
 
     parser.update_arg(
-        'list_presets', short='lps', long='list-presets',
-        action=ListPresetsAction, if_existent=False, group=info_grp)
+        "version",
+        short="V",
+        long="version",
+        action="version",
+        version=psyplot.__version__,
+        if_existent=False,
+        group=info_grp,
+    )
+
+    parser.update_arg(
+        "all_versions",
+        short="aV",
+        long="all-versions",
+        action=AllVersionsAction,
+        if_existent=False,
+        group=info_grp,
+    )
+
+    parser.update_arg(
+        "info",
+        short="i",
+        long="info",
+        action=ShowGridInfo,
+        if_existent=False,
+        group=info_grp,
+    )
+
+    parser.update_arg(
+        "list_plugins",
+        short="lp",
+        long="list-plugins",
+        action=ListPluginsAction,
+        if_existent=False,
+        group=info_grp,
+    )
+    parser.update_arg(
+        "list_plot_methods",
+        short="lpm",
+        long="list-plot-methods",
+        action=ListPlotMethodsAction,
+        if_existent=False,
+        group=info_grp,
+    )
+    parser.update_arg(
+        "list_datasets",
+        short="lds",
+        long="list-datasets",
+        action=ListDsNamesAction,
+        if_existent=False,
+        group=info_grp,
+        help="""List the used dataset names in the given `project`.""",
+    )
+
+    parser.update_arg(
+        "list_presets",
+        short="lps",
+        long="list-presets",
+        action=ListPresetsAction,
+        if_existent=False,
+        group=info_grp,
+    )
 
     parser.setup_args(make_plot)
 
     output_grp = parser.add_argument_group(
-        'Output options',
-        'Options that only have an effect if the `-o` option is set.')
+        "Output options",
+        "Options that only have an effect if the `-o` option is set.",
+    )
 
-    parser.update_arg('fnames', positional=True, nargs='*')
+    parser.update_arg("fnames", positional=True, nargs="*")
 
-    parser.update_arg('name', short='n', nargs='*', metavar='variable_name',
-                      const=None)
+    parser.update_arg(
+        "name", short="n", nargs="*", metavar="variable_name", const=None
+    )
 
-    parser.update_arg('dims', short='d', nargs='+', type=_load_dims,
-                      metavar='dim,val1[,val2[,...]]')
+    parser.update_arg(
+        "dims",
+        short="d",
+        nargs="+",
+        type=_load_dims,
+        metavar="dim,val1[,val2[,...]]",
+    )
 
-    pm_choices = {pm for pm, d in filter(
-                      lambda t: t[1].get('plot_func', True),
-                      six.iteritems(rcParams['project.plotters']))}
+    pm_choices = {
+        pm
+        for pm, d in filter(
+            lambda t: t[1].get("plot_func", True),
+            six.iteritems(rcParams["project.plotters"]),
+        )
+    }
     if psyplot._project_imported:
         import psyplot.project as psy
+
         pm_choices.update(set(psy.plot._plot_methods))
-    parser.update_arg('plot_method', short='pm', choices=pm_choices,
-                      metavar='{%s}' % ', '.join(map(repr, pm_choices)))
+    parser.update_arg(
+        "plot_method",
+        short="pm",
+        choices=pm_choices,
+        metavar="{%s}" % ", ".join(map(repr, pm_choices)),
+    )
 
-    parser.update_arg('output', short='o', group=output_grp)
-    parser.update_arg('output_project', short='op', group=output_grp)
+    parser.update_arg("output", short="o", group=output_grp)
+    parser.update_arg("output_project", short="op", group=output_grp)
 
-    parser.update_arg('project', short='p')
+    parser.update_arg("project", short="p")
 
     parser.update_arg(
-        'formatoptions', short='fmt', type=_load_dict, help="""
-        The path to a yaml (``'.yml'`` or ``'.yaml'``) or pickle file
-        defining a dictionary of formatoption that is applied to the data
-        visualized by the chosen `plot_method`""", metavar='FILENAME')
+        "formatoptions",
+        short="fmt",
+        type=_load_dict,
+        help="""
+        YAML-formatted formatoption (e.g. 'cmap: Reds'), or the path to a yaml
+        (``'.yml'`` or ``'.yaml'``), JSON (``'.json'``) or  pickle file
+        defining a dictionary of formatoption that is applied to the
+        data visualized by the chosen `plot_method`""",
+        metavar="FILENAME_OR_YAML",
+    )
 
     parser.update_arg(
-        'chname', type=lambda s: s.split(','), nargs='*', help="""
+        "decoder",
+        long="decoder",
+        short=None,
+        type=_load_decoder,
+        help="""
+        YAML-formatted decoder options (e.g. 'x: x-coordinate'), or the path to
+        a yaml (``'.yml'`` or ``'.yaml'``), JSON (``'.json'``) or  pickle file
+        defining a dictionary of formatoption that is applied to the
+        data visualized by the chosen `plot_method`""",
+        metavar="FILENAME_OR_YAML",
+    )
+
+    parser.update_arg(
+        "chname",
+        type=lambda s: s.split(","),
+        nargs="*",
+        help="""
         A mapping from variable names in the project to variable names in the
         datasets that should be used instead. Variable names should be
-        separated by a comma.""", metavar='project-variable,variable-to-use')
+        separated by a comma.""",
+        metavar="project-variable,variable-to-use",
+    )
 
-    parser.update_arg('tight', short='t', group=output_grp)
+    parser.update_arg("tight", short="t", group=output_grp)
 
-    parser.update_arg('rc_file', short='rc')
-    parser.pop_key('rc_file', 'metavar')
+    parser.update_arg("rc_file", short="rc")
+    parser.pop_key("rc_file", "metavar")
 
-    parser.update_arg('encoding', short='e')
+    parser.update_arg("encoding", short="e")
 
-    parser.pop_key('enable_post', 'short')
+    parser.pop_key("enable_post", "short")
 
-    parser.update_arg('seaborn_style', short='sns')
+    parser.update_arg("seaborn_style", short="sns")
 
-    parser.update_arg('concat_dim', short='cd')
+    parser.update_arg("concat_dim", short="cd")
 
     if create:
         parser.create_arguments()
@@ -334,31 +440,50 @@ def get_parser(create=True):
 
 
 def _load_dict(fname):
-    with open(fname) as f:
-        if fname.endswith('.yml') or fname.endswith('.yaml'):
-            return yaml.load(f, Loader=yaml.SafeLoader)
-        return pickle.load(f)
+    data = yaml.safe_load(fname)
+    if isinstance(data, str):  # assume a file and load from disc
+        with open(data) as f:
+            if data.endswith(".yml") or data.endswith(".yaml"):
+                return yaml.safe_load(f)
+            elif data.endswith(".json"):
+                return json.load(f)
+            return pickle.load(f)
+    return data
+
+
+def _load_decoder(fname):
+    data = _load_dict(fname)
+    for key in "xyzt":
+        if key in data:
+            data[key] = set(safe_list(data[key]))
+    return data
 
 
 def _load_dims(s):
-    s = s.split(',')
+    s = s.split(",")
     if len(s) > 1:
         return {s[0]: list(map(int, s[1:]))}
     return {}
 
 
 class AllVersionsAction(argparse.Action):
-
-    def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 default=argparse.SUPPRESS, **kwargs):
+    def __init__(
+        self,
+        option_strings,
+        dest=argparse.SUPPRESS,
+        nargs=None,
+        default=argparse.SUPPRESS,
+        **kwargs,
+    ):
         if nargs is not None:
             raise ValueError("nargs not allowed")
-        kwargs['help'] = ("Print the versions of all plugins and requirements "
-                          "and exit")
-        kwargs['default'] = default
+        kwargs["help"] = (
+            "Print the versions of all plugins and requirements " "and exit"
+        )
+        kwargs["default"] = default
         super(AllVersionsAction, self).__init__(
-            option_strings, nargs=0, dest=dest,
-            **kwargs)
+            option_strings, nargs=0, dest=dest, **kwargs
+        )
 
     def __call__(self, parser, namespace, values, option_string=None):
         print(yaml.dump(psyplot.get_versions(), default_flow_style=False))
@@ -366,62 +491,143 @@ class AllVersionsAction(argparse.Action):
 
 
 class ListPresetsAction(argparse.Action):
-
-    def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 default=argparse.SUPPRESS, **kwargs):
+    def __init__(
+        self,
+        option_strings,
+        dest=argparse.SUPPRESS,
+        nargs=None,
+        default=argparse.SUPPRESS,
+        **kwargs,
+    ):
         if nargs is not None:
             raise ValueError("nargs not allowed")
-        kwargs['help'] = ("Print available presets and exit")
-        kwargs['default'] = default
+        kwargs["help"] = "Print available presets and exit"
+        kwargs["default"] = default
         super().__init__(option_strings, nargs=0, dest=dest, **kwargs)
 
     def __call__(self, parser, namespace, values, option_string=None):
         from psyplot.config.rcsetup import get_configdir
-        presets_dir = osp.join(get_configdir(), 'presets')
+
+        presets_dir = osp.join(get_configdir(), "presets")
         if not osp.exists(presets_dir):
             sys.exit(0)
         else:
-            presets = {osp.splitext(osp.basename(fname))[0]: fname
-                       for fname in glob.glob(osp.join(presets_dir, '*.yml'))}
-            print('\n'.join(map(': '.join, presets.items())))
+            presets = {
+                osp.splitext(osp.basename(fname))[0]: fname
+                for fname in glob.glob(osp.join(presets_dir, "*.yml"))
+            }
+            print("\n".join(map(": ".join, presets.items())))
             sys.exit(0)
 
-class ListPluginsAction(argparse.Action):
 
-    def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 default=argparse.SUPPRESS, **kwargs):
+class ListPluginsAction(argparse.Action):
+    def __init__(
+        self,
+        option_strings,
+        dest=argparse.SUPPRESS,
+        nargs=None,
+        default=argparse.SUPPRESS,
+        **kwargs,
+    ):
         if nargs is not None:
             raise ValueError("nargs not allowed")
-        kwargs['help'] = ("Print the names of the plugins and exit")
-        kwargs['default'] = default
+        kwargs["help"] = "Print the names of the plugins and exit"
+        kwargs["default"] = default
         super(ListPluginsAction, self).__init__(
-            option_strings, nargs=0, dest=dest, **kwargs)
+            option_strings, nargs=0, dest=dest, **kwargs
+        )
 
     def __call__(self, parser, namespace, values, option_string=None):
         print(yaml.dump(psyplot.rcParams._plugins, default_flow_style=False))
         sys.exit(0)
 
 
-class ListPlotMethodsAction(argparse.Action):
+class ShowGridInfo(argparse.Action):
+    """Action to show the grid info on a variable"""
 
-    def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 default=argparse.SUPPRESS, **kwargs):
+    def __init__(
+        self,
+        option_strings,
+        nargs=None,
+        dest=argparse.SUPPRESS,
+        default=argparse.SUPPRESS,
+        **kwargs,
+    ):
         if nargs is not None:
             raise ValueError("nargs not allowed")
-        kwargs['help'] = "List the available plot methods and what they do"
-        kwargs['default'] = default
+        kwargs.setdefault(
+            "help", "Show grid information on the specified variables."
+        )
+        super().__init__(
+            option_strings, nargs=0, dest=dest, default=default, **kwargs
+        )
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        from psyplot.data import CFDecoder, open_dataset, open_mfdataset
+
+        if not namespace.fnames:
+            print("Please specify a dataset for the info option.")
+        fnames = namespace.fnames
+        engine = namespace.engine
+        concat_dim = namespace.concat_dim
+        mf_mode = len(fnames) > 1
+        if mf_mode:
+            ds = open_mfdataset(fnames, engine=engine, concat_dim=concat_dim)
+        else:
+            ds = open_dataset(fnames[0], engine=engine)
+
+        data = {}
+
+        names = namespace.name or list(ds.variables)
+
+        if not names:
+            print("No variables found in the given dataset.")
+            sys.exit(1)
+
+        decoder_kwargs = namespace.decoder or {}
+
+        for name in names:
+            if name not in ds.variables:
+                data[name] = {
+                    "error": f"Variable {name} could not be found in the dataset."
+                }
+                continue
+            decoder = CFDecoder.get_decoder(ds, ds[name], **decoder_kwargs)
+            data[name] = decoder.get_metadata_for_variable(ds[name])
+        print(yaml.dump(data, default_flow_style=False))
+        sys.exit(0)
+
+
+class ListPlotMethodsAction(argparse.Action):
+    def __init__(
+        self,
+        option_strings,
+        dest=argparse.SUPPRESS,
+        nargs=None,
+        default=argparse.SUPPRESS,
+        **kwargs,
+    ):
+        if nargs is not None:
+            raise ValueError("nargs not allowed")
+        kwargs["help"] = "List the available plot methods and what they do"
+        kwargs["default"] = default
         super(ListPlotMethodsAction, self).__init__(
-            option_strings, nargs=0, dest=dest, **kwargs)
+            option_strings, nargs=0, dest=dest, **kwargs
+        )
 
     def __call__(self, parser, namespace, values, option_string=None):
         pm_choices = {}
-        for pm, d in filter(lambda t: t[1].get('plot_func', True),
-                            six.iteritems(rcParams['project.plotters'])):
-            pm_choices[pm] = d.get('summary') or (
-                'Open and plot data via :class:`%s.%s` plotters' % (
-                    d['module'], d['plotter_name']))
+        for pm, d in filter(
+            lambda t: t[1].get("plot_func", True),
+            six.iteritems(rcParams["project.plotters"]),
+        ):
+            pm_choices[pm] = d.get("summary") or (
+                "Open and plot data via :class:`%s.%s` plotters"
+                % (d["module"], d["plotter_name"])
+            )
         if psyplot._project_imported:
             import psyplot.project as psy
+
             pm_choices.update(psy.plot._plot_methods)
         print(yaml.dump(pm_choices, default_flow_style=False))
         sys.exit(0)
@@ -430,29 +636,41 @@ class ListPlotMethodsAction(argparse.Action):
 class ListDsNamesAction(argparse.Action):
     """An action to list the used file names in a project"""
 
-    def __init__(self, option_strings, dest=argparse.SUPPRESS, nargs=None,
-                 default=argparse.SUPPRESS, **kwargs):
+    def __init__(
+        self,
+        option_strings,
+        dest=argparse.SUPPRESS,
+        nargs=None,
+        default=argparse.SUPPRESS,
+        **kwargs,
+    ):
         if nargs is not None:
             raise ValueError("nargs not allowed")
-        kwargs['default'] = default
+        kwargs["default"] = default
         super(ListDsNamesAction, self).__init__(
-            option_strings, nargs=0, dest=dest, **kwargs)
+            option_strings, nargs=0, dest=dest, **kwargs
+        )
 
     def __call__(self, parser, namespace, values, option_string=None):
         if namespace.project is None:
-            print('A project is required before this argument! Call syntax:\n'
-                  '%s -p <project-file>.pkl %s' % (parser.prog, option_string))
+            print(
+                "A project is required before this argument! Call syntax:\n"
+                "%s -p <project-file>.pkl %s" % (parser.prog, option_string)
+            )
             sys.exit(1)
-        import psyplot.data as psyd
         import pickle
-        with open(namespace.project, 'rb') as f:
-            d = pickle.load(f)['arrays']
-        names = list(filter(None, (
-            t[0] for t in psyd.ArrayList._get_dsnames(d))))
+
+        import psyplot.data as psyd
+
+        with open(namespace.project, "rb") as f:
+            d = pickle.load(f)["arrays"]
+        names = list(
+            filter(None, (t[0] for t in psyd.ArrayList._get_dsnames(d)))
+        )
         if names:
             print(yaml.dump(names, default_flow_style=False))
         sys.exit(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

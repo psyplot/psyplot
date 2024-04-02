@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 v1.4.3
 ======
 Minor fix for grid files (`#53 <https://github.com/psyplot/psyplot/pull/53>__`)

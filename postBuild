@@ -1,2 +1,0 @@
-conda uninstall --force psyplot
-python -m pip install . --no-deps --ignore-installed -vvv

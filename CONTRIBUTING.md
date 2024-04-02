@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
 # Contributing to psyplot
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
@@ -31,12 +37,12 @@ This project and everyone participating in it is governed by the [psyplot Code o
 
 `psyplot` is just the framework that allows interactive data analysis and visualization. Much of the functionality however is implemented by other packages. What package is the correct one for your bug report/feature request, can be determined by the following list
 
-* [psyplot-gui](https://github.com/psyplot/psyplot-gui/issues): Everything specific to the graphical user interface
-* [psy-view](https://github.com/psyplot/psy-view/issues): Everything specific to the psy-view graphical user interface
-* [psy-simple](https://github.com/psyplot/psy-simple/issues): Everything concerning, e.g. the `lineplot`, `plot2d`, `density` or `vector` plot methods
-* [psy-maps](https://github.com/psyplot/psy-maps/issues): Everything concerning, e.g. the `mapplot`, `mapvector` `mapcombined` plot methods
-* [psy-reg](https://github.com/psyplot/psy-reg/issues): Everything concerning, e.g. the `linreg` or `densityreg` plot methods
-* [psyplot](https://github.com/psyplot/psyplot/issues): Everything concerning the general framework, e.g. data handling, parallel update, etc.
+* [psyplot-gui](https://codebase.helmholtz.cloud/psyplot/psyplot-gui/issues): Everything specific to the graphical user interface
+* [psy-view](https://codebase.helmholtz.cloud/psyplot/psy-view/issues): Everything specific to the psy-view graphical user interface
+* [psy-simple](https://codebase.helmholtz.cloud/psyplot/psy-simple/issues): Everything concerning, e.g. the `lineplot`, `plot2d`, `density` or `vector` plot methods
+* [psy-maps](https://codebase.helmholtz.cloud/psyplot/psy-maps/issues): Everything concerning, e.g. the `mapplot`, `mapvector` `mapcombined` plot methods
+* [psy-reg](https://codebase.helmholtz.cloud/psyplot/psy-reg/issues): Everything concerning, e.g. the `linreg` or `densityreg` plot methods
+* [psyplot](https://codebase.helmholtz.cloud/psyplot/psyplot/issues): Everything concerning the general framework, e.g. data handling, parallel update, etc.
 
 Concerning plot methods, you can simply find out which module implemented it via
 
@@ -45,7 +51,7 @@ import psyplot.project as psy
 print(psy.plot.name-of-your-plot-method._plugin)
 ```
 
-If you still don't know, where to open the issue, just go for [psyplot](https://github.com/psyplot/psyplot/issues).
+If you still don't know, where to open the issue, just go for [psyplot](https://codebase.helmholtz.cloud/psyplot/psyplot/issues).
 
 ## How Can I Contribute?
 
@@ -80,7 +86,7 @@ Include details about your configuration and environment:
 
 This section guides you through submitting an enhancement suggestion for psyplot, including completely new features and minor improvements to existing functionality.
 
-If you want to change an existing feature, use the [change feature template](https://github.com/psyplot/psyplot/issues/new?template=change_feature.md&title=CHANGE+FEATURE:), otherwise fill in the [new feature template](https://github.com/psyplot/psyplot/issues/new?template=new_feature.md&title=NEW+FEATURE:).
+If you want to change an existing feature, use the [change feature template](https://codebase.helmholtz.cloud/psyplot/psyplot/issues/new?template=change_feature.md&title=CHANGE+FEATURE:), otherwise fill in the [new feature template](https://codebase.helmholtz.cloud/psyplot/psyplot/issues/new?template=new_feature.md&title=NEW+FEATURE:).
 
 #### How Do I Submit A (Good) Enhancement Suggestion?
 

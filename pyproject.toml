@@ -1,0 +1,151 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: CC0-1.0
+
+[build-system]
+build-backend = 'setuptools.build_meta'
+requires = ['setuptools >= 61.0', 'versioneer[toml]']
+
+[project]
+name = "psyplot"
+dynamic = ["version"]
+description = "Python package for interactive data visualization"
+
+readme = "README.rst"
+keywords = [
+    "visualization",
+    "netcdf",
+    "raster",
+    "cartopy",
+    "earth-sciences",
+    ]
+
+authors = [
+    { name = 'Philipp S. Sommer', email = 'philipp.sommer@hereon.de' },
+]
+maintainers = [
+    { name = 'Philipp S. Sommer', email = 'philipp.sommer@hereon.de' },
+]
+license = { text = 'LGPL-3.0-only' }
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Scientific/Engineering",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+
+requires-python = '>= 3.9'
+dependencies = [
+    # add your dependencies here
+    "matplotlib",
+    "docrep>=0.3",
+    "funcargparse",
+    "xarray>=0.17",
+    "PyYAML>=4.2b",
+]
+
+[project.urls]
+Homepage = 'https://codebase.helmholtz.cloud/psyplot/psyplot'
+Documentation = "https://psyplot.github.io"
+Source = "https://codebase.helmholtz.cloud/psyplot/psyplot"
+Tracker = "https://codebase.helmholtz.cloud/psyplot/psyplot/issues/"
+
+
+[project.optional-dependencies]
+testsite = [
+    "tox",
+    "isort==5.12.0",
+    "black==23.1.0",
+    "blackdoc==0.3.8",
+    "flake8==6.0.0",
+    "pre-commit",
+    "mypy",
+    "pytest-cov",
+    "reuse",
+    "cffconvert",
+    "pytest-xdist",
+    "netCDF4",
+    "dask",
+    "scipy",
+    "pytest",
+]
+docs = [
+    "autodocsumm",
+    "sphinx-rtd-theme",
+    "hereon-netcdf-sphinxext",
+    "sphinx-design",
+    "ipython",
+    "pickleshare",  # required for IPythons savefig
+    "seaborn",
+    "dask",
+    "netCDF4",
+    "sphinx-argparse",
+    "cdo",
+    # packages for the psyplot-plugin-template
+    "cookiecutter",
+    "GitPython",
+    "pre-commit",
+    "reuse",
+]
+dev = [
+    "psyplot[testsite]",
+    "psyplot[docs]",
+    "PyYAML",
+    "types-PyYAML",
+]
+
+[project.scripts]
+psyplot = "psyplot.__main__:main"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.setuptools]
+zip-safe = false
+license-files = ["LICENSES/*"]
+
+[tool.setuptools.package-data]
+psyplot = []
+
+[tool.setuptools.packages.find]
+namespaces = false
+exclude = [
+    'docs',
+    'tests*',
+    'examples'
+]
+
+[tool.pytest.ini_options]
+addopts = '-v'
+
+[tool.versioneer]
+VCS = 'git'
+style = 'pep440'
+versionfile_source = 'psyplot/_version.py'
+versionfile_build = 'psyplot/_version.py'
+tag_prefix = 'v'
+parentdir_prefix = 'psyplot-'
+
+[tool.isort]
+profile = "black"
+line_length = 79
+src_paths = ["psyplot"]
+float_to_top = true
+known_first_party = "psyplot"
+
+[tool.black]
+line-length = 79
+target-version = ['py39']
+
+[tool.coverage.run]
+omit = ["psyplot/_version.py"]
