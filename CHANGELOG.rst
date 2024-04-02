@@ -2,9 +2,29 @@
 ..
 .. SPDX-License-Identifier: CC-BY-4.0
 
+v1.5.0
+======
+Compatibility fixes, cli improvements and code formatting
+
+Changed
+-------
+- migrate to python-package-template, see merge request `!60 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/60>`__
+- implement custom warning handling, see merge request `!61 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/61>`__
+- fallback to nearest index when not found, see merge request `!62 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/62>`__
+- improve guessing of coordinates based on their names, see merge request `!63 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/63>`__
+- Fix enhanced attrs, see merge request `!66 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/66>`__
+- minor fix for matplotlib 3.8 compatibility, see merge request `!68 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/68>`__
+- implement ci-matrix for different python and mpl versions, see merge request `!69 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/69>`__
+- Update plugin guide, see merge request `!71 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/71>`__
+
+Added
+-----
+- Add metadata info, see merge request `!64 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/64>`__, `!65 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/65>`__
+- improve cli yaml options, see merge request `!67 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/67>`__
+
 v1.4.3
 ======
-Minor fix for grid files (`#53 <https://github.com/psyplot/psyplot/pull/53>__`)
+Minor fix for grid files (`#53 <https://github.com/psyplot/psyplot/pull/53>`__)
 
 v1.4.2
 ======
