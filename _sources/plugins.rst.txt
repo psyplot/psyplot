@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _plugins:
 
 Psyplot plugins
@@ -60,7 +64,7 @@ If you have new plugins that you think should be included in this list, please
 do not hesitate to open an issue on the `github project page of psyplot`_ or
 implement it by yourself in `this file`_ and make a pull request.
 
-.. _this file: https://github.com/psyplot/psyplot/blob/master/docs/plugins.rst
+.. _this file: https://codebase.helmholtz.cloud/psyplot/psyplot/blob/master/docs/plugins.rst
 
 .. note::
 
@@ -84,7 +88,7 @@ implement it by yourself in `this file`_ and make a pull request.
 
     where ``PLUGIN_NAME`` is any of ``psy_simple, psy_maps``, etc.
 
-.. _github project page of psyplot: https://github.com/psyplot/psyplot
+.. _github project page of psyplot: https://codebase.helmholtz.cloud/psyplot/psyplot
 
 
 .. _excluding_plugins:

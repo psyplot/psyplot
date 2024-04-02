@@ -1,6 +1,3 @@
-psyplot.sphinxext.extended\_napoleon module
-===========================================
-
 .. automodule:: psyplot.sphinxext.extended_napoleon
    :members:
    :undoc-members:

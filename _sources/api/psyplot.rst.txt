@@ -1,4 +1,4 @@
-API Reference
+psyplot package
 ===============
 
 .. automodule:: psyplot
@@ -6,19 +6,12 @@ API Reference
    :undoc-members:
    :show-inheritance:
 
-.. autosummary:: 
-    ~psyplot.config.rcsetup.rcParams 
-    ~psyplot.data.InteractiveArray 
-    ~psyplot.data.InteractiveList 
-    
-    
 Subpackages
 -----------
 
 .. toctree::
    :maxdepth: 4
 
-   psyplot.compat
    psyplot.config
    psyplot.sphinxext
 
@@ -32,7 +25,6 @@ Submodules
    psyplot.docstring
    psyplot.gdal_store
    psyplot.plotter
-   psyplot.plugin_template
    psyplot.project
    psyplot.utils
    psyplot.warning

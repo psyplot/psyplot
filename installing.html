@@ -1,23 +1,29 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Installation &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+  <title>Installation &mdash; psyplot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/nc-table-styles.css?v=d585f46f" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+  
     <link rel="shortcut icon" href="_static/psyplot.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -31,22 +37,33 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> psyplot
-            <img src="_static/psyplot.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            psyplot
+              <img src="_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.4.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About psyplot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#why-psyplot">Why psyplot?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#what-it-is-and-what-it-is-not">What it is, and what it is not</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="about.html#what-it-is">What it is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="about.html#what-it-is-not">What it is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#about-the-author">About the author</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#license">License</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-install">How to install</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#installation-using-conda">Installation using conda</a></li>
@@ -68,18 +85,244 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#initialization-and-interactive-usage">Initialization and interactive usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#choosing-the-dimension">Choosing the dimension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#configuring-the-appearance-of-the-plot">Configuring the appearance of the plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#controlling-the-update">Controlling the update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html#automatic-update">Automatic update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html#direct-control-on-formatoption-update">Direct control on formatoption update</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#creating-and-managing-multiple-plots">Creating and managing multiple plots</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html#creating-multiple-plots">Creating multiple plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html#slicing-and-filtering-the-project">Slicing and filtering the project</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#saving-and-loading-your-project">Saving and loading your project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#using-presets">Using presets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#adding-your-own-script-the-post-formatoption">Adding your own script: The <code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code> formatoption</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#the-rcparams">The <code class="docutils literal notranslate"><span class="pre">rcParams</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#default-formatoptions">Default formatoptions</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="projects.html">Subprojects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contributing to psyplot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accessors.html">xarray Accessors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="accessors.html#the-datasetaccessor-dataset-accessor">The <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code> dataset accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="accessors.html#the-interactivearray-dataarray-accessor">The <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code> dataarray accessor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="accessors.html#creating-plots-with-the-dataarray-accessor">Creating plots with the dataarray accessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="accessors.html#updating-plots-and-arrays-with-the-dataarray-accessor">Updating plots and arrays with the dataarray accessor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Psyplot plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#existing-plugins">Existing plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#how-to-exclude-plugins">How to exclude plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#the-psyplot-plugins-environment-variable">The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLUGINS</span></code> environment variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plugins.html#the-psyplot-plotmethods-environment-variable">The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLOTMETHODS</span></code> environment variable</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html#named-arguments">Named Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html#info-options">Info options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html#output-options">Output options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developers guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="develop/framework.html">The psyplot framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="develop/framework.html#the-project-function">The <code class="xref py py-func docutils literal notranslate"><span class="pre">project()</span></code> function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/framework.html#the-interactivebase-and-the-plotter-classes">The <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveBase</span></code> and the <code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code> classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="develop/framework.html#interactive-data-objects">Interactive data objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="develop/framework.html#visualization-objects">Visualization objects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="develop/framework.html#formatoptions">Formatoptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="develop/plugins_guide.html">How to implement your own plotters and plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="develop/plugins_guide.html#creating-plotters">Creating plotters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="develop/plugins_guide.html#interface-for-the-plotter">Interface for the plotter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="develop/plugins_guide.html#interface-to-the-data">Interface to the data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="develop/plugins_guide.html#interfacing-to-other-formatoptions">Interfacing to other formatoptions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="develop/plugins_guide.html#creating-new-plugins">Creating new plugins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="develop/plugins_guide.html#creating-a-package-with-the-psyplot-plugin-template">Creating a package with the psyplot-plugin-template</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="develop/plugins_guide.html#rcparams-handling-in-plugins"><code class="docutils literal notranslate"><span class="pre">rcParams</span></code> handling in plugins</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contribution and development hints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#code-of-conduct">Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#what-should-i-know-before-i-get-started">What should I know before I get started?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#the-psyplot-framework">The psyplot framework</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#contributing-in-the-development">Contributing in the development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#helpers">Helpers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#shortcuts-with-make">Shortcuts with make</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#annotating-licenses">Annotating licenses</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#fixing-the-docs">Fixing the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#contributing-to-the-code">Contributing to the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#updating-the-skeleton-for-this-package">Updating the skeleton for this package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/psyplot.html">psyplot package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/psyplot.html#psyplot.get_versions"><code class="docutils literal notranslate"><span class="pre">get_versions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psyplot.html#psyplot.with_gui"><code class="docutils literal notranslate"><span class="pre">with_gui</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psyplot.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.config.html">psyplot.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.sphinxext.html">psyplot.sphinxext package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psyplot.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html"><code class="docutils literal notranslate"><span class="pre">AbsoluteTimeDecoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.AbsoluteTimeEncoder"><code class="docutils literal notranslate"><span class="pre">AbsoluteTimeEncoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.ArrayList"><code class="docutils literal notranslate"><span class="pre">ArrayList</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.CFDecoder"><code class="docutils literal notranslate"><span class="pre">CFDecoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor"><code class="docutils literal notranslate"><span class="pre">DatasetAccessor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveArray"><code class="docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveBase"><code class="docutils literal notranslate"><span class="pre">InteractiveBase</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveList"><code class="docutils literal notranslate"><span class="pre">InteractiveList</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.UGridDecoder"><code class="docutils literal notranslate"><span class="pre">UGridDecoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.decode_absolute_time"><code class="docutils literal notranslate"><span class="pre">decode_absolute_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.encode_absolute_time"><code class="docutils literal notranslate"><span class="pre">encode_absolute_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.get_filename_ds"><code class="docutils literal notranslate"><span class="pre">get_filename_ds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.get_fname_funcs"><code class="docutils literal notranslate"><span class="pre">get_fname_funcs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.get_index_from_coord"><code class="docutils literal notranslate"><span class="pre">get_index_from_coord()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.get_tdata"><code class="docutils literal notranslate"><span class="pre">get_tdata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.open_dataset"><code class="docutils literal notranslate"><span class="pre">open_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.open_mfdataset"><code class="docutils literal notranslate"><span class="pre">open_mfdataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.setup_coords"><code class="docutils literal notranslate"><span class="pre">setup_coords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.t_patterns"><code class="docutils literal notranslate"><span class="pre">t_patterns</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.to_netcdf"><code class="docutils literal notranslate"><span class="pre">to_netcdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.data.html#psyplot.data.to_slice"><code class="docutils literal notranslate"><span class="pre">to_slice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.docstring.html"><code class="docutils literal notranslate"><span class="pre">PsyplotDocstringProcessor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.docstring.html#psyplot.docstring.append_original_doc"><code class="docutils literal notranslate"><span class="pre">append_original_doc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.docstring.html#psyplot.docstring.dedent"><code class="docutils literal notranslate"><span class="pre">dedent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.docstring.html#psyplot.docstring.docstrings"><code class="docutils literal notranslate"><span class="pre">docstrings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.docstring.html#psyplot.docstring.indent"><code class="docutils literal notranslate"><span class="pre">indent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.gdal_store.html"><code class="docutils literal notranslate"><span class="pre">GdalStore</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html"><code class="docutils literal notranslate"><span class="pre">BEFOREPLOTTING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.DictFormatoption"><code class="docutils literal notranslate"><span class="pre">DictFormatoption</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.END"><code class="docutils literal notranslate"><span class="pre">END</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Formatoption"><code class="docutils literal notranslate"><span class="pre">Formatoption</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.FormatoptionMeta"><code class="docutils literal notranslate"><span class="pre">FormatoptionMeta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter"><code class="docutils literal notranslate"><span class="pre">Plotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.PostProcDependencies"><code class="docutils literal notranslate"><span class="pre">PostProcDependencies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.PostProcessing"><code class="docutils literal notranslate"><span class="pre">PostProcessing</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.PostTiming"><code class="docutils literal notranslate"><span class="pre">PostTiming</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.START"><code class="docutils literal notranslate"><span class="pre">START</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.default_print_func"><code class="docutils literal notranslate"><span class="pre">default_print_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.format_time"><code class="docutils literal notranslate"><span class="pre">format_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.groups"><code class="docutils literal notranslate"><span class="pre">groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.is_data_dependent"><code class="docutils literal notranslate"><span class="pre">is_data_dependent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html"><code class="docutils literal notranslate"><span class="pre">DataArrayPlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.DataArrayPlotterInterface"><code class="docutils literal notranslate"><span class="pre">DataArrayPlotterInterface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.DatasetPlotter"><code class="docutils literal notranslate"><span class="pre">DatasetPlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.DatasetPlotterInterface"><code class="docutils literal notranslate"><span class="pre">DatasetPlotterInterface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.PROJECT_CLS"><code class="docutils literal notranslate"><span class="pre">PROJECT_CLS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.PlotterInterface"><code class="docutils literal notranslate"><span class="pre">PlotterInterface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project"><code class="docutils literal notranslate"><span class="pre">Project</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.ProjectPlotter"><code class="docutils literal notranslate"><span class="pre">ProjectPlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.close"><code class="docutils literal notranslate"><span class="pre">close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.gcp"><code class="docutils literal notranslate"><span class="pre">gcp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.get_project_nums"><code class="docutils literal notranslate"><span class="pre">get_project_nums()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.multiple_subplots"><code class="docutils literal notranslate"><span class="pre">multiple_subplots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.plot"><code class="docutils literal notranslate"><span class="pre">plot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.project"><code class="docutils literal notranslate"><span class="pre">project()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.register_plotter"><code class="docutils literal notranslate"><span class="pre">register_plotter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.scp"><code class="docutils literal notranslate"><span class="pre">scp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.project.html#psyplot.project.unregister_plotter"><code class="docutils literal notranslate"><span class="pre">unregister_plotter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html"><code class="docutils literal notranslate"><span class="pre">Defaultdict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.check_key"><code class="docutils literal notranslate"><span class="pre">check_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.get_default_value"><code class="docutils literal notranslate"><span class="pre">get_default_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.hashable"><code class="docutils literal notranslate"><span class="pre">hashable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.is_iterable"><code class="docutils literal notranslate"><span class="pre">is_iterable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.is_remote_url"><code class="docutils literal notranslate"><span class="pre">is_remote_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.isstring"><code class="docutils literal notranslate"><span class="pre">isstring()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.join_dicts"><code class="docutils literal notranslate"><span class="pre">join_dicts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.plugin_entrypoints"><code class="docutils literal notranslate"><span class="pre">plugin_entrypoints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.sort_kwargs"><code class="docutils literal notranslate"><span class="pre">sort_kwargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.utils.html#psyplot.utils.unique_everseen"><code class="docutils literal notranslate"><span class="pre">unique_everseen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.warning.html"><code class="docutils literal notranslate"><span class="pre">PsyPlotCritical</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.warning.html#psyplot.warning.PsyPlotRuntimeWarning"><code class="docutils literal notranslate"><span class="pre">PsyPlotRuntimeWarning</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.warning.html#psyplot.warning.PsyPlotWarning"><code class="docutils literal notranslate"><span class="pre">PsyPlotWarning</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.warning.html#psyplot.warning.critical"><code class="docutils literal notranslate"><span class="pre">critical()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.warning.html#psyplot.warning.customwarn"><code class="docutils literal notranslate"><span class="pre">customwarn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.warning.html#psyplot.warning.disable_warnings"><code class="docutils literal notranslate"><span class="pre">disable_warnings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psyplot.warning.html#psyplot.warning.warn"><code class="docutils literal notranslate"><span class="pre">warn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="todos.html">ToDos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-4-3">v1.4.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-4-2">v1.4.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#changed">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-4-1">v1.4.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#fixed">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id2">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-4-0">v1.4.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id3">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id4">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id5">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-3-2">v1.3.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id6">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-3-1">v1.3.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id7">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-3-0">v1.3.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id8">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id9">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-2-1">v1.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-2-0">v1.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id10">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#removed">Removed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id11">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-1-0">v1.1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id12">Added</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-0-0">v1.0.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id13">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id14">Changed</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -95,8 +338,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Installation</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/installing.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -107,9 +350,9 @@
            <div itemprop="articleBody">
              
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
 <section id="how-to-install">
-<h2>How to install<a class="headerlink" href="#how-to-install" title="Permalink to this heading"></a></h2>
+<h2>How to install<a class="headerlink" href="#how-to-install" title="Link to this heading"></a></h2>
 <p>There basically three different methodologies for the installation. You should
 choose the one, which is the most appropriate solution concerning your skills
 and your usage:</p>
@@ -122,20 +365,20 @@ your system, you can also use pip (see <a class="reference internal" href="#inst
 </dd>
 </dl>
 <section id="installation-using-conda">
-<span id="install-conda"></span><h3>Installation using conda<a class="headerlink" href="#installation-using-conda" title="Permalink to this heading"></a></h3>
+<span id="install-conda"></span><h3>Installation using conda<a class="headerlink" href="#installation-using-conda" title="Link to this heading"></a></h3>
 <p>We highly recommend to use <a class="reference external" href="https://conda.io/docs/">conda</a> for installing psyplot. After having
 downloaded the <a class="reference external" href="https://conda.io/en/latest/miniconda.html">miniconda installer</a>, you can install psyplot
 and the optional plugins (see  <a class="reference internal" href="#optional-deps"><span class="std std-ref">Optional dependencies</span></a>) via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge psy-view psy-reg
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>psy-view<span class="w"> </span>psy-reg
 </pre></div>
 </div>
 <p>If you only want to install the core, i.e. the raw framework, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge psyplot
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>psyplot
 </pre></div>
 </div>
 <p>If you want to be able to read GeoTiff Raster files, you will need to have
 <a class="reference external" href="http://www.gdal.org/">gdal</a> installed:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install gdal
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>gdal
 </pre></div>
 </div>
 <p>Please also visit the <a class="reference external" href="http://xarray.pydata.org/en/stable/installing.html">xarray installation notes</a>
@@ -143,32 +386,32 @@ for more informations on how to best configure the <a class="reference external"
 package for your needs.</p>
 </section>
 <section id="installation-using-pip">
-<span id="install-pip"></span><h3>Installation using pip<a class="headerlink" href="#installation-using-pip" title="Permalink to this heading"></a></h3>
+<span id="install-pip"></span><h3>Installation using pip<a class="headerlink" href="#installation-using-pip" title="Link to this heading"></a></h3>
 <p>If you do not want to use conda for managing your python packages, you can also
 use the python package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code> and install via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install psyplot
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>psyplot
 </pre></div>
 </div>
 <p>However to be on the safe side, make sure you have the <a class="reference internal" href="#dependencies"><span class="std std-ref">Dependencies</span></a>
 installed.</p>
 </section>
 <section id="installation-from-source">
-<span id="install-source"></span><h3>Installation from source<a class="headerlink" href="#installation-from-source" title="Permalink to this heading"></a></h3>
+<span id="install-source"></span><h3>Installation from source<a class="headerlink" href="#installation-from-source" title="Link to this heading"></a></h3>
 <p>To install it from source, make sure you have the <a class="reference internal" href="#dependencies"><span class="std std-ref">Dependencies</span></a>
-installed, clone the <a class="reference external" href="https://github.com/psyplot/psyplot">github</a> repository via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/psyplot/psyplot.git
+installed, clone the <a class="reference external" href="https://codebase.helmholtz.cloud/psyplot/psyplot">github</a> repository via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://codebase.helmholtz.cloud/psyplot/psyplot.git
 </pre></div>
 </div>
 <p>and install it via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python setup.py install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>setup.py<span class="w"> </span>install
 </pre></div>
 </div>
 </section>
 </section>
 <section id="dependencies">
-<span id="id1"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h2>
+<span id="id1"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h2>
 <section id="required-dependencies">
-<h3>Required dependencies<a class="headerlink" href="#required-dependencies" title="Permalink to this heading"></a></h3>
+<h3>Required dependencies<a class="headerlink" href="#required-dependencies" title="Link to this heading"></a></h3>
 <p>Psyplot supports officially python 3.6 and 3.7. Previous versions are also
 available for python 2.7. Furthermore the package is built upon multiple other
 packages, mainly</p>
@@ -182,11 +425,11 @@ docstrings</p></li>
 </ul>
 </section>
 <section id="optional-dependencies">
-<span id="optional-deps"></span><h3>Optional dependencies<a class="headerlink" href="#optional-dependencies" title="Permalink to this heading"></a></h3>
+<span id="optional-deps"></span><h3>Optional dependencies<a class="headerlink" href="#optional-dependencies" title="Link to this heading"></a></h3>
 <p>We furthermore recommend to use</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://psyplot.github.io/psyplot-gui/installing.html#install" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a>: A graphical user interface to psyplot</p></li>
-<li><p><a class="reference external" href="https://psyplot.github.io/psy-view/installing.html#install" title="(in psy-view v0.1.0)"><span class="xref std std-ref">psy-view</span></a>: An ncview-like interface based on psyplot
+<li><p><a class="reference external" href="https://psyplot.github.io/psy-view/installing.html#install" title="(in psy-view)"><span class="xref std std-ref">psy-view</span></a>: An ncview-like interface based on psyplot
 and psy-maps</p></li>
 <li><p><a class="reference external" href="https://psyplot.github.io/psy-simple/installing.html#install" title="(in psy-simple v1.4.0)"><span class="xref std std-ref">psy-simple</span></a>: A psyplot plugin to make simple plots</p></li>
 <li><p><a class="reference external" href="https://psyplot.github.io/psy-maps/installing.html#install" title="(in psy-maps v1.4.1)"><span class="xref std std-ref">psy-maps</span></a>: A psyplot plugin for visualizing data on a
@@ -197,35 +440,35 @@ your data</p></li>
 </section>
 </section>
 <section id="running-the-tests">
-<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this heading"></a></h2>
-<p>We us <a class="reference external" href="https://pytest.org/latest/contents.html">pytest</a> to run our tests. So you can either run clone out the <a class="reference external" href="https://github.com/psyplot/psyplot">github</a>
+<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Link to this heading"></a></h2>
+<p>We us <a class="reference external" href="https://pytest.org/latest/contents.html">pytest</a> to run our tests. So you can either run clone out the <a class="reference external" href="https://codebase.helmholtz.cloud/psyplot/psyplot">github</a>
 repository and run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python setup.py <span class="nb">test</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>setup.py<span class="w"> </span><span class="nb">test</span>
 </pre></div>
 </div>
 <p>or install <a class="reference external" href="https://pytest.org/latest/contents.html">pytest</a> by yourself and run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ py.test
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>py.test
 </pre></div>
 </div>
 <p>To also test the plugin functionality, install the <code class="docutils literal notranslate"><span class="pre">psyplot_test</span></code> module in
 <code class="docutils literal notranslate"><span class="pre">tests/test_plugin</span></code> via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> tests/test_plugin <span class="o">&amp;&amp;</span> python setup.py install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>tests/test_plugin<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>setup.py<span class="w"> </span>install
 </pre></div>
 </div>
 <p>and run the tests via one of the above mentioned commands.</p>
 </section>
 <section id="building-the-docs">
-<h2>Building the docs<a class="headerlink" href="#building-the-docs" title="Permalink to this heading"></a></h2>
-<p>To build the docs, check out the <a class="reference external" href="https://github.com/psyplot/psyplot">github</a> repository and install the
+<h2>Building the docs<a class="headerlink" href="#building-the-docs" title="Link to this heading"></a></h2>
+<p>To build the docs, check out the <a class="reference external" href="https://codebase.helmholtz.cloud/psyplot/psyplot">github</a> repository and install the
 requirements in <code class="docutils literal notranslate"><span class="pre">'docs/environment.yml'</span></code>. The easiest way to do this is via
 anaconda by typing:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda env create -f docs/environment.yml
-$ <span class="nb">source</span> activate psyplot_docs
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>docs/environment.yml
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>activate<span class="w"> </span>psyplot_docs
 </pre></div>
 </div>
 <p>Then build the docs via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
-$ make html
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>docs
+$<span class="w"> </span>make<span class="w"> </span>html
 </pre></div>
 </div>
 <div class="admonition note">
@@ -235,10 +478,10 @@ disable that by setting <code class="docutils literal notranslate"><span class="
 that the examples are written as python3 notebooks, hence you may have to
 install a python3 kernel through <a class="reference external" href="https://ipykernel.readthedocs.io">ipykernel</a>. Just create a new environment
 <code class="docutils literal notranslate"><span class="pre">'py37'</span></code> and install it via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py37 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
-<span class="nb">source</span> activate py37
-conda install notebook ipykernel
-ipython kernel install --user
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>py37<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
+<span class="nb">source</span><span class="w"> </span>activate<span class="w"> </span>py37
+conda<span class="w"> </span>install<span class="w"> </span>notebook<span class="w"> </span>ipykernel
+ipython<span class="w"> </span>kernel<span class="w"> </span>install<span class="w"> </span>--user
 </pre></div>
 </div>
 <p>You then have to install the necessary modules for each of the examples in
@@ -246,7 +489,7 @@ the new <code class="docutils literal notranslate"><span class="pre">'py37'</spa
 </div>
 </section>
 <section id="uninstallation">
-<span id="uninstall"></span><h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Permalink to this heading"></a></h2>
+<span id="uninstall"></span><h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Link to this heading"></a></h2>
 <p>The uninstallation depends on the system you used to install psyplot. Either
 you did it via <a class="reference internal" href="#install-conda"><span class="std std-ref">conda</span></a> (see
 <a class="reference internal" href="#uninstall-conda"><span class="std std-ref">Uninstallation via conda</span></a>), via <a class="reference internal" href="#install-pip"><span class="std std-ref">pip</span></a> or from the
@@ -257,21 +500,21 @@ the configuration files for psyplot are located in the user home directory.
 Under linux and OSX, this is <code class="docutils literal notranslate"><span class="pre">$HOME/.config/psyplot</span></code>. On other platforms it
 is in the <code class="docutils literal notranslate"><span class="pre">.psyplot</span></code> directory in the user home.</p>
 <section id="uninstallation-via-conda">
-<span id="uninstall-conda"></span><h3>Uninstallation via conda<a class="headerlink" href="#uninstallation-via-conda" title="Permalink to this heading"></a></h3>
+<span id="uninstall-conda"></span><h3>Uninstallation via conda<a class="headerlink" href="#uninstallation-via-conda" title="Link to this heading"></a></h3>
 <p>If you installed psyplot via <a class="reference internal" href="#install-conda"><span class="std std-ref">conda</span></a>, simply run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda remove psyplot
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>remove<span class="w"> </span>psyplot
 </pre></div>
 </div>
 <p>or, if you installed it into an own conda environment, remove the environment
 via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda env remove -n &lt;environment-name&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>remove<span class="w"> </span>-n<span class="w"> </span>&lt;environment-name&gt;
 </pre></div>
 </div>
 </section>
 <section id="uninstallation-via-pip">
-<span id="uninstall-pip"></span><h3>Uninstallation via pip<a class="headerlink" href="#uninstallation-via-pip" title="Permalink to this heading"></a></h3>
+<span id="uninstall-pip"></span><h3>Uninstallation via pip<a class="headerlink" href="#uninstallation-via-pip" title="Link to this heading"></a></h3>
 <p>Uninstalling via pip simply goes via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall psyplot
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>uninstall<span class="w"> </span>psyplot
 </pre></div>
 </div>
 <p>Note, however, that you should use <a class="reference internal" href="#uninstall-conda"><span class="std std-ref">conda</span></a> if you also
@@ -283,7 +526,13 @@ installed it via conda.</p>
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+          <!--
+SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="about.html" class="btn btn-neutral float-left" title="About psyplot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
@@ -291,13 +540,27 @@ installed it via conda.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum Geesthacht, 2016-2021 University of Lausanne.</p>
+    <p>&#169; Copyright 2021-2024 Helmholtz-Zentrum hereon GmbH.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  
+
+<div class="footer">
+    <span class="creativecommons">
+    <a href="https://creativecommons.org/licenses/by/4.0/" >
+    <img style="height: 1.5em;" src="_static/license_logo.png" border="0" alt="Creative Commons License"/>
+    </a>
+    This documentation is licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">
+    CC-BY-4.0
+    </a>
+    </span>
+</div>
+
+
 
 </footer>
         </div>

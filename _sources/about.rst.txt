@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _about:
 
 About psyplot
@@ -51,7 +55,7 @@ What it is, and what it is not
     points below, `edit this document`_ and click on *Propose File Change* and
     *Create pull request*. We can then discuss your changes.
 
-.. _edit this document: https://github.com/psyplot/psyplot/edit/master/docs/about.rst
+.. _edit this document: https://codebase.helmholtz.cloud/psyplot/psyplot/edit/master/docs/about.rst
 
 There are tons of software tools around for visualization, so what is special
 about psyplot? The following list should hopefully provide you some guidance.
@@ -66,7 +70,7 @@ What it is
 
   .. code-block:: python
 
-      psy.plot.mapplot('my-netcdf-file.nc', lonlatbox='Germany')
+      psy.plot.mapplot("my-netcdf-file.nc", lonlatbox="Germany")
 
   while still providing a very high range of flexible options to adjust the
   visualization. No GUI, independent of it's intuitiveness, can ever beat the
@@ -93,7 +97,7 @@ What it is
     plotting methods
 - it will always be free and open-source under the LGPL License.
 
-.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _ICON: https://code.mpimet.mpg.de/projects/iconpublic
 .. _UGRID: https://ugrid-conventions.github.io/ugrid-conventions/
 
 
@@ -133,7 +137,7 @@ with a few downsides.
 .. _flask: https://flask.palletsprojects.com
 .. _options provided by matplotlib: https://matplotlib.org/3.1.1/faq/howto_faq.html#how-to-use-matplotlib-in-a-web-application-server
 .. _other visualization backends: https://github.com/psyplot/psy-vtk
-.. _psy-view: https://github.com/psyplot/psy-view
+.. _psy-view: https://codebase.helmholtz.cloud/psyplot/psy-view
 .. _ncview: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
 .. _psy-reg: https://psyplot.github.io/psy-reg
 .. _seaborn: https://seaborn.pydata.org

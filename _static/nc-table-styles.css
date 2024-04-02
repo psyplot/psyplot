@@ -1,0 +1,16 @@
+.nc-attr-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.nc-attr-description {
+    white-space: break-spaces !important;
+}
+
+.nc-attr-example {
+    white-space: break-spaces !important;
+}
+
+.nc-attr-example ul.simple {
+    overflow: auto;
+}

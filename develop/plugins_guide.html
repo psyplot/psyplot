@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to implement your own plotters and plugins &mdash; psyplot 1.4.2+21.g131e7dc documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+  <title>How to implement your own plotters and plugins &mdash; psyplot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nc-table-styles.css?v=d585f46f" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+  
     <link rel="shortcut icon" href="../_static/psyplot.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/design-tabs.js?v=36754332"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Contributing to psyplot" href="../contribute.html" />
+    <link rel="next" title="Contribution and development hints" href="../contributing.html" />
     <link rel="prev" title="The psyplot framework" href="framework.html" /> 
 </head>
 
@@ -31,32 +37,116 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> psyplot
-            <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            psyplot
+              <img src="../_static/psyplot.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.4.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../about.html">About psyplot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About psyplot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#why-psyplot">Why psyplot?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#what-it-is-and-what-it-is-not">What it is, and what it is not</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../about.html#what-it-is">What it is</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../about.html#what-it-is-not">What it is not</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#about-the-author">About the author</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#how-to-install">How to install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-using-conda">Installation using conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-using-pip">Installation using pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-from-source">Installation from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#required-dependencies">Required dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#optional-dependencies">Optional dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#building-the-docs">Building the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#uninstallation-via-conda">Uninstallation via conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#uninstallation-via-pip">Uninstallation via pip</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#initialization-and-interactive-usage">Initialization and interactive usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#choosing-the-dimension">Choosing the dimension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#configuring-the-appearance-of-the-plot">Configuring the appearance of the plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#controlling-the-update">Controlling the update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started.html#automatic-update">Automatic update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started.html#direct-control-on-formatoption-update">Direct control on formatoption update</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#creating-and-managing-multiple-plots">Creating and managing multiple plots</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started.html#creating-multiple-plots">Creating multiple plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started.html#slicing-and-filtering-the-project">Slicing and filtering the project</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#saving-and-loading-your-project">Saving and loading your project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#using-presets">Using presets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html#adding-your-own-script-the-post-formatoption">Adding your own script: The <code class="xref py py-attr docutils literal notranslate"><span class="pre">post</span></code> formatoption</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference external" href="https://psyplot.github.io/examples/">Example Gallery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../configuration.html#the-rcparams">The <code class="docutils literal notranslate"><span class="pre">rcParams</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuration.html#default-formatoptions">Default formatoptions</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../projects.html">Subprojects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../accessors.html">xarray Accessors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Psyplot plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../accessors.html">xarray Accessors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../accessors.html#the-datasetaccessor-dataset-accessor">The <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code> dataset accessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../accessors.html#the-interactivearray-dataarray-accessor">The <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code> dataarray accessor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../accessors.html#creating-plots-with-the-dataarray-accessor">Creating plots with the dataarray accessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../accessors.html#updating-plots-and-arrays-with-the-dataarray-accessor">Updating plots and arrays with the dataarray accessor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins.html">Psyplot plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html#existing-plugins">Existing plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../plugins.html#how-to-exclude-plugins">How to exclude plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../plugins.html#the-psyplot-plugins-environment-variable">The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLUGINS</span></code> environment variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../plugins.html#the-psyplot-plotmethods-environment-variable">The <code class="docutils literal notranslate"><span class="pre">PSYPLOT_PLOTMETHODS</span></code> environment variable</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#named-arguments">Named Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#info-options">Info options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#output-options">Output options</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Developers guide</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="framework.html">The psyplot framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="framework.html">The psyplot framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="framework.html#the-project-function">The <code class="xref py py-func docutils literal notranslate"><span class="pre">project()</span></code> function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="framework.html#the-interactivebase-and-the-plotter-classes">The <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveBase</span></code> and the <code class="xref py py-class docutils literal notranslate"><span class="pre">Plotter</span></code> classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="framework.html#interactive-data-objects">Interactive data objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="framework.html#visualization-objects">Visualization objects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="framework.html#formatoptions">Formatoptions</a></li>
+</ul>
+</li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">How to implement your own plotters and plugins</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#creating-plotters">Creating plotters</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#interface-for-the-plotter">Interface for the plotter</a></li>
@@ -64,16 +154,175 @@
 <li class="toctree-l4"><a class="reference internal" href="#interfacing-to-other-formatoptions">Interfacing to other formatoptions</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-new-plugins">Creating new plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-new-plugins">Creating new plugins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#creating-a-package-with-the-psyplot-plugin-template">Creating a package with the psyplot-plugin-template</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#rcparams-handling-in-plugins"><code class="docutils literal notranslate"><span class="pre">rcParams</span></code> handling in plugins</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contributing to psyplot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/psyplot.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution and development hints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#code-of-conduct">Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#what-should-i-know-before-i-get-started">What should I know before I get started?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#the-psyplot-framework">The psyplot framework</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#contributing-in-the-development">Contributing in the development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#helpers">Helpers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#shortcuts-with-make">Shortcuts with make</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#annotating-licenses">Annotating licenses</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#fixing-the-docs">Fixing the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#contributing-to-the-code">Contributing to the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#updating-the-skeleton-for-this-package">Updating the skeleton for this package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/psyplot.html">psyplot package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/psyplot.html#psyplot.get_versions"><code class="docutils literal notranslate"><span class="pre">get_versions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psyplot.html#psyplot.with_gui"><code class="docutils literal notranslate"><span class="pre">with_gui</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psyplot.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.config.html">psyplot.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.sphinxext.html">psyplot.sphinxext package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psyplot.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html"><code class="docutils literal notranslate"><span class="pre">AbsoluteTimeDecoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.AbsoluteTimeEncoder"><code class="docutils literal notranslate"><span class="pre">AbsoluteTimeEncoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.ArrayList"><code class="docutils literal notranslate"><span class="pre">ArrayList</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.CFDecoder"><code class="docutils literal notranslate"><span class="pre">CFDecoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.DatasetAccessor"><code class="docutils literal notranslate"><span class="pre">DatasetAccessor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveArray"><code class="docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveBase"><code class="docutils literal notranslate"><span class="pre">InteractiveBase</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveList"><code class="docutils literal notranslate"><span class="pre">InteractiveList</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.UGridDecoder"><code class="docutils literal notranslate"><span class="pre">UGridDecoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.decode_absolute_time"><code class="docutils literal notranslate"><span class="pre">decode_absolute_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.encode_absolute_time"><code class="docutils literal notranslate"><span class="pre">encode_absolute_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.get_filename_ds"><code class="docutils literal notranslate"><span class="pre">get_filename_ds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.get_fname_funcs"><code class="docutils literal notranslate"><span class="pre">get_fname_funcs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.get_index_from_coord"><code class="docutils literal notranslate"><span class="pre">get_index_from_coord()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.get_tdata"><code class="docutils literal notranslate"><span class="pre">get_tdata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.open_dataset"><code class="docutils literal notranslate"><span class="pre">open_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.open_mfdataset"><code class="docutils literal notranslate"><span class="pre">open_mfdataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.setup_coords"><code class="docutils literal notranslate"><span class="pre">setup_coords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.t_patterns"><code class="docutils literal notranslate"><span class="pre">t_patterns</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.to_netcdf"><code class="docutils literal notranslate"><span class="pre">to_netcdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.data.html#psyplot.data.to_slice"><code class="docutils literal notranslate"><span class="pre">to_slice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.docstring.html"><code class="docutils literal notranslate"><span class="pre">PsyplotDocstringProcessor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.docstring.html#psyplot.docstring.append_original_doc"><code class="docutils literal notranslate"><span class="pre">append_original_doc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.docstring.html#psyplot.docstring.dedent"><code class="docutils literal notranslate"><span class="pre">dedent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.docstring.html#psyplot.docstring.docstrings"><code class="docutils literal notranslate"><span class="pre">docstrings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.docstring.html#psyplot.docstring.indent"><code class="docutils literal notranslate"><span class="pre">indent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.gdal_store.html"><code class="docutils literal notranslate"><span class="pre">GdalStore</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html"><code class="docutils literal notranslate"><span class="pre">BEFOREPLOTTING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.DictFormatoption"><code class="docutils literal notranslate"><span class="pre">DictFormatoption</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.END"><code class="docutils literal notranslate"><span class="pre">END</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption"><code class="docutils literal notranslate"><span class="pre">Formatoption</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.FormatoptionMeta"><code class="docutils literal notranslate"><span class="pre">FormatoptionMeta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Plotter"><code class="docutils literal notranslate"><span class="pre">Plotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.PostProcDependencies"><code class="docutils literal notranslate"><span class="pre">PostProcDependencies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.PostProcessing"><code class="docutils literal notranslate"><span class="pre">PostProcessing</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.PostTiming"><code class="docutils literal notranslate"><span class="pre">PostTiming</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.START"><code class="docutils literal notranslate"><span class="pre">START</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.default_print_func"><code class="docutils literal notranslate"><span class="pre">default_print_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.format_time"><code class="docutils literal notranslate"><span class="pre">format_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.groups"><code class="docutils literal notranslate"><span class="pre">groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.is_data_dependent"><code class="docutils literal notranslate"><span class="pre">is_data_dependent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html"><code class="docutils literal notranslate"><span class="pre">DataArrayPlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.DataArrayPlotterInterface"><code class="docutils literal notranslate"><span class="pre">DataArrayPlotterInterface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.DatasetPlotter"><code class="docutils literal notranslate"><span class="pre">DatasetPlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.DatasetPlotterInterface"><code class="docutils literal notranslate"><span class="pre">DatasetPlotterInterface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.PROJECT_CLS"><code class="docutils literal notranslate"><span class="pre">PROJECT_CLS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.PlotterInterface"><code class="docutils literal notranslate"><span class="pre">PlotterInterface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.Project"><code class="docutils literal notranslate"><span class="pre">Project</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.ProjectPlotter"><code class="docutils literal notranslate"><span class="pre">ProjectPlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.close"><code class="docutils literal notranslate"><span class="pre">close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.gcp"><code class="docutils literal notranslate"><span class="pre">gcp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.get_project_nums"><code class="docutils literal notranslate"><span class="pre">get_project_nums()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.multiple_subplots"><code class="docutils literal notranslate"><span class="pre">multiple_subplots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.plot"><code class="docutils literal notranslate"><span class="pre">plot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.project"><code class="docutils literal notranslate"><span class="pre">project()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.register_plotter"><code class="docutils literal notranslate"><span class="pre">register_plotter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.scp"><code class="docutils literal notranslate"><span class="pre">scp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.project.html#psyplot.project.unregister_plotter"><code class="docutils literal notranslate"><span class="pre">unregister_plotter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html"><code class="docutils literal notranslate"><span class="pre">Defaultdict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.check_key"><code class="docutils literal notranslate"><span class="pre">check_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.get_default_value"><code class="docutils literal notranslate"><span class="pre">get_default_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.hashable"><code class="docutils literal notranslate"><span class="pre">hashable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.is_iterable"><code class="docutils literal notranslate"><span class="pre">is_iterable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.is_remote_url"><code class="docutils literal notranslate"><span class="pre">is_remote_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.isstring"><code class="docutils literal notranslate"><span class="pre">isstring()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.join_dicts"><code class="docutils literal notranslate"><span class="pre">join_dicts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.plugin_entrypoints"><code class="docutils literal notranslate"><span class="pre">plugin_entrypoints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.sort_kwargs"><code class="docutils literal notranslate"><span class="pre">sort_kwargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.utils.html#psyplot.utils.unique_everseen"><code class="docutils literal notranslate"><span class="pre">unique_everseen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.warning.html"><code class="docutils literal notranslate"><span class="pre">PsyPlotCritical</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.warning.html#psyplot.warning.PsyPlotRuntimeWarning"><code class="docutils literal notranslate"><span class="pre">PsyPlotRuntimeWarning</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.warning.html#psyplot.warning.PsyPlotWarning"><code class="docutils literal notranslate"><span class="pre">PsyPlotWarning</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.warning.html#psyplot.warning.critical"><code class="docutils literal notranslate"><span class="pre">critical()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.warning.html#psyplot.warning.customwarn"><code class="docutils literal notranslate"><span class="pre">customwarn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.warning.html#psyplot.warning.disable_warnings"><code class="docutils literal notranslate"><span class="pre">disable_warnings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psyplot.warning.html#psyplot.warning.warn"><code class="docutils literal notranslate"><span class="pre">warn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../todos.html">ToDos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-4-3">v1.4.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-4-2">v1.4.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#changed">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-4-1">v1.4.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#fixed">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id2">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-4-0">v1.4.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id3">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id4">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id5">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-3-2">v1.3.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id6">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-3-1">v1.3.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id7">Fixed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-3-0">v1.3.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id8">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id9">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-2-1">v1.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-2-0">v1.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id10">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#removed">Removed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id11">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-1-0">v1.1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id12">Added</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v1-0-0">v1.0.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id13">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id14">Changed</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -89,9 +338,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Developers guide</a> &raquo;</li>
-      <li>How to implement your own plotters and plugins</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Developers guide</a></li>
+      <li class="breadcrumb-item active">How to implement your own plotters and plugins</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/develop/plugins_guide.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -102,12 +351,12 @@
            <div itemprop="articleBody">
              
   <section id="how-to-implement-your-own-plotters-and-plugins">
-<span id="plugins-guide"></span><h1>How to implement your own plotters and plugins<a class="headerlink" href="#how-to-implement-your-own-plotters-and-plugins" title="Permalink to this heading"></a></h1>
+<span id="plugins-guide"></span><h1>How to implement your own plotters and plugins<a class="headerlink" href="#how-to-implement-your-own-plotters-and-plugins" title="Link to this heading"></a></h1>
 <p>New plotters and plugins to the psyplot framework are highly welcomed. In this
 guide, we present <a class="reference internal" href="#new-plotters"><span class="std std-ref">how to create new plotters</span></a> and explain
 to you how you can <a class="reference internal" href="#new-plugins"><span class="std std-ref">include them as a plugin in psyplot</span></a>.</p>
 <section id="creating-plotters">
-<span id="new-plotters"></span><h2>Creating plotters<a class="headerlink" href="#creating-plotters" title="Permalink to this heading"></a></h2>
+<span id="new-plotters"></span><h2>Creating plotters<a class="headerlink" href="#creating-plotters" title="Link to this heading"></a></h2>
 <p>Implementing new plotters can be very easy or quite an effort depending on how
 sophisticated you want to do it. In principle, you only have to implement the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.update" title="psyplot.plotter.Formatoption.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Formatoption.update()</span></code></a> method and a default value. I.e., one simple
@@ -145,7 +394,7 @@ confusing. But in principle, we can group them into 4 categories, the interface
 to the data, to the plotter and to other formatoptions. Plus an additional
 category for some Formatoption internals you definitely have to care about.</p>
 <section id="interface-for-the-plotter">
-<h3>Interface for the plotter<a class="headerlink" href="#interface-for-the-plotter" title="Permalink to this heading"></a></h3>
+<h3>Interface for the plotter<a class="headerlink" href="#interface-for-the-plotter" title="Link to this heading"></a></h3>
 <p>The first interface is the one, that interfaces to the plotter. The most
 important attributes in this group are the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.key" title="psyplot.plotter.Formatoption.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">key</span></code></a>,
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.priority" title="psyplot.plotter.Formatoption.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a>, <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.plot_fmt" title="psyplot.plotter.Formatoption.plot_fmt"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_fmt</span></code></a>,
@@ -189,7 +438,7 @@ formatoption and thereby make use of the interface to the
 <a class="reference internal" href="#fmt-fmt-interface"><span class="std std-ref">formatoptions</span></a>.</p>
 </section>
 <section id="interface-to-the-data">
-<span id="fmt-data-interface"></span><h3>Interface to the data<a class="headerlink" href="#interface-to-the-data" title="Permalink to this heading"></a></h3>
+<span id="fmt-data-interface"></span><h3>Interface to the data<a class="headerlink" href="#interface-to-the-data" title="Link to this heading"></a></h3>
 <p>The next set of attributes help you to interface to the data. There are two
 important parts in this section the interface to the data and the
 interpretation of the data.</p>
@@ -205,7 +454,7 @@ makes sense to access this data for formatoption with <a class="reference intern
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.priority" title="psyplot.plotter.Formatoption.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a>.</p>
 <p>The result of these two attributes depend on the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.index_in_list" title="psyplot.plotter.Formatoption.index_in_list"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Formatoption.index_in_list</span></code></a> attribute. The data objects in the psyplot
-framework are either a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2022.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> or a list of those in a
+framework are either a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> or a list of those in a
 <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.data.InteractiveList</span></code></a>. If the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.index_in_list" title="psyplot.plotter.Formatoption.index_in_list"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_in_list</span></code></a> attribute is not None, and the data object
 is an <a class="reference internal" href="../api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveList</span></code></a>, then only the array at the
@@ -218,7 +467,7 @@ subclass of the <a class="reference internal" href="../api/psyplot.data.html#psy
 x- and y-variables in the data.</p>
 </section>
 <section id="interfacing-to-other-formatoptions">
-<span id="fmt-fmt-interface"></span><h3>Interfacing to other formatoptions<a class="headerlink" href="#interfacing-to-other-formatoptions" title="Permalink to this heading"></a></h3>
+<span id="fmt-fmt-interface"></span><h3>Interfacing to other formatoptions<a class="headerlink" href="#interfacing-to-other-formatoptions" title="Link to this heading"></a></h3>
 <p>A formatoption is the lowest level in the psyplot framework. It is represented
 at multiple levels:</p>
 <ol class="arabic simple">
@@ -248,7 +497,7 @@ here we also have the <a class="reference internal" href="../api/psyplot.plotter
 <li><p>Interface to other formatoptions</p></li>
 </ol>
 <section id="first-solution-use-a-dict">
-<h4>First solution: Use a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><a class="headerlink" href="#first-solution-use-a-dict" title="Permalink to this heading"></a></h4>
+<h4>First solution: Use a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><a class="headerlink" href="#first-solution-use-a-dict" title="Link to this heading"></a></h4>
 <p>That said, to implement a formatoption that inserts a custom text and let the
 user define the size of the text, you either create a formatoption that accepts
 a text via</p>
@@ -290,13 +539,13 @@ a text via</p>
 <li><p>It is easy to allow more keywords for this formatoption</p></li>
 </ul>
 <p>Indeed, the <code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.plotter.Legend</span></code> formatoption uses this framework
-since the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html#matplotlib.pyplot.legend" title="(in Matplotlib v3.5.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.legend()</span></code></a> function accepts that many keywords
+since the <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html#matplotlib.pyplot.legend" title="(in Matplotlib v3.8.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.legend()</span></code></a> function accepts that many keywords
 that it would be not informative to create a formatoption for each of them.</p>
 <p>Otherwise you could of course avoid the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.DictFormatoption" title="psyplot.plotter.DictFormatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictFormatoption</span></code></a> and just
 force the user to always provide a new dictionary.</p>
 </section>
 <section id="second-solution-interact-with-other-formatoptions">
-<h4>Second solution: Interact with other formatoptions<a class="headerlink" href="#second-solution-interact-with-other-formatoptions" title="Permalink to this heading"></a></h4>
+<h4>Second solution: Interact with other formatoptions<a class="headerlink" href="#second-solution-interact-with-other-formatoptions" title="Link to this heading"></a></h4>
 <p>Another possibility is to implement a second formatoption for the size of the
 text. And here, the psyplot framework helps you with several attributes of the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> class:</p>
@@ -314,12 +563,12 @@ of the named formatoptions are updated</p>
 </dl>
 <p>Each of those attributes accept a list of strings that represent the
 formatoption keys of other formatoptions. Those formatoptions are then
-accessible within the formatoption via the usual <a class="reference external" href="https://docs.python.org/3/library/functions.html#getattr" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">getattr()</span></code></a>. I.e. if you
+accessible within the formatoption via the usual <a class="reference external" href="https://docs.python.org/3/library/functions.html#getattr" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">getattr()</span></code></a>. I.e. if you
 list a formatoption in the <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.children" title="psyplot.plotter.Formatoption.children"><code class="xref py py-attr docutils literal notranslate"><span class="pre">children</span></code></a> attribute, you can
 access it inside the formatoption (<code class="docutils literal notranslate"><span class="pre">self</span></code>) via <code class="docutils literal notranslate"><span class="pre">self.other_formatoption</span></code>.</p>
 <p>In our example of the <code class="docutils literal notranslate"><span class="pre">CustomText</span></code>, this could be implemented via</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomTextSize</span><span class="p">(</span><span class="n">Formatoption</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the fontsize of the custom text</span>
 
 <span class="sd">    Possible types</span>
@@ -341,7 +590,7 @@ access it inside the formatoption (<code class="docutils literal notranslate"><s
 
 
 <span class="k">class</span> <span class="nc">CustomText</span><span class="p">(</span><span class="n">Formatoption</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Place a text</span>
 
 <span class="sd">    Possible types</span>
@@ -393,7 +642,7 @@ attributes.</p>
 </section>
 </section>
 <section id="creating-new-plugins">
-<span id="new-plugins"></span><h2>Creating new plugins<a class="headerlink" href="#creating-new-plugins" title="Permalink to this heading"></a></h2>
+<span id="new-plugins"></span><h2>Creating new plugins<a class="headerlink" href="#creating-new-plugins" title="Link to this heading"></a></h2>
 <p>Now that you have created your plotter, you may want to include it in the
 plot methods of the <a class="reference internal" href="../api/psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> class such that you can
 do something like</p>
@@ -410,50 +659,79 @@ do something like</p>
 <a class="reference internal" href="../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rcParams</span></code></a></p></li>
 <li><p>The steady and shareable solution: Create a new plugin</p></li>
 </ol>
-<p>The third solution has been used for the <a class="reference external" href="https://psyplot.github.io/psy-maps/">psy-maps</a> and <a class="reference external" href="https://psyplot.github.io/psy-simple/">psy-simple</a> plugins. To
-create a skeleton for your plugin, you can use the <code class="docutils literal notranslate"><span class="pre">psyplot-plugin</span></code> command
-that is installed when you install psyplot.</p>
-<p>For our demonstration, let’s create a plugin named my-plugin. This is simply
-done via</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="o">!</span>psyplot-plugin my-plugin
+<p>The third solution has been used for the <a class="reference external" href="https://psyplot.github.io/psy-maps/">psy-maps</a> and <a class="reference external" href="https://psyplot.github.io/psy-simple/">psy-simple</a> plugins and
+will be described in the following section.</p>
+<section id="creating-a-package-with-the-psyplot-plugin-template">
+<h3>Creating a package with the psyplot-plugin-template<a class="headerlink" href="#creating-a-package-with-the-psyplot-plugin-template" title="Link to this heading"></a></h3>
+<p>The <a class="reference external" href="https://codebase.helmholtz.cloud/psyplot/psyplot-plugin-template">psyplot-plugin-template</a> provides a template to create a python package that
+integrates with the psyplot environment. We recommend using this template as it
+already contains a setup for automated formatters and linters, and a setup for
+continuous integration.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When creating a real package, we strongly recommend to use <a class="reference external" href="https://cruft.github.io/cruft">cruft</a> instead
+of <a class="reference external" href="https://cookiecutter.readthedocs.io">cookiecutter</a>!</p>
+</div>
+<p>For our demonstration, let’s create a plugin named <em>my-plugin</em>. We will save
+this name in to a YAML-file and use this to create our new plugin.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="o">!</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;default_context: {project_slug: my-plugin}&quot;</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;config.yaml&quot;</span>
 
-<span class="gp">In [8]: </span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="gp">In [8]: </span><span class="n">cookiecutter</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="nb">input</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="n">config</span><span class="o">.</span><span class="n">yaml</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">codebase</span><span class="o">.</span><span class="n">helmholtz</span><span class="o">.</span><span class="n">cloud</span><span class="o">/</span><span class="n">psyplot</span><span class="o">/</span><span class="n">psyplot</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">template</span><span class="o">.</span><span class="n">git</span>
 
-<span class="gp">In [9]: </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;my-plugin/**&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gh">Out[9]: </span><span class="go"></span>
+<span class="gp">In [9]: </span><span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="gp">In [10]: </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;my-plugin/**&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gh">Out[10]: </span>
 <span class="go">[&#39;my-plugin/&#39;,</span>
+<span class="go"> &#39;my-plugin/Makefile&#39;,</span>
+<span class="go"> &#39;my-plugin/tox.ini&#39;,</span>
+<span class="go"> &#39;my-plugin/conftest.py&#39;,</span>
 <span class="go"> &#39;my-plugin/MANIFEST.in&#39;,</span>
-<span class="go"> &#39;my-plugin/COPYING.LESSER&#39;,</span>
-<span class="go"> &#39;my-plugin/COPYING&#39;,</span>
-<span class="go"> &#39;my-plugin/my_plugin&#39;,</span>
-<span class="go"> &#39;my-plugin/my_plugin/plotters.py&#39;,</span>
-<span class="go"> &#39;my-plugin/my_plugin/__init__.py&#39;,</span>
-<span class="go"> &#39;my-plugin/my_plugin/__pycache__&#39;,</span>
-<span class="go"> &#39;my-plugin/my_plugin/__pycache__/__init__.cpython-38.pyc&#39;,</span>
-<span class="go"> &#39;my-plugin/my_plugin/__pycache__/plugin.cpython-38.pyc&#39;,</span>
-<span class="go"> &#39;my-plugin/my_plugin/__pycache__/plotters.cpython-38.pyc&#39;,</span>
-<span class="go"> &#39;my-plugin/my_plugin/plugin.py&#39;,</span>
-<span class="go"> &#39;my-plugin/__pycache__&#39;,</span>
-<span class="go"> &#39;my-plugin/__pycache__/setup.cpython-38.pyc&#39;,</span>
+<span class="go"> &#39;my-plugin/pyproject.toml&#39;,</span>
 <span class="go"> &#39;my-plugin/setup.py&#39;,</span>
-<span class="go"> &#39;my-plugin/README.md&#39;]</span>
+<span class="go"> &#39;my-plugin/README.md&#39;,</span>
+<span class="go"> &#39;my-plugin/docs&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/Makefile&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/conf.py&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/_static&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/_static/license_logo.png&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/_static/license_logo.png.license&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/requirements.txt&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/make.bat&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/index.md&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/_templates&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/_templates/footer.html&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/installation.md&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/api.md&#39;,</span>
+<span class="go"> &#39;my-plugin/docs/contributing.md&#39;,</span>
+<span class="go"> &#39;my-plugin/my_plugin&#39;,</span>
+<span class="go"> &#39;my-plugin/my_plugin/__init__.py&#39;,</span>
+<span class="go"> &#39;my-plugin/my_plugin/py.typed&#39;,</span>
+<span class="go"> &#39;my-plugin/my_plugin/_version.py&#39;,</span>
+<span class="go"> &#39;my-plugin/my_plugin/plotters.py&#39;,</span>
+<span class="go"> &#39;my-plugin/my_plugin/plugin.py&#39;,</span>
+<span class="go"> &#39;my-plugin/CHANGELOG.md&#39;,</span>
+<span class="go"> &#39;my-plugin/CITATION.cff&#39;,</span>
+<span class="go"> &#39;my-plugin/tests&#39;,</span>
+<span class="go"> &#39;my-plugin/tests/test_imports.py&#39;]</span>
 </pre></div>
 </div>
 <p>The following files are created in a directory named <code class="docutils literal notranslate"><span class="pre">'my-plugin'</span></code>:</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">'setup.py'</span></code></dt><dd><p>The installation script</p>
+<dt><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></dt><dd><p>The python package configuration</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">'my_plugin/plugin.py'</span></code></dt><dd><p>The file that sets up the configuration of our plugin. This file should
+<dt><code class="docutils literal notranslate"><span class="pre">'my_python_package/plugin.py'</span></code></dt><dd><p>The file that sets up the configuration of our plugin. This file should
 define the <code class="docutils literal notranslate"><span class="pre">rcParams</span></code> for the plugin (see also <a class="reference internal" href="#plugins-rcparams"><span class="std std-ref">rcParams handling in plugins</span></a>)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">'my_plugin/plotters.py'</span></code></dt><dd><p>The file in which we define the plotters. This file should define the
-plotters and formatoptions.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">'my_python_package/plotters.py'</span></code></dt><dd><p>The file in which we define the plotters. This file should contain the
+plotters and formatoptions from our previous section.</p>
 </dd>
 </dl>
 <p>If you want to see more, look into the comments in the created files.</p>
 </section>
+</section>
 <section id="rcparams-handling-in-plugins">
-<span id="plugins-rcparams"></span><h2><code class="docutils literal notranslate"><span class="pre">rcParams</span></code> handling in plugins<a class="headerlink" href="#rcparams-handling-in-plugins" title="Permalink to this heading"></a></h2>
+<span id="plugins-rcparams"></span><h2><code class="docutils literal notranslate"><span class="pre">rcParams</span></code> handling in plugins<a class="headerlink" href="#rcparams-handling-in-plugins" title="Link to this heading"></a></h2>
 <p>Every formatoption does have default values. In
 <a class="reference internal" href="#new-plotters"><span class="std std-ref">our example above</span></a>, we simply set it via the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.default" title="psyplot.plotter.Formatoption.default"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default</span></code></a> attribute. This is a hard-coded,
@@ -462,10 +740,6 @@ but easy, stable and quick solution.</p>
 requiring a different default value. Or you want to give the user the
 possibility to set his own default value. For this, we implemented the</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter._rcparams_string</span></code></p></td>
 <td><p>List of base strings in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code> dictionary</p></td>
@@ -478,7 +752,7 @@ get the default value of the formatoptions in this plotter from the
 <a class="reference internal" href="../api/psyplot.plotter.html#psyplot.plotter.Formatoption.default_key" title="psyplot.plotter.Formatoption.default_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default_key</span></code></a> for one formatoption would
 then be <code class="docutils literal notranslate"><span class="pre">the_chosen_string</span> <span class="pre">+</span> <span class="pre">fmt_key</span></code>.</p>
 <p>The following example illustrates this:</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [10]: </span><span class="kn">from</span> <span class="nn">psyplot.config.rcsetup</span> <span class="kn">import</span> <span class="n">rcParams</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [11]: </span><span class="kn">from</span> <span class="nn">psyplot.config.rcsetup</span> <span class="kn">import</span> <span class="n">rcParams</span>
 <span class="gp">   ....: </span><span class="kn">from</span> <span class="nn">psyplot.plotter</span> <span class="kn">import</span> <span class="n">Plotter</span><span class="p">,</span> <span class="n">Formatoption</span>
 <span class="gp">   ....: </span>
 </pre></div>
@@ -486,7 +760,7 @@ then be <code class="docutils literal notranslate"><span class="pre">the_chosen_
 <p>First we define our defaultParams, a mapping from default key to the
 default value, a validation function, and a description (see the
 <a class="reference internal" href="../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.defaultParams" title="psyplot.config.rcsetup.defaultParams"><code class="xref py py-data docutils literal notranslate"><span class="pre">psyplot.config.rcsetup.defaultParams</span></code></a> dictionary).</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [11]: </span><span class="n">defaultParams</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [12]: </span><span class="n">defaultParams</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">   ....: </span>    <span class="s1">&#39;plotter.example_plotter.fmt1&#39;</span><span class="p">:</span> <span class="p">[</span>
 <span class="gp">   ....: </span>        <span class="mi">1</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="s1">&#39;Example formatoption&#39;</span><span class="p">]</span>
 <span class="gp">   ....: </span>    <span class="p">}</span>
@@ -496,9 +770,9 @@ default value, a validation function, and a description (see the
 <p>Then we update the <a class="reference internal" href="../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams.defaultParams" title="psyplot.config.rcsetup.RcParams.defaultParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">defaultParams</span></code></a> of
 the <a class="reference internal" href="../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">psyplot.rcParams</span></code></a> and set the
 value</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [12]: </span><span class="n">rcParams</span><span class="o">.</span><span class="n">defaultParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">defaultParams</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [13]: </span><span class="n">rcParams</span><span class="o">.</span><span class="n">defaultParams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">defaultParams</span><span class="p">)</span>
 
-<span class="gp">In [13]: </span><span class="n">rcParams</span><span class="o">.</span><span class="n">update_from_defaultParams</span><span class="p">(</span><span class="n">defaultParams</span><span class="p">)</span>
+<span class="gp">In [14]: </span><span class="n">rcParams</span><span class="o">.</span><span class="n">update_from_defaultParams</span><span class="p">(</span><span class="n">defaultParams</span><span class="p">)</span>
 <span class="gp">   ....: </span><span class="nb">print</span><span class="p">(</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;plotter.example_plotter.fmt1&#39;</span><span class="p">])</span>
 <span class="gp">   ....: </span>
 <span class="go">1</span>
@@ -506,12 +780,12 @@ value</p>
 </div>
 <p>Now we define a formatoption for our new plotter class and implement it in a
 new plotter object.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [14]: </span><span class="k">class</span> <span class="nc">ExampleFmt</span><span class="p">(</span><span class="n">Formatoption</span><span class="p">):</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [15]: </span><span class="k">class</span> <span class="nc">ExampleFmt</span><span class="p">(</span><span class="n">Formatoption</span><span class="p">):</span>
 <span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="gp">   ....: </span>        <span class="k">pass</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [15]: </span><span class="k">class</span> <span class="nc">ExamplePlotter</span><span class="p">(</span><span class="n">Plotter</span><span class="p">):</span>
+<span class="gp">In [16]: </span><span class="k">class</span> <span class="nc">ExamplePlotter</span><span class="p">(</span><span class="n">Plotter</span><span class="p">):</span>
 <span class="gp">   ....: </span>    <span class="c1"># we use our base string, &#39;plotter.example_plotter.&#39;</span>
 <span class="gp">   ....: </span>    <span class="n">_rcparams_string</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;plotter.example_plotter.&#39;</span><span class="p">]</span>
 <span class="gp">   ....: </span>    <span class="c1"># and register a formatoption for the plotter</span>
@@ -522,38 +796,38 @@ new plotter object.</p>
 <p>If we now create a new instance of this <code class="docutils literal notranslate"><span class="pre">ExamplePlotter</span></code>, the <code class="docutils literal notranslate"><span class="pre">fmt1</span></code>
 formatoption will have a value of <code class="docutils literal notranslate"><span class="pre">1</span></code>, as we defined it in the above
 <code class="docutils literal notranslate"><span class="pre">defaultParams</span></code>:</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [16]: </span><span class="n">plotter</span> <span class="o">=</span> <span class="n">ExamplePlotter</span><span class="p">()</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [17]: </span><span class="n">plotter</span> <span class="o">=</span> <span class="n">ExamplePlotter</span><span class="p">()</span>
 
-<span class="gp">In [17]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="p">[</span><span class="s1">&#39;fmt1&#39;</span><span class="p">])</span>
+<span class="gp">In [18]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="p">[</span><span class="s1">&#39;fmt1&#39;</span><span class="p">])</span>
 <span class="go">1</span>
 
 <span class="go"># and the default_key is our string in the defaultParams, a combination</span>
 <span class="go"># of the _rcparams_string and the formatoption key</span>
-<span class="gp">In [18]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">fmt1</span><span class="o">.</span><span class="n">default_key</span><span class="p">)</span>
+<span class="gp">In [19]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">fmt1</span><span class="o">.</span><span class="n">default_key</span><span class="p">)</span>
 <span class="go">plotter.example_plotter.fmt1</span>
 
-<span class="gp">In [19]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">fmt1</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
+<span class="gp">In [20]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">fmt1</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
 <span class="go">1</span>
 </pre></div>
 </div>
 <p>Changing the value in the <a class="reference internal" href="../api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.rcParams" title="psyplot.config.rcsetup.rcParams"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rcParams</span></code></a>, also
 changes the default value for the plotter</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [20]: </span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;plotter.example_plotter.fmt1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [21]: </span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;plotter.example_plotter.fmt1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
-<span class="gp">In [21]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">fmt1</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
+<span class="gp">In [22]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">fmt1</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
 <span class="go">2</span>
 </pre></div>
 </div>
 <p>Also, if we subclass this plotter, the default_key will not change</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [22]: </span><span class="k">class</span> <span class="nc">SecondPlotter</span><span class="p">(</span><span class="n">ExamplePlotter</span><span class="p">):</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [23]: </span><span class="k">class</span> <span class="nc">SecondPlotter</span><span class="p">(</span><span class="n">ExamplePlotter</span><span class="p">):</span>
 <span class="gp">   ....: </span>    <span class="c1"># we set a new _rcparams_string</span>
 <span class="gp">   ....: </span>    <span class="n">_rcparams_string</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;plotter.another_plotter.&#39;</span><span class="p">]</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [23]: </span><span class="n">plotter</span> <span class="o">=</span> <span class="n">SecondPlotter</span><span class="p">()</span>
+<span class="gp">In [24]: </span><span class="n">plotter</span> <span class="o">=</span> <span class="n">SecondPlotter</span><span class="p">()</span>
 
 <span class="go"># still the same key, although we defined a different _rcparams_string</span>
-<span class="gp">In [24]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">fmt1</span><span class="o">.</span><span class="n">default_key</span><span class="p">)</span>
+<span class="gp">In [25]: </span><span class="nb">print</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">fmt1</span><span class="o">.</span><span class="n">default_key</span><span class="p">)</span>
 <span class="go">plotter.example_plotter.fmt1</span>
 </pre></div>
 </div>
@@ -567,21 +841,41 @@ changes the default value for the plotter</p>
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+          <!--
+SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="framework.html" class="btn btn-neutral float-left" title="The psyplot framework" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../contribute.html" class="btn btn-neutral float-right" title="Contributing to psyplot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contribution and development hints" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum Geesthacht, 2016-2021 University of Lausanne.</p>
+    <p>&#169; Copyright 2021-2024 Helmholtz-Zentrum hereon GmbH.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  
+
+<div class="footer">
+    <span class="creativecommons">
+    <a href="https://creativecommons.org/licenses/by/4.0/" >
+    <img style="height: 1.5em;" src="../_static/license_logo.png" border="0" alt="Creative Commons License"/>
+    </a>
+    This documentation is licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">
+    CC-BY-4.0
+    </a>
+    </span>
+</div>
+
+
 
 </footer>
         </div>

@@ -1,6 +1,3 @@
-psyplot.gdal\_store module
-==========================
-
 .. automodule:: psyplot.gdal_store
    :members:
    :undoc-members:
