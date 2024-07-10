@@ -895,7 +895,7 @@ environment variable."""
                     "Error while loading psyplot plugin %s! The "
                     "following plotters have already been "
                     "defined"
-                ) % ep
+                ) % (ep,)
                 msg += "and will be overwritten:" if not raise_error else ":"
                 msg += "\n" + "\n".join(
                     chain.from_iterable(
@@ -928,7 +928,7 @@ environment variable."""
                     "Error while loading psyplot plugin %s! The "
                     "following default keys have already been "
                     "defined:"
-                ) % ep
+                ) % (ep,)
                 msg += "\n" + "\n".join(
                     chain.from_iterable(
                         (
