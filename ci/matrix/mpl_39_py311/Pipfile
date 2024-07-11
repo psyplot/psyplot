@@ -9,8 +9,7 @@ name = "pypi"
 
 [packages]
 psyplot = {extras = ["testsite"], file = "../../..", editable=true}
-matplotlib = "3.5.*"
-numpy = "<2.0.0"
+matplotlib = "3.9.*"
 
 [dev-packages]
 
@@ -18,4 +17,4 @@ numpy = "<2.0.0"
 allow_prereleases = true
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"
