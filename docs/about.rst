@@ -138,7 +138,7 @@ with a few downsides.
 .. _options provided by matplotlib: https://matplotlib.org/3.1.1/faq/howto_faq.html#how-to-use-matplotlib-in-a-web-application-server
 .. _other visualization backends: https://github.com/psyplot/psy-vtk
 .. _psy-view: https://codebase.helmholtz.cloud/psyplot/psy-view
-.. _ncview: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
+.. _ncview: https://cirrus.ucsd.edu/ncview/
 .. _psy-reg: https://psyplot.github.io/psy-reg
 .. _seaborn: https://seaborn.pydata.org
 .. _R: https://www.r-project.org/

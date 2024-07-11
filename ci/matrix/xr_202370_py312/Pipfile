@@ -11,6 +11,7 @@ name = "pypi"
 psyplot = {extras = ["testsite"], file = "../../..", editable=true}
 matplotlib = "3.8.*"
 xarray = "2023.7.0"
+numpy = "<2.0.0"
 
 [dev-packages]
 
