@@ -50,6 +50,10 @@ test:
         IMAGE: python:3.11
       - SCENARIO: mpl_38_py312
         IMAGE: python:3.12
+      - SCENARIO: mpl_39_py311
+        IMAGE: python:3.11
+      - SCENARIO: mpl_39_py312
+        IMAGE: python:3.12
       # matplotlib scenarios
       - SCENARIO: mpl_35_py39
         IMAGE: python:3.9

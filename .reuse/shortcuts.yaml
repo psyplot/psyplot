@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 .defaults: &defaults
-  year: "2021-2024"
+  year: "2024"
   copyright: "Helmholtz-Zentrum hereon GmbH"
 
 # The following dictionaries items map to dictionaries with three possible

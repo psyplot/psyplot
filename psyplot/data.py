@@ -1659,13 +1659,22 @@ class CFDecoder(object):
         if coord.ndim == 1:
             return _infer_interval_breaks(coord)
         elif coord.ndim == 2:
-            from scipy.interpolate import interp2d
+            from scipy.interpolate import RectBivariateSpline
 
             kind = kind or rcParams["decoder.interp_kind"]
             y, x = map(np.arange, coord.shape)
             new_x, new_y = map(_infer_interval_breaks, [x, y])
             coord = np.asarray(coord)
-            return interp2d(x, y, coord, kind=kind, copy=False)(new_x, new_y)
+            interpolation_types = {"linear": 1, "cubic": 3, "quintic": 5}
+            try:
+                kx = ky = interpolation_types[kind]
+            except KeyError as e:
+                raise ValueError(
+                    f"Unsupported interpolation type {repr(kind)}, must be "
+                    f"either of {', '.join(map(repr, interpolation_types))}."
+                ) from e
+            interpolate = RectBivariateSpline(x, y, coord.T, kx=kx, ky=ky)
+            return interpolate(new_x, new_y).T
 
     @classmethod
     @docstrings.get_sections(base="CFDecoder._decode_ds")

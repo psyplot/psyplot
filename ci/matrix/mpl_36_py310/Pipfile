@@ -10,6 +10,7 @@ name = "pypi"
 [packages]
 psyplot = {extras = ["testsite"], file = "../../..", editable=true}
 matplotlib = "3.6.*"
+numpy = "<2.0.0"
 
 [dev-packages]
 
