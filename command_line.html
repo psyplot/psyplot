@@ -9,7 +9,7 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/nc-table-styles.css?v=d585f46f" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
   
@@ -21,9 +21,9 @@
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/design-tabs.js?v=36754332"></script>
+        <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -359,7 +359,7 @@
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">psyplot.__main__</span></code> module defines a simple parser to parse commands
 from the command line to make a plot of data in a netCDF file. Note that the
 arguments change slightly if you have the <code class="docutils literal notranslate"><span class="pre">psyplot-gui</span></code> module installed
-(see <a class="reference external" href="https://psyplot.github.io/psyplot-gui/command_line.html#command-line" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">psyplot-gui</span></a> documentation).</p>
+(see <a class="reference external" href="https://psyplot.github.io/psyplot-gui/command_line.html#command-line" title="(in psyplot-gui)"><span class="xref std std-ref">psyplot-gui</span></a> documentation).</p>
 <p>It can be run from the command line via:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>psyplot<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>arguments<span class="o">]</span>
 </pre></div>
@@ -375,7 +375,7 @@ arguments change slightly if you have the <code class="docutils literal notransl
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usage:<span class="w"> </span>psyplot<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>-V<span class="o">]</span><span class="w"> </span><span class="o">[</span>-aV<span class="o">]</span><span class="w"> </span><span class="o">[</span>-i<span class="o">]</span><span class="w"> </span><span class="o">[</span>-lp<span class="o">]</span><span class="w"> </span><span class="o">[</span>-lpm<span class="o">]</span><span class="w"> </span><span class="o">[</span>-lds<span class="o">]</span><span class="w"> </span><span class="o">[</span>-lps<span class="o">]</span>
 <span class="w">               </span><span class="o">[</span>-n<span class="w"> </span><span class="o">[</span>variable_name<span class="w"> </span>...<span class="o">]]</span><span class="w"> </span><span class="o">[</span>-d<span class="w"> </span>dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span>
 <span class="w">               </span><span class="o">[</span>dim,val1<span class="o">[</span>,val2<span class="o">[</span>,...<span class="o">]]</span><span class="w"> </span>...<span class="o">]]</span>
-<span class="w">               </span><span class="o">[</span>-pm<span class="w"> </span><span class="o">{</span><span class="s1">&#39;mapvector&#39;</span>,<span class="w"> </span><span class="s1">&#39;mapplot&#39;</span>,<span class="w"> </span><span class="s1">&#39;violinplot&#39;</span>,<span class="w"> </span><span class="s1">&#39;combined&#39;</span>,<span class="w"> </span><span class="s1">&#39;density&#39;</span>,<span class="w"> </span><span class="s1">&#39;lineplot&#39;</span>,<span class="w"> </span><span class="s1">&#39;barplot&#39;</span>,<span class="w"> </span><span class="s1">&#39;vector&#39;</span>,<span class="w"> </span><span class="s1">&#39;fldmean&#39;</span>,<span class="w"> </span><span class="s1">&#39;plot2d&#39;</span>,<span class="w"> </span><span class="s1">&#39;mapcombined&#39;</span><span class="o">}]</span>
+<span class="w">               </span><span class="o">[</span>-pm<span class="w"> </span><span class="o">{</span><span class="s1">&#39;mapplot&#39;</span>,<span class="w"> </span><span class="s1">&#39;vector&#39;</span>,<span class="w"> </span><span class="s1">&#39;fldmean&#39;</span>,<span class="w"> </span><span class="s1">&#39;mapvector&#39;</span>,<span class="w"> </span><span class="s1">&#39;mapcombined&#39;</span>,<span class="w"> </span><span class="s1">&#39;barplot&#39;</span>,<span class="w"> </span><span class="s1">&#39;lineplot&#39;</span>,<span class="w"> </span><span class="s1">&#39;density&#39;</span>,<span class="w"> </span><span class="s1">&#39;plot2d&#39;</span>,<span class="w"> </span><span class="s1">&#39;violinplot&#39;</span>,<span class="w"> </span><span class="s1">&#39;combined&#39;</span><span class="o">}]</span>
 <span class="w">               </span><span class="o">[</span>-o<span class="w"> </span>str<span class="w"> </span>or<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>str<span class="o">]</span><span class="w"> </span><span class="o">[</span>-p<span class="w"> </span>str<span class="o">]</span><span class="w"> </span><span class="o">[</span>-engine<span class="w"> </span>str<span class="o">]</span>
 <span class="w">               </span><span class="o">[</span>-fmt<span class="w"> </span>FILENAME_OR_YAML<span class="o">]</span><span class="w"> </span><span class="o">[</span>-t<span class="o">]</span><span class="w"> </span><span class="o">[</span>-rc<span class="w"> </span>RC_FILE<span class="o">]</span><span class="w"> </span><span class="o">[</span>-e<span class="w"> </span>str<span class="o">]</span>
 <span class="w">               </span><span class="o">[</span>--enable-post<span class="o">]</span><span class="w"> </span><span class="o">[</span>-sns<span class="w"> </span>str<span class="o">]</span><span class="w"> </span><span class="o">[</span>-op<span class="w"> </span>str<span class="o">]</span><span class="w"> </span><span class="o">[</span>-cd<span class="w"> </span>str<span class="o">]</span>
@@ -407,7 +407,7 @@ original filename to a new one</p>
 given</p>
 </dd>
 <dt><kbd>-pm, --plot-method</kbd></dt>
-<dd><p>Possible choices: mapvector, mapplot, violinplot, combined, density, lineplot, barplot, vector, fldmean, plot2d, mapcombined</p>
+<dd><p>Possible choices: mapplot, vector, fldmean, mapvector, mapcombined, barplot, lineplot, density, plot2d, violinplot, combined</p>
 <p>The name of the plot_method to use</p>
 </dd>
 <dt><kbd>-p, --project</kbd></dt>

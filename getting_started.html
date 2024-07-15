@@ -9,7 +9,7 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/nc-table-styles.css?v=d585f46f" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
   
@@ -21,9 +21,9 @@
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/design-tabs.js?v=36754332"></script>
+        <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -360,13 +360,13 @@
 <h2>Initialization and interactive usage<a class="headerlink" href="#initialization-and-interactive-usage" title="Link to this heading"></a></h2>
 <p>This section shall introduce you how to read data from a netCDF file and
 visualize it via psyplot. For this, you need to have <a class="reference external" href="https://github.com/Unidata/netcdf4-python">netCDF4</a> and the
-<a class="reference external" href="https://psyplot.github.io/psy-maps/">psy-maps</a> psyplot plugin to be installed (see <a class="reference external" href="https://psyplot.github.io/psyplot-gui/installing.html#install" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">install</span></a>).</p>
+<a class="reference external" href="https://psyplot.github.io/psy-maps/">psy-maps</a> psyplot plugin to be installed (see <a class="reference external" href="https://psyplot.github.io/psyplot-gui/installing.html#install" title="(in psyplot-gui)"><span class="xref std std-ref">install</span></a>).</p>
 <p>Furthermore we use the <a class="reference download internal" download="" href="_downloads/6d351965500a2dd3ef53e3daa3ac50d1/demo.nc"><code class="xref download docutils literal notranslate"><span class="pre">demo.nc</span></code></a> netCDF file for our
 demonstrations.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We recommend to either run this example using our
-<a class="reference external" href="https://psyplot.github.io/psyplot-gui/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">GUI</span></a>. However, you can also either use
+<span class="xref std std-ref">GUI</span>. However, you can also either use
 <a class="reference external" href="https://ipython.readthedocs.io/en/stable/">IPython</a> from the terminal via</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>ipython<span class="w">  </span><span class="c1"># or pip install ipython</span>
 ipython<span class="w">  </span><span class="c1"># starts the ipython console</span>
@@ -439,7 +439,7 @@ type</p>
 <a class="reference internal image-reference" href="_images/docs_getting_started.png"><img alt="_images/docs_getting_started.png" src="_images/docs_getting_started.png" style="width: 4in;" /></a>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you’re not using the <a class="reference external" href="https://psyplot.github.io/psyplot-gui/index.html#psyplot-gui" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">GUI</span></a>, you have to
+<p>If you’re not using the <span class="xref std std-ref">GUI</span>, you have to
 call the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.Project.show" title="psyplot.project.Project.show"><code class="xref py py-meth docutils literal notranslate"><span class="pre">show()</span></code></a> method to display the plot, i.e. just run</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -450,7 +450,7 @@ call the <a class="reference internal" href="api/psyplot.project.html#psyplot.pr
 <span class="gh">Out[5]: </span><span class="go">psyplot.project.Project([    arr0: 2-dim DataArray of t2m, with (lat, lon)=(96, 192), lev=1e+05, time=1979-01-31T18:00:00])</span>
 </pre></div>
 </div>
-<p>which contains the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
+<p>which contains the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a> that stores the data and the
 corresponding plotter that visualizes it</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gh">Out[6]: </span>
@@ -571,7 +571,7 @@ look at the types this formatoption accepts using the <a class="reference intern
 <p>Let’s use an orthogonal projection. The update goes via the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Project.update()</span></code> method which goes all the way down to the
 <a class="reference internal" href="api/psyplot.plotter.html#psyplot.plotter.Plotter.update" title="psyplot.plotter.Plotter.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter.update()</span></code></a> and the
-<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.Projection.update" title="(in psy-maps v1.4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psy_maps.plotters.Projection.update()</span></code></a> method of the formatoption.</p>
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.Projection.update" title="(in psy-maps)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psy_maps.plotters.Projection.update()</span></code></a> method of the formatoption.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [10]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;ortho&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -587,13 +587,13 @@ attribute of the formatoption.</p>
 example, if we want to display the field for february, we can type</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="go"># currently we are displaying january</span>
 <span class="gp">In [11]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span>
-<span class="gh">Out[11]: </span><span class="go">numpy.datetime64(&#39;1979-01-31T18:00:00.000000000&#39;)</span>
+<span class="gh">Out[11]: </span><span class="go">np.datetime64(&#39;1979-01-31T18:00:00.000000000&#39;)</span>
 
 <span class="gp">In [12]: </span><span class="n">p</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;1979-02&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
 
 <span class="go"># now its february</span>
 <span class="gp">In [13]: </span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span>
-<span class="gh">Out[13]: </span><span class="go">numpy.datetime64(&#39;1979-01-31T18:00:00.000000000&#39;)</span>
+<span class="gh">Out[13]: </span><span class="go">np.datetime64(&#39;1979-01-31T18:00:00.000000000&#39;)</span>
 </pre></div>
 </div>
 <p>which is in our case equivalent for choosing the second index in our time
@@ -643,7 +643,7 @@ the dimensions are therefore decoded as <code class="docutils literal notranslat
 </pre></div>
 </div>
 <p>You can also use the <cite>method</cite> keyword from the plotting function to use the
-advantages of the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
+advantages of the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.sel.html#xarray.DataArray.sel" title="(in xarray v2024.6.1.dev0)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">xarray.DataArray.sel()</span></code></a> method. E.g. to plot the data
 corresponding to March 1979 you can use</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [19]: </span><span class="n">psy</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">mapplot</span><span class="p">(</span><span class="s1">&#39;demo.nc&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">&#39;1979-03&#39;</span><span class="p">,</span>
 <span class="gp">   ....: </span>                 <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
@@ -681,19 +681,19 @@ the basic matplotlib objects like figures and axes if you need.</p>
 them and they set up the corresponding plotter.</p>
 <p>Formatoptions are all designed for an interactive usage and can usually be
 controlled with very simple commands. They range from simple formatoptions
-like <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.title" title="(in psy-simple v1.4.0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">title</span></code></a> to
-<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.lonlatbox" title="(in psy-maps v1.4.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">latitude-longitude</span> <span class="pre">box</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data</span></code></a>.</p>
+like <code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">title</span></code> to
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">choosing</span> <span class="pre">the</span> <span class="pre">latitude-longitude</span> <span class="pre">box</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data</span></code>.</p>
 <p>The formatoptions depend on the specific plotting method and can be seen via
 the methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/psyplot.project.html#psyplot.project.PlotterInterface.keys" title="psyplot.project.PlotterInterface.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Classmethod to return a nice looking table with the given formatoptions</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">summaries</span></code>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/psyplot.project.html#psyplot.project.PlotterInterface.summaries" title="psyplot.project.PlotterInterface.summaries"><code class="xref py py-obj docutils literal notranslate"><span class="pre">summaries</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Method to print the summaries of the formatoptions</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">docs</span></code>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/psyplot.project.html#psyplot.project.PlotterInterface.docs" title="psyplot.project.PlotterInterface.docs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">docs</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Method to print the full documentations of the formatoptions</p></td>
 </tr>
 </tbody>

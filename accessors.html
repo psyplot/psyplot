@@ -9,7 +9,7 @@
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/nc-table-styles.css?v=d585f46f" />
       <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
   
@@ -21,9 +21,9 @@
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/design-tabs.js?v=36754332"></script>
+        <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -356,17 +356,17 @@
              
   <section id="xarray-accessors">
 <span id="accessors"></span><h1>xarray Accessors<a class="headerlink" href="#xarray-accessors" title="Link to this heading"></a></h1>
-<p>psyplot defines a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> and a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a>
-accessor. You can use these accessors (see <a class="reference external" href="https://docs.xarray.dev/en/stable/internals/index.html#internals" title="(in xarray v2024.3.1.dev0)"><span>Xarray Internals</span></a>) to
+<p>psyplot defines a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a> and a <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a>
+accessor. You can use these accessors (see <a class="reference external" href="https://docs.xarray.dev/en/stable/internals/index.html#internals" title="(in xarray v2024.6.1.dev0)"><span>Xarray Internals</span></a>) to
 visualize your data and to update your plots. The following sections will show
 you how to make and update plots with these accessors. The plotmethods of the
 accessors are the same as for the <a class="reference internal" href="api/psyplot.project.html#psyplot.project.plot" title="psyplot.project.plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.project.plot</span></code></a> object.</p>
 <section id="the-datasetaccessor-dataset-accessor">
 <span id="dataset-accessor"></span><h2>The <a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor" title="psyplot.data.DatasetAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code></a> dataset accessor<a class="headerlink" href="#the-datasetaccessor-dataset-accessor" title="Link to this heading"></a></h2>
 <p>Importing the psyplot package registers a new dataset accessor (see
-<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.register_dataset_accessor.html#xarray.register_dataset_accessor" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.register_dataset_accessor()</span></code></a>), the
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.register_dataset_accessor.html#xarray.register_dataset_accessor" title="(in xarray v2024.6.1.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">xarray.register_dataset_accessor()</span></code></a>), the
 <a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor" title="psyplot.data.DatasetAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code></a>. You can access it via the <code class="docutils literal notranslate"><span class="pre">psy</span></code>
-attribute of the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> class, i.e.</p>
+attribute of the <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> class, i.e.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.Dataset.psy</span></code></p></td>
@@ -403,7 +403,7 @@ same plotmethods as the <a class="reference internal" href="api/psyplot.project.
 <p>More advanced then the <a class="reference internal" href="#dataset-accessor"><span class="std std-ref">dataset accessor</span></a> is the
 registered DataArray accessor, the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveArray</span></code></a>.</p>
 <p>As well as the <a class="reference internal" href="api/psyplot.data.html#psyplot.data.DatasetAccessor" title="psyplot.data.DatasetAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetAccessor</span></code></a>, it is registered as the <code class="docutils literal notranslate"><span class="pre">'psy'</span></code>
-attribute of any <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, i.e.</p>
+attribute of any <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArray</span></code></a>, i.e.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.DataArray.psy</span></code></p></td>
@@ -451,10 +451,10 @@ class, is the object that visualizes the data array. It can also
 be accessed via the <code class="docutils literal notranslate"><span class="pre">da.psy.plotter</span></code> attribute. Note that the creation of
 such a plotter overwrites any previous plotter in the <code class="docutils literal notranslate"><span class="pre">da.psy.plotter</span></code>
 attribute.</p>
-<p>This methodology does not only work for <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.3.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArrays</span></code></a>,
+<p>This methodology does not only work for <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.6.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataArrays</span></code></a>,
 but also for multiple DataArrays in a <a class="reference internal" href="api/psyplot.data.html#psyplot.data.InteractiveList" title="psyplot.data.InteractiveList"><code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveList</span></code></a>. This data
 structure is, for example, used by the
-<a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.lineplot.html#psyplot.project.plot.lineplot" title="(in psy-simple v1.4.0)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.lineplot</span></code></a> plot method to visualize
+<a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.lineplot.html#psyplot.project.plot.lineplot" title="(in psy-simple)"><code class="docutils literal notranslate"><span class="pre">psyplot.project.plot.lineplot</span></code></a> plot method to visualize
 multiple lines. Consider the following example:</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [12]: </span><span class="n">ds0</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">lev</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># select a subset of the dataset</span>
 

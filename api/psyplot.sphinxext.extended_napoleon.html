@@ -9,7 +9,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/nc-table-styles.css?v=d585f46f" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
   
@@ -21,9 +21,9 @@
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../_static/design-tabs.js?v=36754332"></script>
+        <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -358,12 +358,12 @@
            <div itemprop="articleBody">
              
   <p id="module-psyplot.sphinxext.extended_napoleon">Sphinx extension module to provide additional sections for numpy docstrings</p>
-<p>This extension extends the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a> package with an
+<p>This extension extends the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v7.4.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a> package with an
 additional <em>Possible types</em> section in order to document possible types for
 descriptors.</p>
 <p class="rubric">Notes</p>
 <p>If you use this module as a sphinx extension, you should not list the
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a> module in the extensions variable of your conf.py.
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v7.4.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a> module in the extensions variable of your conf.py.
 This module has been tested for sphinx 1.3.1.</p>
 <p><strong>Classes:</strong></p>
 <table class="autosummary longtable docutils align-default">
@@ -458,7 +458,7 @@ be parsed:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>app</strong> (<a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx" title="(in Sphinx v7.3.0)"><em>sphinx.application.Sphinx</em></a>) – Application object representing the Sphinx process.</p></li>
+<li><p><strong>app</strong> (<a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx" title="(in Sphinx v7.4.1)"><em>sphinx.application.Sphinx</em></a>) – Application object representing the Sphinx process.</p></li>
 <li><p><strong>what</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A string specifying the type of the object to which the docstring
 belongs. Valid values: “module”, “class”, “exception”, “function”,
 “method”, “attribute”.</p></li>
@@ -478,7 +478,7 @@ directive.</p></li>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>This function is (to most parts) taken from the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a>
+<p>This function is (to most parts) taken from the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v7.4.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a>
 module, sphinx version 1.3.1, and adapted to the classes defined here</p>
 </dd></dl>
 
@@ -491,11 +491,11 @@ the <code class="docutils literal notranslate"><span class="pre">setup()</span><
 the extension offers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>app</strong> (<a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx" title="(in Sphinx v7.3.0)"><em>sphinx.application.Sphinx</em></a>) – Application object representing the Sphinx process</p>
+<dd class="field-odd"><p><strong>app</strong> (<a class="reference external" href="https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx" title="(in Sphinx v7.4.1)"><em>sphinx.application.Sphinx</em></a>) – Application object representing the Sphinx process</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>This function uses the setup function of the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v7.3.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a>
+<p>This function uses the setup function of the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#module-sphinx.ext.napoleon" title="(in Sphinx v7.4.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sphinx.ext.napoleon</span></code></a>
 module</p>
 </dd></dl>
 

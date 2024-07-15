@@ -9,7 +9,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/nc-table-styles.css?v=d585f46f" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
   
@@ -21,9 +21,9 @@
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../_static/design-tabs.js?v=36754332"></script>
+        <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -867,7 +867,7 @@ when the update text for the formatoption should be changed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> (<a class="reference external" href="https://psyplot.github.io/psyplot-gui/api/psyplot_gui.fmt_widget.html#psyplot_gui.fmt_widget.FormatoptionWidget" title="(in psyplot-gui v1.3.0)"><em>psyplot_gui.fmt_widget.FormatoptionWidget</em></a>) – The parent widget that contains the returned QWidget</p></li>
+<li><p><strong>parent</strong> (<a class="reference external" href="https://psyplot.github.io/psyplot-gui/api/psyplot_gui.fmt_widget.html#psyplot_gui.fmt_widget.FormatoptionWidget" title="(in psyplot-gui)"><em>psyplot_gui.fmt_widget.FormatoptionWidget</em></a>) – The parent widget that contains the returned QWidget</p></li>
 <li><p><strong>project</strong> (<a class="reference internal" href="psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><em>psyplot.project.Project</em></a>) – The current subproject (see <a class="reference internal" href="psyplot.project.html#psyplot.project.gcp" title="psyplot.project.gcp"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project.gcp()</span></code></a>)</p></li>
 </ul>
 </dd>
@@ -1010,7 +1010,7 @@ the formatoption is updated.</p>
 <p>This method is called when the axes is cleared due to a
 formatoption with <a class="reference internal" href="#psyplot.plotter.Formatoption.requires_clearing" title="psyplot.plotter.Formatoption.requires_clearing"><code class="xref py py-attr docutils literal notranslate"><span class="pre">requires_clearing</span></code></a> set to True. You don’t
 necessarily have to implement this formatoption if your plot results
-are removed by the usual <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.clear.html#matplotlib.axes.Axes.clear" title="(in Matplotlib v3.8.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.clear()</span></code></a> method.</p>
+are removed by the usual <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.clear.html#matplotlib.axes.Axes.clear" title="(in Matplotlib v3.9.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.clear()</span></code></a> method.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1184,7 +1184,7 @@ derived from the <a class="reference internal" href="#psyplot.plotter.Formatopti
 <li><p><strong>data</strong> (<a class="reference internal" href="psyplot.data.html#psyplot.data.InteractiveArray" title="psyplot.data.InteractiveArray"><em>InteractiveArray</em></a><em> or </em><a class="reference internal" href="psyplot.data.html#psyplot.data.ArrayList" title="psyplot.data.ArrayList"><em>ArrayList</em></a><em>, </em><em>optional</em>) – Data object that shall be visualized. If given and <cite>plot</cite> is True,
 the <a class="reference internal" href="#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initialize_plot()</span></code></a> method is called at the end. Otherwise
 you can call this method later by yourself</p></li>
-<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.8.3)"><em>matplotlib.axes.Axes</em></a>) – Matplotlib Axes to plot on. If None, a new one will be created as
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.1)"><em>matplotlib.axes.Axes</em></a>) – Matplotlib Axes to plot on. If None, a new one will be created as
 soon as the <a class="reference internal" href="#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initialize_plot()</span></code></a> method is called</p></li>
 <li><p><strong>auto_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Default: None. A boolean indicating whether this list shall
 automatically update the contained arrays when calling the
@@ -1552,7 +1552,7 @@ the <a class="reference internal" href="#psyplot.plotter.Plotter.data" title="ps
 <li><p>If both are None, nothing is done.</p></li>
 </ul>
 </p></li>
-<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.8.3)"><em>matplotlib.axes.Axes</em></a>) – Matplotlib Axes to plot on. If None, a new one will be created as
+<li><p><strong>ax</strong> (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.9.1)"><em>matplotlib.axes.Axes</em></a>) – Matplotlib Axes to plot on. If None, a new one will be created as
 soon as the <a class="reference internal" href="#psyplot.plotter.Plotter.initialize_plot" title="psyplot.plotter.Plotter.initialize_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initialize_plot()</span></code></a> method is called</p></li>
 <li><p><strong>make_plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, and <cite>data</cite> is not None, the plot is initialized. Otherwise
 only the framework between plotter and data is set up</p></li>
@@ -2335,7 +2335,7 @@ when the update text for the formatoption should be changed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> (<a class="reference external" href="https://psyplot.github.io/psyplot-gui/api/psyplot_gui.fmt_widget.html#psyplot_gui.fmt_widget.FormatoptionWidget" title="(in psyplot-gui v1.3.0)"><em>psyplot_gui.fmt_widget.FormatoptionWidget</em></a>) – The parent widget that contains the returned QWidget</p></li>
+<li><p><strong>parent</strong> (<a class="reference external" href="https://psyplot.github.io/psyplot-gui/api/psyplot_gui.fmt_widget.html#psyplot_gui.fmt_widget.FormatoptionWidget" title="(in psyplot-gui)"><em>psyplot_gui.fmt_widget.FormatoptionWidget</em></a>) – The parent widget that contains the returned QWidget</p></li>
 <li><p><strong>project</strong> (<a class="reference internal" href="psyplot.project.html#psyplot.project.Project" title="psyplot.project.Project"><em>psyplot.project.Project</em></a>) – The current subproject (see <a class="reference internal" href="psyplot.project.html#psyplot.project.gcp" title="psyplot.project.gcp"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project.gcp()</span></code></a>)</p></li>
 </ul>
 </dd>
@@ -2441,7 +2441,7 @@ using the <code class="xref py py-func docutils literal notranslate"><span class
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fmto</strong> (<a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><em>Formatoption</em></a>) – The <a class="reference internal" href="#psyplot.plotter.Formatoption" title="psyplot.plotter.Formatoption"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> instance to check</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.3.1.dev0)"><em>xarray.DataArray</em></a>) – The data array to use if the <a class="reference internal" href="#psyplot.plotter.Formatoption.data_dependent" title="psyplot.plotter.Formatoption.data_dependent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_dependent</span></code></a>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2024.6.1.dev0)"><em>xarray.DataArray</em></a>) – The data array to use if the <a class="reference internal" href="#psyplot.plotter.Formatoption.data_dependent" title="psyplot.plotter.Formatoption.data_dependent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_dependent</span></code></a>
 attribute is a callable</p></li>
 </ul>
 </dd>
