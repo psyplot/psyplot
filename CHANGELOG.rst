@@ -2,6 +2,15 @@
 ..
 .. SPDX-License-Identifier: CC-BY-4.0
 
+v1.5.1
+======
+Compatibility fixes for scipy and matplotlib
+
+Added
+-----
+- Add compatibility fixes for scipy `1.14`, see `!74 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/74>`
+- Add compatibility fixes for matplotlib `3.9`, see `!76 <https://codebase.helmholtz.cloud/psyplot/psyplot/-/merge_requests/76>`
+
 v1.5.0
 ======
 Compatibility fixes, cli improvements and code formatting
